@@ -10,7 +10,7 @@ class ColorBase {
     }
 
     set a(a) {
-        this._a = clamp(a);
+        this._a = Frost.clamp(a);
     }
 
     darken(amount) {
@@ -41,30 +41,32 @@ class ColorBase {
         return this.toRGB().luma();
     }
 
+    mix(color, amount) {
+        return this.toRGB().mix(color, amount);
+    }
+
+    multiply(color) {
+        return this.toRGB().multiply(color);
+    }
+
     setBrightness(brightness) {
-        const hsv = this.toHSV();
-        hsv.v = brightness;
-        return hsv;
+        return this.toHSV().setBrightness(brightness);
     }
 
     setHue(hue) {
-        const hsl = this.toHSV();
-        hsl.h = hue;
-        return hsl;
+        return this.toHSV().setHue(hue);
     }
 
     setSaturation(saturation) {
-        const hsl = this.toHSV();
-        hsl.s = saturation;
-        return hsl;
+        return this.toHSV().setSaturation(saturation);
     }
 
     shade(amount) {
-        return this.toHSV().shade(amount);
+        return this.toRGB().shade(amount);
     }
 
     tint(amount) {
-        return this.toHSV().tint(amount);
+        return this.toRGB().tint(amount);
     }
 
     toCMY() {
@@ -81,6 +83,10 @@ class ColorBase {
 
     toHSV() {
         return this.toRGB().toHSV();
+    }
+
+    tone(amount) {
+        return this.toRGB().tone(amount);
     }
 
     toString() {

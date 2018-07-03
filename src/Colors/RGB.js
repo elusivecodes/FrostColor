@@ -22,15 +22,15 @@ class RGB extends ColorBase {
     }
 
     set r(r) {
-        this._r = clamp(r, 0, 255);
+        this._r = Frost.clamp(r, 0, 255);
     }
 
     set g(g) {
-        this._g = clamp(g, 0, 255);
+        this._g = Frost.clamp(g, 0, 255);
     }
 
     set b(b) {
-        this._b = clamp(b, 0, 255);
+        this._b = Frost.clamp(b, 0, 255);
     }
 
     luma() {
@@ -41,12 +41,21 @@ class RGB extends ColorBase {
 		return (v1 + v2 + v3) / 255;
     }
 
-    mix(color, amount = 0.5) {
+    mix(color) {
         color = color.toRGB();
-        const r = lerp(this.r, color.r, amount);
-        const g = lerp(this.g, color.g, amount);
-        const b = lerp(this.b, color.b, amount);
-        const a = lerp(this.a, color.a, amount);
+        const r = Frost.lerp(this.r, color.r, amount);
+        const g = Frost.lerp(this.g, color.g, amount);
+        const b = Frost.lerp(this.b, color.b, amount);
+        const a = Frost.lerp(this.a, color.a, amount);
+        return new RGB(r, g, b, a);
+    }
+
+    multiply(color) {
+        color = color.toRGB();
+        const r = (this.r / 255) * (color.r / 255) * 255;
+        const g = (this.g / 255) * (color.g / 255) * 255;
+        const b = (this.b / 255) * (color.b / 255) * 255;
+        const a = (this.a / 255) * (color.a / 255) * 255;
         return new RGB(r, g, b, a);
     }
 
@@ -54,12 +63,20 @@ class RGB extends ColorBase {
         return new RGB(this.r, this.g, this.b, a);
     }
 
+    shade(amount) {
+        return this.mix(new RGB(255, 255, 255), amount);
+    }
+
+    tint(amount) {
+        return this.mix(new RGB(0, 0, 0), amount);
+    }
+
     toCMY() {
         const c = 1 - (this.r / 255);
         const m = 1 - (this.g / 255);
         const y = 1 - (this.b / 255);
 
-        return new CMY(c, m, y, this.a);
+        return new CMY(c * 100, m * 100, y * 100, this.a);
     }
 
     toHSL() {
@@ -74,7 +91,7 @@ class RGB extends ColorBase {
         const l = (max + min) / 2;
 
         if (diff == 0) {
-            return new HSL(0, 0, l, this.a);
+            return new HSL(0, 0, l * 100, this.a);
         }
 
         let h = 0;
@@ -103,7 +120,7 @@ class RGB extends ColorBase {
             h++;
         }
 
-        return new HSL(h, s, l, this.a);
+        return new HSL(h * 360, s * 100, l * 100, this.a);
     }
 
     toHSV() {
@@ -118,7 +135,7 @@ class RGB extends ColorBase {
         const v = max;
 
         if (diff == 0) {
-            return new HSV(0, 0, v, this.a);
+            return new HSV(0, 0, v * 100, this.a);
         }
 
         let h = 0;
@@ -142,7 +159,11 @@ class RGB extends ColorBase {
             h++;
         }
 
-        return new HSV(h, s, v, this.a);
+        return new HSV(h * 360, s * 100, v * 100, this.a);
+    }
+
+    tone(amount) {
+        return this.mix(new RGB(128, 128, 128), amount);
     }
 
     toRGB() {

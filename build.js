@@ -6,24 +6,24 @@ const UglifyJS = require('uglify-es');
 const srcFolder = 'src';
 const distFolder = 'dist';
 
-const wrapper = `(function(window) {
+const name = 'frost-color';
+const wrapper = `(function(Frost) {
 
 %%CODE%%
 
-})(window);`;
+})(Frost);`;
 
-loadFiles(srcFolder, 'js')
-    .then(files => jsChain(files, 'color', wrapper));
+loadFiles(srcFolder, '.js').then(jsChain);
 
-function jsChain(jsFiles, name, wrapper) {
-    if ( ! jsFiles.length) {
+function jsChain(files) {
+    if ( ! files.length) {
         return;
     }
 
-    concat(jsFiles)
+    concat(files)
     .then(code => {
         code = wrapper.replace('%%CODE%%', code);
-        const destination = path.join(distFolder, 'frost-' + name + '.js');
+        const destination = path.join(distFolder, name + '.js');
         filepath.create(destination).write(code);
         return code;
     })
@@ -32,7 +32,7 @@ function jsChain(jsFiles, name, wrapper) {
         if (result.error) {
             console.error(result.error);
         } else {
-            const destination = path.join(distFolder, 'frost-' + name + '.min.js');
+            const destination = path.join(distFolder, name + '.min.js');
             filepath.create(destination).write(result.code);
         }
     })
@@ -40,15 +40,15 @@ function jsChain(jsFiles, name, wrapper) {
 }
 
 function loadFiles(folder, ext) {
-    const results = [];
-
     return new Promise (resolve => {
+        const results = [];
+
         filepath.create(folder).recurse(path => {
             if ( ! path.isFile()) {
                 return;
             }
 
-            if (path.extname(path.path) === '.' + ext) {
+            if (path.extname(path.path) === ext) {
                 results.push(path.path);
             }
         });

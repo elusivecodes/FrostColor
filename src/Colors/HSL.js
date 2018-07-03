@@ -22,23 +22,23 @@ class HSL extends ColorBase {
     }
 
     set h(h) {
-        this._h = h % 1;
+        this._h = h % 360;
     }
 
     set s(s) {
-        this._s = clamp(s);
+        this._s = Frost.clampPercent(s);
     }
 
     set l(l) {
-        this._l = clamp(l);
+        this._l = Frost.clampPercent(l);
     }
 
     darken(amount) {
-        return new HSL(this.h, this.s, this.l - (amount / 200), this.a);
+        return new HSL(this.h, this.s, this.l - (amount * 50), this.a);
     }
 
     lighten(amount) {
-        return new HSL(this.h, this.s, this.l + (amount / 200), this.a);
+        return new HSL(this.h, this.s, this.l + (amount * 50), this.a);
     }
 
     setAlpha(a) {
@@ -54,26 +54,30 @@ class HSL extends ColorBase {
             return new RGB(0, 0, 0, this.a);
         }
 
+        const h = this.h / 360;
+        const s = this.s / 100;
+        const l = this.l / 100;
+
         let v2;
-        if (this.l < 0.5) {
-            v2 = this.l * (1 + this.s);
+        if (l < 0.5) {
+            v2 = l * (1 + s);
         } else {
-            v2 = (this.l + this.s) - (this.s * this.l);
+            v2 = (l + s) - (s * l);
         }
 
-        const v1 = 2 * this.l - v2;
+        const v1 = 2 * l - v2;
 
-        const r = HSL.RGBHue(v1, v2, this.h + (1 / 3)) * 255;
-        const g = HSL.RGBHue(v1, v2, this.h) * 255;
-        const b = HSL.RGBHue(v1, v2, this.h - (1 / 3)) * 255;
+        const r = HSL.RGBHue(v1, v2, h + (1 / 3));
+        const g = HSL.RGBHue(v1, v2, h);
+        const b = HSL.RGBHue(v1, v2, h - (1 / 3));
 
-        return new RGB(r, g, b, this.a);
+        return new RGB(r * 255, g * 255, b * 255, this.a);
     }
 
     toString() {
-		const h = Math.floor(this.h * 360);
-		const s = Math.floor(this.s * 100) + '%';
-		const l = Math.floor(this.l * 100) + '%';
+		const h = Math.round(this.h);
+		const s = Math.round(this.s) + '%';
+		const l = Math.round(this.l) + '%';
 
 		if (this.a == 1) {
 			return 'hsl(' + h + ', ' + s + ', ' + l + ')';
