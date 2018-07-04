@@ -1,15 +1,16 @@
-(function(Frost) {
+(function(frost) {
 
 class Color {
     constructor(r, g = 1, b = false, a = 1) {
-        if (b) {
+        if (b !== false) {
             this._color = new RGB(r, g, b, a);
         } else if (r instanceof ColorBase) {
             this._color = r.toRGB();
         } else if (r instanceof Color) {
             this._color = r._color.toRGB();
         } else {
-            this._color = new HSV(0, 0, r || 0, g).toRGB();
+            r = r || 0;
+            this._color = new HSL(0, 0, r, g);
         }
     }
 
@@ -21,9 +22,17 @@ class Color {
     toString() {
         return this._color.toRGB().toString();
     }
+
+    valueOf() {
+        return this.toString();
+    }
+
+    [Symbol.toPrimitive]() {
+        return this.toString();
+    }
 }
 
-Frost.Color = Color;
+frost.Color = Color;
 class ColorImmutable extends Color {
     constructor() {
         super(...arguments);
@@ -34,7 +43,7 @@ class ColorImmutable extends Color {
     }
 }
 
-Frost.ColorImmutable = ColorImmutable;
+frost.ColorImmutable = ColorImmutable;
 class ColorBase {
     constructor(a = 1) {
         this.a = a;
@@ -47,7 +56,7 @@ class ColorBase {
     }
 
     set a(a) {
-        this._a = Frost.clamp(a);
+        this._a = frost.clamp(a);
     }
 
     darken(amount) {
@@ -154,15 +163,15 @@ class CMY extends ColorBase {
     }
 
     set c(c) {
-        this._c = Frost.clampPercent(c);
+        this._c = frost.clampPercent(c);
     }
 
     set m(m) {
-        this._m = Frost.clampPercent(m);
+        this._m = frost.clampPercent(m);
     }
 
     set y(y) {
-        this._y = Frost.clampPercent(y);
+        this._y = frost.clampPercent(y);
     }
 
     setAlpha(a) {
@@ -224,19 +233,19 @@ class CMYK extends ColorBase {
     }
 
     set c(c) {
-        this._c = Frost.clampPercent(c);
+        this._c = frost.clampPercent(c);
     }
 
     set m(m) {
-        this._m = Frost.clampPercent(m);
+        this._m = frost.clampPercent(m);
     }
 
     set y(y) {
-        this._y = Frost.clampPercent(y);
+        this._y = frost.clampPercent(y);
     }
 
     set k(k) {
-        this._k = Frost.clampPercent(k);
+        this._k = frost.clampPercent(k);
     }
 
     setAlpha(a) {
@@ -288,11 +297,11 @@ class HSL extends ColorBase {
     }
 
     set s(s) {
-        this._s = Frost.clampPercent(s);
+        this._s = frost.clampPercent(s);
     }
 
     set l(l) {
-        this._l = Frost.clampPercent(l);
+        this._l = frost.clampPercent(l);
     }
 
     darken(amount) {
@@ -399,11 +408,11 @@ class HSV extends ColorBase {
     }
 
     set s(s) {
-        this._s = Frost.clampPercent(s);
+        this._s = frost.clampPercent(s);
     }
 
     set v(v) {
-        this._v = Frost.clampPercent(v);
+        this._v = frost.clampPercent(v);
     }
 
     setAlpha(a) {
@@ -499,15 +508,15 @@ class RGB extends ColorBase {
     }
 
     set r(r) {
-        this._r = Frost.clamp(r, 0, 255);
+        this._r = frost.clamp(r, 0, 255);
     }
 
     set g(g) {
-        this._g = Frost.clamp(g, 0, 255);
+        this._g = frost.clamp(g, 0, 255);
     }
 
     set b(b) {
-        this._b = Frost.clamp(b, 0, 255);
+        this._b = frost.clamp(b, 0, 255);
     }
 
     luma() {
@@ -518,12 +527,12 @@ class RGB extends ColorBase {
 		return (v1 + v2 + v3) / 255;
     }
 
-    mix(color) {
+    mix(color, amount) {
         color = color.toRGB();
-        const r = Frost.lerp(this.r, color.r, amount);
-        const g = Frost.lerp(this.g, color.g, amount);
-        const b = Frost.lerp(this.b, color.b, amount);
-        const a = Frost.lerp(this.a, color.a, amount);
+        const r = frost.lerp(this.r, color.r, amount);
+        const g = frost.lerp(this.g, color.g, amount);
+        const b = frost.lerp(this.b, color.b, amount);
+        const a = frost.lerp(this.a, color.a, amount);
         return new RGB(r, g, b, a);
     }
 
@@ -541,11 +550,11 @@ class RGB extends ColorBase {
     }
 
     shade(amount) {
-        return this.mix(new RGB(255, 255, 255), amount);
+        return this.mix(new RGB(0, 0, 0), amount);
     }
 
     tint(amount) {
-        return this.mix(new RGB(0, 0, 0), amount);
+        return this.mix(new RGB(255, 255, 255), amount);
     }
 
     toCMY() {
@@ -1022,4 +1031,4 @@ Color.hexRegExShort = /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/i;
 Color.RGBARegEx = /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(0?\.\d+)\)$/i;
 Color.RGBRegEx = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/i;
 
-})(Frost);
+})(frost);

@@ -26,11 +26,11 @@ class HSV extends ColorBase {
     }
 
     set s(s) {
-        this._s = Frost.clampPercent(s);
+        this._s = frost.clampPercent(s);
     }
 
     set v(v) {
-        this._v = Frost.clampPercent(v);
+        this._v = frost.clampPercent(v);
     }
 
     setAlpha(a) {

@@ -22,15 +22,15 @@ class CMY extends ColorBase {
     }
 
     set c(c) {
-        this._c = Frost.clampPercent(c);
+        this._c = frost.clampPercent(c);
     }
 
     set m(m) {
-        this._m = Frost.clampPercent(m);
+        this._m = frost.clampPercent(m);
     }
 
     set y(y) {
-        this._y = Frost.clampPercent(y);
+        this._y = frost.clampPercent(y);
     }
 
     setAlpha(a) {

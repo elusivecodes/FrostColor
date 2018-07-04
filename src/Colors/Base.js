@@ -10,7 +10,7 @@ class ColorBase {
     }
 
     set a(a) {
-        this._a = Frost.clamp(a);
+        this._a = frost.clamp(a);
     }
 
     darken(amount) {

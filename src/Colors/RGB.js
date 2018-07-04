@@ -22,15 +22,15 @@ class RGB extends ColorBase {
     }
 
     set r(r) {
-        this._r = Frost.clamp(r, 0, 255);
+        this._r = frost.clamp(r, 0, 255);
     }
 
     set g(g) {
-        this._g = Frost.clamp(g, 0, 255);
+        this._g = frost.clamp(g, 0, 255);
     }
 
     set b(b) {
-        this._b = Frost.clamp(b, 0, 255);
+        this._b = frost.clamp(b, 0, 255);
     }
 
     luma() {
@@ -41,12 +41,12 @@ class RGB extends ColorBase {
 		return (v1 + v2 + v3) / 255;
     }
 
-    mix(color) {
+    mix(color, amount) {
         color = color.toRGB();
-        const r = Frost.lerp(this.r, color.r, amount);
-        const g = Frost.lerp(this.g, color.g, amount);
-        const b = Frost.lerp(this.b, color.b, amount);
-        const a = Frost.lerp(this.a, color.a, amount);
+        const r = frost.lerp(this.r, color.r, amount);
+        const g = frost.lerp(this.g, color.g, amount);
+        const b = frost.lerp(this.b, color.b, amount);
+        const a = frost.lerp(this.a, color.a, amount);
         return new RGB(r, g, b, a);
     }
 
@@ -64,11 +64,11 @@ class RGB extends ColorBase {
     }
 
     shade(amount) {
-        return this.mix(new RGB(255, 255, 255), amount);
+        return this.mix(new RGB(0, 0, 0), amount);
     }
 
     tint(amount) {
-        return this.mix(new RGB(0, 0, 0), amount);
+        return this.mix(new RGB(255, 255, 255), amount);
     }
 
     toCMY() {

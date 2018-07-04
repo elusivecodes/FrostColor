@@ -26,11 +26,11 @@ class HSL extends ColorBase {
     }
 
     set s(s) {
-        this._s = Frost.clampPercent(s);
+        this._s = frost.clampPercent(s);
     }
 
     set l(l) {
-        this._l = Frost.clampPercent(l);
+        this._l = frost.clampPercent(l);
     }
 
     darken(amount) {

@@ -27,19 +27,19 @@ class CMYK extends ColorBase {
     }
 
     set c(c) {
-        this._c = Frost.clampPercent(c);
+        this._c = frost.clampPercent(c);
     }
 
     set m(m) {
-        this._m = Frost.clampPercent(m);
+        this._m = frost.clampPercent(m);
     }
 
     set y(y) {
-        this._y = Frost.clampPercent(y);
+        this._y = frost.clampPercent(y);
     }
 
     set k(k) {
-        this._k = Frost.clampPercent(k);
+        this._k = frost.clampPercent(k);
     }
 
     setAlpha(a) {
