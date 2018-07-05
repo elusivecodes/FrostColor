@@ -2,9 +2,9 @@ class RGB extends ColorBase {
     constructor(r, g, b, a = 1) {
         super(a);
 
-        this.r = frost.clamp(r, 0, 255);
-        this.g = frost.clamp(g, 0, 255);
-        this.b = frost.clamp(b, 0, 255);
+        this.r = clamp(r, 0, 255);
+        this.g = clamp(g, 0, 255);
+        this.b = clamp(b, 0, 255);
     }
 
     luma() {

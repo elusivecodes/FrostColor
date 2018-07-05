@@ -1,24 +1,5 @@
 Object.assign(Color.prototype, {
 
-    analogous() {
-        return [
-            new Color(this._color.setHue(this._color.getHue() + 30)),
-            new Color(this._color.setHue(this._color.getHue() + 330))
-        ];
-    },
-
-    complementary() {
-        return new Color(this._color.setHue(this._color.getHue() + 180));
-    },
-
-    mix(color, amount) {
-        return new Color(this._color.mix(color._color, amount));
-    },
-
-    multiply(color) {
-        return new Color(this._color.multiply(color));
-    },
-
     palette(shades = 10, tints = 10, tones = 10) {
         return {
             shades: this.shades(shades),
@@ -35,21 +16,6 @@ Object.assign(Color.prototype, {
         return results;
     },
 
-    split() {
-        return [
-            new Color(this._color.setHue(this._color.getHue() + 150)),
-            new Color(this._color.setHue(this._color.getHue() + 210))
-        ];
-    },
-
-    tetradic() {
-        return [
-            new Color(this._color.setHue(this._color.getHue() + 60)),
-            new Color(this._color.setHue(this._color.getHue() + 180)),
-            new Color(this._color.setHue(this._color.getHue() + 240))
-        ];
-    },
-
     tints(tints = 10) {
         const results = [];
         for (let i = 1; i <= tints; i++) {
@@ -64,13 +30,6 @@ Object.assign(Color.prototype, {
             results.push(this._color.tone(i / (tones + 1)));
         }
         return results;
-    },
-
-    triadic() {
-        return [
-            new Color(this._color.setHue(this._color.getHue() + 120)),
-            new Color(this._color.setHue(this._color.getHue() + 240))
-        ];
     }
 
 });

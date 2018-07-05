@@ -8,4 +8,4 @@ class ColorImmutable extends Color {
     }
 }
 
-frost.ColorImmutable = ColorImmutable;
+window.ColorImmutable = ColorImmutable;

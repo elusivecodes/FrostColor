@@ -1,13 +1,12 @@
 class Color {
-    constructor(r, g = 1, b = false, a = 1) {
+    constructor(r = 0, g = 1, b = false, a = 1) {
         if (b !== false) {
             this._color = new RGB(r, g, b, a);
         } else if (r instanceof ColorBase) {
-            this._color = r.toRGB();
+            this._color = r;
         } else if (r instanceof Color) {
-            this._color = r._color.toRGB();
+            this._color = r._color;
         } else {
-            r = r || 0;
             this._color = new HSL(0, 0, r, g);
         }
     }
@@ -22,12 +21,12 @@ class Color {
     }
 
     valueOf() {
-        return this.toString();
+        return this._color.toString();
     }
 
     [Symbol.toPrimitive]() {
-        return this.toString();
+        return this._color.toString();
     }
 }
 
-frost.Color = Color;
+window.Color = Color;

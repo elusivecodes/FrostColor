@@ -1,6 +1,6 @@
 class ColorBase {
     constructor(a = 1) {
-        this.a = frost.clamp(a);
+        this.a = clamp(a, 0, 1);
     }
 
     darken(amount) {

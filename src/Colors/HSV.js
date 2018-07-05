@@ -3,8 +3,8 @@ class HSV extends ColorBase {
         super(a);
 
         this.h = h % 360;
-        this.s = frost.clampPercent(s);
-        this.v = frost.clampPercent(v);
+        this.s = clamp(s);
+        this.v = clamp(v);
     }
 
     getBrightness() {

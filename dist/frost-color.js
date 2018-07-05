@@ -1,15 +1,14 @@
-(function(frost) {
+(function(window) {
 
 class Color {
-    constructor(r, g = 1, b = false, a = 1) {
+    constructor(r = 0, g = 1, b = false, a = 1) {
         if (b !== false) {
             this._color = new RGB(r, g, b, a);
         } else if (r instanceof ColorBase) {
-            this._color = r.toRGB();
+            this._color = r;
         } else if (r instanceof Color) {
-            this._color = r._color.toRGB();
+            this._color = r._color;
         } else {
-            r = r || 0;
             this._color = new HSL(0, 0, r, g);
         }
     }
@@ -24,15 +23,15 @@ class Color {
     }
 
     valueOf() {
-        return this.toString();
+        return this._color.toString();
     }
 
     [Symbol.toPrimitive]() {
-        return this.toString();
+        return this._color.toString();
     }
 }
 
-frost.Color = Color;
+window.Color = Color;
 class ColorImmutable extends Color {
     constructor() {
         super(...arguments);
@@ -43,10 +42,10 @@ class ColorImmutable extends Color {
     }
 }
 
-frost.ColorImmutable = ColorImmutable;
+window.ColorImmutable = ColorImmutable;
 class ColorBase {
     constructor(a = 1) {
-        this.a = frost.clamp(a);
+        this.a = clamp(a, 0, 1);
     }
 
     darken(amount) {
@@ -122,12 +121,12 @@ class ColorBase {
     }
 }
 class CMY extends ColorBase {
-    constructor(c, m, y, alpha = 1) {
+    constructor(c, m, y, a = 1) {
         super(a);
 
-        this.c = frost.clampPercent(c);
-        this.m = frost.clampPercent(m);
-        this.y = frost.clampPercent(y);
+        this.c = clamp(c);
+        this.m = clamp(m);
+        this.y = clamp(y);
     }
 
     setAlpha(a) {
@@ -152,10 +151,10 @@ class CMYK extends ColorBase {
     constructor(c, m, y, k, a = 1) {
         super(a);
 
-        this.c = frost.clampPercent(c);
-        this.m = frost.clampPercent(m);
-        this.y = frost.clampPercent(y);
-        this.k = frost.clampPercent(k);
+        this.c = clamp(c);
+        this.m = clamp(m);
+        this.y = clamp(y);
+        this.k = clamp(k);
     }
 
     setAlpha(a) {
@@ -180,8 +179,8 @@ class HSL extends ColorBase {
         super(a);
 
         this.h = h % 360;
-        this.s = frost.clampPercent(s);
-        this.l = frost.clampPercent(l);
+        this.s = clamp(s);
+        this.l = clamp(l);
     }
 
     darken(amount) {
@@ -229,8 +228,8 @@ class HSV extends ColorBase {
         super(a);
 
         this.h = h % 360;
-        this.s = frost.clampPercent(s);
-        this.v = frost.clampPercent(v);
+        this.s = clamp(s);
+        this.v = clamp(v);
     }
 
     getBrightness() {
@@ -274,9 +273,9 @@ class RGB extends ColorBase {
     constructor(r, g, b, a = 1) {
         super(a);
 
-        this.r = frost.clamp(r, 0, 255);
-        this.g = frost.clamp(g, 0, 255);
-        this.b = frost.clamp(b, 0, 255);
+        this.r = clamp(r, 0, 255);
+        this.g = clamp(g, 0, 255);
+        this.b = clamp(b, 0, 255);
     }
 
     luma() {
@@ -337,6 +336,13 @@ class RGB extends ColorBase {
 
 		return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
     }
+}
+function lerp(a, b, amount) {
+    return a * (1 - amount) + b * amount;
+}
+
+function clamp(val, min = 0, max = 100) {
+    return val > min ? val < max ? val : max : min;
 }
 Object.assign(Color, {
 
@@ -622,111 +628,31 @@ Object.assign(Color, {
 Object.assign(Color, {
 
     mix(color1, color2, amount) {
-        color1 = color1.toRGB();
-        color2 = color2.toRGB();
+        const c1 = color1._color.toRGB();
+        const c2 = color2._color.toRGB();
 
-        const r = frost.lerp(color1.red, color2.red, amount);
-        const g = frost.lerp(color1.green, color2.green, amount);
-        const b = frost.lerp(color1.blue, color2.blue, amount);
-        const a = frost.lerp(color1.alpha, color2.alpha, amount);
+        const r = lerp(c1.r, c2.r, amount);
+        const g = lerp(c1.g, c2.g, amount);
+        const b = lerp(c1.b, c2.b, amount);
+        const a = lerp(c1.a, c2.a, amount);
 
         return new RGB(r, g, b, a);
     },
 
     multiply(color1, color2) {
-        color1 = color1.toRGB();
-        color2 = color2.toRGB();
+        const c1 = color1._color.toRGB();
+        const c2 = color2._color.toRGB();
 
-        const r = (color1.red / 255) * (color2.red / 255) * 255;
-        const g = (color1.green / 255) * (color2.green / 255) * 255;
-        const b = (color1.blue / 255) * (color2.blue / 255) * 255;
-        const a = color1.alpha * color2.alpha;
+        const r = (c1.r / 255) * (c2.r / 255) * 255;
+        const g = (c1.g / 255) * (c2.g / 255) * 255;
+        const b = (c1.b / 255) * (c2.b / 255) * 255;
+        const a = c1.a * c2.a;
 
         return new RGB(r, g, b, a);
     }
 
 });
 Object.assign(Color.prototype, {
-
-    analogous() {
-        return [
-            new Color(this._color.setHue(this._color.getHue() + 30)),
-            new Color(this._color.setHue(this._color.getHue() + 330))
-        ];
-    },
-
-    complementary() {
-        return new Color(this._color.setHue(this._color.getHue() + 180));
-    },
-
-    mix(color, amount) {
-        return new Color(this._color.mix(color._color, amount));
-    },
-
-    multiply(color) {
-        return new Color(this._color.multiply(color));
-    },
-
-    palette(shades = 10, tints = 10, tones = 10) {
-        return {
-            shades: this.shades(shades),
-            tints: this.tints(tints),
-            tones: this.tones(tones)
-        };
-    },
-
-    shades(shades = 10) {
-        const results = [];
-        for (let i = 1; i <= shades; i++) {
-            results.push(this._color.shade(i / (shades + 1)));
-        }
-        return results;
-    },
-
-    split() {
-        return [
-            new Color(this._color.setHue(this._color.getHue() + 150)),
-            new Color(this._color.setHue(this._color.getHue() + 210))
-        ];
-    },
-
-    tetradic() {
-        return [
-            new Color(this._color.setHue(this._color.getHue() + 60)),
-            new Color(this._color.setHue(this._color.getHue() + 180)),
-            new Color(this._color.setHue(this._color.getHue() + 240))
-        ];
-    },
-
-    tints(tints = 10) {
-        const results = [];
-        for (let i = 1; i <= tints; i++) {
-            results.push(this._color.tint(i / (tints + 1)));
-        }
-        return results;
-    },
-
-    tones(tones = 10) {
-        const results = [];
-        for (let i = 1; i <= tones; i++) {
-            results.push(this._color.tone(i / (tones + 1)));
-        }
-        return results;
-    },
-
-    triadic() {
-        return [
-            new Color(this._color.setHue(this._color.getHue() + 120)),
-            new Color(this._color.setHue(this._color.getHue() + 240))
-        ];
-    }
-
-});
-Object.assign(Color.prototype, {
-
-    darken(amount) {
-        return this.pushColor(this._color.darken(amount));
-    },
 
     getAlpha() {
         return this._color.getAlpha();
@@ -742,10 +668,6 @@ Object.assign(Color.prototype, {
 
     getSaturation() {
         return this._color.getSaturation();
-    },
-
-    lighten(amount) {
-        return this.pushColor(this._color.lighten(amount));
     },
 
     luma() {
@@ -768,6 +690,17 @@ Object.assign(Color.prototype, {
         return this.pushColor(this._color.setSaturation(saturation));
     },
 
+});
+Object.assign(Color.prototype, {
+
+    darken(amount) {
+        return this.pushColor(this._color.darken(amount));
+    },
+
+    lighten(amount) {
+        return this.pushColor(this._color.lighten(amount));
+    },
+
     shade(amount) {
         return this.pushColor(this._color.shade(amount));
     },
@@ -778,6 +711,77 @@ Object.assign(Color.prototype, {
 
     tone(amount) {
         return this.pushColor(this._color.tone(amount));
+    }
+
+});
+Object.assign(Color.prototype, {
+
+    palette(shades = 10, tints = 10, tones = 10) {
+        return {
+            shades: this.shades(shades),
+            tints: this.tints(tints),
+            tones: this.tones(tones)
+        };
+    },
+
+    shades(shades = 10) {
+        const results = [];
+        for (let i = 1; i <= shades; i++) {
+            results.push(this._color.shade(i / (shades + 1)));
+        }
+        return results;
+    },
+
+    tints(tints = 10) {
+        const results = [];
+        for (let i = 1; i <= tints; i++) {
+            results.push(this._color.tint(i / (tints + 1)));
+        }
+        return results;
+    },
+
+    tones(tones = 10) {
+        const results = [];
+        for (let i = 1; i <= tones; i++) {
+            results.push(this._color.tone(i / (tones + 1)));
+        }
+        return results;
+    }
+
+});
+Object.assign(Color.prototype, {
+
+    analogous() {
+        return [
+            new Color(this._color.setHue(this._color.getHue() + 30)),
+            new Color(this._color.setHue(this._color.getHue() + 330))
+        ];
+    },
+
+    complementary() {
+        return new Color(this._color.setHue(this._color.getHue() + 180));
+    },
+
+    split() {
+        return [
+            new Color(this._color.setHue(this._color.getHue() + 150)),
+            new Color(this._color.setHue(this._color.getHue() + 210))
+        ];
+    },
+
+    tetradic() {
+        return [
+            new Color(this._color.setHue(this._color.getHue() + 60)),
+            new Color(this._color.setHue(this._color.getHue() + 180)),
+            new Color(this._color.setHue(this._color.getHue() + 240))
+        ];
+    },
+
+    triadic() {
+        return [
+            new Color(this._color.setHue(this._color.getHue() + 120)),
+            new Color(this._color.setHue(this._color.getHue() + 240))
+        ];
     }
 
 });
@@ -941,4 +945,4 @@ Color.RGBRegEx = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/i;
 Color.HSLARegEx = /^hsla\((\d{1,3}),\s*(\d{1,3})\%,\s*(\d{1,3})\%,\s*(0?\.\d+)\)$/i;
 Color.HSLRegEx = /^hsl\((\d{1,3}),\s*(\d{1,3})\%,\s*(\d{1,3})\%\)$/i;
 
-})(frost);
+})(window);

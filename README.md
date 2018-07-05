@@ -2,7 +2,7 @@
 
 **FrostColor** is a free, open-source color manipulation library for *JavaScript*.
 
-It is built as an extension for the **FrostCore** library, and features full support for RGB, HSL, HSV, CMY and CMYK color spaces.
+It features full support for RGB, HSL, HSV, CMY and CMYK color spaces.
 
 
 ## Table of contents
@@ -10,6 +10,7 @@ It is built as an extension for the **FrostCore** library, and features full sup
 - [Color Creation](#color-creation)
 - [Color Attributes](#color-attributes)
 - [Color Manipulation](#color-manipulation)
+- [Color Schemes](#color-schemes)
 - [Color Palettes](#color-palettes)
 
 
@@ -22,7 +23,7 @@ Colors can created using the following syntax, where `red`, `green` and `blue` a
 If the `alpha` argument is omitted, a default value of 1 will be used (opaque).
 
 ```javascript
-const color = new frost.Color(red, green, blue, alpha);
+const color = new Color(red, green, blue, alpha);
 ```
 
 #### From Brightness
@@ -32,7 +33,7 @@ If you are creating a greyscale color, you can alternatively enter a single `bri
 Again, the `alpha` argument can be omitted for a default value of 1.
 
 ```javascript
-const color = new frost.Color(brightness, alpha);
+const color = new Color(brightness, alpha);
 ```
 
 #### Immutable Colors
@@ -42,7 +43,7 @@ By default, Color objects are mutable, but if you wish to create an immutable re
 Immutable Color objects return a new ColorImmutable whenever they are modified.
 
 ```javascript
-const color = new frost.ColorImmutable(red, green, blue, alpha);
+const color = new ColorImmutable(red, green, blue, alpha);
 ```
 
 #### To String
@@ -60,10 +61,10 @@ const colorString = color.toString();
 
 If you have a string representation of a color, you can create a Color object from it using the static `fromString()` method.
 
-This method supports hex, rgb, rgba, hsl, hsla and HTML color names;
+This method supports hex, rgb, rgba, hsl, hsla and standard HTML color names;
 
 ```javascript
-const color = frost.Color.fromString(colorString);
+const color = Color.fromString(colorString);
 ```
 
 #### From CMY
@@ -71,7 +72,7 @@ const color = frost.Color.fromString(colorString);
 Create a color from a CMY range, where `cyan`, `magenta` and `yellow` are values between 0 and 100.
 
 ```javascript
-const color = frost.Color.fromCMY(cyan, magenta, yellow, alpha);
+const color = Color.fromCMY(cyan, magenta, yellow, alpha);
 ```
 
 #### From CMYK
@@ -79,7 +80,7 @@ const color = frost.Color.fromCMY(cyan, magenta, yellow, alpha);
 Create a color from a CMYK range, where `cyan`, `magenta`, `yellow` and `key` are values between 0 and 100.
 
 ```javascript
-const color = frost.Color.fromCMYK(cyan, magenta, yellow, key, alpha);
+const color = Color.fromCMYK(cyan, magenta, yellow, key, alpha);
 ```
 
 #### From HSL
@@ -87,7 +88,7 @@ const color = frost.Color.fromCMYK(cyan, magenta, yellow, key, alpha);
 Create a color from a HSL range, where `hue` is a value between 0 and 360, and `saturation` and `lightness` are values between 0 and 100.
 
 ```javascript
-const color = frost.Color.fromHSL(hue, saturation, lightness, alpha);
+const color = Color.fromHSL(hue, saturation, lightness, alpha);
 ```
 
 #### From HSV
@@ -95,7 +96,7 @@ const color = frost.Color.fromHSL(hue, saturation, lightness, alpha);
 Create a color from a HSV range, where `hue` is a value between 0 and 360, and `saturation` and `value` are values between 0 and 100.
 
 ```javascript
-const color = frost.Color.fromHSV(hue, saturation, value, alpha);
+const color = Color.fromHSV(hue, saturation, value, alpha);
 ```
 
 
@@ -103,9 +104,10 @@ const color = frost.Color.fromHSV(hue, saturation, value, alpha);
 
 Retrieve information about a Color object you have created using the following methods.
 
-The `brightness` and `saturation` values returned will be between 0 and 100, while the `hue` value will be between 0 and 360.
+The `brightness` and `saturation` values returned will be between 0 and 100, the `hue` value will be between 0 and 360, and the `alpha` value will be between 0 and 1.
 
 ```javascript
+const alpha = color.getAlpha();
 const brightness = color.getBrightness();
 const hue = color.getHue();
 const saturation = color.getSaturation();
@@ -114,6 +116,7 @@ const saturation = color.getSaturation();
 You can also set these values on any Color object you have created.
 
 ```javascript
+color.setAlpha(alpha);
 color.setBrightness(brightness);
 color.setHue(hue);
 color.setSaturation(saturation);
@@ -178,9 +181,9 @@ color.tone(amount);
 Mix two colors together, by a specified `amount` (between 0 and 1).
 
 ```javascript
-const red = frost.Color.fromString('red');
-const yellow = frost.Color.fromString('yellow');
-const orange = frost.Color.mix(red, yellow, 0.5);
+const red = Color.fromString('red');
+const yellow = Color.fromString('yellow');
+const orange = Color.mix(red, yellow, 0.5);
 ```
 
 #### Multiply
@@ -188,17 +191,17 @@ const orange = frost.Color.mix(red, yellow, 0.5);
 Multiply a color with another color.
 
 ```javascript
-const blue = frost.Color.fromString('blue');
-const yellow = frost.Color.fromString('yellow');
-const purple = frost.Color.multiply(blue, yellow);
+const blue = Color.fromString('blue');
+const yellow = Color.fromString('yellow');
+const purple = Color.multiply(blue, yellow);
 ```
 
 
-## Color Palettes
+## Color Schemes
 
 #### Complementary
 
-Creates the complementary of a color.
+Creates a complementary color of a color.
 
 ```javascript
 const complementary = color.complementary();
@@ -206,35 +209,38 @@ const complementary = color.complementary();
 
 #### Split
 
-Creates an array containing the split complementary of a color.
+Creates an array containing the 2 split complementary colors of a color.
 
 ```javascript
-const split = color.split();
+const [secondary, accent] = color.split();
 ```
 
 #### Analogous
 
-Creates an array with 2 analogous colors, based on a color.
+Creates an array with 2 analogous colors of a color.
 
 ```javascript
-const analogous = color.analogous();
+const [secondary, accent] = color.analogous();
 ```
 
 #### Triadic
 
-Creates an array with 3 triadic colors, based on a color.
+Creates an array with 2 triadic colors of a color.
 
 ```javascript
-const triadic = color.triadic();
+const [secondary, accent] = color.triadic();
 ```
 
 #### Tetradic
 
-Creates an array with 4 tetradic colors, based on a color.
+Creates an array with 3 tetradic colors of a color.
 
 ```javascript
-const tetradic = color.tetradic();
+const [secondary, alternate, accent] = color.tetradic();
 ```
+
+
+## Color Palettes
 
 #### Shades
 

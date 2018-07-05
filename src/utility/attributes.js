@@ -1,9 +1,5 @@
 Object.assign(Color.prototype, {
 
-    darken(amount) {
-        return this.pushColor(this._color.darken(amount));
-    },
-
     getAlpha() {
         return this._color.getAlpha();
     },
@@ -18,10 +14,6 @@ Object.assign(Color.prototype, {
 
     getSaturation() {
         return this._color.getSaturation();
-    },
-
-    lighten(amount) {
-        return this.pushColor(this._color.lighten(amount));
     },
 
     luma() {
@@ -43,17 +35,5 @@ Object.assign(Color.prototype, {
     setSaturation(saturation) {
         return this.pushColor(this._color.setSaturation(saturation));
     },
-
-    shade(amount) {
-        return this.pushColor(this._color.shade(amount));
-    },
-
-    tint(amount) {
-        return this.pushColor(this._color.tint(amount));
-    },
-
-    tone(amount) {
-        return this.pushColor(this._color.tone(amount));
-    }
 
 });

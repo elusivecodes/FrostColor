@@ -1,10 +1,10 @@
 class CMY extends ColorBase {
-    constructor(c, m, y, alpha = 1) {
+    constructor(c, m, y, a = 1) {
         super(a);
 
-        this.c = frost.clampPercent(c);
-        this.m = frost.clampPercent(m);
-        this.y = frost.clampPercent(y);
+        this.c = clamp(c);
+        this.m = clamp(m);
+        this.y = clamp(y);
     }
 
     setAlpha(a) {

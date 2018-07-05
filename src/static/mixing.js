@@ -1,25 +1,25 @@
 Object.assign(Color, {
 
     mix(color1, color2, amount) {
-        color1 = color1.toRGB();
-        color2 = color2.toRGB();
+        const c1 = color1._color.toRGB();
+        const c2 = color2._color.toRGB();
 
-        const r = frost.lerp(color1.red, color2.red, amount);
-        const g = frost.lerp(color1.green, color2.green, amount);
-        const b = frost.lerp(color1.blue, color2.blue, amount);
-        const a = frost.lerp(color1.alpha, color2.alpha, amount);
+        const r = lerp(c1.r, c2.r, amount);
+        const g = lerp(c1.g, c2.g, amount);
+        const b = lerp(c1.b, c2.b, amount);
+        const a = lerp(c1.a, c2.a, amount);
 
         return new RGB(r, g, b, a);
     },
 
     multiply(color1, color2) {
-        color1 = color1.toRGB();
-        color2 = color2.toRGB();
+        const c1 = color1._color.toRGB();
+        const c2 = color2._color.toRGB();
 
-        const r = (color1.red / 255) * (color2.red / 255) * 255;
-        const g = (color1.green / 255) * (color2.green / 255) * 255;
-        const b = (color1.blue / 255) * (color2.blue / 255) * 255;
-        const a = color1.alpha * color2.alpha;
+        const r = (c1.r / 255) * (c2.r / 255) * 255;
+        const g = (c1.g / 255) * (c2.g / 255) * 255;
+        const b = (c1.b / 255) * (c2.b / 255) * 255;
+        const a = c1.a * c2.a;
 
         return new RGB(r, g, b, a);
     }

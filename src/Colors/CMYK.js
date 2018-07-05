@@ -2,10 +2,10 @@ class CMYK extends ColorBase {
     constructor(c, m, y, k, a = 1) {
         super(a);
 
-        this.c = frost.clampPercent(c);
-        this.m = frost.clampPercent(m);
-        this.y = frost.clampPercent(y);
-        this.k = frost.clampPercent(k);
+        this.c = clamp(c);
+        this.m = clamp(m);
+        this.y = clamp(y);
+        this.k = clamp(k);
     }
 
     setAlpha(a) {

@@ -3,8 +3,8 @@ class HSL extends ColorBase {
         super(a);
 
         this.h = h % 360;
-        this.s = frost.clampPercent(s);
-        this.l = frost.clampPercent(l);
+        this.s = clamp(s);
+        this.l = clamp(l);
     }
 
     darken(amount) {

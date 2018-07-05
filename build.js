@@ -7,11 +7,11 @@ const srcFolder = 'src';
 const distFolder = 'dist';
 
 const name = 'frost-color';
-const wrapper = `(function(frost) {
+const wrapper = `(function(window) {
 
 %%CODE%%
 
-})(frost);`;
+})(window);`;
 
 loadFiles(srcFolder, '.js').then(jsChain);
 
