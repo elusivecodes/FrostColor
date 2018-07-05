@@ -2,44 +2,10 @@ class CMYK extends ColorBase {
     constructor(c, m, y, k, a = 1) {
         super(a);
 
-        this.c = c;
-        this.m = m;
-        this.y = y;
-        this.k = k;
-
-        return this;
-    }
-
-    get c() {
-        return this._c;
-    }
-
-    get m() {
-        return this._m;
-    }
-
-    get y() {
-        return this._y;
-    }
-
-    get k() {
-        return this._k;
-    }
-
-    set c(c) {
-        this._c = frost.clampPercent(c);
-    }
-
-    set m(m) {
-        this._m = frost.clampPercent(m);
-    }
-
-    set y(y) {
-        this._y = frost.clampPercent(y);
-    }
-
-    set k(k) {
-        this._k = frost.clampPercent(k);
+        this.c = frost.clampPercent(c);
+        this.m = frost.clampPercent(m);
+        this.y = frost.clampPercent(y);
+        this.k = frost.clampPercent(k);
     }
 
     setAlpha(a) {
@@ -47,16 +13,12 @@ class CMYK extends ColorBase {
     }
 
     toCMY() {
-        const k = this.k / 100;
-        const c = (this.c / 100) * (1 - k) + k;
-        const m = (this.m / 100) * (1 - k) + k;
-        const y = (this.y / 100) * (1 - k) + k;
-
-        return new CMY(c * 100, m * 100, y * 100, this.a);
+        const [c, m, y] = Color.CMYK2CMY(this.c, this.m, this.y, this.k);
+        return new CMY(c, m, y, this.a);
     }
 
     toCMYK() {
-        return new CMYK(this.c, this.m, this.y, this.k, this.a);
+        return this;
     }
 
     toRGB() {

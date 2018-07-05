@@ -1,8 +1,9 @@
 # FrostColor
 
-**FrostColor** is a free, open-source Color manipulation library for *JavaScript*.
+**FrostColor** is a free, open-source color manipulation library for *JavaScript*.
 
 It is built as an extension for the **FrostCore** library.
+
 
 ## Table of contents
 - [Basic usage](#basic-usage)
@@ -27,15 +28,26 @@ const color = new frost.Color(red, green, blue, alpha);
 
 If you are creating a greyscale color, you can alternatively enter a single `brightness` value between 0 and 100.
 
-Again, the alpha argument can be omitted for a default value of 1.
+Again, the `alpha` argument can be omitted for a default value of 1.
 
 ```javascript
 const color = new frost.Color(brightness, alpha);
 ```
 
+#### Color Immutables
+
+By default, Color objects are mutable, but if you wish to create an immutable reference you can use the following syntax.
+
+Immutable Color objects return a new ColorImmutable whenever they are modified.
+
+```javascript
+const color = new frost.ColorImmutable(red, green, blue, alpha);
+const color = new frost.ColorImmutable(brightness, alpha);
+```
+
 #### Color Output
 
-After a color has been created, you can get the string representation using the `toString()` method.
+After a Color object has been created, you can get the string representation using the `toString()` method.
 
 ```javascript
 const colorString = color.toString();
@@ -48,10 +60,16 @@ const colorString = color.toString();
 
 If you have a string representation of a color, you can create a Color object from it using the static `fromString()` method.
 
-This method supports (`#fff`), (`#ffffff`), (`rgb(255, 255, 255)`), (`rgba(255, 255, 255, 1)`) or HTML color names (`white`);
+This method supports hex, rgb, rgba, hsl, hsla and HTML color names;
 
 ```javascript
-const color = frost.Color.fromString(colorString);
+frost.Color.fromString('#fff').toString(); // white
+frost.Color.fromString('#ffffff').toString(); // white
+frost.Color.fromString('rgb(255, 255, 255)').toString(); // white
+frost.Color.fromString('rgba(255, 255, 255, 1)').toString(); // white
+frost.Color.fromString('hsl(0, 0%, 100%)').toString(); // white
+frost.Color.fromString('hsla(0, 0%, 100%, 1)').toString(); // white
+frost.Color.fromString('white').toString(); // white
 ```
 
 #### From CMY
@@ -87,47 +105,47 @@ const color = frost.Color.fromHSV(hue, saturation, value, alpha);
 ```
 
 
-## Color manipulation
+## Color Manipulation
 
-Darken a color by a specified `amount` (between 0 and 1).
+Darken a color, where the `amount` specified is a value between 0 and 1.
 
 ```javascript
 color.darken(amount);
 ```
 
-Lighten a color by a specified `amount` (between 0 and 1).
+Lighten a color, where the `amount` specified is a value between 0 and 1.
 
 ```javascript
 color.lighten(amount);
 ```
 
-Shade a color (mix with black) by a specified `amount` (between 0 and 1).
+Shade a color (mix with black), where the `amount` specified in a value between 0 and 1.
 
 ```javascript
 color.shade(amount);
 ```
 
-Tint a color (mix with white) by a specified `amount` (between 0 and 1).
+Tint a color (mix with white), where the `amount` specified in a value between 0 and 1.
 
 ```javascript
 color.tint(amount);
 ```
 
-Tone a color (mix with grey) by a specified `amount` (between 0 and 1).
+Tone a color (mix with grey), where the `amount` specified in a value between 0 and 1.
 
 ```javascript
 color.tone(amount);
 ```
 
 
-## Color mixing
+## Color Mixing
 
 Mix two colors together, by a specified `amount` (between 0 and 1).
 
 ```javascript
 const red = frost.Color.fromString('red');
 const yellow = frost.Color.fromString('yellow');
-const orange = red.mix(yellow, 0.5);
+const orange = frost.Color.mix(red, yellow, 0.5);
 ```
 
 Multiply a color with another color.
@@ -135,11 +153,11 @@ Multiply a color with another color.
 ```javascript
 const blue = frost.Color.fromString('blue');
 const yellow = frost.Color.fromString('yellow');
-const purple = blue.multiply(yellow);
+const purple = frost.Color.multiply(blue, yellow);
 ```
 
 
-## Color palettes
+## Color Palettes
 
 Creates the complementary of a color.
 

@@ -1,16 +1,6 @@
 class ColorBase {
     constructor(a = 1) {
-        this.a = a;
-
-        return this;
-    }
-
-    get a() {
-        return this._a;
-    }
-
-    set a(a) {
-        this._a = frost.clamp(a);
+        this.a = frost.clamp(a);
     }
 
     darken(amount) {
@@ -22,15 +12,15 @@ class ColorBase {
     }
 
     getBrightness() {
-        return this.toHSV().v;
+        return this.toHSV().getBrightness();
     }
 
     getHue() {
-        return this.toHSV().h;
+        return this.toHSV().getHue();
     }
 
     getSaturation() {
-        return this.toHSV().s;
+        return this.toHSV().getSaturation();
     }
 
     lighten(amount) {
@@ -42,31 +32,31 @@ class ColorBase {
     }
 
     mix(color, amount) {
-        return this.toRGB().mix(color, amount);
+        return Color.mix(this, color, amount);
     }
 
     multiply(color) {
-        return this.toRGB().multiply(color);
+        return Color.multiply(this, color);
     }
 
-    setBrightness(brightness) {
-        return this.toHSV().setBrightness(brightness);
+    setBrightness(v) {
+        return this.toHSV().setBrightness(v);
     }
 
-    setHue(hue) {
-        return this.toHSV().setHue(hue);
+    setHue(h) {
+        return this.toHSV().setHue(h);
     }
 
-    setSaturation(saturation) {
-        return this.toHSV().setSaturation(saturation);
+    setSaturation(s) {
+        return this.toHSV().setSaturation(s);
     }
 
     shade(amount) {
-        return this.toRGB().shade(amount);
+        return Color.mix(this, new RGB(0, 0, 0), amount);
     }
 
     tint(amount) {
-        return this.toRGB().tint(amount);
+        return Color.mix(this, new RGB(255, 255, 255), amount);
     }
 
     toCMY() {
@@ -86,7 +76,7 @@ class ColorBase {
     }
 
     tone(amount) {
-        return this.toRGB().tone(amount);
+        return Color.mix(this, new RGB(127, 127, 127), amount);
     }
 
     toString() {

@@ -20,7 +20,7 @@ class Color {
     }
 
     toString() {
-        return this._color.toRGB().toString();
+        return this._color.toString();
     }
 
     valueOf() {
@@ -46,17 +46,7 @@ class ColorImmutable extends Color {
 frost.ColorImmutable = ColorImmutable;
 class ColorBase {
     constructor(a = 1) {
-        this.a = a;
-
-        return this;
-    }
-
-    get a() {
-        return this._a;
-    }
-
-    set a(a) {
-        this._a = frost.clamp(a);
+        this.a = frost.clamp(a);
     }
 
     darken(amount) {
@@ -68,15 +58,15 @@ class ColorBase {
     }
 
     getBrightness() {
-        return this.toHSV().v;
+        return this.toHSV().getBrightness();
     }
 
     getHue() {
-        return this.toHSV().h;
+        return this.toHSV().getHue();
     }
 
     getSaturation() {
-        return this.toHSV().s;
+        return this.toHSV().getSaturation();
     }
 
     lighten(amount) {
@@ -88,31 +78,31 @@ class ColorBase {
     }
 
     mix(color, amount) {
-        return this.toRGB().mix(color, amount);
+        return Color.mix(this, color, amount);
     }
 
     multiply(color) {
-        return this.toRGB().multiply(color);
+        return Color.multiply(this, color);
     }
 
-    setBrightness(brightness) {
-        return this.toHSV().setBrightness(brightness);
+    setBrightness(v) {
+        return this.toHSV().setBrightness(v);
     }
 
-    setHue(hue) {
-        return this.toHSV().setHue(hue);
+    setHue(h) {
+        return this.toHSV().setHue(h);
     }
 
-    setSaturation(saturation) {
-        return this.toHSV().setSaturation(saturation);
+    setSaturation(s) {
+        return this.toHSV().setSaturation(s);
     }
 
     shade(amount) {
-        return this.toRGB().shade(amount);
+        return Color.mix(this, new RGB(0, 0, 0), amount);
     }
 
     tint(amount) {
-        return this.toRGB().tint(amount);
+        return Color.mix(this, new RGB(255, 255, 255), amount);
     }
 
     toCMY() {
@@ -132,7 +122,7 @@ class ColorBase {
     }
 
     tone(amount) {
-        return this.toRGB().tone(amount);
+        return Color.mix(this, new RGB(127, 127, 127), amount);
     }
 
     toString() {
@@ -140,38 +130,12 @@ class ColorBase {
     }
 }
 class CMY extends ColorBase {
-    constructor(c, m, y, a = 1) {
+    constructor(c, m, y, alpha = 1) {
         super(a);
 
-        this.c = c;
-        this.m = m;
-        this.y = y;
-
-        return this;
-    }
-
-    get c() {
-        return this._c;
-    }
-
-    get m() {
-        return this._m;
-    }
-
-    get y() {
-        return this._y;
-    }
-
-    set c(c) {
-        this._c = frost.clampPercent(c);
-    }
-
-    set m(m) {
-        this._m = frost.clampPercent(m);
-    }
-
-    set y(y) {
-        this._y = frost.clampPercent(y);
+        this.c = frost.clampPercent(c);
+        this.m = frost.clampPercent(m);
+        this.y = frost.clampPercent(y);
     }
 
     setAlpha(a) {
@@ -179,73 +143,27 @@ class CMY extends ColorBase {
     }
 
     toCMY() {
-        return new CMY(this.c, this.m, this,y, this.a);
+        return this;
     }
 
     toCMYK() {
-        const k = Math.min(this.c, this.m, this.y) / 100;
-
-        if (k == 1) {
-            return new CMYK(0, 0, 0, k, this.a);
-        }
-
-        const c = ((this.c / 100) - k) / (1 - k);
-        const m = ((this.m / 100) - k) / (1 - k);
-        const y = ((this.y / 100) - k) / (1 - k);
-
-        return new CMYK(c * 100, m * 100, y * 100, k * 100, this.a);
+        const [c, m, y, k] = Color.CMY2CMYK(this.c, this.m, this.y);
+        return new CMYK(c, m, y, k, this.a);
     }
 
     toRGB() {
-        const r = (1 - (this.c / 100));
-        const g = (1 - (this.m / 100));
-        const b = (1 - (this.y / 100));
-
-        return new RGB(r * 255, g * 255, b * 255, this.a);
+        const [r, g, b] = Color.CMY2RGB(this.c, this.m, this.y);
+        return new RGB(r, g, b, this.a);
     }
 }
 class CMYK extends ColorBase {
     constructor(c, m, y, k, a = 1) {
         super(a);
 
-        this.c = c;
-        this.m = m;
-        this.y = y;
-        this.k = k;
-
-        return this;
-    }
-
-    get c() {
-        return this._c;
-    }
-
-    get m() {
-        return this._m;
-    }
-
-    get y() {
-        return this._y;
-    }
-
-    get k() {
-        return this._k;
-    }
-
-    set c(c) {
-        this._c = frost.clampPercent(c);
-    }
-
-    set m(m) {
-        this._m = frost.clampPercent(m);
-    }
-
-    set y(y) {
-        this._y = frost.clampPercent(y);
-    }
-
-    set k(k) {
-        this._k = frost.clampPercent(k);
+        this.c = frost.clampPercent(c);
+        this.m = frost.clampPercent(m);
+        this.y = frost.clampPercent(y);
+        this.k = frost.clampPercent(k);
     }
 
     setAlpha(a) {
@@ -253,16 +171,12 @@ class CMYK extends ColorBase {
     }
 
     toCMY() {
-        const k = this.k / 100;
-        const c = (this.c / 100) * (1 - k) + k;
-        const m = (this.m / 100) * (1 - k) + k;
-        const y = (this.y / 100) * (1 - k) + k;
-
-        return new CMY(c * 100, m * 100, y * 100, this.a);
+        const [c, m, y] = Color.CMYK2CMY(this.c, this.m, this.y, this.k);
+        return new CMY(c, m, y, this.a);
     }
 
     toCMYK() {
-        return new CMYK(this.c, this.m, this.y, this.k, this.a);
+        return this;
     }
 
     toRGB() {
@@ -273,35 +187,9 @@ class HSL extends ColorBase {
     constructor(h, s, l, a = 1) {
         super(a);
 
-        this.h = h;
-        this.s = s;
-        this.l = l;
-
-        return this;
-    }
-
-    get h() {
-        return this._h;
-    }
-
-    get s() {
-        return this._s;
-    }
-
-    get l() {
-        return this._l;
-    }
-
-    set h(h) {
-        this._h = h % 360;
-    }
-
-    set s(s) {
-        this._s = frost.clampPercent(s);
-    }
-
-    set l(l) {
-        this._l = frost.clampPercent(l);
+        this.h = h % 360;
+        this.s = frost.clampPercent(s);
+        this.l = frost.clampPercent(l);
     }
 
     darken(amount) {
@@ -317,35 +205,19 @@ class HSL extends ColorBase {
     }
 
     toHSL() {
-        return new HSL(this.h, this.s, this.l, this.a);
+        return this;
     }
 
     toRGB() {
-        if (this.l == 0) {
-            return new RGB(0, 0, 0, this.a);
-        }
-
-        const h = this.h / 360;
-        const s = this.s / 100;
-        const l = this.l / 100;
-
-        let v2;
-        if (l < 0.5) {
-            v2 = l * (1 + s);
-        } else {
-            v2 = (l + s) - (s * l);
-        }
-
-        const v1 = 2 * l - v2;
-
-        const r = HSL.RGBHue(v1, v2, h + (1 / 3));
-        const g = HSL.RGBHue(v1, v2, h);
-        const b = HSL.RGBHue(v1, v2, h - (1 / 3));
-
-        return new RGB(r * 255, g * 255, b * 255, this.a);
+        const [r, g, b] = Color.HSL2RGB(this.h, this.s, this.v);
+        return new RGB(r, g, b, this.a);
     }
 
-    toString() {
+    toString(rgb = true) {
+        if (rgb) {
+            return this.toRGB().toString();
+        }
+
 		const h = Math.round(this.h);
 		const s = Math.round(this.s) + '%';
 		const l = Math.round(this.l) + '%';
@@ -357,95 +229,183 @@ class HSL extends ColorBase {
 		const a = Math.round(this.a * 100) / 100;
 		return 'hsla(' + h + ', ' + s + ', ' + l + ', ' + a + ')';
     }
-
-    static RGBHue(v1, v2, vH) {
-        if (vH < 0) {
-            vH += 1;
-        } else if (vH > 1) {
-            vH -= 1;
-        }
-
-        if (6 * vH < 1) {
-            return v1 + (v2 - v1) * 6 * vH;
-        }
-
-        if (2 * vH < 1) {
-            return v2;
-        }
-
-        if (3 * vH < 2) {
-            return v1 + (v2 - v1) * ((2 / 3) - vH) * 6;
-        }
-
-        return v1;
-    }
 }
 class HSV extends ColorBase {
     constructor(h, s, v, a = 1) {
         super(a);
 
-        this.h = h;
-        this.s = s;
-        this.v = v;
-
-        return this;
+        this.h = h % 360;
+        this.s = frost.clampPercent(s);
+        this.v = frost.clampPercent(v);
     }
 
-    get h() {
-        return this._h;
+    getBrightness() {
+        return this.v;
     }
 
-    get s() {
-        return this._s;
+    getHue() {
+        return this.h;
     }
 
-    get v() {
-        return this._v;
-    }
-
-    set h(h) {
-        this._h = h % 360;
-    }
-
-    set s(s) {
-        this._s = frost.clampPercent(s);
-    }
-
-    set v(v) {
-        this._v = frost.clampPercent(v);
+    getSaturation() {
+        return this.s;
     }
 
     setAlpha(a) {
         return new HSV(this.h, this.s, this.v, a);
     }
 
-    setBrightness(brightness) {
-        return new HSV(this.h, this.s, brightness, this.a);
+    setBrightness(v) {
+        return new HSV(this.h, this.s, v, this.a);
     }
 
-    setHue(hue) {
-        return new HSV(hue, this.s, this.v, this.a);
+    setHue(h) {
+        return new HSV(h, this.s, this.v, this.a);
     }
 
-    setSaturation(saturation) {
-        return new HSV(this.h, saturation, this.v, this.a);
+    setSaturation(s) {
+        return new HSV(this.h, s, this.v, this.a);
     }
 
     toHSV() {
-        return new HSV(this.h, this.s, this.v, this.a);
+        return this;
     }
 
     toRGB() {
-        const s = this.s / 100;
-        const v = this.v / 100;
-        if (s == 0) {
-            return new RGB(v * 255, v * 255, v * 255, this.a);
+        const [r, g, b] = Color.HSV2RGB(this.h, this.s, this.v);
+        return new RGB(r, g, b, this.a);
+    }
+}
+class RGB extends ColorBase {
+    constructor(r, g, b, a = 1) {
+        super(a);
+
+        this.r = frost.clamp(r, 0, 255);
+        this.g = frost.clamp(g, 0, 255);
+        this.b = frost.clamp(b, 0, 255);
+    }
+
+    luma() {
+        return Color.RGB2Luma(this.r, this.g, this.b);
+    }
+
+    setAlpha(a) {
+        return new RGB(this.r, this.g, this.b, a);
+    }
+
+    toCMY() {
+        const [c, m, y] = Color.RGB2CMY(this.r, this.g, this.b);
+        return new CMY(c, m, y, this.a);
+    }
+
+    toHSL() {
+        const [h, s, l] = Color.RGB2HSL(this.r, this.g, this.b);
+        return new HSL(h, s, l, this.a);
+    }
+
+    toHSV() {
+        const [h, s, v] = Color.RGB2HSV(this.r, this.g, this.b);
+        return new HSV(h, s, v, this.a);
+    }
+
+    toRGB() {
+        return this;
+    }
+
+    toString() {
+        const a = Math.round(this.alpha * 100) / 100;
+
+        if (a === 0) {
+            return 'transparent';
         }
 
-        let h = this.h / 60;
-        if (h == 6) {
-            h = 0;
+        const r = Math.round(this.r);
+        const g = Math.round(this.g);
+        const b = Math.round(this.b);
+
+        if (this.a === 1) {
+            const rgb = b | (g << 8) | (r << 16);
+            const hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
+            const name = Object.keys(Color.colors).find(name => Color.colors[name] === hex);
+            if (name) {
+                return name;
+            }
+
+            const hexMatch = string.match(this.hexRegEx);
+            if (hexMatch[1][0] === hexMatch[1][1] &&
+                hexMatch[2][0] === hexMatch[2][1] &&
+                hexMatch[3][0] === hexMatch[3][1]) {
+                return '#' + hexMatch[1][0] + hexMatch[2][0] + hexMatch[3][0];
+            }
+
+            return hex;
         }
+
+		return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+    }
+}
+Object.assign(Color, {
+
+    CMY2CMYK(c, m, y) {
+        const k = Math.min(c, m, y) / 100;
+
+        if (k == 1) {
+            return [0, 0, 0, k * 100];
+        }
+
+        c = ((c / 100) - k) / (1 - k);
+        m = ((m / 100) - k) / (1 - k);
+        y = ((y / 100) - k) / (1 - k);
+
+        return [c * 100, m * 100, y * 100, k * 100];
+    },
+
+    CMY2RGB(c, m, y) {
+        const r = 1 - (c / 100);
+        const g = 1 - (m / 100);
+        const b = 1 - (y / 100);
+
+        return [r * 255, g * 255, b * 255];
+    },
+
+    CMYK2CMY(c, m, y, k) {
+        k /= 100;
+        c = (c / 100) * (1 - k) + k;
+        m = (m / 100) * (1 - k) + k;
+        y = (y / 100) * (1 - k) + k;
+
+        return [c * 100, m * 100, y * 100];
+    },
+
+    HSL2RGB(h, s, l) {
+        if (l == 0) {
+            return [0, 0, 0];
+        }
+
+        h /= 360;
+        s /= 100;
+        l /= 100;
+
+        const v2 = l < 0.5 ?
+            l * (1 + s) :
+            (l + s) - (s * l);
+        const v1 = 2 * l - v2;
+
+        const r = this.RGBHue(v1, v2, h + (1 / 3));
+        const g = this.RGBHue(v1, v2, h);
+        const b = this.RGBHue(v1, v2, h - (1 / 3));
+
+        return [r * 255, g * 255, b * 255];
+    },
+
+    HSV2RGB(h, s, v) {
+        if (s == 0) {
+            return [v, v, v];
+        }
+
+        h = h / 60 % 6;
+        s /= 100;
+        v /= 100;
 
         const vi = Math.floor(h);
         const v1 = v * (1 - s);
@@ -481,94 +441,29 @@ class HSV extends ColorBase {
             b = v2;
         }
 
-        return new RGB(r * 255, g * 255, b * 255, this.a);
-    }
-}
-class RGB extends ColorBase {
-    constructor(r, g, b, a = 1) {
-        super(a);
+        return [r * 255, g * 255, b * 255];
+    },
 
-        this.r = r;
-        this.g = g;
-        this.b = b;
+    RGB2CMY(r, g, b) {
+        const c = 1 - (r / 255);
+        const m = 1 - (g / 255);
+        const y = 1 - (b / 255);
 
-        return this;
-    }
+        return [c * 100, m * 100, y * 100];
+    },
 
-    get r() {
-        return this._r;
-    }
+    RGB2Luma(r, g, b) {
+		const v1 = 0.2126 * (r / 255);
+		const v2 = 0.7152 * (g / 255);
+        const v3 = 0.0722 * (b / 255);
 
-    get g() {
-        return this._g;
-    }
+		return v1 + v2 + v3;
+    },
 
-    get b() {
-        return this._b;
-    }
-
-    set r(r) {
-        this._r = frost.clamp(r, 0, 255);
-    }
-
-    set g(g) {
-        this._g = frost.clamp(g, 0, 255);
-    }
-
-    set b(b) {
-        this._b = frost.clamp(b, 0, 255);
-    }
-
-    luma() {
-		const v1 = 0.2126 * this.r;
-		const v2 = 0.7152 * this.g;
-        const v3 = 0.0722 * this.b;
-
-		return (v1 + v2 + v3) / 255;
-    }
-
-    mix(color, amount) {
-        color = color.toRGB();
-        const r = frost.lerp(this.r, color.r, amount);
-        const g = frost.lerp(this.g, color.g, amount);
-        const b = frost.lerp(this.b, color.b, amount);
-        const a = frost.lerp(this.a, color.a, amount);
-        return new RGB(r, g, b, a);
-    }
-
-    multiply(color) {
-        color = color.toRGB();
-        const r = (this.r / 255) * (color.r / 255) * 255;
-        const g = (this.g / 255) * (color.g / 255) * 255;
-        const b = (this.b / 255) * (color.b / 255) * 255;
-        const a = (this.a / 255) * (color.a / 255) * 255;
-        return new RGB(r, g, b, a);
-    }
-
-    setAlpha(a) {
-        return new RGB(this.r, this.g, this.b, a);
-    }
-
-    shade(amount) {
-        return this.mix(new RGB(0, 0, 0), amount);
-    }
-
-    tint(amount) {
-        return this.mix(new RGB(255, 255, 255), amount);
-    }
-
-    toCMY() {
-        const c = 1 - (this.r / 255);
-        const m = 1 - (this.g / 255);
-        const y = 1 - (this.b / 255);
-
-        return new CMY(c * 100, m * 100, y * 100, this.a);
-    }
-
-    toHSL() {
-        const r = this.r / 255;
-        const g = this.g / 255;
-        const b = this.b / 255;
+    RGB2HSL(r, g, b) {
+        r /= 255;
+        g /= 255;
+        b /= 255;
 
         const min = Math.min(r, g, b);
         const max = Math.max(r, g, b);
@@ -577,21 +472,18 @@ class RGB extends ColorBase {
         const l = (max + min) / 2;
 
         if (diff == 0) {
-            return new HSL(0, 0, l * 100, this.a);
+            return [0, 0, l * 100];
         }
 
-        let h = 0;
-        let s;
-        if (l < 0.5) {
-            s = diff / (max + min);
-        } else {
-            s = diff / (2 - max - min);
-        }
+        const s = l < 0.5 ?
+            diff / (max + min) :
+            diff / (2 - max - min);
 
         const deltaR = (((max - r) / 6) + (diff / 2)) / diff;
         const deltaG = (((max - g) / 6) + (diff / 2)) / diff;
         const deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
+        let h = 0;
         if (r == max) {
             h = deltaB - deltaG;
         } else if (g == max) {
@@ -600,19 +492,15 @@ class RGB extends ColorBase {
             h = (2 / 3) + deltaG - deltaR;
         }
 
-        if (h > 1) {
-            h--;
-        } else if (h < 0) {
-            h++;
-        }
+        h %= 1;
 
-        return new HSL(h * 360, s * 100, l * 100, this.a);
-    }
+        return [h * 100, s * 100, l * 100];
+    },
 
-    toHSV() {
-        const r = this.r / 255;
-        const g = this.g / 255;
-        const b = this.b / 255;
+    RGB2HSV(r, g, b) {
+        r /= 255;
+        g /= 255;
+        b /= 255;
 
         const min = Math.min(r, g, b);
         const max = Math.max(r, g, b);
@@ -621,16 +509,16 @@ class RGB extends ColorBase {
         const v = max;
 
         if (diff == 0) {
-            return new HSV(0, 0, v * 100, this.a);
+            return [0, 0, v * 100];
         }
 
-        let h = 0;
         const s = diff / max;
 
         const deltaR = (((max - r) / 6) + (diff / 2)) / diff;
         const deltaG = (((max - g) / 6) + (diff / 2)) / diff;
         const deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
+        let h = 0;
         if (r == max) {
             h = deltaB - deltaG;
         } else if (g == max) {
@@ -639,42 +527,29 @@ class RGB extends ColorBase {
             h = (2 / 3) + deltaG - deltaR;
         }
 
-        if (h > 1) {
-            h--;
-        } else if (h < 0) {
-            h++;
+        h %= 1;
+
+        return [h * 100, s * 100, v * 100];
+    },
+
+    RGBHue(v1, v2, vH) {
+        vH %= 1;
+
+        if (6 * vH < 1) {
+            return v1 + (v2 - v1) * 6 * vH;
         }
 
-        return new HSV(h * 360, s * 100, v * 100, this.a);
-    }
-
-    tone(amount) {
-        return this.mix(new RGB(128, 128, 128), amount);
-    }
-
-    toRGB() {
-        return new RGB(this.r, this.g, this.b, this.a);
-    }
-
-    toString() {
-        if (this.a === 0) {
-            return 'transparent';
+        if (2 * vH < 1) {
+            return v2;
         }
 
-        const r = Math.round(this.r);
-        const g = Math.round(this.g);
-        const b = Math.round(this.b);
-
-        if (this.a === 1) {
-            const rgb = b | (g << 8) | (r << 16);
-            const hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
-            return Object.keys(Color.colors).find(name => Color.colors[name] === hex) || hex;
+        if (3 * vH < 2) {
+            return v1 + (v2 - v1) * ((2 / 3) - vH) * 6;
         }
 
-		const a = Math.round(this.a * 100) / 100;
-		return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+        return v1;
     }
-}
+});
 Object.assign(Color, {
 
 	fromCMY(c, m, y, a = 1) {
@@ -735,7 +610,44 @@ Object.assign(Color, {
 			return this.fromRGB(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
 		}
 
+		const HSLAMatch = string.match(this.HSLARegEx);
+		if (HSLAMatch) {
+			return this.fromHSL(HSLAMatch[1], HSLAMatch[2], HSLAMatch[3], HSLAMatch[4]);
+		}
+
+		const HSLMatch = string.match(this.HSLRegEx);
+		if (HSLMatch) {
+			return this.fromRGB(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
+		}
+
 		return this.fromRGB(0, 0, 0);
+    }
+
+});
+Object.assign(Color, {
+
+    mix(color1, color2, amount) {
+        color1 = color1.toRGB();
+        color2 = color2.toRGB();
+
+        const r = frost.lerp(color1.red, color2.red, amount);
+        const g = frost.lerp(color1.green, color2.green, amount);
+        const b = frost.lerp(color1.blue, color2.blue, amount);
+        const a = frost.lerp(color1.alpha, color2.alpha, amount);
+
+        return new RGB(r, g, b, a);
+    },
+
+    multiply(color1, color2) {
+        color1 = color1.toRGB();
+        color2 = color2.toRGB();
+
+        const r = (color1.red / 255) * (color2.red / 255) * 255;
+        const g = (color1.green / 255) * (color2.green / 255) * 255;
+        const b = (color1.blue / 255) * (color2.blue / 255) * 255;
+        const a = color1.alpha * color2.alpha;
+
+        return new RGB(r, g, b, a);
     }
 
 });
@@ -1030,5 +942,8 @@ Color.hexRegExShort = /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/i;
 
 Color.RGBARegEx = /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(0?\.\d+)\)$/i;
 Color.RGBRegEx = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/i;
+
+Color.HSLARegEx = /^hsla\((\d{1,3}),\s*(\d{1,3})\%,\s*(\d{1,3})\%,\s*(0?\.\d+)\)$/i;
+Color.HSLRegEx = /^hsl\((\d{1,3}),\s*(\d{1,3})\%,\s*(\d{1,3})\%\)$/i;
 
 })(frost);

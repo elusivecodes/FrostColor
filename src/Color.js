@@ -18,7 +18,7 @@ class Color {
     }
 
     toString() {
-        return this._color.toRGB().toString();
+        return this._color.toString();
     }
 
     valueOf() {

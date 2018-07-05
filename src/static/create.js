@@ -58,6 +58,16 @@ Object.assign(Color, {
 			return this.fromRGB(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
 		}
 
+		const HSLAMatch = string.match(this.HSLARegEx);
+		if (HSLAMatch) {
+			return this.fromHSL(HSLAMatch[1], HSLAMatch[2], HSLAMatch[3], HSLAMatch[4]);
+		}
+
+		const HSLMatch = string.match(this.HSLRegEx);
+		if (HSLMatch) {
+			return this.fromRGB(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
+		}
+
 		return this.fromRGB(0, 0, 0);
     }
 
