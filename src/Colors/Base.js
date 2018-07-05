@@ -31,14 +31,6 @@ class ColorBase {
         return this.toRGB().luma();
     }
 
-    mix(color, amount) {
-        return Color.mix(this, color, amount);
-    }
-
-    multiply(color) {
-        return Color.multiply(this, color);
-    }
-
     setBrightness(v) {
         return this.toHSV().setBrightness(v);
     }

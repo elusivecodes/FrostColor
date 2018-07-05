@@ -77,14 +77,6 @@ class ColorBase {
         return this.toRGB().luma();
     }
 
-    mix(color, amount) {
-        return Color.mix(this, color, amount);
-    }
-
-    multiply(color) {
-        return Color.multiply(this, color);
-    }
-
     setBrightness(v) {
         return this.toHSV().setBrightness(v);
     }
@@ -193,11 +185,13 @@ class HSL extends ColorBase {
     }
 
     darken(amount) {
-        return new HSL(this.h, this.s, this.l - (amount * 50), this.a);
+        const l = this.l - (this.l * amount);
+        return new HSL(this.h, this.s, l, this.a);
     }
 
     lighten(amount) {
-        return new HSL(this.h, this.s, this.l + (amount * 50), this.a);
+        const l = this.l + ((100 - this.l) * amount);
+        return new HSL(this.h, this.s, l, this.a);
     }
 
     setAlpha(a) {
@@ -399,13 +393,14 @@ Object.assign(Color, {
     },
 
     HSV2RGB(h, s, v) {
+        v /= 100;
+
         if (s == 0) {
-            return [v, v, v];
+            return [v * 255, v * 255, v * 255];
         }
 
         h = h / 60 % 6;
         s /= 100;
-        v /= 100;
 
         const vi = Math.floor(h);
         const v1 = v * (1 - s);
@@ -492,9 +487,9 @@ Object.assign(Color, {
             h = (2 / 3) + deltaG - deltaR;
         }
 
-        h %= 1;
+        h = (h + 1) % 1;
 
-        return [h * 100, s * 100, l * 100];
+        return [h * 360, s * 100, l * 100];
     },
 
     RGB2HSV(r, g, b) {
@@ -527,13 +522,13 @@ Object.assign(Color, {
             h = (2 / 3) + deltaG - deltaR;
         }
 
-        h %= 1;
+        h = (h + 1) % 1;
 
-        return [h * 100, s * 100, v * 100];
+        return [h * 360, s * 100, v * 100];
     },
 
     RGBHue(v1, v2, vH) {
-        vH %= 1;
+        vH = (vH + 1) % 1;
 
         if (6 * vH < 1) {
             return v1 + (v2 - v1) * 6 * vH;
