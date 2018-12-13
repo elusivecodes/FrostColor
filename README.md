@@ -236,7 +236,7 @@ const mixed = Color.mix(color1, color2, amount);
 - `amount` is a number between 0 and 1.
 
 ```javascript
-const mixed = Color.multiplied(color1, color2, amount);
+const multiplied = Color.multiply(color1, color2, amount);
 ```
 
 
