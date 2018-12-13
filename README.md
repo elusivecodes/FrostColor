@@ -18,9 +18,10 @@ It features full support for RGB, HSL, HSV, CMY and CMYK color spaces.
 
 #### From RGB
 
-Colors can created using the following syntax, where `red`, `green` and `blue` are values between 0 and 255, and `alpha` is a value between 0 and 1.
-
-If the `alpha` argument is omitted, a default value of 1 will be used (opaque).
+- `red` is a number between 0 and 255.
+- `green` is a number between 0 and 255.
+- `blue` is a number between 0 and 255.
+- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
 
 ```javascript
 const color = new Color(red, green, blue, alpha);
@@ -28,9 +29,8 @@ const color = new Color(red, green, blue, alpha);
 
 #### From Brightness
 
-If you are creating a greyscale color, you can alternatively enter a single `brightness` value between 0 and 100.
-
-Again, the `alpha` argument can be omitted for a default value of 1.
+- `brightness` is a number between 0 and 100.
+- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
 
 ```javascript
 const color = new Color(brightness, alpha);
@@ -50,6 +50,8 @@ const color = new ColorImmutable(red, green, blue, alpha);
 
 After a Color object has been created, you can get the string representation using the `toString()` method.
 
+The `colorString` returned will be a string containing either a HTML color name (if one exists), a hexidecimal representation (if alpha is 1) or an rgba string.
+
 ```javascript
 const colorString = color.toString();
 ```
@@ -59,9 +61,7 @@ const colorString = color.toString();
 
 #### From String
 
-If you have a string representation of a color, you can create a Color object from it using the static `fromString()` method.
-
-This method supports hex, rgb, rgba, hsl, hsla and standard HTML color names;
+- `colorString` is a string containing a color value in either hex, rgb, rgba, hsl, hsla or a standard HTML color name.
 
 ```javascript
 const color = Color.fromString(colorString);
@@ -69,7 +69,10 @@ const color = Color.fromString(colorString);
 
 #### From CMY
 
-Create a color from a CMY range, where `cyan`, `magenta` and `yellow` are values between 0 and 100.
+- `cyan` is a number between 0 and 100.
+- `magenta` is a number between 0 and 100.
+- `yellow` is a number between 0 and 100.
+- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
 
 ```javascript
 const color = Color.fromCMY(cyan, magenta, yellow, alpha);
@@ -77,7 +80,11 @@ const color = Color.fromCMY(cyan, magenta, yellow, alpha);
 
 #### From CMYK
 
-Create a color from a CMYK range, where `cyan`, `magenta`, `yellow` and `key` are values between 0 and 100.
+- `cyan` is a number between 0 and 100.
+- `magenta` is a number between 0 and 100.
+- `yellow` is a number between 0 and 100.
+- `key` is a number between 0 and 100.
+- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
 
 ```javascript
 const color = Color.fromCMYK(cyan, magenta, yellow, key, alpha);
@@ -85,7 +92,10 @@ const color = Color.fromCMYK(cyan, magenta, yellow, key, alpha);
 
 #### From HSL
 
-Create a color from a HSL range, where `hue` is a value between 0 and 360, and `saturation` and `lightness` are values between 0 and 100.
+- `hue` is a number between 0 and 360.
+- `saturation` is a number between 0 and 100.
+- `lightness` is a number between 0 and 100.
+- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
 
 ```javascript
 const color = Color.fromHSL(hue, saturation, lightness, alpha);
@@ -93,7 +103,10 @@ const color = Color.fromHSL(hue, saturation, lightness, alpha);
 
 #### From HSV
 
-Create a color from a HSV range, where `hue` is a value between 0 and 360, and `saturation` and `value` are values between 0 and 100.
+- `hue` is a number between 0 and 360.
+- `saturation` is a number between 0 and 100.
+- `value` is a number between 0 and 100.
+- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
 
 ```javascript
 const color = Color.fromHSV(hue, saturation, value, alpha);
@@ -102,29 +115,59 @@ const color = Color.fromHSV(hue, saturation, value, alpha);
 
 ## Color Attributes
 
-Retrieve information about a Color object you have created using the following methods.
+Retrieve or set attributes on a Color object you have created using the following methods.
 
-The `brightness` and `saturation` values returned will be between 0 and 100, the `hue` value will be between 0 and 360, and the `alpha` value will be between 0 and 1.
+#### Alpha
+
+- `alpha` is a number between 0 and 1.
 
 ```javascript
+// Get alpha
 const alpha = color.getAlpha();
-const brightness = color.getBrightness();
-const hue = color.getHue();
-const saturation = color.getSaturation();
+
+// Set alpha
+color.setAlpha(alpha);
 ```
 
-You can also set these values on any Color object you have created.
+#### Brightness
+
+- `brightness` is a number between 0 and 100.
 
 ```javascript
-color.setAlpha(alpha);
-color.setBrightness(brightness);
-color.setHue(hue);
-color.setSaturation(saturation);
+// Get brightness
+const brightness = color.getBrightness();
+
+// Set brightness
+color.getBrightness(brightness);
 ```
 
-The `luma()` function will return the luminance value of a Color, between 0 and 1.
+#### Hue
 
-This can be useful, for example, when deciding what color text to display on a background.
+- `hue` is a number between 0 and 360.
+
+```javascript
+// Get hue
+const hue = color.getHue();
+
+// Set hue
+color.getHue(hue);
+```
+
+#### Saturation
+
+- `saturation` is a number between 0 and 100.
+
+```javascript
+// Get saturation
+const saturation = color.getSaturation();
+
+// Set saturation
+color.getSaturation(saturation);
+```
+
+#### Luma
+
+The `luma` value returned is a number between 0 and 1.
 
 ```javascript
 const luma = color.luma();
@@ -135,7 +178,7 @@ const luma = color.luma();
 
 #### Darken
 
-Darken a color, where the `amount` specified is a value between 0 and 1.
+- `amount` is a number between 0 and 1.
 
 ```javascript
 color.darken(amount);
@@ -143,7 +186,7 @@ color.darken(amount);
 
 #### Lighten
 
-Lighten a color, where the `amount` specified is a value between 0 and 1.
+- `amount` is a number between 0 and 1.
 
 ```javascript
 color.lighten(amount);
@@ -151,7 +194,7 @@ color.lighten(amount);
 
 #### Shade
 
-Shade a color (mix with black), where the `amount` specified in a value between 0 and 1.
+- `amount` is a number between 0 and 1.
 
 ```javascript
 color.shade(amount);
@@ -159,7 +202,7 @@ color.shade(amount);
 
 #### Tint
 
-Tint a color (mix with white), where the `amount` specified in a value between 0 and 1.
+- `amount` is a number between 0 and 1.
 
 ```javascript
 color.tint(amount);
@@ -167,7 +210,7 @@ color.tint(amount);
 
 #### Tone
 
-Tone a color (mix with grey), where the `amount` specified in a value between 0 and 1.
+- `amount` is a number between 0 and 1.
 
 ```javascript
 color.tone(amount);
@@ -178,22 +221,22 @@ color.tone(amount);
 
 #### Mix
 
-Mix two colors together, by a specified `amount` (between 0 and 1).
+- `color1` is a Color.
+- `color2` is a Color.
+- `amount` is a number between 0 and 1.
 
 ```javascript
-const red = Color.fromString('red');
-const yellow = Color.fromString('yellow');
-const orange = Color.mix(red, yellow, 0.5);
+const mixed = Color.mix(color1, color2, amount);
 ```
 
 #### Multiply
 
-Multiply a color with another color.
+- `color1` is a Color.
+- `color2` is a Color.
+- `amount` is a number between 0 and 1.
 
 ```javascript
-const blue = Color.fromString('blue');
-const yellow = Color.fromString('yellow');
-const purple = Color.multiply(blue, yellow);
+const mixed = Color.multiplied(color1, color2, amount);
 ```
 
 
@@ -244,7 +287,7 @@ const [secondary, alternate, accent] = color.tetradic();
 
 #### Shades
 
-Creates an array with a specified number of evenly distributed `shades` of a color. Defaults to 10.
+- `shades` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
 
 ```javascript
 const shades = color.shades(shades);
@@ -252,7 +295,7 @@ const shades = color.shades(shades);
 
 #### Tints
 
-Creates an array with a specified number of evenly distributed `tints` of a color. Defaults to 10.
+- `tints` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
 
 ```javascript
 const tints = color.tints(tints);
@@ -260,7 +303,7 @@ const tints = color.tints(tints);
 
 #### Tones
 
-Creates an array with a specified number of evenly distributed `tones` of a color. Defaults to 10.
+- `tones` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
 
 ```javascript
 const tones = color.tones(tones);
@@ -268,7 +311,9 @@ const tones = color.tones(tones);
 
 #### Palette
 
-Creates an object with a specified number of evenly distributed `shades`, `tints` and `tones` of a color. Defaults to 10 of each.
+- `shades` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
+- `tints` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
+- `tones` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
 
 ```javascript
 const colorPalette = color.palette(shades, tints, tones);

@@ -1,37 +1,70 @@
 Object.assign(Color, {
 
-    CMY2CMYK(c, m, y) {
-        const k = Math.min(c, m, y) / 100;
+    /**
+     * CMY2CMYK
+     * @param {int} c
+     * @param {int} m
+     * @param {int} y
+     * @returns {Array}
+     */
+    CMY2CMYK(c, m, y)
+    {
+        const k = Math.min(c, m, y);
 
-        if (k == 1) {
-            return [0, 0, 0, k * 100];
+        if (k === 100) {
+            return [0, 0, 0, k];
         }
 
-        c = ((c / 100) - k) / (1 - k);
-        m = ((m / 100) - k) / (1 - k);
-        y = ((y / 100) - k) / (1 - k);
-
-        return [c * 100, m * 100, y * 100, k * 100];
+        return [
+            (c - k) / (100 - k) * 100,
+            (m - k) / (100 - k) * 100,
+            (y - k) / (100 - k) * 100,
+            k
+        ];
     },
 
-    CMY2RGB(c, m, y) {
-        const r = 1 - (c / 100);
-        const g = 1 - (m / 100);
-        const b = 1 - (y / 100);
-
-        return [r * 255, g * 255, b * 255];
+    /**
+     * CMY2RGB
+     * @param {int} c
+     * @param {int} m
+     * @param {int} y
+     * @returns {Array}
+     */
+    CMY2RGB(c, m, y)
+    {
+        return [
+            (100 - c) * 2.5,
+            (100 - m) * 2.5,
+            (100 - y) * 2.5
+        ];
     },
 
-    CMYK2CMY(c, m, y, k) {
-        k /= 100;
-        c = (c / 100) * (1 - k) + k;
-        m = (m / 100) * (1 - k) + k;
-        y = (y / 100) * (1 - k) + k;
-
-        return [c * 100, m * 100, y * 100];
+    /**
+     * CMYK2CMY
+     * @param {int} c
+     * @param {int} m
+     * @param {int} y
+     * @param {int} k
+     * @returns {Array}
+     */
+    CMYK2CMY(c, m, y, k)
+    {
+        return [
+            c * (100 - k) + k,
+            m * (100 - k) + k,
+            y * (100 - k) + k
+        ];
     },
 
-    HSL2RGB(h, s, l) {
+    /**
+     * HSL2RGB
+     * @param {int} h
+     * @param {int} s
+     * @param {int} l
+     * @returns {Array}
+     */
+    HSL2RGB(h, s, l)
+    {
         if (l == 0) {
             return [0, 0, 0];
         }
@@ -52,14 +85,22 @@ Object.assign(Color, {
         return [r * 255, g * 255, b * 255];
     },
 
-    HSV2RGB(h, s, v) {
+    /**
+     * HSV2RGB
+     * @param {int} h
+     * @param {int} s
+     * @param {int} v
+     * @returns {Array}
+     */
+    HSV2RGB(h, s, v)
+    {
         v /= 100;
 
         if (s == 0) {
             return [v * 255, v * 255, v * 255];
         }
 
-        h = h / 60 % 6;
+        h = (h / 60) % 6;
         s /= 100;
 
         const vi = Math.floor(h);
@@ -99,23 +140,45 @@ Object.assign(Color, {
         return [r * 255, g * 255, b * 255];
     },
 
-    RGB2CMY(r, g, b) {
-        const c = 1 - (r / 255);
-        const m = 1 - (g / 255);
-        const y = 1 - (b / 255);
-
-        return [c * 100, m * 100, y * 100];
+    /**
+     * RGB2CMY
+     * @param {int} r
+     * @param {int} g
+     * @param {int} b
+     * @returns {Array}
+     */
+    RGB2CMY(r, g, b)
+    {
+        return [
+            100 - (r / 2.55),
+            100 - (g / 2.55),
+            100 - (b / 2.55)
+        ];
     },
 
-    RGB2Luma(r, g, b) {
-		const v1 = 0.2126 * (r / 255);
-		const v2 = 0.7152 * (g / 255);
-        const v3 = 0.0722 * (b / 255);
-
-		return v1 + v2 + v3;
+    /**
+     * RGB2Luma
+     * @param {int} r
+     * @param {int} g
+     * @param {int} b
+     * @returns {float}
+     */
+    RGB2Luma(r, g, b)
+    {
+        return (0.2126 * (r / 255)) +
+            (0.7152 * (g / 255)) +
+            (0.0722 * (b / 255));
     },
 
-    RGB2HSL(r, g, b) {
+    /**
+     * RGB2HSL
+     * @param {int} r
+     * @param {int} g
+     * @param {int} b
+     * @returns {Array}
+     */
+    RGB2HSL(r, g, b)
+    {
         r /= 255;
         g /= 255;
         b /= 255;
@@ -152,7 +215,15 @@ Object.assign(Color, {
         return [h * 360, s * 100, l * 100];
     },
 
-    RGB2HSV(r, g, b) {
+    /**
+     * RGB2HSV
+     * @param {int} r
+     * @param {int} g
+     * @param {int} b
+     * @returns {Array}
+     */
+    RGB2HSV(r, g, b)
+    {
         r /= 255;
         g /= 255;
         b /= 255;
@@ -187,7 +258,15 @@ Object.assign(Color, {
         return [h * 360, s * 100, v * 100];
     },
 
-    RGBHue(v1, v2, vH) {
+    /**
+     * RGBHue
+     * @param {float} v1
+     * @param {float} v2
+     * @param {float} vH
+     * @returns {float}
+     */
+    RGBHue(v1, v2, vH)
+    {
         vH = (vH + 1) % 1;
 
         if (6 * vH < 1) {

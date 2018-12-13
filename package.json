@@ -1,17 +1,18 @@
 {
-  "name": "frostcolor",
-  "version": "0.9.0",
-  "description": "",
-  "main": "build.js",
-  "scripts": {
-    "start": "node build.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "concat": "^1.0.3",
-    "filepath": "^1.1.0",
-    "uglify-es": "^3.3.9"
-  }
+    "name": "frostcolor",
+    "version": "0.9.0",
+    "description": "",
+    "main": "build.js",
+    "scripts": {
+        "start": "node build.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.1.6",
+        "@babel/preset-env": "^7.1.6",
+        "filepath": "^1.1.0",
+        "uglify-es": "^3.3.9"
+    }
 }

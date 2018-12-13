@@ -149,8 +149,8 @@ Color.colors = {
     yellowgreen: '#9acd32'
 };
 
-Color.hexRegEx = /^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/i;
-Color.hexRegExShort = /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/i;
+Color.hexRegEx = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i;
+Color.hexRegExShort = /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i;
 
 Color.RGBARegEx = /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(0?\.\d+)\)$/i;
 Color.RGBRegEx = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/i;

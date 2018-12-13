@@ -1,5 +1,7 @@
-class RGB extends ColorBase {
-    constructor(r, g, b, a = 1) {
+class RGB extends ColorBase
+{
+    constructor(r, g, b, a = 1)
+    {
         super(a);
 
         this.r = clamp(r, 0, 255);
@@ -7,35 +9,107 @@ class RGB extends ColorBase {
         this.b = clamp(b, 0, 255);
     }
 
-    luma() {
+    /**
+     * Luma
+     * @returns {int} The luma value of the color
+     */
+    luma()
+    {
         return Color.RGB2Luma(this.r, this.g, this.b);
     }
 
-    setAlpha(a) {
+    /**
+     * Mix
+     * @param {Base} color
+     * @param {float} amount
+     * @returns {RGB}
+     */
+    mix(color, amount)
+    {
+        const rgb = color.toRGB();
+
+        return new RGB(
+            lerp(this.r, rgb.r, amount),
+            lerp(this.g, rgb.g, amount),
+            lerp(this.b, rgb.b, amount),
+            lerp(this.a, rgb.a, amount)
+        );
+    }
+
+    /**
+     * Multiply
+     * @param {Base} color
+     * @param {float} amount
+     * @returns {RGB}
+     */
+    multiply(color, amount)
+    {
+        const rgb = color.toRGB();
+
+        return new RGB(
+            lerp(this.r, this.r * rgb.r / 255, amount),
+            lerp(this.g, this.g * rgb.g / 255, amount),
+            lerp(this.b, this.b * rgb.b / 255, amount),
+            lerp(this.a, this.a * rgb.a, amount)
+        );
+    }
+
+    /**
+     * Set Alpha
+     * @param {float} a The new alpha value (between 0 and 1)
+     * @returns {RGB}
+     */
+    setAlpha(a)
+    {
         return new RGB(this.r, this.g, this.b, a);
     }
 
-    toCMY() {
+    /**
+     * To CMY
+     * @returns {CMY}
+     */
+    toCMY()
+    {
         const [c, m, y] = Color.RGB2CMY(this.r, this.g, this.b);
         return new CMY(c, m, y, this.a);
     }
 
-    toHSL() {
+    /**
+     * To HSL
+     * @returns {HSL}
+     */
+    toHSL()
+    {
         const [h, s, l] = Color.RGB2HSL(this.r, this.g, this.b);
         return new HSL(h, s, l, this.a);
     }
 
-    toHSV() {
+    /**
+     * To HSV
+     * @returns {HSV}
+     */
+    toHSV()
+    {
         const [h, s, v] = Color.RGB2HSV(this.r, this.g, this.b);
         return new HSV(h, s, v, this.a);
     }
 
-    toRGB() {
+    /**
+     * To RGB
+     * @returns {RGB}
+     */
+    toRGB()
+    {
         return this;
     }
 
-    toString() {
-        const a = Math.round(this.alpha * 100) / 100;
+    /**
+     * To String
+     * @returns {string}
+     */
+    toString()
+    {
+        const a = Math.round(this.a * 100) / 100;
 
         if (a === 0) {
             return 'transparent';
@@ -45,24 +119,26 @@ class RGB extends ColorBase {
         const g = Math.round(this.g);
         const b = Math.round(this.b);
 
-        if (this.a === 1) {
-            const rgb = b | (g << 8) | (r << 16);
-            const hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
-            const name = Object.keys(Color.colors).find(name => Color.colors[name] === hex);
-            if (name) {
-                return name;
-            }
-
-            const hexMatch = string.match(this.hexRegEx);
-            if (hexMatch[1][0] === hexMatch[1][1] &&
-                hexMatch[2][0] === hexMatch[2][1] &&
-                hexMatch[3][0] === hexMatch[3][1]) {
-                return '#' + hexMatch[1][0] + hexMatch[2][0] + hexMatch[3][0];
-            }
-
-            return hex;
+        if (a < 1) {
+            return `rgba(${r}, ${g}, ${b}, ${a})`;
         }
 
-		return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+        const rgb = b | (g << 8) | (r << 16);
+        const hex = '#' + (0x1000000 + rgb).toString(16).slice(1);
+
+        const name = Object.keys(Color.colors)
+            .find(name => Color.colors[name] === hex);
+
+        if (name) {
+            return name;
+        }
+
+        if (hex[1] === hex[2] &&
+            hex[3] === hex[4] &&
+            hex[5] === hex[6]) {
+            return `#${hex[1]}${hex[3]}${hex[5]}`;
+        }
+
+        return hex;
     }
 }

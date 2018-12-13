@@ -1,57 +1,86 @@
 const path = require('path');
+const fs = require('fs');
 const filepath = require('filepath');
-const concat = require('concat');
-const UglifyJS = require('uglify-es');
+const uglify = require('uglify-es');
+const babel = require('@babel/core');
 
 const srcFolder = 'src';
 const distFolder = 'dist';
 
 const name = 'frost-color';
-const wrapper = `(function(window) {
 
-%%CODE%%
+// create dist folder if it doesn't exist
+if (!fs.existsSync(distFolder)) {
+    fs.mkdirSync(distFolder);
+}
 
-})(window);`;
+// load files and wrapper
+let wrapper;
+const files = [];
 
-loadFiles(srcFolder, '.js').then(jsChain);
-
-function jsChain(files) {
-    if ( ! files.length) {
+filepath.create(srcFolder).recurse(fullPath =>
+{
+    if (!fullPath.isFile()) {
         return;
     }
 
-    concat(files)
-    .then(code => {
-        code = wrapper.replace('%%CODE%%', code);
-        const destination = path.join(distFolder, name + '.js');
-        filepath.create(destination).write(code);
-        return code;
-    })
-    .then(UglifyJS.minify)
-    .then(result => {
-        if (result.error) {
-            console.error(result.error);
+    if (path.extname(fullPath.path) === '.js') {
+        const fileName = path.basename(fullPath.path, '.js');
+        const data = fs.readFileSync(fullPath.path, 'utf8');
+
+        if (fileName === 'wrapper') {
+            wrapper = data;
         } else {
-            const destination = path.join(distFolder, name + '.min.js');
-            filepath.create(destination).write(result.code);
+            files.push(data);
         }
-    })
-    .catch(console.error);
+    }
+});
+
+// inject code to wrapper
+const code = wrapper.replace(
+    '    // {{code}}',
+    files.join('\r\n\r\n')
+        .replace(
+            /^(?!\s*$)/mg,
+            ' '.repeat(4)
+        )
+);
+
+// write file
+fs.writeFileSync(
+    path.join(distFolder, name + '.js'),
+    code
+);
+
+// minify
+const minified = uglify.minify(code);
+
+if (minified.error) {
+    console.error(minified.error);
+} else {
+    fs.writeFileSync(
+        path.join(distFolder, name + '.min.js'),
+        minified.code
+    );
 }
 
-function loadFiles(folder, ext) {
-    return new Promise (resolve => {
-        const results = [];
+// es5 transpile
+const es5 = babel.transformSync(code, { presets: ['@babel/env'] });
 
-        filepath.create(folder).recurse(path => {
-            if ( ! path.isFile()) {
-                return;
-            }
+// write file
+fs.writeFileSync(
+    path.join(distFolder, name + '-es5.js'),
+    es5.code
+);
 
-            if (path.extname(path.path) === ext) {
-                results.push(path.path);
-            }
-        });
-        resolve(results);
-    });
+// minify
+const minifiedes5 = uglify.minify(es5.code);
+
+if (minifiedes5.error) {
+    console.error(minifiedes5.error);
+} else {
+    fs.writeFileSync(
+        path.join(distFolder, name + '-es5.min.js'),
+        minifiedes5.code
+    );
 }

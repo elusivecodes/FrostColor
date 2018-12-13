@@ -1,5 +1,7 @@
-class CMYK extends ColorBase {
-    constructor(c, m, y, k, a = 1) {
+class CMYK extends ColorBase
+{
+    constructor(c, m, y, k, a = 1)
+    {
         super(a);
 
         this.c = clamp(c);
@@ -8,20 +10,41 @@ class CMYK extends ColorBase {
         this.k = clamp(k);
     }
 
-    setAlpha(a) {
+    /**
+     * Set Alpha
+     * @param {float} a The new alpha value (between 0 and 1)
+     * @returns {CMYK}
+     */
+    setAlpha(a)
+    {
         return new CMYK(this.c, this.m, this.y, this.k, a);
     }
 
-    toCMY() {
+    /**
+     * To CMY
+     * @returns {CMY}
+     */
+    toCMY()
+    {
         const [c, m, y] = Color.CMYK2CMY(this.c, this.m, this.y, this.k);
         return new CMY(c, m, y, this.a);
     }
 
-    toCMYK() {
+    /**
+     * To CMYK
+     * @returns {CMYK}
+     */
+    toCMYK()
+    {
         return this;
     }
 
-    toRGB() {
+    /**
+     * To RGB
+     * @returns {RGB}
+     */
+    toRGB()
+    {
         return this.toCMY().toRGB();
     }
 }

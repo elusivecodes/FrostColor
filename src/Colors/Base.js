@@ -1,77 +1,199 @@
-class ColorBase {
-    constructor(a = 1) {
+class ColorBase
+{
+    constructor(a = 1)
+    {
         this.a = clamp(a, 0, 1);
     }
 
-    darken(amount) {
+    /**
+     * Darken
+     * @param {float} amount The amount to darken the color by (between 0 and 1)
+     * @returns {HSL}
+     */
+    darken(amount)
+    {
         return this.toHSL().darken(amount);
     }
 
-    getAlpha() {
+    /**
+     * Get Alpha
+     * @returns {float} The alpha value of the color (between 0 and 1)
+     */
+    getAlpha()
+    {
         return this.a;
     }
 
-    getBrightness() {
+    /**
+     * Get Brightness
+     * @returns {int} The brightness value of the color (between 0 and 100)
+     */
+    getBrightness()
+    {
         return this.toHSV().getBrightness();
     }
 
-    getHue() {
+    /**
+     * Get Hue
+     * @returns {int} The hue value of the color (between 0 and 360)
+     */
+    getHue()
+    {
         return this.toHSV().getHue();
     }
 
-    getSaturation() {
+    /**
+     * Get Saturation
+     * @returns {int} The saturation value of the color (between 0 and 100)
+     */
+    getSaturation()
+    {
         return this.toHSV().getSaturation();
     }
 
-    lighten(amount) {
+    /**
+     * Lighten
+     * @param {float} amount The amount to lighten the color by (between 0 and 1)
+     * @returns {HSL}
+     */
+    lighten(amount)
+    {
         return this.toHSL().lighten(amount);
     }
 
-    luma() {
+    /**
+     * Luma
+     * @returns {int} The luma value of the color
+     */
+    luma()
+    {
         return this.toRGB().luma();
     }
 
-    setBrightness(v) {
+    /**
+     * Mix
+     * @param {Base} color
+     * @param {float} amount
+     * @returns {RGB}
+     */
+    mix(color, amount)
+    {
+        return this.toRGB().mix(color, amount);
+    }
+
+    /**
+     * Multiply
+     * @param {Base} color
+     * @param {float} amount
+     * @returns {RGB}
+     */
+    multiply(color, amount)
+    {
+        return this.toRGB().multiply(color, amount);
+    }
+
+    /**
+     * Set Brightness
+     * @param {int} v The new brightness value (between 0 and 100)
+     * @returns {HSV}
+     */
+    setBrightness(v)
+    {
         return this.toHSV().setBrightness(v);
     }
 
-    setHue(h) {
+    /**
+     * Set Hue
+     * @param {int} h The new hue value (between 0 and 360)
+     * @returns {HSV}
+     */
+    setHue(h)
+    {
         return this.toHSV().setHue(h);
     }
 
-    setSaturation(s) {
+    /**
+     * Set Saturation
+     * @param {int} s The new saturation value (between 0 and 100)
+     * @returns {HSV}
+     */
+    setSaturation(s)
+    {
         return this.toHSV().setSaturation(s);
     }
 
-    shade(amount) {
+    /**
+     * Shade
+     * @param {float} amount The amount to shade the color by (between 0 and 1)
+     * @returns {RGB}
+     */
+    shade(amount)
+    {
         return Color.mix(this, new RGB(0, 0, 0), amount);
     }
 
-    tint(amount) {
+    /**
+     * Tint
+     * @param {float} amount The amount to tint the color by (between 0 and 1)
+     * @returns {RGB}
+     */
+    tint(amount)
+    {
         return Color.mix(this, new RGB(255, 255, 255), amount);
     }
 
-    toCMY() {
+    /**
+     * To CMY
+     * @returns {CMY}
+     */
+    toCMY()
+    {
         return this.toRGB().toCMY();
     }
 
-    toCMYK() {
+    /**
+     * To CMYK
+     * @returns {CMYK}
+     */
+    toCMYK()
+    {
         return this.toCMY().toCMYK();
     }
 
-    toHSL() {
+    /**
+     * To HSL
+     * @returns {HSL}
+     */
+    toHSL()
+    {
         return this.toRGB().toHSL();
     }
 
-    toHSV() {
+    /**
+     * To HSV
+     * @returns {HSV}
+     */
+    toHSV()
+    {
         return this.toRGB().toHSV();
     }
 
-    tone(amount) {
+    /**
+     * Tone
+     * @param {float} amount The amount to tone the color by (between 0 and 1)
+     * @returns {RGB}
+     */
+    tone(amount)
+    {
         return Color.mix(this, new RGB(127, 127, 127), amount);
     }
 
-    toString() {
+    /**
+     * To String
+     * @returns {string}
+     */
+    toString()
+    {
         return this.toRGB().toString();
     }
 }
