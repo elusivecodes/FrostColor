@@ -93,8 +93,7 @@ class HSVColor extends BaseColor {
      * @returns {RGBColor}
      */
     toRGB() {
-        const [r, g, b] = Color.HSV2RGB(this._h, this._s, this._v);
-        return new RGBColor(r, g, b, this._a);
+        return new RGBColor(...Color.HSV2RGB(this._h, this._s, this._v).concat([this._a]));
     }
 
 }

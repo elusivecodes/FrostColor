@@ -70,8 +70,7 @@ class HSLColor extends BaseColor {
      * @returns {RGBColor}
      */
     toRGB() {
-        const [r, g, b] = Color.HSL2RGB(this._h, this._s, this._l);
-        return new RGBColor(r, g, b, this._a);
+        return new RGBColor(...Color.HSL2RGB(this._h, this._s, this._l).concat([this._a]));
     }
 
 }

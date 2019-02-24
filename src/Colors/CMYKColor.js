@@ -36,8 +36,7 @@ class CMYKColor extends BaseColor {
      * @returns {CMYColor}
      */
     toCMY() {
-        const [c, m, y] = Color.CMYK2CMY(this._c, this._m, this._y, this._k);
-        return new CMYColor(c, m, y, this._a);
+        return new CMYColor(...Color.CMYK2CMY(this._c, this._m, this._y, this._k).concat([this._a]));
     }
 
     /**

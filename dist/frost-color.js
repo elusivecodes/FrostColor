@@ -1370,8 +1370,7 @@
          * @returns {CMYKColor}
          */
         toCMYK() {
-            const [c, m, y, k] = Color.CMY2CMYK(this._c, this._m, this._y);
-            return new CMYKColor(c, m, y, k, this.a);
+            return new CMYKColor(...Color.CMY2CMYK(this._c, this._m, this._y).concat([this._a]));
         }
 
         /**
@@ -1379,8 +1378,7 @@
          * @returns {RGBColor}
          */
         toRGB() {
-            const [r, g, b] = Color.CMY2RGB(this._c, this._m, this._y);
-            return new RGBColor(r, g, b, this._a);
+            return new RGBColor(...Color.CMY2RGB(this._c, this._m, this._y).concat([this._a]));
         }
 
     }
@@ -1423,8 +1421,7 @@
          * @returns {CMYColor}
          */
         toCMY() {
-            const [c, m, y] = Color.CMYK2CMY(this._c, this._m, this._y, this._k);
-            return new CMYColor(c, m, y, this._a);
+            return new CMYColor(...Color.CMYK2CMY(this._c, this._m, this._y, this._k).concat([this._a]));
         }
 
         /**
@@ -1518,8 +1515,7 @@
          * @returns {RGBColor}
          */
         toRGB() {
-            const [r, g, b] = Color.HSL2RGB(this._h, this._s, this._l);
-            return new RGBColor(r, g, b, this._a);
+            return new RGBColor(...Color.HSL2RGB(this._h, this._s, this._l).concat([this._a]));
         }
 
     }
@@ -1619,8 +1615,7 @@
          * @returns {RGBColor}
          */
         toRGB() {
-            const [r, g, b] = Color.HSV2RGB(this._h, this._s, this._v);
-            return new RGBColor(r, g, b, this._a);
+            return new RGBColor(...Color.HSV2RGB(this._h, this._s, this._v).concat([this._a]));
         }
 
     }
@@ -1703,8 +1698,7 @@
          * @returns {CMYColor}
          */
         toCMY() {
-            const [c, m, y] = Color.RGB2CMY(this._r, this._g, this._b);
-            return new CMYColor(c, m, y, this._a);
+            return new CMYColor(...Color.RGB2CMY(this._r, this._g, this._b).concat([this._a]));
         }
 
         /**
@@ -1712,8 +1706,7 @@
          * @returns {HSLColor}
          */
         toHSL() {
-            const [h, s, l] = Color.RGB2HSL(this._r, this._g, this._b);
-            return new HSLColor(h, s, l, this._a);
+            return new HSLColor(...Color.RGB2HSL(this._r, this._g, this._b).concat([this._a]));
         }
 
         /**
@@ -1721,8 +1714,7 @@
          * @returns {HSVColor}
          */
         toHSV() {
-            const [h, s, v] = Color.RGB2HSV(this._r, this._g, this._b);
-            return new HSVColor(h, s, v, this._a);
+            return new HSVColor(...Color.RGB2HSV(this._r, this._g, this._b).concat([this._a]));
         }
 
         /**

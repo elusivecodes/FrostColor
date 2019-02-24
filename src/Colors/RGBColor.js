@@ -76,8 +76,7 @@ class RGBColor extends BaseColor {
      * @returns {CMYColor}
      */
     toCMY() {
-        const [c, m, y] = Color.RGB2CMY(this._r, this._g, this._b);
-        return new CMYColor(c, m, y, this._a);
+        return new CMYColor(...Color.RGB2CMY(this._r, this._g, this._b).concat([this._a]));
     }
 
     /**
@@ -85,8 +84,7 @@ class RGBColor extends BaseColor {
      * @returns {HSLColor}
      */
     toHSL() {
-        const [h, s, l] = Color.RGB2HSL(this._r, this._g, this._b);
-        return new HSLColor(h, s, l, this._a);
+        return new HSLColor(...Color.RGB2HSL(this._r, this._g, this._b).concat([this._a]));
     }
 
     /**
@@ -94,8 +92,7 @@ class RGBColor extends BaseColor {
      * @returns {HSVColor}
      */
     toHSV() {
-        const [h, s, v] = Color.RGB2HSV(this._r, this._g, this._b);
-        return new HSVColor(h, s, v, this._a);
+        return new HSVColor(...Color.RGB2HSV(this._r, this._g, this._b).concat([this._a]));
     }
 
     /**

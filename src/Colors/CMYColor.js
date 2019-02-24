@@ -42,8 +42,7 @@ class CMYColor extends BaseColor {
      * @returns {CMYKColor}
      */
     toCMYK() {
-        const [c, m, y, k] = Color.CMY2CMYK(this._c, this._m, this._y);
-        return new CMYKColor(c, m, y, k, this.a);
+        return new CMYKColor(...Color.CMY2CMYK(this._c, this._m, this._y).concat([this._a]));
     }
 
     /**
@@ -51,8 +50,7 @@ class CMYColor extends BaseColor {
      * @returns {RGBColor}
      */
     toRGB() {
-        const [r, g, b] = Color.CMY2RGB(this._c, this._m, this._y);
-        return new RGBColor(r, g, b, this._a);
+        return new RGBColor(...Color.CMY2RGB(this._c, this._m, this._y).concat([this._a]));
     }
 
 }
