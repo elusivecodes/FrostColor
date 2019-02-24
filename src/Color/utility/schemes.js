@@ -1,11 +1,10 @@
 Object.assign(Color.prototype, {
 
     /**
-     * Analogous
-     * @returns {Array}
+     * Returns an Array with 2 analogous Color variations
+     * @returns {Color[]}
      */
-    analogous()
-    {
+    analogous() {
         return [
             new Color(
                 this.color.setHue(
@@ -14,18 +13,17 @@ Object.assign(Color.prototype, {
             ),
             new Color(
                 this.color.setHue(
-                    this.color.getHue() + 330
+                    this.color.getHue() - 30
                 )
             )
         ];
     },
 
     /**
-     * Complementary
+     * Returns a complementary Color variation
      * @returns {Color}
      */
-    complementary()
-    {
+    complementary() {
         return new Color(
             this.color.setHue(
                 this.color.getHue() + 180
@@ -34,11 +32,10 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Split
-     * @returns {Array}
+     * Returns an Array with 2 split Color variations
+     * @returns {Color[]}
      */
-    split()
-    {
+    split() {
         return [
             new Color(
                 this.color.setHue(
@@ -47,18 +44,17 @@ Object.assign(Color.prototype, {
             ),
             new Color(
                 this.color.setHue(
-                    this.color.getHue() + 210
+                    this.color.getHue() - 150
                 )
             )
         ];
     },
 
     /**
-     * Tetradic
-     * @returns {Array}
+     * Returns an Array with 3 tetradic Color variations
+     * @returns {Color[]}
      */
-    tetradic()
-    {
+    tetradic() {
         return [
             new Color(
                 this.color.setHue(
@@ -79,11 +75,10 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Triadic
-     * @returns {Array}
+     * Returns an Array with 2 triadic Color variations
+     * @returns {Color[]}
      */
-    triadic()
-    {
+    triadic() {
         return [
             new Color(
                 this.color.setHue(

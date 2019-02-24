@@ -1,14 +1,13 @@
 Object.assign(Color, {
 
     /**
-     * CMY2CMYK
-     * @param {int} c
-     * @param {int} m
-     * @param {int} y
-     * @returns {Array}
+     * Converts CMY color values to CMYK
+     * @param {number} c
+     * @param {number} m
+     * @param {number} y
+     * @returns {number[]}
      */
-    CMY2CMYK(c, m, y)
-    {
+    CMY2CMYK(c, m, y) {
         const k = Math.min(c, m, y);
 
         if (k === 100) {
@@ -24,14 +23,13 @@ Object.assign(Color, {
     },
 
     /**
-     * CMY2RGB
-     * @param {int} c
-     * @param {int} m
-     * @param {int} y
-     * @returns {Array}
+     * Converts CMY color values to RGB
+     * @param {number} c
+     * @param {number} m
+     * @param {number} y
+     * @returns {number[]}
      */
-    CMY2RGB(c, m, y)
-    {
+    CMY2RGB(c, m, y) {
         return [
             (100 - c) * 2.5,
             (100 - m) * 2.5,
@@ -40,15 +38,14 @@ Object.assign(Color, {
     },
 
     /**
-     * CMYK2CMY
-     * @param {int} c
-     * @param {int} m
-     * @param {int} y
-     * @param {int} k
-     * @returns {Array}
+     * Converts CMYK color values to CMY
+     * @param {number} c
+     * @param {number} m
+     * @param {number} y
+     * @param {number} k
+     * @returns {number[]}
      */
-    CMYK2CMY(c, m, y, k)
-    {
+    CMYK2CMY(c, m, y, k) {
         return [
             c * (100 - k) + k,
             m * (100 - k) + k,
@@ -57,14 +54,13 @@ Object.assign(Color, {
     },
 
     /**
-     * HSL2RGB
-     * @param {int} h
-     * @param {int} s
-     * @param {int} l
-     * @returns {Array}
+     * Converts HSL color values to RGB
+     * @param {number} h
+     * @param {number} s
+     * @param {number} l
+     * @returns {number[]}
      */
-    HSL2RGB(h, s, l)
-    {
+    HSL2RGB(h, s, l) {
         if (l == 0) {
             return [0, 0, 0];
         }
@@ -86,14 +82,13 @@ Object.assign(Color, {
     },
 
     /**
-     * HSV2RGB
-     * @param {int} h
-     * @param {int} s
-     * @param {int} v
-     * @returns {Array}
+     * Converts HSV color values to RGB
+     * @param {number} h
+     * @param {number} s
+     * @param {number} v
+     * @returns {number[]}
      */
-    HSV2RGB(h, s, v)
-    {
+    HSV2RGB(h, s, v) {
         v /= 100;
 
         if (s == 0) {
@@ -141,14 +136,13 @@ Object.assign(Color, {
     },
 
     /**
-     * RGB2CMY
-     * @param {int} r
-     * @param {int} g
-     * @param {int} b
-     * @returns {Array}
+     * Converts RGB color values to CMY
+     * @param {number} r
+     * @param {number} g
+     * @param {number} b
+     * @returns {number[]}
      */
-    RGB2CMY(r, g, b)
-    {
+    RGB2CMY(r, g, b) {
         return [
             100 - (r / 2.55),
             100 - (g / 2.55),
@@ -157,28 +151,26 @@ Object.assign(Color, {
     },
 
     /**
-     * RGB2Luma
-     * @param {int} r
-     * @param {int} g
-     * @param {int} b
-     * @returns {float}
+     * Calculates the luminance of an RGB color
+     * @param {number} r
+     * @param {number} g
+     * @param {number} b
+     * @returns {number}
      */
-    RGB2Luma(r, g, b)
-    {
+    RGB2Luma(r, g, b) {
         return (0.2126 * (r / 255)) +
             (0.7152 * (g / 255)) +
             (0.0722 * (b / 255));
     },
 
     /**
-     * RGB2HSL
-     * @param {int} r
-     * @param {int} g
-     * @param {int} b
-     * @returns {Array}
+     * Converts RGB color values to HSL
+     * @param {number} r
+     * @param {number} g
+     * @param {number} b
+     * @returns {number[]}
      */
-    RGB2HSL(r, g, b)
-    {
+    RGB2HSL(r, g, b) {
         r /= 255;
         g /= 255;
         b /= 255;
@@ -216,14 +208,13 @@ Object.assign(Color, {
     },
 
     /**
-     * RGB2HSV
-     * @param {int} r
-     * @param {int} g
-     * @param {int} b
-     * @returns {Array}
+     * Converts RGB color values to HSV
+     * @param {number} r
+     * @param {number} g
+     * @param {number} b
+     * @returns {number[]}
      */
-    RGB2HSV(r, g, b)
-    {
+    RGB2HSV(r, g, b) {
         r /= 255;
         g /= 255;
         b /= 255;
@@ -259,14 +250,13 @@ Object.assign(Color, {
     },
 
     /**
-     * RGBHue
-     * @param {float} v1
-     * @param {float} v2
-     * @param {float} vH
-     * @returns {float}
+     * Calculates the R, G or B value of a hue
+     * @param {number} v1
+     * @param {number} v2
+     * @param {number} vH
+     * @returns {number}
      */
-    RGBHue(v1, v2, vH)
-    {
+    RGBHue(v1, v2, vH) {
         vH = (vH + 1) % 1;
 
         if (6 * vH < 1) {

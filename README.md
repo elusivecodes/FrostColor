@@ -2,7 +2,7 @@
 
 **FrostColor** is a free, open-source color manipulation library for *JavaScript*.
 
-It features full support for RGB, HSL, HSV, CMY and CMYK color spaces.
+It features full support for RGB, HSL, HSV, CMY and CMYK color-spaces.
 
 
 ## Table of contents
@@ -50,7 +50,7 @@ const color = new ColorImmutable(red, green, blue, alpha);
 
 After a Color object has been created, you can get the string representation using the `toString()` method.
 
-The `colorString` returned will be a string containing either a HTML color name (if one exists), a hexidecimal representation (if alpha is 1) or an rgba string.
+The `colorString` returned will be a string containing either a HTML color name (if one exists), a hexadecimal representation (if alpha is 1) or an RGB/RGBA string.
 
 ```javascript
 const colorString = color.toString();
@@ -61,7 +61,7 @@ const colorString = color.toString();
 
 #### From String
 
-- `colorString` is a string containing a color value in either hex, rgb, rgba, hsl, hsla or a standard HTML color name.
+- `colorString` is a string containing a color value in either hexadecimal, RGB, RGBA, HSL, HSLA or a standard HTML color name.
 
 ```javascript
 const color = Color.fromString(colorString);
@@ -138,7 +138,7 @@ color.setAlpha(alpha);
 const brightness = color.getBrightness();
 
 // Set brightness
-color.getBrightness(brightness);
+color.setBrightness(brightness);
 ```
 
 #### Hue
@@ -150,7 +150,7 @@ color.getBrightness(brightness);
 const hue = color.getHue();
 
 // Set hue
-color.getHue(hue);
+color.setHue(hue);
 ```
 
 #### Saturation
@@ -162,7 +162,7 @@ color.getHue(hue);
 const saturation = color.getSaturation();
 
 // Set saturation
-color.getSaturation(saturation);
+color.setSaturation(saturation);
 ```
 
 #### Luma

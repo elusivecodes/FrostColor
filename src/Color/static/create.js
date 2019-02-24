@@ -1,92 +1,86 @@
 Object.assign(Color, {
 
     /**
-     * From CMY
-     * @param {int} c
-     * @param {int} m
-     * @param {int} y
-     * @param {float} [a]
+     * Creates a new Color object from CMY color values
+     * @param {number} c
+     * @param {number} m
+     * @param {number} y
+     * @param {number} [a=1]
      * @returns {Color}
      */
-    fromCMY(...args)
-    {
+    fromCMY(c, m, y, a = 1) {
         return new this(
-            new CMY(...args)
+            new CMYColor(c, m, y, a)
         );
     },
 
     /**
-     * From CMYK
-     * @param {int} c
-     * @param {int} m
-     * @param {int} y
-     * @param {int} k
-     * @param {float} [a]
+     * Creates a new Color object from CMYK color values
+     * @param {number} c
+     * @param {number} m
+     * @param {number} y
+     * @param {number} k
+     * @param {number} [a=1]
      * @returns {Color}
      */
-    fromCMYK(...args)
-    {
+    fromCMYK(c, m, y, k, a = 1) {
         return new this(
-            new CMYK(...args)
+            new CMYKColor(c, m, y, k, a)
         );
     },
 
     /**
-     * From HSL
-     * @param {int} h
-     * @param {int} s
-     * @param {int} l
-     * @param {float} [a]
+     * Creates a new Color object from HSL color values
+     * @param {number} h
+     * @param {number} s
+     * @param {number} l
+     * @param {number} [a=1]
      * @returns {Color}
      */
-    fromHSL(...args)
-    {
+    fromHSL(h, s, l, a = 1) {
         return new this(
-            new HSL(...args)
+            new HSLColor(h, s, l, a)
         );
     },
 
     /**
-     * From HSV
-     * @param {int} h
-     * @param {int} s
-     * @param {int} v
-     * @param {float} [a]
+     * Creates a new Color object from HSV color values
+     * @param {number} h
+     * @param {number} s
+     * @param {number} v
+     * @param {number} [a=1]
      * @returns {Color}
      */
-    fromHSV(...args)
-    {
+    fromHSV(h, s, v, a = 1) {
         return new this(
-            new HSV(...args)
+            new HSVColor(h, s, v, a)
         );
     },
 
     /**
-     * From RGB
-     * @param {int} r
-     * @param {int} g
-     * @param {int} b
-     * @param {float} [a]
+     * Creates a new Color object from RGB color values
+     * @param {number} r
+     * @param {number} g
+     * @param {number} b
+     * @param {number} [a=1]
      * @returns {Color}
      */
-    fromRGB(...args)
-    {
+    fromRGB(r, g, b, a = 1) {
         return new this(
-            new RGB(...args)
+            new RGBColor(r, g, b, a)
         );
     },
 
     /**
-     * From String
+     * Creates a new Color object from a HTML color string
      * @param {string} string
      * @returns {Color}
      */
-    fromString(string)
-    {
+    fromString(string) {
         string = string.toLowerCase();
 
         if (string === 'transparent') {
-            return this.fromRGB(0, 0, 0, 0);
+            return new this(0, 0, 0, 0);
         }
 
         if (this.colors[string]) {
@@ -95,24 +89,24 @@ Object.assign(Color, {
 
         const hexMatch = string.match(this.hexRegEx);
         if (hexMatch) {
-            const rgb = hexMatch.slice(1, 4).map(value => parseInt(value, 16));
-            return this.fromRGB(rgb[0], rgb[1], rgb[2]);
+            const rgb = hexMatch.slice(1, 4).map(value => parsenumber(value, 16));
+            return new this(rgb[0], rgb[1], rgb[2]);
         }
 
         const hexMatchShort = string.match(this.hexRegExShort);
         if (hexMatchShort) {
-            const rgb = hexMatchShort.slice(1, 4).map(value => 0x11 * parseInt(value, 16));
-            return this.fromRGB(rgb[0], rgb[1], rgb[2]);
+            const rgb = hexMatchShort.slice(1, 4).map(value => 0x11 * parsenumber(value, 16));
+            return new this(rgb[0], rgb[1], rgb[2]);
         }
 
         const RGBAMatch = string.match(this.RGBARegEx);
         if (RGBAMatch) {
-            return this.fromRGB(RGBAMatch[1], RGBAMatch[2], RGBAMatch[3], RGBAMatch[4]);
+            return new this(RGBAMatch[1], RGBAMatch[2], RGBAMatch[3], RGBAMatch[4]);
         }
 
         const RGBMatch = string.match(this.RGBRegEx);
         if (RGBMatch) {
-            return this.fromRGB(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
+            return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
         }
 
         const HSLAMatch = string.match(this.HSLARegEx);
@@ -125,7 +119,7 @@ Object.assign(Color, {
             return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
         }
 
-        return this.fromRGB(0, 0, 0);
+        return new this(0, 0, 0);
     }
 
 });

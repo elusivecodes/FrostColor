@@ -7,12 +7,18 @@
     }
 
 })(window, function() {
+    'use strict';
 
     // {{code}}
-
     return {
         Color,
-        ColorImmutable
+        ColorImmutable,
+        BaseColor,
+        CMYColor,
+        CMYKColor,
+        HSLColor,
+        HSVColor,
+        RGBColor
     };
 
 });

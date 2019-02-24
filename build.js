@@ -18,8 +18,7 @@ if (!fs.existsSync(distFolder)) {
 let wrapper;
 const files = [];
 
-filepath.create(srcFolder).recurse(fullPath =>
-{
+filepath.create(srcFolder).recurse(fullPath => {
     if (!fullPath.isFile()) {
         return;
     }
@@ -39,7 +38,7 @@ filepath.create(srcFolder).recurse(fullPath =>
 // inject code to wrapper
 const code = wrapper.replace(
     '    // {{code}}',
-    files.join('\r\n\r\n')
+    files.join('\r\n')
         .replace(
             /^(?!\s*$)/mg,
             ' '.repeat(4)

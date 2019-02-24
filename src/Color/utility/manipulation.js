@@ -1,53 +1,58 @@
 Object.assign(Color.prototype, {
 
     /**
-     * Darken
-     * @param {float} amount The amount to darken the color by (between 0 and 1)
+     * Darkens the color by a specified amount (between 0 and 1)
+     * @param {number} amount
      * @returns {Color}
      */
-    darken(amount)
-    {
-        return this.setColor(this.color.darken(amount));
+    darken(amount) {
+        return this.setColor(
+            this.color.darken(amount)
+        );
     },
 
     /**
-     * Lighten
-     * @param {float} amount The amount to lighten the color by (between 0 and 1)
+     * Lightens the color by a specified amount (between 0 and 1)
+     * @param {number} amount
      * @returns {Color}
      */
-    lighten(amount)
-    {
-        return this.setColor(this.color.lighten(amount));
+    lighten(amount) {
+        return this.setColor(
+            this.color.lighten(amount)
+        );
     },
 
     /**
-     * Shade
-     * @param {float} amount The amount to shade the color by (between 0 and 1)
+     * Shades the color by a specified amount (between 0 and 1)
+     * @param {number} amount
      * @returns {Color}
      */
-    shade(amount)
-    {
-        return this.setColor(this.color.shade(amount));
+    shade(amount) {
+        return this.setColor(
+            this.color.shade(amount)
+        );
     },
 
     /**
-     * Tint
-     * @param {float} amount The amount to tint the color by (between 0 and 1)
-     * @returns {RGB}
+     * Tints the color by a specified amount (between 0 and 1)
+     * @param {number} amount
+     * @returns {Color}
      */
-    tint(amount)
-    {
-        return this.setColor(this.color.tint(amount));
+    tint(amount) {
+        return this.setColor(
+            this.color.tint(amount)
+        );
     },
 
     /**
-     * Tone
-     * @param {float} amount The amount to tone the color by (between 0 and 1)
-     * @returns {RGB}
+     * Tones the color by a specified amount (between 0 and 1)
+     * @param {number} amount
+     * @returns {Color}
      */
-    tone(amount)
-    {
-        return this.setColor(this.color.tone(amount));
+    tone(amount) {
+        return this.setColor(
+            this.color.tone(amount)
+        );
     }
 
 });
