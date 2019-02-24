@@ -15,9 +15,9 @@ class HSLColor extends BaseColor {
     constructor(hue, saturation, lightness, alpha = 1) {
         super(alpha);
 
-        this.h = hue % 360;
-        this.s = Color.clamp(saturation);
-        this.l = Color.clamp(lightness);
+        this._h = hue % 360;
+        this._s = Color.clamp(saturation);
+        this._l = Color.clamp(lightness);
     }
 
     /**
@@ -27,10 +27,10 @@ class HSLColor extends BaseColor {
      */
     darken(amount) {
         return new HSLColor(
-            this.h,
-            this.s,
-            this.l - (this.l * amount),
-            this.a
+            this._h,
+            this._s,
+            this._l - (this._l * amount),
+            this._a
         );
     }
 
@@ -41,10 +41,10 @@ class HSLColor extends BaseColor {
      */
     lighten(amount) {
         return new HSLColor(
-            this.h,
-            this.s,
-            this.l + ((100 - this.l) * amount),
-            this.a
+            this._h,
+            this._s,
+            this._l + ((100 - this._l) * amount),
+            this._a
         );
     }
 
@@ -54,7 +54,7 @@ class HSLColor extends BaseColor {
      * @returns {HSLColor}
      */
     setAlpha(alpha) {
-        return new HSL(this.h, this.s, this.l, alpha);
+        return new HSL(this._h, this._s, this._l, alpha);
     }
 
     /**
@@ -70,8 +70,8 @@ class HSLColor extends BaseColor {
      * @returns {RGBColor}
      */
     toRGB() {
-        const [r, g, b] = Color.HSL2RGB(this.h, this.s, this.l);
-        return new RGBColor(r, g, b, this.a);
+        const [r, g, b] = Color.HSL2RGB(this._h, this._s, this._l);
+        return new RGBColor(r, g, b, this._a);
     }
 
 }

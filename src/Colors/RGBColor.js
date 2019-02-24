@@ -15,9 +15,9 @@ class RGBColor extends BaseColor {
     constructor(red, green, blue, alpha = 1) {
         super(alpha);
 
-        this.r = Color.clamp(red, 0, 255);
-        this.g = Color.clamp(green, 0, 255);
-        this.b = Color.clamp(blue, 0, 255);
+        this._r = Color.clamp(red, 0, 255);
+        this._g = Color.clamp(green, 0, 255);
+        this._b = Color.clamp(blue, 0, 255);
     }
 
     /**
@@ -25,7 +25,7 @@ class RGBColor extends BaseColor {
      * @returns {number}
      */
     luma() {
-        return Color.RGB2Luma(this.r, this.g, this.b);
+        return Color.RGB2Luma(this._r, this._g, this._b);
     }
 
     /**
@@ -38,10 +38,10 @@ class RGBColor extends BaseColor {
         const rgb = color.toRGB();
 
         return new RGBColor(
-            Color.lerp(this.r, rgb.r, amount),
-            Color.lerp(this.g, rgb.g, amount),
-            Color.lerp(this.b, rgb.b, amount),
-            Color.lerp(this.a, rgb.a, amount)
+            Color.lerp(this._r, rgb._r, amount),
+            Color.lerp(this._g, rgb._g, amount),
+            Color.lerp(this._b, rgb._b, amount),
+            Color.lerp(this._a, rgb._a, amount)
         );
     }
 
@@ -55,10 +55,10 @@ class RGBColor extends BaseColor {
         const rgb = color.toRGB();
 
         return new RGBColor(
-            Color.lerp(this.r, this.r * rgb.r / 255, amount),
-            Color.lerp(this.g, this.g * rgb.g / 255, amount),
-            Color.lerp(this.b, this.b * rgb.b / 255, amount),
-            Color.lerp(this.a, this.a * rgb.a, amount)
+            Color.lerp(this._r, this._r * rgb._r / 255, amount),
+            Color.lerp(this._g, this._g * rgb._g / 255, amount),
+            Color.lerp(this._b, this._b * rgb._b / 255, amount),
+            Color.lerp(this._a, this._a * rgb._a, amount)
         );
     }
 
@@ -68,7 +68,7 @@ class RGBColor extends BaseColor {
      * @returns {RGBColor}
      */
     setAlpha(alpha) {
-        return new RGBColor(this.r, this.g, this.b, alpha);
+        return new RGBColor(this._r, this._g, this._b, alpha);
     }
 
     /**
@@ -76,8 +76,8 @@ class RGBColor extends BaseColor {
      * @returns {CMYColor}
      */
     toCMY() {
-        const [c, m, y] = Color.RGB2CMY(this.r, this.g, this.b);
-        return new CMYColor(c, m, y, this.a);
+        const [c, m, y] = Color.RGB2CMY(this._r, this._g, this._b);
+        return new CMYColor(c, m, y, this._a);
     }
 
     /**
@@ -85,8 +85,8 @@ class RGBColor extends BaseColor {
      * @returns {HSLColor}
      */
     toHSL() {
-        const [h, s, l] = Color.RGB2HSL(this.r, this.g, this.b);
-        return new HSLColor(h, s, l, this.a);
+        const [h, s, l] = Color.RGB2HSL(this._r, this._g, this._b);
+        return new HSLColor(h, s, l, this._a);
     }
 
     /**
@@ -94,8 +94,8 @@ class RGBColor extends BaseColor {
      * @returns {HSVColor}
      */
     toHSV() {
-        const [h, s, v] = Color.RGB2HSV(this.r, this.g, this.b);
-        return new HSVColor(h, s, v, this.a);
+        const [h, s, v] = Color.RGB2HSV(this._r, this._g, this._b);
+        return new HSVColor(h, s, v, this._a);
     }
 
     /**
@@ -111,15 +111,15 @@ class RGBColor extends BaseColor {
      * @returns {string}
      */
     toString() {
-        const a = Math.round(this.a * 100) / 100;
+        const a = Math.round(this._a * 100) / 100;
 
         if (a === 0) {
             return 'transparent';
         }
 
-        const r = Math.round(this.r);
-        const g = Math.round(this.g);
-        const b = Math.round(this.b);
+        const r = Math.round(this._r);
+        const g = Math.round(this._g);
+        const b = Math.round(this._b);
 
         if (a < 1) {
             return `rgba(${r}, ${g}, ${b}, ${a})`;

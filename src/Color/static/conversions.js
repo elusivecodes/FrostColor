@@ -75,17 +75,13 @@ Object.assign(Color, {
 
         const v2 = l < 0.5 ?
             l * (1 + s) :
-            (l + s) - (s * l);
-        const v1 = 2 * l - v2;
-
-        const r = this.RGBHue(v1, v2, h + (1 / 3));
-        const g = this.RGBHue(v1, v2, h);
-        const b = this.RGBHue(v1, v2, h - (1 / 3));
+            (l + s) - (s * l),
+            v1 = 2 * l - v2;
 
         return [
-            r * 255,
-            g * 255,
-            b * 255
+            this.RGBHue(v1, v2, h + (1 / 3)) * 255,
+            this.RGBHue(v1, v2, h) * 255,
+            this.RGBHue(v1, v2, h - (1 / 3)) * 255
         ];
     },
 
@@ -110,14 +106,13 @@ Object.assign(Color, {
         h = (h / 60) % 6;
         s /= 100;
 
-        const vi = Math.floor(h);
-        const v1 = v * (1 - s);
-        const v2 = v * (1 - s * (h - vi));
-        const v3 = v * (1 - s * (1 - (h - vi)));
+        const vi = Math.floor(h),
+            v1 = v * (1 - s),
+            v2 = v * (1 - s * (h - vi)),
+            v3 = v * (1 - s * (1 - (h - vi)));
 
-        let r;
-        let g;
-        let b;
+        let r, g, b;
+
         if (vi == 0) {
             r = v;
             g = v3;
@@ -191,11 +186,10 @@ Object.assign(Color, {
         g /= 255;
         b /= 255;
 
-        const min = Math.min(r, g, b);
-        const max = Math.max(r, g, b);
-        const diff = max - min;
-
-        const l = (max + min) / 2;
+        const min = Math.min(r, g, b),
+            max = Math.max(r, g, b),
+            diff = max - min,
+            l = (max + min) / 2;
 
         if (diff == 0) {
             return [0, 0, l * 100];
@@ -205,11 +199,12 @@ Object.assign(Color, {
             diff / (max + min) :
             diff / (2 - max - min);
 
-        const deltaR = (((max - r) / 6) + (diff / 2)) / diff;
-        const deltaG = (((max - g) / 6) + (diff / 2)) / diff;
-        const deltaB = (((max - b) / 6) + (diff / 2)) / diff;
+        const deltaR = (((max - r) / 6) + (diff / 2)) / diff,
+            deltaG = (((max - g) / 6) + (diff / 2)) / diff,
+            deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
         let h = 0;
+
         if (r == max) {
             h = deltaB - deltaG;
         } else if (g == max) {
@@ -237,23 +232,22 @@ Object.assign(Color, {
         g /= 255;
         b /= 255;
 
-        const min = Math.min(r, g, b);
-        const max = Math.max(r, g, b);
-        const diff = max - min;
-
-        const v = max;
+        const min = Math.min(r, g, b),
+            max = Math.max(r, g, b),
+            diff = max - min,
+            v = max;
 
         if (diff == 0) {
             return [0, 0, v * 100];
         }
 
-        const s = diff / max;
-
-        const deltaR = (((max - r) / 6) + (diff / 2)) / diff;
-        const deltaG = (((max - g) / 6) + (diff / 2)) / diff;
-        const deltaB = (((max - b) / 6) + (diff / 2)) / diff;
+        const s = diff / max,
+            deltaR = (((max - r) / 6) + (diff / 2)) / diff,
+            deltaG = (((max - g) / 6) + (diff / 2)) / diff,
+            deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
         let h = 0;
+
         if (r == max) {
             h = deltaB - deltaG;
         } else if (g == max) {

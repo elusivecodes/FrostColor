@@ -218,12 +218,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       h /= 360;
       s /= 100;
       l /= 100;
-      var v2 = l < 0.5 ? l * (1 + s) : l + s - s * l;
-      var v1 = 2 * l - v2;
-      var r = this.RGBHue(v1, v2, h + 1 / 3);
-      var g = this.RGBHue(v1, v2, h);
-      var b = this.RGBHue(v1, v2, h - 1 / 3);
-      return [r * 255, g * 255, b * 255];
+      var v2 = l < 0.5 ? l * (1 + s) : l + s - s * l,
+          v1 = 2 * l - v2;
+      return [this.RGBHue(v1, v2, h + 1 / 3) * 255, this.RGBHue(v1, v2, h) * 255, this.RGBHue(v1, v2, h - 1 / 3) * 255];
     },
 
     /**
@@ -242,13 +239,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       h = h / 60 % 6;
       s /= 100;
-      var vi = Math.floor(h);
-      var v1 = v * (1 - s);
-      var v2 = v * (1 - s * (h - vi));
-      var v3 = v * (1 - s * (1 - (h - vi)));
-      var r;
-      var g;
-      var b;
+      var vi = Math.floor(h),
+          v1 = v * (1 - s),
+          v2 = v * (1 - s * (h - vi)),
+          v3 = v * (1 - s * (1 - (h - vi)));
+      var r, g, b;
 
       if (vi == 0) {
         r = v;
@@ -312,19 +307,19 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       r /= 255;
       g /= 255;
       b /= 255;
-      var min = Math.min(r, g, b);
-      var max = Math.max(r, g, b);
-      var diff = max - min;
-      var l = (max + min) / 2;
+      var min = Math.min(r, g, b),
+          max = Math.max(r, g, b),
+          diff = max - min,
+          l = (max + min) / 2;
 
       if (diff == 0) {
         return [0, 0, l * 100];
       }
 
       var s = l < 0.5 ? diff / (max + min) : diff / (2 - max - min);
-      var deltaR = ((max - r) / 6 + diff / 2) / diff;
-      var deltaG = ((max - g) / 6 + diff / 2) / diff;
-      var deltaB = ((max - b) / 6 + diff / 2) / diff;
+      var deltaR = ((max - r) / 6 + diff / 2) / diff,
+          deltaG = ((max - g) / 6 + diff / 2) / diff,
+          deltaB = ((max - b) / 6 + diff / 2) / diff;
       var h = 0;
 
       if (r == max) {
@@ -349,19 +344,19 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       r /= 255;
       g /= 255;
       b /= 255;
-      var min = Math.min(r, g, b);
-      var max = Math.max(r, g, b);
-      var diff = max - min;
-      var v = max;
+      var min = Math.min(r, g, b),
+          max = Math.max(r, g, b),
+          diff = max - min,
+          v = max;
 
       if (diff == 0) {
         return [0, 0, v * 100];
       }
 
-      var s = diff / max;
-      var deltaR = ((max - r) / 6 + diff / 2) / diff;
-      var deltaG = ((max - g) / 6 + diff / 2) / diff;
-      var deltaB = ((max - b) / 6 + diff / 2) / diff;
+      var s = diff / max,
+          deltaR = ((max - r) / 6 + diff / 2) / diff,
+          deltaG = ((max - g) / 6 + diff / 2) / diff,
+          deltaB = ((max - b) / 6 + diff / 2) / diff;
       var h = 0;
 
       if (r == max) {
@@ -988,7 +983,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       _classCallCheck(this, BaseColor);
 
-      this.a = Color.clamp(alpha, 0, 1);
+      this._a = Color.clamp(alpha, 0, 1);
     }
     /**
      * Darkens the color by a specified amount (between 0 and 1)
@@ -1010,7 +1005,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "getAlpha",
       value: function getAlpha() {
-        return this.a;
+        return this._a;
       }
       /**
        * Gets the brightness value of the color (between 0 and 100)
@@ -1254,9 +1249,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, CMYColor);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(CMYColor).call(this, alpha));
-      _this.c = Color.clamp(cyan);
-      _this.m = Color.clamp(magenta);
-      _this.y = Color.clamp(yellow);
+      _this._c = Color.clamp(cyan);
+      _this._m = Color.clamp(magenta);
+      _this._y = Color.clamp(yellow);
       return _this;
     }
     /**
@@ -1269,7 +1264,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(CMYColor, [{
       key: "setAlpha",
       value: function setAlpha(alpha) {
-        return new CMYColor(this.c, this.m, this.y, alpha);
+        return new CMYColor(this._c, this._m, this._y, alpha);
       }
       /**
        * Creates a CMY representation of the color
@@ -1289,7 +1284,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toCMYK",
       value: function toCMYK() {
-        var _Color$CMY2CMYK = Color.CMY2CMYK(this.c, this.m, this.y),
+        var _Color$CMY2CMYK = Color.CMY2CMYK(this._c, this._m, this._y),
             _Color$CMY2CMYK2 = _slicedToArray(_Color$CMY2CMYK, 4),
             c = _Color$CMY2CMYK2[0],
             m = _Color$CMY2CMYK2[1],
@@ -1306,13 +1301,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toRGB",
       value: function toRGB() {
-        var _Color$CMY2RGB = Color.CMY2RGB(this.c, this.m, this.y),
+        var _Color$CMY2RGB = Color.CMY2RGB(this._c, this._m, this._y),
             _Color$CMY2RGB2 = _slicedToArray(_Color$CMY2RGB, 3),
             r = _Color$CMY2RGB2[0],
             g = _Color$CMY2RGB2[1],
             b = _Color$CMY2RGB2[2];
 
-        return new RGBColor(r, g, b, this.a);
+        return new RGBColor(r, g, b, this._a);
       }
     }]);
 
@@ -1346,10 +1341,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, CMYKColor);
 
       _this2 = _possibleConstructorReturn(this, _getPrototypeOf(CMYKColor).call(this, alpha));
-      _this2.c = Color.clamp(cyan);
-      _this2.m = Color.clamp(magenta);
-      _this2.y = Color.clamp(yellow);
-      _this2.k = Color.clamp(key);
+      _this2._c = Color.clamp(cyan);
+      _this2._m = Color.clamp(magenta);
+      _this2._y = Color.clamp(yellow);
+      _this2._k = Color.clamp(key);
       return _this2;
     }
     /**
@@ -1362,7 +1357,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(CMYKColor, [{
       key: "setAlpha",
       value: function setAlpha(alpha) {
-        return new CMYKColor(this.c, this.m, this.y, this.k, alpha);
+        return new CMYKColor(this._c, this._m, this._y, this._k, alpha);
       }
       /**
        * Creates a CMY representation of the color
@@ -1372,13 +1367,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toCMY",
       value: function toCMY() {
-        var _Color$CMYK2CMY = Color.CMYK2CMY(this.c, this.m, this.y, this.k),
+        var _Color$CMYK2CMY = Color.CMYK2CMY(this._c, this._m, this._y, this._k),
             _Color$CMYK2CMY2 = _slicedToArray(_Color$CMYK2CMY, 3),
             c = _Color$CMYK2CMY2[0],
             m = _Color$CMYK2CMY2[1],
             y = _Color$CMYK2CMY2[2];
 
-        return new CMYColor(c, m, y, this.a);
+        return new CMYColor(c, m, y, this._a);
       }
       /**
        * Creates a CMYK representation of the color
@@ -1431,9 +1426,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, HSLColor);
 
       _this3 = _possibleConstructorReturn(this, _getPrototypeOf(HSLColor).call(this, alpha));
-      _this3.h = hue % 360;
-      _this3.s = Color.clamp(saturation);
-      _this3.l = Color.clamp(lightness);
+      _this3._h = hue % 360;
+      _this3._s = Color.clamp(saturation);
+      _this3._l = Color.clamp(lightness);
       return _this3;
     }
     /**
@@ -1446,7 +1441,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(HSLColor, [{
       key: "darken",
       value: function darken(amount) {
-        return new HSLColor(this.h, this.s, this.l - this.l * amount, this.a);
+        return new HSLColor(this._h, this._s, this._l - this._l * amount, this._a);
       }
       /**
        * Lightens the color by a specified amount (between 0 and 1)
@@ -1457,7 +1452,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "lighten",
       value: function lighten(amount) {
-        return new HSLColor(this.h, this.s, this.l + (100 - this.l) * amount, this.a);
+        return new HSLColor(this._h, this._s, this._l + (100 - this._l) * amount, this._a);
       }
       /**
        * Sets the alpha value of the color (between 0 and 1)
@@ -1468,7 +1463,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "setAlpha",
       value: function setAlpha(alpha) {
-        return new HSL(this.h, this.s, this.l, alpha);
+        return new HSL(this._h, this._s, this._l, alpha);
       }
       /**
        * Creates a HSL representation of the color
@@ -1488,13 +1483,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toRGB",
       value: function toRGB() {
-        var _Color$HSL2RGB = Color.HSL2RGB(this.h, this.s, this.l),
+        var _Color$HSL2RGB = Color.HSL2RGB(this._h, this._s, this._l),
             _Color$HSL2RGB2 = _slicedToArray(_Color$HSL2RGB, 3),
             r = _Color$HSL2RGB2[0],
             g = _Color$HSL2RGB2[1],
             b = _Color$HSL2RGB2[2];
 
-        return new RGBColor(r, g, b, this.a);
+        return new RGBColor(r, g, b, this._a);
       }
     }]);
 
@@ -1527,9 +1522,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, HSVColor);
 
       _this4 = _possibleConstructorReturn(this, _getPrototypeOf(HSVColor).call(this, alpha));
-      _this4.h = hue % 360;
-      _this4.s = Color.clamp(saturation);
-      _this4.v = Color.clamp(brightness);
+      _this4._h = hue % 360;
+      _this4._s = Color.clamp(saturation);
+      _this4._v = Color.clamp(brightness);
       return _this4;
     }
     /**
@@ -1541,7 +1536,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(HSVColor, [{
       key: "getBrightness",
       value: function getBrightness() {
-        return this.v;
+        return this._v;
       }
       /**
        * Gets the hue value of the color (between 0 and 360)
@@ -1551,7 +1546,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "getHue",
       value: function getHue() {
-        return this.h;
+        return this._h;
       }
       /**
        * Gets the saturation value of the color (between 0 and 100)
@@ -1561,7 +1556,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "getSaturation",
       value: function getSaturation() {
-        return this.s;
+        return this._s;
       }
       /**
        * Sets the alpha value of the color (between 0 and 1)
@@ -1572,7 +1567,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "setAlpha",
       value: function setAlpha(alpha) {
-        return new HSVColor(this.h, this.s, this.v, alpha);
+        return new HSVColor(this._h, this._s, this._v, alpha);
       }
       /**
        * Sets the brightness value of the color (between 0 and 100)
@@ -1583,7 +1578,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "setBrightness",
       value: function setBrightness(brightness) {
-        return new HSVColor(this.h, this.s, brightness, this.a);
+        return new HSVColor(this._h, this._s, brightness, this._a);
       }
       /**
        * Sets the hue value of the color (between 0 and 360)
@@ -1594,7 +1589,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "setHue",
       value: function setHue(hue) {
-        return new HSVColor(hue, this.s, this.v, this.a);
+        return new HSVColor(hue, this._s, this._v, this._a);
       }
       /**
        * Sets the saturation value of the color (between 0 and 100)
@@ -1605,7 +1600,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "setSaturation",
       value: function setSaturation(saturation) {
-        return new HSVColor(this.h, saturation, this.v, this.a);
+        return new HSVColor(this._h, saturation, this._v, this._a);
       }
       /**
        * Creates a HSV representation of the color
@@ -1625,13 +1620,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toRGB",
       value: function toRGB() {
-        var _Color$HSV2RGB = Color.HSV2RGB(this.h, this.s, this.v),
+        var _Color$HSV2RGB = Color.HSV2RGB(this._h, this._s, this._v),
             _Color$HSV2RGB2 = _slicedToArray(_Color$HSV2RGB, 3),
             r = _Color$HSV2RGB2[0],
             g = _Color$HSV2RGB2[1],
             b = _Color$HSV2RGB2[2];
 
-        return new RGBColor(r, g, b, this.a);
+        return new RGBColor(r, g, b, this._a);
       }
     }]);
 
@@ -1664,9 +1659,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, RGBColor);
 
       _this5 = _possibleConstructorReturn(this, _getPrototypeOf(RGBColor).call(this, alpha));
-      _this5.r = Color.clamp(red, 0, 255);
-      _this5.g = Color.clamp(green, 0, 255);
-      _this5.b = Color.clamp(blue, 0, 255);
+      _this5._r = Color.clamp(red, 0, 255);
+      _this5._g = Color.clamp(green, 0, 255);
+      _this5._b = Color.clamp(blue, 0, 255);
       return _this5;
     }
     /**
@@ -1678,7 +1673,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     _createClass(RGBColor, [{
       key: "luma",
       value: function luma() {
-        return Color.RGB2Luma(this.r, this.g, this.b);
+        return Color.RGB2Luma(this._r, this._g, this._b);
       }
       /**
        * Mixes this color with another by a specified amount (between 0 and 1)
@@ -1691,7 +1686,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "mix",
       value: function mix(color, amount) {
         var rgb = color.toRGB();
-        return new RGBColor(Color.lerp(this.r, rgb.r, amount), Color.lerp(this.g, rgb.g, amount), Color.lerp(this.b, rgb.b, amount), Color.lerp(this.a, rgb.a, amount));
+        return new RGBColor(Color.lerp(this._r, rgb._r, amount), Color.lerp(this._g, rgb._g, amount), Color.lerp(this._b, rgb._b, amount), Color.lerp(this._a, rgb._a, amount));
       }
       /**
        * Multiplies this color with another by a specified amount (between 0 and 1)
@@ -1704,7 +1699,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "multiply",
       value: function multiply(color, amount) {
         var rgb = color.toRGB();
-        return new RGBColor(Color.lerp(this.r, this.r * rgb.r / 255, amount), Color.lerp(this.g, this.g * rgb.g / 255, amount), Color.lerp(this.b, this.b * rgb.b / 255, amount), Color.lerp(this.a, this.a * rgb.a, amount));
+        return new RGBColor(Color.lerp(this._r, this._r * rgb._r / 255, amount), Color.lerp(this._g, this._g * rgb._g / 255, amount), Color.lerp(this._b, this._b * rgb._b / 255, amount), Color.lerp(this._a, this._a * rgb._a, amount));
       }
       /**
        * Sets the alpha value of the color (between 0 and 1)
@@ -1715,7 +1710,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "setAlpha",
       value: function setAlpha(alpha) {
-        return new RGBColor(this.r, this.g, this.b, alpha);
+        return new RGBColor(this._r, this._g, this._b, alpha);
       }
       /**
        * Creates a CMY representation of the color
@@ -1725,13 +1720,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toCMY",
       value: function toCMY() {
-        var _Color$RGB2CMY = Color.RGB2CMY(this.r, this.g, this.b),
+        var _Color$RGB2CMY = Color.RGB2CMY(this._r, this._g, this._b),
             _Color$RGB2CMY2 = _slicedToArray(_Color$RGB2CMY, 3),
             c = _Color$RGB2CMY2[0],
             m = _Color$RGB2CMY2[1],
             y = _Color$RGB2CMY2[2];
 
-        return new CMYColor(c, m, y, this.a);
+        return new CMYColor(c, m, y, this._a);
       }
       /**
        * Creates a HSL representation of the color
@@ -1741,13 +1736,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toHSL",
       value: function toHSL() {
-        var _Color$RGB2HSL = Color.RGB2HSL(this.r, this.g, this.b),
+        var _Color$RGB2HSL = Color.RGB2HSL(this._r, this._g, this._b),
             _Color$RGB2HSL2 = _slicedToArray(_Color$RGB2HSL, 3),
             h = _Color$RGB2HSL2[0],
             s = _Color$RGB2HSL2[1],
             l = _Color$RGB2HSL2[2];
 
-        return new HSLColor(h, s, l, this.a);
+        return new HSLColor(h, s, l, this._a);
       }
       /**
        * Creates a HSLV representation of the color
@@ -1757,13 +1752,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toHSV",
       value: function toHSV() {
-        var _Color$RGB2HSV = Color.RGB2HSV(this.r, this.g, this.b),
+        var _Color$RGB2HSV = Color.RGB2HSV(this._r, this._g, this._b),
             _Color$RGB2HSV2 = _slicedToArray(_Color$RGB2HSV, 3),
             h = _Color$RGB2HSV2[0],
             s = _Color$RGB2HSV2[1],
             v = _Color$RGB2HSV2[2];
 
-        return new HSVColor(h, s, v, this.a);
+        return new HSVColor(h, s, v, this._a);
       }
       /**
        * Creates a RGB representation of the color
@@ -1783,15 +1778,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toString",
       value: function toString() {
-        var a = Math.round(this.a * 100) / 100;
+        var a = Math.round(this._a * 100) / 100;
 
         if (a === 0) {
           return 'transparent';
         }
 
-        var r = Math.round(this.r);
-        var g = Math.round(this.g);
-        var b = Math.round(this.b);
+        var r = Math.round(this._r);
+        var g = Math.round(this._g);
+        var b = Math.round(this._b);
 
         if (a < 1) {
           return "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");

@@ -15,9 +15,9 @@ class HSVColor extends BaseColor {
     constructor(hue, saturation, brightness, alpha = 1) {
         super(alpha);
 
-        this.h = hue % 360;
-        this.s = Color.clamp(saturation);
-        this.v = Color.clamp(brightness);
+        this._h = hue % 360;
+        this._s = Color.clamp(saturation);
+        this._v = Color.clamp(brightness);
     }
 
     /**
@@ -25,7 +25,7 @@ class HSVColor extends BaseColor {
      * @returns {number}
      */
     getBrightness() {
-        return this.v;
+        return this._v;
     }
 
     /**
@@ -33,7 +33,7 @@ class HSVColor extends BaseColor {
      * @returns {number}
      */
     getHue() {
-        return this.h;
+        return this._h;
     }
 
     /**
@@ -41,7 +41,7 @@ class HSVColor extends BaseColor {
      * @returns {number}
      */
     getSaturation() {
-        return this.s;
+        return this._s;
     }
 
     /**
@@ -50,7 +50,7 @@ class HSVColor extends BaseColor {
      * @returns {HSVColor}
      */
     setAlpha(alpha) {
-        return new HSVColor(this.h, this.s, this.v, alpha);
+        return new HSVColor(this._h, this._s, this._v, alpha);
     }
 
     /**
@@ -59,7 +59,7 @@ class HSVColor extends BaseColor {
      * @returns {HSVColor}
      */
     setBrightness(brightness) {
-        return new HSVColor(this.h, this.s, brightness, this.a);
+        return new HSVColor(this._h, this._s, brightness, this._a);
     }
 
     /**
@@ -68,7 +68,7 @@ class HSVColor extends BaseColor {
      * @returns {HSVColor}
      */
     setHue(hue) {
-        return new HSVColor(hue, this.s, this.v, this.a);
+        return new HSVColor(hue, this._s, this._v, this._a);
     }
 
     /**
@@ -77,7 +77,7 @@ class HSVColor extends BaseColor {
      * @returns {HSVColor}
      */
     setSaturation(saturation) {
-        return new HSVColor(this.h, saturation, this.v, this.a);
+        return new HSVColor(this._h, saturation, this._v, this._a);
     }
 
     /**
@@ -93,8 +93,8 @@ class HSVColor extends BaseColor {
      * @returns {RGBColor}
      */
     toRGB() {
-        const [r, g, b] = Color.HSV2RGB(this.h, this.s, this.v);
-        return new RGBColor(r, g, b, this.a);
+        const [r, g, b] = Color.HSV2RGB(this._h, this._s, this._v);
+        return new RGBColor(r, g, b, this._a);
     }
 
 }

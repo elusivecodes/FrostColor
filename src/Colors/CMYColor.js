@@ -15,9 +15,9 @@ class CMYColor extends BaseColor {
     constructor(cyan, magenta, yellow, alpha = 1) {
         super(alpha);
 
-        this.c = Color.clamp(cyan);
-        this.m = Color.clamp(magenta);
-        this.y = Color.clamp(yellow);
+        this._c = Color.clamp(cyan);
+        this._m = Color.clamp(magenta);
+        this._y = Color.clamp(yellow);
     }
 
     /**
@@ -26,7 +26,7 @@ class CMYColor extends BaseColor {
      * @returns {CMYColor}
      */
     setAlpha(alpha) {
-        return new CMYColor(this.c, this.m, this.y, alpha);
+        return new CMYColor(this._c, this._m, this._y, alpha);
     }
 
     /**
@@ -42,7 +42,7 @@ class CMYColor extends BaseColor {
      * @returns {CMYKColor}
      */
     toCMYK() {
-        const [c, m, y, k] = Color.CMY2CMYK(this.c, this.m, this.y);
+        const [c, m, y, k] = Color.CMY2CMYK(this._c, this._m, this._y);
         return new CMYKColor(c, m, y, k, this.a);
     }
 
@@ -51,8 +51,8 @@ class CMYColor extends BaseColor {
      * @returns {RGBColor}
      */
     toRGB() {
-        const [r, g, b] = Color.CMY2RGB(this.c, this.m, this.y);
-        return new RGBColor(r, g, b, this.a);
+        const [r, g, b] = Color.CMY2RGB(this._c, this._m, this._y);
+        return new RGBColor(r, g, b, this._a);
     }
 
 }

@@ -10,7 +10,7 @@ class BaseColor {
      * @returns {BaseColor}
      */
     constructor(alpha = 1) {
-        this.a = Color.clamp(alpha, 0, 1);
+        this._a = Color.clamp(alpha, 0, 1);
     }
 
     /**
@@ -28,7 +28,7 @@ class BaseColor {
      * @returns {number}
      */
     getAlpha() {
-        return this.a;
+        return this._a;
     }
 
     /**

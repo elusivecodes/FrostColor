@@ -175,17 +175,13 @@
 
             const v2 = l < 0.5 ?
                 l * (1 + s) :
-                (l + s) - (s * l);
-            const v1 = 2 * l - v2;
-
-            const r = this.RGBHue(v1, v2, h + (1 / 3));
-            const g = this.RGBHue(v1, v2, h);
-            const b = this.RGBHue(v1, v2, h - (1 / 3));
+                (l + s) - (s * l),
+                v1 = 2 * l - v2;
 
             return [
-                r * 255,
-                g * 255,
-                b * 255
+                this.RGBHue(v1, v2, h + (1 / 3)) * 255,
+                this.RGBHue(v1, v2, h) * 255,
+                this.RGBHue(v1, v2, h - (1 / 3)) * 255
             ];
         },
 
@@ -210,14 +206,13 @@
             h = (h / 60) % 6;
             s /= 100;
 
-            const vi = Math.floor(h);
-            const v1 = v * (1 - s);
-            const v2 = v * (1 - s * (h - vi));
-            const v3 = v * (1 - s * (1 - (h - vi)));
+            const vi = Math.floor(h),
+                v1 = v * (1 - s),
+                v2 = v * (1 - s * (h - vi)),
+                v3 = v * (1 - s * (1 - (h - vi)));
 
-            let r;
-            let g;
-            let b;
+            let r, g, b;
+
             if (vi == 0) {
                 r = v;
                 g = v3;
@@ -291,11 +286,10 @@
             g /= 255;
             b /= 255;
 
-            const min = Math.min(r, g, b);
-            const max = Math.max(r, g, b);
-            const diff = max - min;
-
-            const l = (max + min) / 2;
+            const min = Math.min(r, g, b),
+                max = Math.max(r, g, b),
+                diff = max - min,
+                l = (max + min) / 2;
 
             if (diff == 0) {
                 return [0, 0, l * 100];
@@ -305,11 +299,12 @@
                 diff / (max + min) :
                 diff / (2 - max - min);
 
-            const deltaR = (((max - r) / 6) + (diff / 2)) / diff;
-            const deltaG = (((max - g) / 6) + (diff / 2)) / diff;
-            const deltaB = (((max - b) / 6) + (diff / 2)) / diff;
+            const deltaR = (((max - r) / 6) + (diff / 2)) / diff,
+                deltaG = (((max - g) / 6) + (diff / 2)) / diff,
+                deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
             let h = 0;
+
             if (r == max) {
                 h = deltaB - deltaG;
             } else if (g == max) {
@@ -337,23 +332,22 @@
             g /= 255;
             b /= 255;
 
-            const min = Math.min(r, g, b);
-            const max = Math.max(r, g, b);
-            const diff = max - min;
-
-            const v = max;
+            const min = Math.min(r, g, b),
+                max = Math.max(r, g, b),
+                diff = max - min,
+                v = max;
 
             if (diff == 0) {
                 return [0, 0, v * 100];
             }
 
-            const s = diff / max;
-
-            const deltaR = (((max - r) / 6) + (diff / 2)) / diff;
-            const deltaG = (((max - g) / 6) + (diff / 2)) / diff;
-            const deltaB = (((max - b) / 6) + (diff / 2)) / diff;
+            const s = diff / max,
+                deltaR = (((max - r) / 6) + (diff / 2)) / diff,
+                deltaG = (((max - g) / 6) + (diff / 2)) / diff,
+                deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
             let h = 0;
+
             if (r == max) {
                 h = deltaB - deltaG;
             } else if (g == max) {
@@ -1110,7 +1104,7 @@
          * @returns {BaseColor}
          */
         constructor(alpha = 1) {
-            this.a = Color.clamp(alpha, 0, 1);
+            this._a = Color.clamp(alpha, 0, 1);
         }
 
         /**
@@ -1128,7 +1122,7 @@
          * @returns {number}
          */
         getAlpha() {
-            return this.a;
+            return this._a;
         }
 
         /**
@@ -1349,9 +1343,9 @@
         constructor(cyan, magenta, yellow, alpha = 1) {
             super(alpha);
 
-            this.c = Color.clamp(cyan);
-            this.m = Color.clamp(magenta);
-            this.y = Color.clamp(yellow);
+            this._c = Color.clamp(cyan);
+            this._m = Color.clamp(magenta);
+            this._y = Color.clamp(yellow);
         }
 
         /**
@@ -1360,7 +1354,7 @@
          * @returns {CMYColor}
          */
         setAlpha(alpha) {
-            return new CMYColor(this.c, this.m, this.y, alpha);
+            return new CMYColor(this._c, this._m, this._y, alpha);
         }
 
         /**
@@ -1376,7 +1370,7 @@
          * @returns {CMYKColor}
          */
         toCMYK() {
-            const [c, m, y, k] = Color.CMY2CMYK(this.c, this.m, this.y);
+            const [c, m, y, k] = Color.CMY2CMYK(this._c, this._m, this._y);
             return new CMYKColor(c, m, y, k, this.a);
         }
 
@@ -1385,8 +1379,8 @@
          * @returns {RGBColor}
          */
         toRGB() {
-            const [r, g, b] = Color.CMY2RGB(this.c, this.m, this.y);
-            return new RGBColor(r, g, b, this.a);
+            const [r, g, b] = Color.CMY2RGB(this._c, this._m, this._y);
+            return new RGBColor(r, g, b, this._a);
         }
 
     }
@@ -1409,10 +1403,10 @@
         constructor(cyan, magenta, yellow, key, alpha = 1) {
             super(alpha);
 
-            this.c = Color.clamp(cyan);
-            this.m = Color.clamp(magenta);
-            this.y = Color.clamp(yellow);
-            this.k = Color.clamp(key);
+            this._c = Color.clamp(cyan);
+            this._m = Color.clamp(magenta);
+            this._y = Color.clamp(yellow);
+            this._k = Color.clamp(key);
         }
 
         /**
@@ -1421,7 +1415,7 @@
          * @returns {CMYKColor}
          */
         setAlpha(alpha) {
-            return new CMYKColor(this.c, this.m, this.y, this.k, alpha);
+            return new CMYKColor(this._c, this._m, this._y, this._k, alpha);
         }
 
         /**
@@ -1429,8 +1423,8 @@
          * @returns {CMYColor}
          */
         toCMY() {
-            const [c, m, y] = Color.CMYK2CMY(this.c, this.m, this.y, this.k);
-            return new CMYColor(c, m, y, this.a);
+            const [c, m, y] = Color.CMYK2CMY(this._c, this._m, this._y, this._k);
+            return new CMYColor(c, m, y, this._a);
         }
 
         /**
@@ -1469,9 +1463,9 @@
         constructor(hue, saturation, lightness, alpha = 1) {
             super(alpha);
 
-            this.h = hue % 360;
-            this.s = Color.clamp(saturation);
-            this.l = Color.clamp(lightness);
+            this._h = hue % 360;
+            this._s = Color.clamp(saturation);
+            this._l = Color.clamp(lightness);
         }
 
         /**
@@ -1481,10 +1475,10 @@
          */
         darken(amount) {
             return new HSLColor(
-                this.h,
-                this.s,
-                this.l - (this.l * amount),
-                this.a
+                this._h,
+                this._s,
+                this._l - (this._l * amount),
+                this._a
             );
         }
 
@@ -1495,10 +1489,10 @@
          */
         lighten(amount) {
             return new HSLColor(
-                this.h,
-                this.s,
-                this.l + ((100 - this.l) * amount),
-                this.a
+                this._h,
+                this._s,
+                this._l + ((100 - this._l) * amount),
+                this._a
             );
         }
 
@@ -1508,7 +1502,7 @@
          * @returns {HSLColor}
          */
         setAlpha(alpha) {
-            return new HSL(this.h, this.s, this.l, alpha);
+            return new HSL(this._h, this._s, this._l, alpha);
         }
 
         /**
@@ -1524,8 +1518,8 @@
          * @returns {RGBColor}
          */
         toRGB() {
-            const [r, g, b] = Color.HSL2RGB(this.h, this.s, this.l);
-            return new RGBColor(r, g, b, this.a);
+            const [r, g, b] = Color.HSL2RGB(this._h, this._s, this._l);
+            return new RGBColor(r, g, b, this._a);
         }
 
     }
@@ -1547,9 +1541,9 @@
         constructor(hue, saturation, brightness, alpha = 1) {
             super(alpha);
 
-            this.h = hue % 360;
-            this.s = Color.clamp(saturation);
-            this.v = Color.clamp(brightness);
+            this._h = hue % 360;
+            this._s = Color.clamp(saturation);
+            this._v = Color.clamp(brightness);
         }
 
         /**
@@ -1557,7 +1551,7 @@
          * @returns {number}
          */
         getBrightness() {
-            return this.v;
+            return this._v;
         }
 
         /**
@@ -1565,7 +1559,7 @@
          * @returns {number}
          */
         getHue() {
-            return this.h;
+            return this._h;
         }
 
         /**
@@ -1573,7 +1567,7 @@
          * @returns {number}
          */
         getSaturation() {
-            return this.s;
+            return this._s;
         }
 
         /**
@@ -1582,7 +1576,7 @@
          * @returns {HSVColor}
          */
         setAlpha(alpha) {
-            return new HSVColor(this.h, this.s, this.v, alpha);
+            return new HSVColor(this._h, this._s, this._v, alpha);
         }
 
         /**
@@ -1591,7 +1585,7 @@
          * @returns {HSVColor}
          */
         setBrightness(brightness) {
-            return new HSVColor(this.h, this.s, brightness, this.a);
+            return new HSVColor(this._h, this._s, brightness, this._a);
         }
 
         /**
@@ -1600,7 +1594,7 @@
          * @returns {HSVColor}
          */
         setHue(hue) {
-            return new HSVColor(hue, this.s, this.v, this.a);
+            return new HSVColor(hue, this._s, this._v, this._a);
         }
 
         /**
@@ -1609,7 +1603,7 @@
          * @returns {HSVColor}
          */
         setSaturation(saturation) {
-            return new HSVColor(this.h, saturation, this.v, this.a);
+            return new HSVColor(this._h, saturation, this._v, this._a);
         }
 
         /**
@@ -1625,8 +1619,8 @@
          * @returns {RGBColor}
          */
         toRGB() {
-            const [r, g, b] = Color.HSV2RGB(this.h, this.s, this.v);
-            return new RGBColor(r, g, b, this.a);
+            const [r, g, b] = Color.HSV2RGB(this._h, this._s, this._v);
+            return new RGBColor(r, g, b, this._a);
         }
 
     }
@@ -1648,9 +1642,9 @@
         constructor(red, green, blue, alpha = 1) {
             super(alpha);
 
-            this.r = Color.clamp(red, 0, 255);
-            this.g = Color.clamp(green, 0, 255);
-            this.b = Color.clamp(blue, 0, 255);
+            this._r = Color.clamp(red, 0, 255);
+            this._g = Color.clamp(green, 0, 255);
+            this._b = Color.clamp(blue, 0, 255);
         }
 
         /**
@@ -1658,7 +1652,7 @@
          * @returns {number}
          */
         luma() {
-            return Color.RGB2Luma(this.r, this.g, this.b);
+            return Color.RGB2Luma(this._r, this._g, this._b);
         }
 
         /**
@@ -1671,10 +1665,10 @@
             const rgb = color.toRGB();
 
             return new RGBColor(
-                Color.lerp(this.r, rgb.r, amount),
-                Color.lerp(this.g, rgb.g, amount),
-                Color.lerp(this.b, rgb.b, amount),
-                Color.lerp(this.a, rgb.a, amount)
+                Color.lerp(this._r, rgb._r, amount),
+                Color.lerp(this._g, rgb._g, amount),
+                Color.lerp(this._b, rgb._b, amount),
+                Color.lerp(this._a, rgb._a, amount)
             );
         }
 
@@ -1688,10 +1682,10 @@
             const rgb = color.toRGB();
 
             return new RGBColor(
-                Color.lerp(this.r, this.r * rgb.r / 255, amount),
-                Color.lerp(this.g, this.g * rgb.g / 255, amount),
-                Color.lerp(this.b, this.b * rgb.b / 255, amount),
-                Color.lerp(this.a, this.a * rgb.a, amount)
+                Color.lerp(this._r, this._r * rgb._r / 255, amount),
+                Color.lerp(this._g, this._g * rgb._g / 255, amount),
+                Color.lerp(this._b, this._b * rgb._b / 255, amount),
+                Color.lerp(this._a, this._a * rgb._a, amount)
             );
         }
 
@@ -1701,7 +1695,7 @@
          * @returns {RGBColor}
          */
         setAlpha(alpha) {
-            return new RGBColor(this.r, this.g, this.b, alpha);
+            return new RGBColor(this._r, this._g, this._b, alpha);
         }
 
         /**
@@ -1709,8 +1703,8 @@
          * @returns {CMYColor}
          */
         toCMY() {
-            const [c, m, y] = Color.RGB2CMY(this.r, this.g, this.b);
-            return new CMYColor(c, m, y, this.a);
+            const [c, m, y] = Color.RGB2CMY(this._r, this._g, this._b);
+            return new CMYColor(c, m, y, this._a);
         }
 
         /**
@@ -1718,8 +1712,8 @@
          * @returns {HSLColor}
          */
         toHSL() {
-            const [h, s, l] = Color.RGB2HSL(this.r, this.g, this.b);
-            return new HSLColor(h, s, l, this.a);
+            const [h, s, l] = Color.RGB2HSL(this._r, this._g, this._b);
+            return new HSLColor(h, s, l, this._a);
         }
 
         /**
@@ -1727,8 +1721,8 @@
          * @returns {HSVColor}
          */
         toHSV() {
-            const [h, s, v] = Color.RGB2HSV(this.r, this.g, this.b);
-            return new HSVColor(h, s, v, this.a);
+            const [h, s, v] = Color.RGB2HSV(this._r, this._g, this._b);
+            return new HSVColor(h, s, v, this._a);
         }
 
         /**
@@ -1744,15 +1738,15 @@
          * @returns {string}
          */
         toString() {
-            const a = Math.round(this.a * 100) / 100;
+            const a = Math.round(this._a * 100) / 100;
 
             if (a === 0) {
                 return 'transparent';
             }
 
-            const r = Math.round(this.r);
-            const g = Math.round(this.g);
-            const b = Math.round(this.b);
+            const r = Math.round(this._r);
+            const g = Math.round(this._g);
+            const b = Math.round(this._b);
 
             if (a < 1) {
                 return `rgba(${r}, ${g}, ${b}, ${a})`;
