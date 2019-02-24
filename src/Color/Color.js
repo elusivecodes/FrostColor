@@ -47,7 +47,8 @@ class Color {
      * @returns {string}
      */
     toString() {
-        return this.getColor().toString();
+        return this.getColor()
+            .toString();
     }
 
     /**
@@ -55,7 +56,8 @@ class Color {
      * @returns {number}
      */
     valueOf() {
-        return this.getColor().valueOf();
+        return this.getColor()
+            .valueOf();
     }
 
     /**

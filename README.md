@@ -176,6 +176,8 @@ const luma = color.luma();
 
 ## Color Manipulation
 
+Manipulate a Color object you have created using the following methods.
+
 #### Darken
 
 - `amount` is a number between 0 and 1.
@@ -219,6 +221,8 @@ color.tone(amount);
 
 ## Color Mixing
 
+Mix two Color objects you have created using the following methods.
+
 #### Mix
 
 - `color1` is a Color.
@@ -241,6 +245,8 @@ const multiplied = Color.multiply(color1, color2, amount);
 
 
 ## Color Schemes
+
+Create schemes from a Color object you have created using the following methods.
 
 #### Complementary
 
@@ -284,6 +290,8 @@ const [secondary, alternate, accent] = color.tetradic();
 
 
 ## Color Palettes
+
+Create a palette of colors from a Color object you have created using the following methods.
 
 #### Shades
 

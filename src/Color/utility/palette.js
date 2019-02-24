@@ -21,10 +21,13 @@ Object.assign(Color.prototype, {
      * @returns {Color[]}
      */
     shades(shades = 10) {
+        const rgb = this.getColor()
+            .toRGB();
+
         return new Array(shades)
             .fill()
             .map((_, index) =>
-                this.getColor().shade(
+                rgb.shade(
                     index / (shades + 1)
                 )
             );
@@ -36,10 +39,13 @@ Object.assign(Color.prototype, {
      * @returns {Color[]}
      */
     tints(tints = 10) {
+        const rgb = this.getColor()
+            .toRGB();
+
         return new Array(tints)
             .fill()
             .map((_, index) =>
-                this.getColor().tint(
+                rgb.tint(
                     index / (tints + 1)
                 )
             );
@@ -51,10 +57,13 @@ Object.assign(Color.prototype, {
      * @returns {Color[]}
      */
     tones(tones = 10) {
+        const rgb = this.getColor()
+            .toRGB();
+
         return new Array(tones)
             .fill()
             .map((_, index) =>
-                this.getColor().tone(
+                rgb.tone(
                     index / (tones + 1)
                 )
             );

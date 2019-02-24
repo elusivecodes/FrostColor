@@ -5,15 +5,18 @@ Object.assign(Color.prototype, {
      * @returns {Color[]}
      */
     analogous() {
+        const hsv = this.getColor()
+            .toHSV();
+
         return [
             new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() + 30
+                hsv.setHue(
+                    hsv.getHue() + 30
                 )
             ),
             new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() - 30
+                hsv.setHue(
+                    hsv.getHue() - 30
                 )
             )
         ];
@@ -24,9 +27,12 @@ Object.assign(Color.prototype, {
      * @returns {Color}
      */
     complementary() {
+        const hsv = this.getColor()
+            .toHSV();
+
         return new Color(
-            this.getColor().setHue(
-                this.getColor().getHue() + 180
+            hsv.setHue(
+                hsv.getHue() + 180
             )
         );
     },
@@ -36,15 +42,18 @@ Object.assign(Color.prototype, {
      * @returns {Color[]}
      */
     split() {
+        const hsv = this.getColor()
+            .toHSV();
+
         return [
             new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() + 150
+                hsv.setHue(
+                    hsv.getHue() + 150
                 )
             ),
             new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() - 150
+                hsv.setHue(
+                    hsv.getHue() - 150
                 )
             )
         ];
@@ -55,20 +64,23 @@ Object.assign(Color.prototype, {
      * @returns {Color[]}
      */
     tetradic() {
+        const hsv = this.getColor()
+            .toHSV();
+
         return [
             new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() + 60
+                hsv.setHue(
+                    hsv.getHue() + 60
                 )
             ),
             new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() + 180
+                hsv.setHue(
+                    hsv.getHue() + 180
                 )
             ),
             new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() + 240
+                hsv.setHue(
+                    hsv.getHue() + 240
                 )
             )
         ];
@@ -79,15 +91,18 @@ Object.assign(Color.prototype, {
      * @returns {Color[]}
      */
     triadic() {
+        const hsv = this.getColor()
+            .toHSV();
+
         return [
             new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() + 120
+                hsv.setHue(
+                    hsv.getHue() + 120
                 )
             ),
             new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() + 240
+                hsv.setHue(
+                    hsv.getHue() + 240
                 )
             )
         ];

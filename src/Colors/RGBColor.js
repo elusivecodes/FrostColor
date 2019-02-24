@@ -107,7 +107,7 @@ class RGBColor extends BaseColor {
     }
 
     /**
-     * To String
+     * Returns a string representation of the color
      * @returns {string}
      */
     toString() {

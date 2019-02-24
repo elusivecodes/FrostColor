@@ -58,7 +58,8 @@
          * @returns {string}
          */
         toString() {
-            return this.getColor().toString();
+            return this.getColor()
+                .toString();
         }
 
         /**
@@ -66,7 +67,8 @@
          * @returns {number}
          */
         valueOf() {
-            return this.getColor().valueOf();
+            return this.getColor()
+                .valueOf();
         }
 
         /**
@@ -112,11 +114,13 @@
                 return [0, 0, 0, k];
             }
 
+            k /= 100;
+
             return [
-                (c - k) / (100 - k) * 100,
-                (m - k) / (100 - k) * 100,
-                (y - k) / (100 - k) * 100,
-                k
+                (c / 100 - k) / (1 - k) * 100,
+                (m / 100 - k) / (1 - k) * 100,
+                (y / 100 - k) / (1 - k) * 100,
+                k * 100
             ];
         },
 
@@ -129,9 +133,9 @@
          */
         CMY2RGB(c, m, y) {
             return [
-                (100 - c) * 2.5,
-                (100 - m) * 2.5,
-                (100 - y) * 2.5
+                (100 - c) / 100 * 255,
+                (100 - m) / 100 * 255,
+                (100 - y) / 100 * 255
             ];
         },
 
@@ -144,10 +148,12 @@
          * @returns {number[]}
          */
         CMYK2CMY(c, m, y, k) {
+            k /= 100;
+
             return [
-                c * (100 - k) + k,
-                m * (100 - k) + k,
-                y * (100 - k) + k
+                (c / 100 * (1 - k) + k) * 100,
+                (m / 100 * (1 - k) + k) * 100,
+                (y / 100 * (1 - k) + k) * 100
             ];
         },
 
@@ -176,7 +182,11 @@
             const g = this.RGBHue(v1, v2, h);
             const b = this.RGBHue(v1, v2, h - (1 / 3));
 
-            return [r * 255, g * 255, b * 255];
+            return [
+                r * 255,
+                g * 255,
+                b * 255
+            ];
         },
 
         /**
@@ -190,7 +200,11 @@
             v /= 100;
 
             if (s == 0) {
-                return [v * 255, v * 255, v * 255];
+                return [
+                    v * 255,
+                    v * 255,
+                    v * 255
+                ];
             }
 
             h = (h / 60) % 6;
@@ -230,7 +244,11 @@
                 b = v2;
             }
 
-            return [r * 255, g * 255, b * 255];
+            return [
+                r * 255,
+                g * 255,
+                b * 255
+            ];
         },
 
         /**
@@ -242,9 +260,9 @@
          */
         RGB2CMY(r, g, b) {
             return [
-                100 - (r / 2.55),
-                100 - (g / 2.55),
-                100 - (b / 2.55)
+                (1 - (r / 255)) * 100,
+                (1 - (g / 255)) * 100,
+                (1 - (b / 255)) * 100
             ];
         },
 
@@ -300,9 +318,11 @@
                 h = (2 / 3) + deltaG - deltaR;
             }
 
-            h = (h + 1) % 1;
-
-            return [h * 360, s * 100, l * 100];
+            return [
+                ((h + 1) % 1) * 360,
+                s * 100,
+                l * 100
+            ];
         },
 
         /**
@@ -344,7 +364,11 @@
 
             h = (h + 1) % 1;
 
-            return [h * 360, s * 100, v * 100];
+            return [
+                h * 360,
+                s * 100,
+                v * 100
+            ];
         },
 
         /**
@@ -510,7 +534,8 @@
          */
         mix(color1, color2, amount) {
             return new this(
-                color1.getColor().mix(color2.getColor(), amount)
+                color1.getColor()
+                    .mix(color2.getColor(), amount)
             );
         },
 
@@ -523,7 +548,8 @@
          */
         multiply(color1, color2, amount) {
             return new this(
-                color1.getColor().multiply(color2.getColor(), amount)
+                color1.getColor()
+                    .multiply(color2.getColor(), amount)
             );
         }
 
@@ -733,7 +759,8 @@
          * @returns {number}
          */
         getAlpha() {
-            return this.getColor().getAlpha();
+            return this.getColor()
+                .getAlpha();
         },
 
         /**
@@ -741,7 +768,8 @@
          * @returns {number}
          */
         getBrightness() {
-            return this.getColor().getBrightness();
+            return this.getColor()
+                .getBrightness();
         },
 
         /**
@@ -749,7 +777,8 @@
          * @returns {number}
          */
         getHue() {
-            return this.getColor().getHue();
+            return this.getColor()
+                .getHue();
         },
 
         /**
@@ -757,7 +786,8 @@
          * @returns {number}
          */
         getSaturation() {
-            return this.getColor().getSaturation();
+            return this.getColor()
+                .getSaturation();
         },
 
         /**
@@ -765,7 +795,8 @@
          * @returns {number}
          */
         luma() {
-            return this.getColor().luma();
+            return this.getColor()
+                .luma();
         },
 
         /**
@@ -775,7 +806,8 @@
          */
         setAlpha(alpha) {
             return this.setColor(
-                this.getColor().setAlpha(alpha)
+                this.getColor()
+                    .setAlpha(alpha)
             );
         },
 
@@ -786,7 +818,8 @@
          */
         setBrightness(brightness) {
             return this.setColor(
-                this.getColor().setBrightness(brightness)
+                this.getColor()
+                    .setBrightness(brightness)
             );
         },
 
@@ -797,7 +830,8 @@
          */
         setHue(hue) {
             return this.setColor(
-                this.getColor().setHue(hue)
+                this.getColor()
+                    .setHue(hue)
             );
         },
 
@@ -808,7 +842,8 @@
          */
         setSaturation(saturation) {
             return this.setColor(
-                this.getColor().setSaturation(saturation)
+                this.getColor()
+                    .setSaturation(saturation)
             );
         }
 
@@ -823,7 +858,8 @@
          */
         darken(amount) {
             return this.setColor(
-                this.getColor().darken(amount)
+                this.getColor()
+                    .darken(amount)
             );
         },
 
@@ -834,7 +870,8 @@
          */
         lighten(amount) {
             return this.setColor(
-                this.getColor().lighten(amount)
+                this.getColor()
+                    .lighten(amount)
             );
         },
 
@@ -845,7 +882,8 @@
          */
         shade(amount) {
             return this.setColor(
-                this.getColor().shade(amount)
+                this.getColor()
+                    .shade(amount)
             );
         },
 
@@ -856,7 +894,8 @@
          */
         tint(amount) {
             return this.setColor(
-                this.getColor().tint(amount)
+                this.getColor()
+                    .tint(amount)
             );
         },
 
@@ -867,7 +906,8 @@
          */
         tone(amount) {
             return this.setColor(
-                this.getColor().tone(amount)
+                this.getColor()
+                    .tone(amount)
             );
         }
 
@@ -896,10 +936,13 @@
          * @returns {Color[]}
          */
         shades(shades = 10) {
+            const rgb = this.getColor()
+                .toRGB();
+
             return new Array(shades)
                 .fill()
                 .map((_, index) =>
-                    this.getColor().shade(
+                    rgb.shade(
                         index / (shades + 1)
                     )
                 );
@@ -911,10 +954,13 @@
          * @returns {Color[]}
          */
         tints(tints = 10) {
+            const rgb = this.getColor()
+                .toRGB();
+
             return new Array(tints)
                 .fill()
                 .map((_, index) =>
-                    this.getColor().tint(
+                    rgb.tint(
                         index / (tints + 1)
                     )
                 );
@@ -926,10 +972,13 @@
          * @returns {Color[]}
          */
         tones(tones = 10) {
+            const rgb = this.getColor()
+                .toRGB();
+
             return new Array(tones)
                 .fill()
                 .map((_, index) =>
-                    this.getColor().tone(
+                    rgb.tone(
                         index / (tones + 1)
                     )
                 );
@@ -944,15 +993,18 @@
          * @returns {Color[]}
          */
         analogous() {
+            const hsv = this.getColor()
+                .toHSV();
+
             return [
                 new Color(
-                    this.getColor().setHue(
-                        this.getColor().getHue() + 30
+                    hsv.setHue(
+                        hsv.getHue() + 30
                     )
                 ),
                 new Color(
-                    this.getColor().setHue(
-                        this.getColor().getHue() - 30
+                    hsv.setHue(
+                        hsv.getHue() - 30
                     )
                 )
             ];
@@ -963,9 +1015,12 @@
          * @returns {Color}
          */
         complementary() {
+            const hsv = this.getColor()
+                .toHSV();
+
             return new Color(
-                this.getColor().setHue(
-                    this.getColor().getHue() + 180
+                hsv.setHue(
+                    hsv.getHue() + 180
                 )
             );
         },
@@ -975,15 +1030,18 @@
          * @returns {Color[]}
          */
         split() {
+            const hsv = this.getColor()
+                .toHSV();
+
             return [
                 new Color(
-                    this.getColor().setHue(
-                        this.getColor().getHue() + 150
+                    hsv.setHue(
+                        hsv.getHue() + 150
                     )
                 ),
                 new Color(
-                    this.getColor().setHue(
-                        this.getColor().getHue() - 150
+                    hsv.setHue(
+                        hsv.getHue() - 150
                     )
                 )
             ];
@@ -994,20 +1052,23 @@
          * @returns {Color[]}
          */
         tetradic() {
+            const hsv = this.getColor()
+                .toHSV();
+
             return [
                 new Color(
-                    this.getColor().setHue(
-                        this.getColor().getHue() + 60
+                    hsv.setHue(
+                        hsv.getHue() + 60
                     )
                 ),
                 new Color(
-                    this.getColor().setHue(
-                        this.getColor().getHue() + 180
+                    hsv.setHue(
+                        hsv.getHue() + 180
                     )
                 ),
                 new Color(
-                    this.getColor().setHue(
-                        this.getColor().getHue() + 240
+                    hsv.setHue(
+                        hsv.getHue() + 240
                     )
                 )
             ];
@@ -1018,15 +1079,18 @@
          * @returns {Color[]}
          */
         triadic() {
+            const hsv = this.getColor()
+                .toHSV();
+
             return [
                 new Color(
-                    this.getColor().setHue(
-                        this.getColor().getHue() + 120
+                    hsv.setHue(
+                        hsv.getHue() + 120
                     )
                 ),
                 new Color(
-                    this.getColor().setHue(
-                        this.getColor().getHue() + 240
+                    hsv.setHue(
+                        hsv.getHue() + 240
                     )
                 )
             ];
@@ -1676,7 +1740,7 @@
         }
 
         /**
-         * To String
+         * Returns a string representation of the color
          * @returns {string}
          */
         toString() {

@@ -8,6 +8,8 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -173,7 +175,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return [0, 0, 0, k];
       }
 
-      return [(c - k) / (100 - k) * 100, (m - k) / (100 - k) * 100, (y - k) / (100 - k) * 100, k];
+      k /= (_readOnlyError("k"), 100);
+      return [(c / 100 - k) / (1 - k) * 100, (m / 100 - k) / (1 - k) * 100, (y / 100 - k) / (1 - k) * 100, k * 100];
     },
 
     /**
@@ -184,7 +187,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number[]}
      */
     CMY2RGB: function CMY2RGB(c, m, y) {
-      return [(100 - c) * 2.5, (100 - m) * 2.5, (100 - y) * 2.5];
+      return [(100 - c) / 100 * 255, (100 - m) / 100 * 255, (100 - y) / 100 * 255];
     },
 
     /**
@@ -196,7 +199,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number[]}
      */
     CMYK2CMY: function CMYK2CMY(c, m, y, k) {
-      return [c * (100 - k) + k, m * (100 - k) + k, y * (100 - k) + k];
+      k /= 100;
+      return [(c / 100 * (1 - k) + k) * 100, (m / 100 * (1 - k) + k) * 100, (y / 100 * (1 - k) + k) * 100];
     },
 
     /**
@@ -283,7 +287,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number[]}
      */
     RGB2CMY: function RGB2CMY(r, g, b) {
-      return [100 - r / 2.55, 100 - g / 2.55, 100 - b / 2.55];
+      return [(1 - r / 255) * 100, (1 - g / 255) * 100, (1 - b / 255) * 100];
     },
 
     /**
@@ -331,8 +335,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         h = 2 / 3 + deltaG - deltaR;
       }
 
-      h = (h + 1) % 1;
-      return [h * 360, s * 100, l * 100];
+      return [(h + 1) % 1 * 360, s * 100, l * 100];
     },
 
     /**
@@ -885,12 +888,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     shades: function shades() {
-      var _this = this;
-
       var _shades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
+      var rgb = this.getColor().toRGB();
       return new Array(_shades).fill().map(function (_, index) {
-        return _this.getColor().shade(index / (_shades + 1));
+        return rgb.shade(index / (_shades + 1));
       });
     },
 
@@ -900,12 +902,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     tints: function tints() {
-      var _this2 = this;
-
       var _tints = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
+      var rgb = this.getColor().toRGB();
       return new Array(_tints).fill().map(function (_, index) {
-        return _this2.getColor().tint(index / (_tints + 1));
+        return rgb.tint(index / (_tints + 1));
       });
     },
 
@@ -915,12 +916,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     tones: function tones() {
-      var _this3 = this;
-
       var _tones = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
+      var rgb = this.getColor().toRGB();
       return new Array(_tones).fill().map(function (_, index) {
-        return _this3.getColor().tone(index / (_tones + 1));
+        return rgb.tone(index / (_tones + 1));
       });
     }
   });
@@ -930,7 +930,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     analogous: function analogous() {
-      return [new Color(this.getColor().setHue(this.getColor().getHue() + 30)), new Color(this.getColor().setHue(this.getColor().getHue() - 30))];
+      var hsv = this.getColor().toHSV();
+      return [new Color(hsv.setHue(hsv.getHue() + 30)), new Color(hsv.setHue(hsv.getHue() - 30))];
     },
 
     /**
@@ -938,7 +939,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     complementary: function complementary() {
-      return new Color(this.getColor().setHue(this.getColor().getHue() + 180));
+      var hsv = this.getColor().toHSV();
+      return new Color(hsv.setHue(hsv.getHue() + 180));
     },
 
     /**
@@ -946,7 +948,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     split: function split() {
-      return [new Color(this.getColor().setHue(this.getColor().getHue() + 150)), new Color(this.getColor().setHue(this.getColor().getHue() - 150))];
+      var hsv = this.getColor().toHSV();
+      return [new Color(hsv.setHue(hsv.getHue() + 150)), new Color(hsv.setHue(hsv.getHue() - 150))];
     },
 
     /**
@@ -954,7 +957,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     tetradic: function tetradic() {
-      return [new Color(this.getColor().setHue(this.getColor().getHue() + 60)), new Color(this.getColor().setHue(this.getColor().getHue() + 180)), new Color(this.getColor().setHue(this.getColor().getHue() + 240))];
+      var hsv = this.getColor().toHSV();
+      return [new Color(hsv.setHue(hsv.getHue() + 60)), new Color(hsv.setHue(hsv.getHue() + 180)), new Color(hsv.setHue(hsv.getHue() + 240))];
     },
 
     /**
@@ -962,7 +966,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     triadic: function triadic() {
-      return [new Color(this.getColor().setHue(this.getColor().getHue() + 120)), new Color(this.getColor().setHue(this.getColor().getHue() + 240))];
+      var hsv = this.getColor().toHSV();
+      return [new Color(hsv.setHue(hsv.getHue() + 120)), new Color(hsv.setHue(hsv.getHue() + 240))];
     }
   });
   /**
@@ -1242,17 +1247,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {CMYColor}
      */
     function CMYColor(cyan, magenta, yellow) {
-      var _this4;
+      var _this;
 
       var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, CMYColor);
 
-      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(CMYColor).call(this, alpha));
-      _this4.c = Color.clamp(cyan);
-      _this4.m = Color.clamp(magenta);
-      _this4.y = Color.clamp(yellow);
-      return _this4;
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(CMYColor).call(this, alpha));
+      _this.c = Color.clamp(cyan);
+      _this.m = Color.clamp(magenta);
+      _this.y = Color.clamp(yellow);
+      return _this;
     }
     /**
      * Sets the alpha value of the color (between 0 and 1)
@@ -1334,18 +1339,18 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {CMYKColor}
      */
     function CMYKColor(cyan, magenta, yellow, key) {
-      var _this5;
+      var _this2;
 
       var alpha = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
 
       _classCallCheck(this, CMYKColor);
 
-      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(CMYKColor).call(this, alpha));
-      _this5.c = Color.clamp(cyan);
-      _this5.m = Color.clamp(magenta);
-      _this5.y = Color.clamp(yellow);
-      _this5.k = Color.clamp(key);
-      return _this5;
+      _this2 = _possibleConstructorReturn(this, _getPrototypeOf(CMYKColor).call(this, alpha));
+      _this2.c = Color.clamp(cyan);
+      _this2.m = Color.clamp(magenta);
+      _this2.y = Color.clamp(yellow);
+      _this2.k = Color.clamp(key);
+      return _this2;
     }
     /**
      * Sets the alpha value of the color (between 0 and 1)
@@ -1419,17 +1424,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {HSLColor}
      */
     function HSLColor(hue, saturation, lightness) {
-      var _this6;
+      var _this3;
 
       var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, HSLColor);
 
-      _this6 = _possibleConstructorReturn(this, _getPrototypeOf(HSLColor).call(this, alpha));
-      _this6.h = hue % 360;
-      _this6.s = Color.clamp(saturation);
-      _this6.l = Color.clamp(lightness);
-      return _this6;
+      _this3 = _possibleConstructorReturn(this, _getPrototypeOf(HSLColor).call(this, alpha));
+      _this3.h = hue % 360;
+      _this3.s = Color.clamp(saturation);
+      _this3.l = Color.clamp(lightness);
+      return _this3;
     }
     /**
      * Darkens the color by a specified amount (between 0 and 1)
@@ -1515,17 +1520,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {HSVColor}
      */
     function HSVColor(hue, saturation, brightness) {
-      var _this7;
+      var _this4;
 
       var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, HSVColor);
 
-      _this7 = _possibleConstructorReturn(this, _getPrototypeOf(HSVColor).call(this, alpha));
-      _this7.h = hue % 360;
-      _this7.s = Color.clamp(saturation);
-      _this7.v = Color.clamp(brightness);
-      return _this7;
+      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(HSVColor).call(this, alpha));
+      _this4.h = hue % 360;
+      _this4.s = Color.clamp(saturation);
+      _this4.v = Color.clamp(brightness);
+      return _this4;
     }
     /**
      * Gets the brightness value of the color (between 0 and 100)
@@ -1652,17 +1657,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {RGBColor}
      */
     function RGBColor(red, green, blue) {
-      var _this8;
+      var _this5;
 
       var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, RGBColor);
 
-      _this8 = _possibleConstructorReturn(this, _getPrototypeOf(RGBColor).call(this, alpha));
-      _this8.r = Color.clamp(red, 0, 255);
-      _this8.g = Color.clamp(green, 0, 255);
-      _this8.b = Color.clamp(blue, 0, 255);
-      return _this8;
+      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(RGBColor).call(this, alpha));
+      _this5.r = Color.clamp(red, 0, 255);
+      _this5.g = Color.clamp(green, 0, 255);
+      _this5.b = Color.clamp(blue, 0, 255);
+      return _this5;
     }
     /**
      * Gets the luminance value of the color 
@@ -1771,7 +1776,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return this;
       }
       /**
-       * To String
+       * Returns a string representation of the color
        * @returns {string}
        */
 

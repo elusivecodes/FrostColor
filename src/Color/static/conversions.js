@@ -14,11 +14,13 @@ Object.assign(Color, {
             return [0, 0, 0, k];
         }
 
+        k /= 100;
+
         return [
-            (c - k) / (100 - k) * 100,
-            (m - k) / (100 - k) * 100,
-            (y - k) / (100 - k) * 100,
-            k
+            (c / 100 - k) / (1 - k) * 100,
+            (m / 100 - k) / (1 - k) * 100,
+            (y / 100 - k) / (1 - k) * 100,
+            k * 100
         ];
     },
 
@@ -31,9 +33,9 @@ Object.assign(Color, {
      */
     CMY2RGB(c, m, y) {
         return [
-            (100 - c) * 2.5,
-            (100 - m) * 2.5,
-            (100 - y) * 2.5
+            (100 - c) / 100 * 255,
+            (100 - m) / 100 * 255,
+            (100 - y) / 100 * 255
         ];
     },
 
@@ -46,10 +48,12 @@ Object.assign(Color, {
      * @returns {number[]}
      */
     CMYK2CMY(c, m, y, k) {
+        k /= 100;
+
         return [
-            c * (100 - k) + k,
-            m * (100 - k) + k,
-            y * (100 - k) + k
+            (c / 100 * (1 - k) + k) * 100,
+            (m / 100 * (1 - k) + k) * 100,
+            (y / 100 * (1 - k) + k) * 100
         ];
     },
 
@@ -78,7 +82,11 @@ Object.assign(Color, {
         const g = this.RGBHue(v1, v2, h);
         const b = this.RGBHue(v1, v2, h - (1 / 3));
 
-        return [r * 255, g * 255, b * 255];
+        return [
+            r * 255,
+            g * 255,
+            b * 255
+        ];
     },
 
     /**
@@ -92,7 +100,11 @@ Object.assign(Color, {
         v /= 100;
 
         if (s == 0) {
-            return [v * 255, v * 255, v * 255];
+            return [
+                v * 255,
+                v * 255,
+                v * 255
+            ];
         }
 
         h = (h / 60) % 6;
@@ -132,7 +144,11 @@ Object.assign(Color, {
             b = v2;
         }
 
-        return [r * 255, g * 255, b * 255];
+        return [
+            r * 255,
+            g * 255,
+            b * 255
+        ];
     },
 
     /**
@@ -144,9 +160,9 @@ Object.assign(Color, {
      */
     RGB2CMY(r, g, b) {
         return [
-            100 - (r / 2.55),
-            100 - (g / 2.55),
-            100 - (b / 2.55)
+            (1 - (r / 255)) * 100,
+            (1 - (g / 255)) * 100,
+            (1 - (b / 255)) * 100
         ];
     },
 
@@ -202,9 +218,11 @@ Object.assign(Color, {
             h = (2 / 3) + deltaG - deltaR;
         }
 
-        h = (h + 1) % 1;
-
-        return [h * 360, s * 100, l * 100];
+        return [
+            ((h + 1) % 1) * 360,
+            s * 100,
+            l * 100
+        ];
     },
 
     /**
@@ -246,7 +264,11 @@ Object.assign(Color, {
 
         h = (h + 1) % 1;
 
-        return [h * 360, s * 100, v * 100];
+        return [
+            h * 360,
+            s * 100,
+            v * 100
+        ];
     },
 
     /**
