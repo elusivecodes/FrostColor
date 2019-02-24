@@ -6,18 +6,18 @@ class HSVColor extends BaseColor {
 
     /**
      * New HSVColor constructor
-     * @param {number} [h]
-     * @param {number} [s]
-     * @param {number} [v]
-     * @param {number} [a=1]
+     * @param {number} hue
+     * @param {number} saturation
+     * @param {number} brightness
+     * @param {number} [alpha=1]
      * @returns {HSVColor}
      */
-    constructor(h, s, v, a = 1) {
-        super(a);
+    constructor(hue, saturation, brightness, alpha = 1) {
+        super(alpha);
 
-        this.h = h % 360;
-        this.s = Color.clamp(s);
-        this.v = Color.clamp(v);
+        this.h = hue % 360;
+        this.s = Color.clamp(saturation);
+        this.v = Color.clamp(brightness);
     }
 
     /**
@@ -46,38 +46,38 @@ class HSVColor extends BaseColor {
 
     /**
      * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} a
+     * @param {number} alpha
      * @returns {HSVColor}
      */
-    setAlpha(a) {
-        return new HSVColor(this.h, this.s, this.v, a);
+    setAlpha(alpha) {
+        return new HSVColor(this.h, this.s, this.v, alpha);
     }
 
     /**
      * Sets the brightness value of the color (between 0 and 100)
-     * @param {number} v
+     * @param {number} brightness
      * @returns {HSVColor}
      */
-    setBrightness(v) {
-        return new HSVColor(this.h, this.s, v, this.a);
+    setBrightness(brightness) {
+        return new HSVColor(this.h, this.s, brightness, this.a);
     }
 
     /**
      * Sets the hue value of the color (between 0 and 360)
-     * @param {number} h
+     * @param {number} hue
      * @returns {HSVColor}
      */
-    setHue(h) {
-        return new HSVColor(h, this.s, this.v, this.a);
+    setHue(hue) {
+        return new HSVColor(hue, this.s, this.v, this.a);
     }
 
     /**
      * Sets the saturation value of the color (between 0 and 100)
-     * @param {number} s
+     * @param {number} saturation
      * @returns {HSVColor}
      */
-    setSaturation(s) {
-        return new HSVColor(this.h, s, this.v, this.a);
+    setSaturation(saturation) {
+        return new HSVColor(this.h, saturation, this.v, this.a);
     }
 
     /**

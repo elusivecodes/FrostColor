@@ -44,41 +44,51 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   function () {
     /**
      * New Color constructor
-     * @param {number} [r=0]
-     * @param {number} [g=1]
-     * @param {null|number} [b=null]
-     * @param {number} [a=1]
+     * @param {number|BaseColor|Color} [red=0]
+     * @param {number} [green=1]
+     * @param {null|number} [blue=null]
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
     function Color() {
-      var r = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var g = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-      var b = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      var red = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var green = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var blue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, Color);
 
-      if (b !== null) {
-        this.color = new RGBColor(r, g, b, a);
-      } else if (r instanceof BaseColor) {
-        this.color = r;
-      } else if (r instanceof Color) {
-        this.color = r.color;
+      if (blue !== null) {
+        this._color = new RGBColor(red, green, blue, alpha);
+      } else if (red instanceof BaseColor) {
+        this._color = red;
+      } else if (red instanceof Color) {
+        this._color = red.getColor();
       } else {
-        this.color = new HSLColor(0, 0, r, g);
+        this._color = new HSLColor(0, 0, red, green);
       }
     }
     /**
-     * Sets the BaseColor of the color
-     * @param {BaseColor} color
-     * @returns {Color}
+     * Returns the internal BaseColor of the color
+     * @returns {BaseColor}
      */
 
 
     _createClass(Color, [{
+      key: "getColor",
+      value: function getColor() {
+        return this._color;
+      }
+      /**
+       * Sets the BaseColor of the color
+       * @param {BaseColor} color
+       * @returns {Color}
+       */
+
+    }, {
       key: "setColor",
       value: function setColor(color) {
-        this.color = color;
+        this._color = color;
         return this;
       }
       /**
@@ -89,7 +99,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toString",
       value: function toString() {
-        return this.color.toString();
+        return this.getColor().toString();
       }
       /**
        * Returns the luminance value of the color
@@ -99,7 +109,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "valueOf",
       value: function valueOf() {
-        return this.color.valueOf();
+        return this.getColor().valueOf();
       }
       /**
        * Returns a primitive value of the color
@@ -109,7 +119,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: Symbol.toPrimitive,
       value: function value(hint) {
-        return this.color[Symbol.toPrimitive](hint);
+        return this.getColor()[Symbol.toPrimitive](hint);
       }
     }]);
 
@@ -391,68 +401,68 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   Object.assign(Color, {
     /**
      * Creates a new Color object from CMY color values
-     * @param {number} c
-     * @param {number} m
-     * @param {number} y
-     * @param {number} [a=1]
+     * @param {number} cyan
+     * @param {number} magenta
+     * @param {number} yellow
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromCMY: function fromCMY(c, m, y) {
-      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
-      return new this(new CMYColor(c, m, y, a));
+    fromCMY: function fromCMY(cyan, magenta, yellow) {
+      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      return new this(new CMYColor(cyan, magenta, yellow, alpha));
     },
 
     /**
      * Creates a new Color object from CMYK color values
-     * @param {number} c
-     * @param {number} m
-     * @param {number} y
-     * @param {number} k
-     * @param {number} [a=1]
+     * @param {number} cyan
+     * @param {number} magenta
+     * @param {number} yellow
+     * @param {number} key
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromCMYK: function fromCMYK(c, m, y, k) {
-      var a = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
-      return new this(new CMYKColor(c, m, y, k, a));
+    fromCMYK: function fromCMYK(cyan, magenta, yellow, key) {
+      var alpha = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+      return new this(new CMYKColor(cyan, magenta, yellow, key, alpha));
     },
 
     /**
      * Creates a new Color object from HSL color values
-     * @param {number} h
-     * @param {number} s
-     * @param {number} l
-     * @param {number} [a=1]
+     * @param {number} hue
+     * @param {number} saturation
+     * @param {number} lightness
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromHSL: function fromHSL(h, s, l) {
-      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
-      return new this(new HSLColor(h, s, l, a));
+    fromHSL: function fromHSL(hue, saturation, lightness) {
+      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      return new this(new HSLColor(hue, saturation, lightness, alpha));
     },
 
     /**
      * Creates a new Color object from HSV color values
-     * @param {number} h
-     * @param {number} s
-     * @param {number} v
-     * @param {number} [a=1]
+     * @param {number} hue
+     * @param {number} saturation
+     * @param {number} brightness
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromHSV: function fromHSV(h, s, v) {
-      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
-      return new this(new HSVColor(h, s, v, a));
+    fromHSV: function fromHSV(hue, saturation, brightness) {
+      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      return new this(new HSVColor(hue, saturation, brightness, alpha));
     },
 
     /**
      * Creates a new Color object from RGB color values
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
-     * @param {number} [a=1]
+     * @param {number} red
+     * @param {number} green
+     * @param {number} blue
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromRGB: function fromRGB(r, g, b) {
-      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
-      return new this(new RGBColor(r, g, b, a));
+    fromRGB: function fromRGB(red, green, blue) {
+      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      return new this(new RGBColor(red, green, blue, alpha));
     },
 
     /**
@@ -526,7 +536,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     mix: function mix(color1, color2, amount) {
-      return new this(color1.color.mix(color2.color, amount));
+      return new this(color1.getColor().mix(color2.getColor(), amount));
     },
 
     /**
@@ -537,7 +547,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     multiply: function multiply(color1, color2, amount) {
-      return new this(color1.color.multiply(color2.color, amount));
+      return new this(color1.getColor().multiply(color2.getColor(), amount));
     }
   });
   Object.assign(Color, {
@@ -733,7 +743,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number}
      */
     getAlpha: function getAlpha() {
-      return this.color.getAlpha();
+      return this.getColor().getAlpha();
     },
 
     /**
@@ -741,7 +751,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number}
      */
     getBrightness: function getBrightness() {
-      return this.color.getBrightness();
+      return this.getColor().getBrightness();
     },
 
     /**
@@ -749,7 +759,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number}
      */
     getHue: function getHue() {
-      return this.color.getHue();
+      return this.getColor().getHue();
     },
 
     /**
@@ -757,7 +767,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number}
      */
     getSaturation: function getSaturation() {
-      return this.color.getSaturation();
+      return this.getColor().getSaturation();
     },
 
     /**
@@ -765,7 +775,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number}
      */
     luma: function luma() {
-      return this.color.luma();
+      return this.getColor().luma();
     },
 
     /**
@@ -774,7 +784,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     setAlpha: function setAlpha(alpha) {
-      return this.setColor(this.color.setAlpha(alpha));
+      return this.setColor(this.getColor().setAlpha(alpha));
     },
 
     /**
@@ -783,25 +793,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     setBrightness: function setBrightness(brightness) {
-      return this.setColor(this.color.setBrightness(brightness));
+      return this.setColor(this.getColor().setBrightness(brightness));
     },
 
     /**
      * Sets the hue value of the color (between 0 and 360)
-     * @param {number} h
+     * @param {number} hue
      * @returns {Color}
      */
     setHue: function setHue(hue) {
-      return this.setColor(this.color.setHue(hue));
+      return this.setColor(this.getColor().setHue(hue));
     },
 
     /**
      * Sets the saturation value of the color (between 0 and 100)
-     * @param {number} s
+     * @param {number} saturation
      * @returns {Color}
      */
     setSaturation: function setSaturation(saturation) {
-      return this.setColor(this.color.setSaturation(saturation));
+      return this.setColor(this.getColor().setSaturation(saturation));
     }
   });
   Object.assign(Color.prototype, {
@@ -811,7 +821,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     darken: function darken(amount) {
-      return this.setColor(this.color.darken(amount));
+      return this.setColor(this.getColor().darken(amount));
     },
 
     /**
@@ -820,7 +830,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     lighten: function lighten(amount) {
-      return this.setColor(this.color.lighten(amount));
+      return this.setColor(this.getColor().lighten(amount));
     },
 
     /**
@@ -829,7 +839,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     shade: function shade(amount) {
-      return this.setColor(this.color.shade(amount));
+      return this.setColor(this.getColor().shade(amount));
     },
 
     /**
@@ -838,7 +848,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     tint: function tint(amount) {
-      return this.setColor(this.color.tint(amount));
+      return this.setColor(this.getColor().tint(amount));
     },
 
     /**
@@ -847,7 +857,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     tone: function tone(amount) {
-      return this.setColor(this.color.tone(amount));
+      return this.setColor(this.getColor().tone(amount));
     }
   });
   Object.assign(Color.prototype, {
@@ -880,7 +890,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var _shades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
       return new Array(_shades).fill().map(function (_, index) {
-        return _this.color.shade(index / (_shades + 1));
+        return _this.getColor().shade(index / (_shades + 1));
       });
     },
 
@@ -895,7 +905,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var _tints = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
       return new Array(_tints).fill().map(function (_, index) {
-        return _this2.color.tint(index / (_tints + 1));
+        return _this2.getColor().tint(index / (_tints + 1));
       });
     },
 
@@ -910,7 +920,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       var _tones = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
       return new Array(_tones).fill().map(function (_, index) {
-        return _this3.color.tone(index / (_tones + 1));
+        return _this3.getColor().tone(index / (_tones + 1));
       });
     }
   });
@@ -920,7 +930,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     analogous: function analogous() {
-      return [new Color(this.color.setHue(this.color.getHue() + 30)), new Color(this.color.setHue(this.color.getHue() - 30))];
+      return [new Color(this.getColor().setHue(this.getColor().getHue() + 30)), new Color(this.getColor().setHue(this.getColor().getHue() - 30))];
     },
 
     /**
@@ -928,7 +938,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     complementary: function complementary() {
-      return new Color(this.color.setHue(this.color.getHue() + 180));
+      return new Color(this.getColor().setHue(this.getColor().getHue() + 180));
     },
 
     /**
@@ -936,7 +946,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     split: function split() {
-      return [new Color(this.color.setHue(this.color.getHue() + 150)), new Color(this.color.setHue(this.color.getHue() - 150))];
+      return [new Color(this.getColor().setHue(this.getColor().getHue() + 150)), new Color(this.getColor().setHue(this.getColor().getHue() - 150))];
     },
 
     /**
@@ -944,7 +954,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     tetradic: function tetradic() {
-      return [new Color(this.color.setHue(this.color.getHue() + 60)), new Color(this.color.setHue(this.color.getHue() + 180)), new Color(this.color.setHue(this.color.getHue() + 240))];
+      return [new Color(this.getColor().setHue(this.getColor().getHue() + 60)), new Color(this.getColor().setHue(this.getColor().getHue() + 180)), new Color(this.getColor().setHue(this.getColor().getHue() + 240))];
     },
 
     /**
@@ -952,7 +962,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]}
      */
     triadic: function triadic() {
-      return [new Color(this.color.setHue(this.color.getHue() + 120)), new Color(this.color.setHue(this.color.getHue() + 240))];
+      return [new Color(this.getColor().setHue(this.getColor().getHue() + 120)), new Color(this.getColor().setHue(this.getColor().getHue() + 240))];
     }
   });
   /**
@@ -965,15 +975,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   function () {
     /**
      * New BaseColor constructor
-     * @param {number} [a=1]
+     * @param {number} [alpha=1]
      * @returns {BaseColor}
      */
     function BaseColor() {
-      var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var alpha = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
       _classCallCheck(this, BaseColor);
 
-      this.a = Color.clamp(a, 0, 1);
+      this.a = Color.clamp(alpha, 0, 1);
     }
     /**
      * Darkens the color by a specified amount (between 0 and 1)
@@ -1074,36 +1084,36 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Sets the brightness value of the color (between 0 and 100)
-       * @param {number} v
+       * @param {number} brightness
        * @returns {HSVColor}
        */
 
     }, {
       key: "setBrightness",
-      value: function setBrightness(v) {
-        return this.toHSV().setBrightness(v);
+      value: function setBrightness(brightness) {
+        return this.toHSV().setBrightness(brightness);
       }
       /**
        * Sets the hue value of the color (between 0 and 360)
-       * @param {number} h
+       * @param {number} hue
        * @returns {HSVColor}
        */
 
     }, {
       key: "setHue",
-      value: function setHue(h) {
-        return this.toHSV().setHue(h);
+      value: function setHue(hue) {
+        return this.toHSV().setHue(hue);
       }
       /**
        * Sets the saturation value of the color (between 0 and 100)
-       * @param {number} s
+       * @param {number} saturation
        * @returns {HSVColor}
        */
 
     }, {
       key: "setSaturation",
-      value: function setSaturation(s) {
-        return this.toHSV().setSaturation(s);
+      value: function setSaturation(saturation) {
+        return this.toHSV().setSaturation(saturation);
       }
       /**
        * Shades the color by a specified amount (between 0 and 1)
@@ -1225,36 +1235,36 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New CMYColor constructor
-     * @param {number} [c]
-     * @param {number} [m]
-     * @param {number} [y]
-     * @param {number} [a=1]
+     * @param {number} cyan
+     * @param {number} magenta
+     * @param {number} yellow
+     * @param {number} [alpha=1]
      * @returns {CMYColor}
      */
-    function CMYColor(c, m, y) {
+    function CMYColor(cyan, magenta, yellow) {
       var _this4;
 
-      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, CMYColor);
 
-      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(CMYColor).call(this, a));
-      _this4.c = Color.clamp(c);
-      _this4.m = Color.clamp(m);
-      _this4.y = Color.clamp(y);
+      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(CMYColor).call(this, alpha));
+      _this4.c = Color.clamp(cyan);
+      _this4.m = Color.clamp(magenta);
+      _this4.y = Color.clamp(yellow);
       return _this4;
     }
     /**
      * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} a
+     * @param {number} alpha
      * @returns {CMYColor}
      */
 
 
     _createClass(CMYColor, [{
       key: "setAlpha",
-      value: function setAlpha(a) {
-        return new CMYColor(this.c, this.m, this.y, a);
+      value: function setAlpha(alpha) {
+        return new CMYColor(this.c, this.m, this.y, alpha);
       }
       /**
        * Creates a CMY representation of the color
@@ -1316,38 +1326,38 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New CMYKColor constructor
-     * @param {number} [c]
-     * @param {number} [m]
-     * @param {number} [y]
-     * @param {number} [k]
-     * @param {number} [a=1]
+     * @param {number} cyan
+     * @param {number} magenta
+     * @param {number} yellow
+     * @param {number} key
+     * @param {number} [alpha=1]
      * @returns {CMYKColor}
      */
-    function CMYKColor(c, m, y, k) {
+    function CMYKColor(cyan, magenta, yellow, key) {
       var _this5;
 
-      var a = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+      var alpha = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
 
       _classCallCheck(this, CMYKColor);
 
-      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(CMYKColor).call(this, a));
-      _this5.c = Color.clamp(c);
-      _this5.m = Color.clamp(m);
-      _this5.y = Color.clamp(y);
-      _this5.k = Color.clamp(k);
+      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(CMYKColor).call(this, alpha));
+      _this5.c = Color.clamp(cyan);
+      _this5.m = Color.clamp(magenta);
+      _this5.y = Color.clamp(yellow);
+      _this5.k = Color.clamp(key);
       return _this5;
     }
     /**
      * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} a
+     * @param {number} alpha
      * @returns {CMYKColor}
      */
 
 
     _createClass(CMYKColor, [{
       key: "setAlpha",
-      value: function setAlpha(a) {
-        return new CMYKColor(this.c, this.m, this.y, this.k, a);
+      value: function setAlpha(alpha) {
+        return new CMYKColor(this.c, this.m, this.y, this.k, alpha);
       }
       /**
        * Creates a CMY representation of the color
@@ -1402,23 +1412,23 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New HSLColor constructor
-     * @param {number} [h]
-     * @param {number} [s]
-     * @param {number} [l]
-     * @param {number} [a=1]
+     * @param {number} hue
+     * @param {number} saturation
+     * @param {number} lightness
+     * @param {number} [alpha=1]
      * @returns {HSLColor}
      */
-    function HSLColor(h, s, l) {
+    function HSLColor(hue, saturation, lightness) {
       var _this6;
 
-      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, HSLColor);
 
-      _this6 = _possibleConstructorReturn(this, _getPrototypeOf(HSLColor).call(this, a));
-      _this6.h = h % 360;
-      _this6.s = Color.clamp(s);
-      _this6.l = Color.clamp(l);
+      _this6 = _possibleConstructorReturn(this, _getPrototypeOf(HSLColor).call(this, alpha));
+      _this6.h = hue % 360;
+      _this6.s = Color.clamp(saturation);
+      _this6.l = Color.clamp(lightness);
       return _this6;
     }
     /**
@@ -1446,14 +1456,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Sets the alpha value of the color (between 0 and 1)
-       * @param {number} a
+       * @param {number} alpha
        * @returns {HSLColor}
        */
 
     }, {
       key: "setAlpha",
-      value: function setAlpha(a) {
-        return new HSL(this.h, this.s, this.l, a);
+      value: function setAlpha(alpha) {
+        return new HSL(this.h, this.s, this.l, alpha);
       }
       /**
        * Creates a HSL representation of the color
@@ -1498,23 +1508,23 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New HSVColor constructor
-     * @param {number} [h]
-     * @param {number} [s]
-     * @param {number} [v]
-     * @param {number} [a=1]
+     * @param {number} hue
+     * @param {number} saturation
+     * @param {number} brightness
+     * @param {number} [alpha=1]
      * @returns {HSVColor}
      */
-    function HSVColor(h, s, v) {
+    function HSVColor(hue, saturation, brightness) {
       var _this7;
 
-      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, HSVColor);
 
-      _this7 = _possibleConstructorReturn(this, _getPrototypeOf(HSVColor).call(this, a));
-      _this7.h = h % 360;
-      _this7.s = Color.clamp(s);
-      _this7.v = Color.clamp(v);
+      _this7 = _possibleConstructorReturn(this, _getPrototypeOf(HSVColor).call(this, alpha));
+      _this7.h = hue % 360;
+      _this7.s = Color.clamp(saturation);
+      _this7.v = Color.clamp(brightness);
       return _this7;
     }
     /**
@@ -1550,47 +1560,47 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Sets the alpha value of the color (between 0 and 1)
-       * @param {number} a
+       * @param {number} alpha
        * @returns {HSVColor}
        */
 
     }, {
       key: "setAlpha",
-      value: function setAlpha(a) {
-        return new HSVColor(this.h, this.s, this.v, a);
+      value: function setAlpha(alpha) {
+        return new HSVColor(this.h, this.s, this.v, alpha);
       }
       /**
        * Sets the brightness value of the color (between 0 and 100)
-       * @param {number} v
+       * @param {number} brightness
        * @returns {HSVColor}
        */
 
     }, {
       key: "setBrightness",
-      value: function setBrightness(v) {
-        return new HSVColor(this.h, this.s, v, this.a);
+      value: function setBrightness(brightness) {
+        return new HSVColor(this.h, this.s, brightness, this.a);
       }
       /**
        * Sets the hue value of the color (between 0 and 360)
-       * @param {number} h
+       * @param {number} hue
        * @returns {HSVColor}
        */
 
     }, {
       key: "setHue",
-      value: function setHue(h) {
-        return new HSVColor(h, this.s, this.v, this.a);
+      value: function setHue(hue) {
+        return new HSVColor(hue, this.s, this.v, this.a);
       }
       /**
        * Sets the saturation value of the color (between 0 and 100)
-       * @param {number} s
+       * @param {number} saturation
        * @returns {HSVColor}
        */
 
     }, {
       key: "setSaturation",
-      value: function setSaturation(s) {
-        return new HSVColor(this.h, s, this.v, this.a);
+      value: function setSaturation(saturation) {
+        return new HSVColor(this.h, saturation, this.v, this.a);
       }
       /**
        * Creates a HSV representation of the color
@@ -1635,23 +1645,23 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New RGBColor constructor
-     * @param {number} [r]
-     * @param {number} [g]
-     * @param {number} [b]
-     * @param {number} [a=1]
+     * @param {number} red
+     * @param {number} green
+     * @param {number} blue
+     * @param {number} [alpha=1]
      * @returns {RGBColor}
      */
-    function RGBColor(r, g, b) {
+    function RGBColor(red, green, blue) {
       var _this8;
 
-      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, RGBColor);
 
-      _this8 = _possibleConstructorReturn(this, _getPrototypeOf(RGBColor).call(this, a));
-      _this8.r = Color.clamp(r, 0, 255);
-      _this8.g = Color.clamp(g, 0, 255);
-      _this8.b = Color.clamp(b, 0, 255);
+      _this8 = _possibleConstructorReturn(this, _getPrototypeOf(RGBColor).call(this, alpha));
+      _this8.r = Color.clamp(red, 0, 255);
+      _this8.g = Color.clamp(green, 0, 255);
+      _this8.b = Color.clamp(blue, 0, 255);
       return _this8;
     }
     /**
@@ -1693,14 +1703,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Sets the alpha value of the color (between 0 and 1)
-       * @param {number} a
+       * @param {number} alpha
        * @returns {RGBColor}
        */
 
     }, {
       key: "setAlpha",
-      value: function setAlpha(a) {
-        return new RGBColor(this.r, this.g, this.b, a);
+      value: function setAlpha(alpha) {
+        return new RGBColor(this.r, this.g, this.b, alpha);
       }
       /**
        * Creates a CMY representation of the color

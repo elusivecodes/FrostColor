@@ -6,18 +6,18 @@ class RGBColor extends BaseColor {
 
     /**
      * New RGBColor constructor
-     * @param {number} [r]
-     * @param {number} [g]
-     * @param {number} [b]
-     * @param {number} [a=1]
+     * @param {number} red
+     * @param {number} green
+     * @param {number} blue
+     * @param {number} [alpha=1]
      * @returns {RGBColor}
      */
-    constructor(r, g, b, a = 1) {
-        super(a);
+    constructor(red, green, blue, alpha = 1) {
+        super(alpha);
 
-        this.r = Color.clamp(r, 0, 255);
-        this.g = Color.clamp(g, 0, 255);
-        this.b = Color.clamp(b, 0, 255);
+        this.r = Color.clamp(red, 0, 255);
+        this.g = Color.clamp(green, 0, 255);
+        this.b = Color.clamp(blue, 0, 255);
     }
 
     /**
@@ -64,11 +64,11 @@ class RGBColor extends BaseColor {
 
     /**
      * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} a
+     * @param {number} alpha
      * @returns {RGBColor}
      */
-    setAlpha(a) {
-        return new RGBColor(this.r, this.g, this.b, a);
+    setAlpha(alpha) {
+        return new RGBColor(this.r, this.g, this.b, alpha);
     }
 
     /**

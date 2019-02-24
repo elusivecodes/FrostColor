@@ -6,18 +6,18 @@ class HSLColor extends BaseColor {
 
     /**
      * New HSLColor constructor
-     * @param {number} [h]
-     * @param {number} [s]
-     * @param {number} [l]
-     * @param {number} [a=1]
+     * @param {number} hue
+     * @param {number} saturation
+     * @param {number} lightness
+     * @param {number} [alpha=1]
      * @returns {HSLColor}
      */
-    constructor(h, s, l, a = 1) {
-        super(a);
+    constructor(hue, saturation, lightness, alpha = 1) {
+        super(alpha);
 
-        this.h = h % 360;
-        this.s = Color.clamp(s);
-        this.l = Color.clamp(l);
+        this.h = hue % 360;
+        this.s = Color.clamp(saturation);
+        this.l = Color.clamp(lightness);
     }
 
     /**
@@ -50,11 +50,11 @@ class HSLColor extends BaseColor {
 
     /**
      * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} a
+     * @param {number} alpha
      * @returns {HSLColor}
      */
-    setAlpha(a) {
-        return new HSL(this.h, this.s, this.l, a);
+    setAlpha(alpha) {
+        return new HSL(this.h, this.s, this.l, alpha);
     }
 
     /**

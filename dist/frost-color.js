@@ -17,22 +17,30 @@
 
         /**
          * New Color constructor
-         * @param {number} [r=0]
-         * @param {number} [g=1]
-         * @param {null|number} [b=null]
-         * @param {number} [a=1]
+         * @param {number|BaseColor|Color} [red=0]
+         * @param {number} [green=1]
+         * @param {null|number} [blue=null]
+         * @param {number} [alpha=1]
          * @returns {Color}
          */
-        constructor(r = 0, g = 1, b = null, a = 1) {
-            if (b !== null) {
-                this.color = new RGBColor(r, g, b, a);
-            } else if (r instanceof BaseColor) {
-                this.color = r;
-            } else if (r instanceof Color) {
-                this.color = r.color;
+        constructor(red = 0, green = 1, blue = null, alpha = 1) {
+            if (blue !== null) {
+                this._color = new RGBColor(red, green, blue, alpha);
+            } else if (red instanceof BaseColor) {
+                this._color = red;
+            } else if (red instanceof Color) {
+                this._color = red.getColor();
             } else {
-                this.color = new HSLColor(0, 0, r, g);
+                this._color = new HSLColor(0, 0, red, green);
             }
+        }
+
+        /**
+         * Returns the internal BaseColor of the color
+         * @returns {BaseColor}
+         */
+        getColor() {
+            return this._color;
         }
 
         /**
@@ -41,7 +49,7 @@
          * @returns {Color}
          */
         setColor(color) {
-            this.color = color;
+            this._color = color;
             return this;
         }
 
@@ -50,7 +58,7 @@
          * @returns {string}
          */
         toString() {
-            return this.color.toString();
+            return this.getColor().toString();
         }
 
         /**
@@ -58,7 +66,7 @@
          * @returns {number}
          */
         valueOf() {
-            return this.color.valueOf();
+            return this.getColor().valueOf();
         }
 
         /**
@@ -66,7 +74,7 @@
          * @returns {string|number}
          */
         [Symbol.toPrimitive](hint) {
-            return this.color[Symbol.toPrimitive](hint);
+            return this.getColor()[Symbol.toPrimitive](hint);
         }
 
     }
@@ -369,72 +377,72 @@
 
         /**
          * Creates a new Color object from CMY color values
-         * @param {number} c
-         * @param {number} m
-         * @param {number} y
-         * @param {number} [a=1]
+         * @param {number} cyan
+         * @param {number} magenta
+         * @param {number} yellow
+         * @param {number} [alpha=1]
          * @returns {Color}
          */
-        fromCMY(c, m, y, a = 1) {
+        fromCMY(cyan, magenta, yellow, alpha = 1) {
             return new this(
-                new CMYColor(c, m, y, a)
+                new CMYColor(cyan, magenta, yellow, alpha)
             );
         },
 
         /**
          * Creates a new Color object from CMYK color values
-         * @param {number} c
-         * @param {number} m
-         * @param {number} y
-         * @param {number} k
-         * @param {number} [a=1]
+         * @param {number} cyan
+         * @param {number} magenta
+         * @param {number} yellow
+         * @param {number} key
+         * @param {number} [alpha=1]
          * @returns {Color}
          */
-        fromCMYK(c, m, y, k, a = 1) {
+        fromCMYK(cyan, magenta, yellow, key, alpha = 1) {
             return new this(
-                new CMYKColor(c, m, y, k, a)
+                new CMYKColor(cyan, magenta, yellow, key, alpha)
             );
         },
 
         /**
          * Creates a new Color object from HSL color values
-         * @param {number} h
-         * @param {number} s
-         * @param {number} l
-         * @param {number} [a=1]
+         * @param {number} hue
+         * @param {number} saturation
+         * @param {number} lightness
+         * @param {number} [alpha=1]
          * @returns {Color}
          */
-        fromHSL(h, s, l, a = 1) {
+        fromHSL(hue, saturation, lightness, alpha = 1) {
             return new this(
-                new HSLColor(h, s, l, a)
+                new HSLColor(hue, saturation, lightness, alpha)
             );
         },
 
         /**
          * Creates a new Color object from HSV color values
-         * @param {number} h
-         * @param {number} s
-         * @param {number} v
-         * @param {number} [a=1]
+         * @param {number} hue
+         * @param {number} saturation
+         * @param {number} brightness
+         * @param {number} [alpha=1]
          * @returns {Color}
          */
-        fromHSV(h, s, v, a = 1) {
+        fromHSV(hue, saturation, brightness, alpha = 1) {
             return new this(
-                new HSVColor(h, s, v, a)
+                new HSVColor(hue, saturation, brightness, alpha)
             );
         },
 
         /**
          * Creates a new Color object from RGB color values
-         * @param {number} r
-         * @param {number} g
-         * @param {number} b
-         * @param {number} [a=1]
+         * @param {number} red
+         * @param {number} green
+         * @param {number} blue
+         * @param {number} [alpha=1]
          * @returns {Color}
          */
-        fromRGB(r, g, b, a = 1) {
+        fromRGB(red, green, blue, alpha = 1) {
             return new this(
-                new RGBColor(r, g, b, a)
+                new RGBColor(red, green, blue, alpha)
             );
         },
 
@@ -502,7 +510,7 @@
          */
         mix(color1, color2, amount) {
             return new this(
-                color1.color.mix(color2.color, amount)
+                color1.getColor().mix(color2.getColor(), amount)
             );
         },
 
@@ -515,7 +523,7 @@
          */
         multiply(color1, color2, amount) {
             return new this(
-                color1.color.multiply(color2.color, amount)
+                color1.getColor().multiply(color2.getColor(), amount)
             );
         }
 
@@ -725,7 +733,7 @@
          * @returns {number}
          */
         getAlpha() {
-            return this.color.getAlpha();
+            return this.getColor().getAlpha();
         },
 
         /**
@@ -733,7 +741,7 @@
          * @returns {number}
          */
         getBrightness() {
-            return this.color.getBrightness();
+            return this.getColor().getBrightness();
         },
 
         /**
@@ -741,7 +749,7 @@
          * @returns {number}
          */
         getHue() {
-            return this.color.getHue();
+            return this.getColor().getHue();
         },
 
         /**
@@ -749,7 +757,7 @@
          * @returns {number}
          */
         getSaturation() {
-            return this.color.getSaturation();
+            return this.getColor().getSaturation();
         },
 
         /**
@@ -757,7 +765,7 @@
          * @returns {number}
          */
         luma() {
-            return this.color.luma();
+            return this.getColor().luma();
         },
 
         /**
@@ -767,7 +775,7 @@
          */
         setAlpha(alpha) {
             return this.setColor(
-                this.color.setAlpha(alpha)
+                this.getColor().setAlpha(alpha)
             );
         },
 
@@ -778,29 +786,29 @@
          */
         setBrightness(brightness) {
             return this.setColor(
-                this.color.setBrightness(brightness)
+                this.getColor().setBrightness(brightness)
             );
         },
 
         /**
          * Sets the hue value of the color (between 0 and 360)
-         * @param {number} h
+         * @param {number} hue
          * @returns {Color}
          */
         setHue(hue) {
             return this.setColor(
-                this.color.setHue(hue)
+                this.getColor().setHue(hue)
             );
         },
 
         /**
          * Sets the saturation value of the color (between 0 and 100)
-         * @param {number} s
+         * @param {number} saturation
          * @returns {Color}
          */
         setSaturation(saturation) {
             return this.setColor(
-                this.color.setSaturation(saturation)
+                this.getColor().setSaturation(saturation)
             );
         }
 
@@ -815,7 +823,7 @@
          */
         darken(amount) {
             return this.setColor(
-                this.color.darken(amount)
+                this.getColor().darken(amount)
             );
         },
 
@@ -826,7 +834,7 @@
          */
         lighten(amount) {
             return this.setColor(
-                this.color.lighten(amount)
+                this.getColor().lighten(amount)
             );
         },
 
@@ -837,7 +845,7 @@
          */
         shade(amount) {
             return this.setColor(
-                this.color.shade(amount)
+                this.getColor().shade(amount)
             );
         },
 
@@ -848,7 +856,7 @@
          */
         tint(amount) {
             return this.setColor(
-                this.color.tint(amount)
+                this.getColor().tint(amount)
             );
         },
 
@@ -859,7 +867,7 @@
          */
         tone(amount) {
             return this.setColor(
-                this.color.tone(amount)
+                this.getColor().tone(amount)
             );
         }
 
@@ -891,7 +899,7 @@
             return new Array(shades)
                 .fill()
                 .map((_, index) =>
-                    this.color.shade(
+                    this.getColor().shade(
                         index / (shades + 1)
                     )
                 );
@@ -906,7 +914,7 @@
             return new Array(tints)
                 .fill()
                 .map((_, index) =>
-                    this.color.tint(
+                    this.getColor().tint(
                         index / (tints + 1)
                     )
                 );
@@ -921,7 +929,7 @@
             return new Array(tones)
                 .fill()
                 .map((_, index) =>
-                    this.color.tone(
+                    this.getColor().tone(
                         index / (tones + 1)
                     )
                 );
@@ -938,13 +946,13 @@
         analogous() {
             return [
                 new Color(
-                    this.color.setHue(
-                        this.color.getHue() + 30
+                    this.getColor().setHue(
+                        this.getColor().getHue() + 30
                     )
                 ),
                 new Color(
-                    this.color.setHue(
-                        this.color.getHue() - 30
+                    this.getColor().setHue(
+                        this.getColor().getHue() - 30
                     )
                 )
             ];
@@ -956,8 +964,8 @@
          */
         complementary() {
             return new Color(
-                this.color.setHue(
-                    this.color.getHue() + 180
+                this.getColor().setHue(
+                    this.getColor().getHue() + 180
                 )
             );
         },
@@ -969,13 +977,13 @@
         split() {
             return [
                 new Color(
-                    this.color.setHue(
-                        this.color.getHue() + 150
+                    this.getColor().setHue(
+                        this.getColor().getHue() + 150
                     )
                 ),
                 new Color(
-                    this.color.setHue(
-                        this.color.getHue() - 150
+                    this.getColor().setHue(
+                        this.getColor().getHue() - 150
                     )
                 )
             ];
@@ -988,18 +996,18 @@
         tetradic() {
             return [
                 new Color(
-                    this.color.setHue(
-                        this.color.getHue() + 60
+                    this.getColor().setHue(
+                        this.getColor().getHue() + 60
                     )
                 ),
                 new Color(
-                    this.color.setHue(
-                        this.color.getHue() + 180
+                    this.getColor().setHue(
+                        this.getColor().getHue() + 180
                     )
                 ),
                 new Color(
-                    this.color.setHue(
-                        this.color.getHue() + 240
+                    this.getColor().setHue(
+                        this.getColor().getHue() + 240
                     )
                 )
             ];
@@ -1012,13 +1020,13 @@
         triadic() {
             return [
                 new Color(
-                    this.color.setHue(
-                        this.color.getHue() + 120
+                    this.getColor().setHue(
+                        this.getColor().getHue() + 120
                     )
                 ),
                 new Color(
-                    this.color.setHue(
-                        this.color.getHue() + 240
+                    this.getColor().setHue(
+                        this.getColor().getHue() + 240
                     )
                 )
             ];
@@ -1034,11 +1042,11 @@
 
         /**
          * New BaseColor constructor
-         * @param {number} [a=1]
+         * @param {number} [alpha=1]
          * @returns {BaseColor}
          */
-        constructor(a = 1) {
-            this.a = Color.clamp(a, 0, 1);
+        constructor(alpha = 1) {
+            this.a = Color.clamp(alpha, 0, 1);
         }
 
         /**
@@ -1129,32 +1137,32 @@
 
         /**
          * Sets the brightness value of the color (between 0 and 100)
-         * @param {number} v
+         * @param {number} brightness
          * @returns {HSVColor}
          */
-        setBrightness(v) {
+        setBrightness(brightness) {
             return this.toHSV()
-                .setBrightness(v);
+                .setBrightness(brightness);
         }
 
         /**
          * Sets the hue value of the color (between 0 and 360)
-         * @param {number} h
+         * @param {number} hue
          * @returns {HSVColor}
          */
-        setHue(h) {
+        setHue(hue) {
             return this.toHSV()
-                .setHue(h);
+                .setHue(hue);
         }
 
         /**
          * Sets the saturation value of the color (between 0 and 100)
-         * @param {number} s
+         * @param {number} saturation
          * @returns {HSVColor}
          */
-        setSaturation(s) {
+        setSaturation(saturation) {
             return this.toHSV()
-                .setSaturation(s);
+                .setSaturation(saturation);
         }
 
         /**
@@ -1268,27 +1276,27 @@
 
         /**
          * New CMYColor constructor
-         * @param {number} [c]
-         * @param {number} [m]
-         * @param {number} [y]
-         * @param {number} [a=1]
+         * @param {number} cyan
+         * @param {number} magenta
+         * @param {number} yellow
+         * @param {number} [alpha=1]
          * @returns {CMYColor}
          */
-        constructor(c, m, y, a = 1) {
-            super(a);
+        constructor(cyan, magenta, yellow, alpha = 1) {
+            super(alpha);
 
-            this.c = Color.clamp(c);
-            this.m = Color.clamp(m);
-            this.y = Color.clamp(y);
+            this.c = Color.clamp(cyan);
+            this.m = Color.clamp(magenta);
+            this.y = Color.clamp(yellow);
         }
 
         /**
          * Sets the alpha value of the color (between 0 and 1)
-         * @param {number} a
+         * @param {number} alpha
          * @returns {CMYColor}
          */
-        setAlpha(a) {
-            return new CMYColor(this.c, this.m, this.y, a);
+        setAlpha(alpha) {
+            return new CMYColor(this.c, this.m, this.y, alpha);
         }
 
         /**
@@ -1327,29 +1335,29 @@
 
         /**
          * New CMYKColor constructor
-         * @param {number} [c]
-         * @param {number} [m]
-         * @param {number} [y]
-         * @param {number} [k]
-         * @param {number} [a=1]
+         * @param {number} cyan
+         * @param {number} magenta
+         * @param {number} yellow
+         * @param {number} key
+         * @param {number} [alpha=1]
          * @returns {CMYKColor}
          */
-        constructor(c, m, y, k, a = 1) {
-            super(a);
+        constructor(cyan, magenta, yellow, key, alpha = 1) {
+            super(alpha);
 
-            this.c = Color.clamp(c);
-            this.m = Color.clamp(m);
-            this.y = Color.clamp(y);
-            this.k = Color.clamp(k);
+            this.c = Color.clamp(cyan);
+            this.m = Color.clamp(magenta);
+            this.y = Color.clamp(yellow);
+            this.k = Color.clamp(key);
         }
 
         /**
          * Sets the alpha value of the color (between 0 and 1)
-         * @param {number} a
+         * @param {number} alpha
          * @returns {CMYKColor}
          */
-        setAlpha(a) {
-            return new CMYKColor(this.c, this.m, this.y, this.k, a);
+        setAlpha(alpha) {
+            return new CMYKColor(this.c, this.m, this.y, this.k, alpha);
         }
 
         /**
@@ -1388,18 +1396,18 @@
 
         /**
          * New HSLColor constructor
-         * @param {number} [h]
-         * @param {number} [s]
-         * @param {number} [l]
-         * @param {number} [a=1]
+         * @param {number} hue
+         * @param {number} saturation
+         * @param {number} lightness
+         * @param {number} [alpha=1]
          * @returns {HSLColor}
          */
-        constructor(h, s, l, a = 1) {
-            super(a);
+        constructor(hue, saturation, lightness, alpha = 1) {
+            super(alpha);
 
-            this.h = h % 360;
-            this.s = Color.clamp(s);
-            this.l = Color.clamp(l);
+            this.h = hue % 360;
+            this.s = Color.clamp(saturation);
+            this.l = Color.clamp(lightness);
         }
 
         /**
@@ -1432,11 +1440,11 @@
 
         /**
          * Sets the alpha value of the color (between 0 and 1)
-         * @param {number} a
+         * @param {number} alpha
          * @returns {HSLColor}
          */
-        setAlpha(a) {
-            return new HSL(this.h, this.s, this.l, a);
+        setAlpha(alpha) {
+            return new HSL(this.h, this.s, this.l, alpha);
         }
 
         /**
@@ -1466,18 +1474,18 @@
 
         /**
          * New HSVColor constructor
-         * @param {number} [h]
-         * @param {number} [s]
-         * @param {number} [v]
-         * @param {number} [a=1]
+         * @param {number} hue
+         * @param {number} saturation
+         * @param {number} brightness
+         * @param {number} [alpha=1]
          * @returns {HSVColor}
          */
-        constructor(h, s, v, a = 1) {
-            super(a);
+        constructor(hue, saturation, brightness, alpha = 1) {
+            super(alpha);
 
-            this.h = h % 360;
-            this.s = Color.clamp(s);
-            this.v = Color.clamp(v);
+            this.h = hue % 360;
+            this.s = Color.clamp(saturation);
+            this.v = Color.clamp(brightness);
         }
 
         /**
@@ -1506,38 +1514,38 @@
 
         /**
          * Sets the alpha value of the color (between 0 and 1)
-         * @param {number} a
+         * @param {number} alpha
          * @returns {HSVColor}
          */
-        setAlpha(a) {
-            return new HSVColor(this.h, this.s, this.v, a);
+        setAlpha(alpha) {
+            return new HSVColor(this.h, this.s, this.v, alpha);
         }
 
         /**
          * Sets the brightness value of the color (between 0 and 100)
-         * @param {number} v
+         * @param {number} brightness
          * @returns {HSVColor}
          */
-        setBrightness(v) {
-            return new HSVColor(this.h, this.s, v, this.a);
+        setBrightness(brightness) {
+            return new HSVColor(this.h, this.s, brightness, this.a);
         }
 
         /**
          * Sets the hue value of the color (between 0 and 360)
-         * @param {number} h
+         * @param {number} hue
          * @returns {HSVColor}
          */
-        setHue(h) {
-            return new HSVColor(h, this.s, this.v, this.a);
+        setHue(hue) {
+            return new HSVColor(hue, this.s, this.v, this.a);
         }
 
         /**
          * Sets the saturation value of the color (between 0 and 100)
-         * @param {number} s
+         * @param {number} saturation
          * @returns {HSVColor}
          */
-        setSaturation(s) {
-            return new HSVColor(this.h, s, this.v, this.a);
+        setSaturation(saturation) {
+            return new HSVColor(this.h, saturation, this.v, this.a);
         }
 
         /**
@@ -1567,18 +1575,18 @@
 
         /**
          * New RGBColor constructor
-         * @param {number} [r]
-         * @param {number} [g]
-         * @param {number} [b]
-         * @param {number} [a=1]
+         * @param {number} red
+         * @param {number} green
+         * @param {number} blue
+         * @param {number} [alpha=1]
          * @returns {RGBColor}
          */
-        constructor(r, g, b, a = 1) {
-            super(a);
+        constructor(red, green, blue, alpha = 1) {
+            super(alpha);
 
-            this.r = Color.clamp(r, 0, 255);
-            this.g = Color.clamp(g, 0, 255);
-            this.b = Color.clamp(b, 0, 255);
+            this.r = Color.clamp(red, 0, 255);
+            this.g = Color.clamp(green, 0, 255);
+            this.b = Color.clamp(blue, 0, 255);
         }
 
         /**
@@ -1625,11 +1633,11 @@
 
         /**
          * Sets the alpha value of the color (between 0 and 1)
-         * @param {number} a
+         * @param {number} alpha
          * @returns {RGBColor}
          */
-        setAlpha(a) {
-            return new RGBColor(this.r, this.g, this.b, a);
+        setAlpha(alpha) {
+            return new RGBColor(this.r, this.g, this.b, alpha);
         }
 
         /**

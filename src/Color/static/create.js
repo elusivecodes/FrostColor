@@ -2,72 +2,72 @@ Object.assign(Color, {
 
     /**
      * Creates a new Color object from CMY color values
-     * @param {number} c
-     * @param {number} m
-     * @param {number} y
-     * @param {number} [a=1]
+     * @param {number} cyan
+     * @param {number} magenta
+     * @param {number} yellow
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromCMY(c, m, y, a = 1) {
+    fromCMY(cyan, magenta, yellow, alpha = 1) {
         return new this(
-            new CMYColor(c, m, y, a)
+            new CMYColor(cyan, magenta, yellow, alpha)
         );
     },
 
     /**
      * Creates a new Color object from CMYK color values
-     * @param {number} c
-     * @param {number} m
-     * @param {number} y
-     * @param {number} k
-     * @param {number} [a=1]
+     * @param {number} cyan
+     * @param {number} magenta
+     * @param {number} yellow
+     * @param {number} key
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromCMYK(c, m, y, k, a = 1) {
+    fromCMYK(cyan, magenta, yellow, key, alpha = 1) {
         return new this(
-            new CMYKColor(c, m, y, k, a)
+            new CMYKColor(cyan, magenta, yellow, key, alpha)
         );
     },
 
     /**
      * Creates a new Color object from HSL color values
-     * @param {number} h
-     * @param {number} s
-     * @param {number} l
-     * @param {number} [a=1]
+     * @param {number} hue
+     * @param {number} saturation
+     * @param {number} lightness
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromHSL(h, s, l, a = 1) {
+    fromHSL(hue, saturation, lightness, alpha = 1) {
         return new this(
-            new HSLColor(h, s, l, a)
+            new HSLColor(hue, saturation, lightness, alpha)
         );
     },
 
     /**
      * Creates a new Color object from HSV color values
-     * @param {number} h
-     * @param {number} s
-     * @param {number} v
-     * @param {number} [a=1]
+     * @param {number} hue
+     * @param {number} saturation
+     * @param {number} brightness
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromHSV(h, s, v, a = 1) {
+    fromHSV(hue, saturation, brightness, alpha = 1) {
         return new this(
-            new HSVColor(h, s, v, a)
+            new HSVColor(hue, saturation, brightness, alpha)
         );
     },
 
     /**
      * Creates a new Color object from RGB color values
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
-     * @param {number} [a=1]
+     * @param {number} red
+     * @param {number} green
+     * @param {number} blue
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    fromRGB(r, g, b, a = 1) {
+    fromRGB(red, green, blue, alpha = 1) {
         return new this(
-            new RGBColor(r, g, b, a)
+            new RGBColor(red, green, blue, alpha)
         );
     },
 

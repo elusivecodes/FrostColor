@@ -6,29 +6,29 @@ class CMYKColor extends BaseColor {
 
     /**
      * New CMYKColor constructor
-     * @param {number} [c]
-     * @param {number} [m]
-     * @param {number} [y]
-     * @param {number} [k]
-     * @param {number} [a=1]
+     * @param {number} cyan
+     * @param {number} magenta
+     * @param {number} yellow
+     * @param {number} key
+     * @param {number} [alpha=1]
      * @returns {CMYKColor}
      */
-    constructor(c, m, y, k, a = 1) {
-        super(a);
+    constructor(cyan, magenta, yellow, key, alpha = 1) {
+        super(alpha);
 
-        this.c = Color.clamp(c);
-        this.m = Color.clamp(m);
-        this.y = Color.clamp(y);
-        this.k = Color.clamp(k);
+        this.c = Color.clamp(cyan);
+        this.m = Color.clamp(magenta);
+        this.y = Color.clamp(yellow);
+        this.k = Color.clamp(key);
     }
 
     /**
      * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} a
+     * @param {number} alpha
      * @returns {CMYKColor}
      */
-    setAlpha(a) {
-        return new CMYKColor(this.c, this.m, this.y, this.k, a);
+    setAlpha(alpha) {
+        return new CMYKColor(this.c, this.m, this.y, this.k, alpha);
     }
 
     /**

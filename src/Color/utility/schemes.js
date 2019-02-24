@@ -7,13 +7,13 @@ Object.assign(Color.prototype, {
     analogous() {
         return [
             new Color(
-                this.color.setHue(
-                    this.color.getHue() + 30
+                this.getColor().setHue(
+                    this.getColor().getHue() + 30
                 )
             ),
             new Color(
-                this.color.setHue(
-                    this.color.getHue() - 30
+                this.getColor().setHue(
+                    this.getColor().getHue() - 30
                 )
             )
         ];
@@ -25,8 +25,8 @@ Object.assign(Color.prototype, {
      */
     complementary() {
         return new Color(
-            this.color.setHue(
-                this.color.getHue() + 180
+            this.getColor().setHue(
+                this.getColor().getHue() + 180
             )
         );
     },
@@ -38,13 +38,13 @@ Object.assign(Color.prototype, {
     split() {
         return [
             new Color(
-                this.color.setHue(
-                    this.color.getHue() + 150
+                this.getColor().setHue(
+                    this.getColor().getHue() + 150
                 )
             ),
             new Color(
-                this.color.setHue(
-                    this.color.getHue() - 150
+                this.getColor().setHue(
+                    this.getColor().getHue() - 150
                 )
             )
         ];
@@ -57,18 +57,18 @@ Object.assign(Color.prototype, {
     tetradic() {
         return [
             new Color(
-                this.color.setHue(
-                    this.color.getHue() + 60
+                this.getColor().setHue(
+                    this.getColor().getHue() + 60
                 )
             ),
             new Color(
-                this.color.setHue(
-                    this.color.getHue() + 180
+                this.getColor().setHue(
+                    this.getColor().getHue() + 180
                 )
             ),
             new Color(
-                this.color.setHue(
-                    this.color.getHue() + 240
+                this.getColor().setHue(
+                    this.getColor().getHue() + 240
                 )
             )
         ];
@@ -81,13 +81,13 @@ Object.assign(Color.prototype, {
     triadic() {
         return [
             new Color(
-                this.color.setHue(
-                    this.color.getHue() + 120
+                this.getColor().setHue(
+                    this.getColor().getHue() + 120
                 )
             ),
             new Color(
-                this.color.setHue(
-                    this.color.getHue() + 240
+                this.getColor().setHue(
+                    this.getColor().getHue() + 240
                 )
             )
         ];

@@ -6,22 +6,30 @@ class Color {
 
     /**
      * New Color constructor
-     * @param {number} [r=0]
-     * @param {number} [g=1]
-     * @param {null|number} [b=null]
-     * @param {number} [a=1]
+     * @param {number|BaseColor|Color} [red=0]
+     * @param {number} [green=1]
+     * @param {null|number} [blue=null]
+     * @param {number} [alpha=1]
      * @returns {Color}
      */
-    constructor(r = 0, g = 1, b = null, a = 1) {
-        if (b !== null) {
-            this.color = new RGBColor(r, g, b, a);
-        } else if (r instanceof BaseColor) {
-            this.color = r;
-        } else if (r instanceof Color) {
-            this.color = r.color;
+    constructor(red = 0, green = 1, blue = null, alpha = 1) {
+        if (blue !== null) {
+            this._color = new RGBColor(red, green, blue, alpha);
+        } else if (red instanceof BaseColor) {
+            this._color = red;
+        } else if (red instanceof Color) {
+            this._color = red.getColor();
         } else {
-            this.color = new HSLColor(0, 0, r, g);
+            this._color = new HSLColor(0, 0, red, green);
         }
+    }
+
+    /**
+     * Returns the internal BaseColor of the color
+     * @returns {BaseColor}
+     */
+    getColor() {
+        return this._color;
     }
 
     /**
@@ -30,7 +38,7 @@ class Color {
      * @returns {Color}
      */
     setColor(color) {
-        this.color = color;
+        this._color = color;
         return this;
     }
 
@@ -39,7 +47,7 @@ class Color {
      * @returns {string}
      */
     toString() {
-        return this.color.toString();
+        return this.getColor().toString();
     }
 
     /**
@@ -47,7 +55,7 @@ class Color {
      * @returns {number}
      */
     valueOf() {
-        return this.color.valueOf();
+        return this.getColor().valueOf();
     }
 
     /**
@@ -55,7 +63,7 @@ class Color {
      * @returns {string|number}
      */
     [Symbol.toPrimitive](hint) {
-        return this.color[Symbol.toPrimitive](hint);
+        return this.getColor()[Symbol.toPrimitive](hint);
     }
 
 }

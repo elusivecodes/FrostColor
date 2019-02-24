@@ -6,11 +6,11 @@ class BaseColor {
 
     /**
      * New BaseColor constructor
-     * @param {number} [a=1]
+     * @param {number} [alpha=1]
      * @returns {BaseColor}
      */
-    constructor(a = 1) {
-        this.a = Color.clamp(a, 0, 1);
+    constructor(alpha = 1) {
+        this.a = Color.clamp(alpha, 0, 1);
     }
 
     /**
@@ -101,32 +101,32 @@ class BaseColor {
 
     /**
      * Sets the brightness value of the color (between 0 and 100)
-     * @param {number} v
+     * @param {number} brightness
      * @returns {HSVColor}
      */
-    setBrightness(v) {
+    setBrightness(brightness) {
         return this.toHSV()
-            .setBrightness(v);
+            .setBrightness(brightness);
     }
 
     /**
      * Sets the hue value of the color (between 0 and 360)
-     * @param {number} h
+     * @param {number} hue
      * @returns {HSVColor}
      */
-    setHue(h) {
+    setHue(hue) {
         return this.toHSV()
-            .setHue(h);
+            .setHue(hue);
     }
 
     /**
      * Sets the saturation value of the color (between 0 and 100)
-     * @param {number} s
+     * @param {number} saturation
      * @returns {HSVColor}
      */
-    setSaturation(s) {
+    setSaturation(saturation) {
         return this.toHSV()
-            .setSaturation(s);
+            .setSaturation(saturation);
     }
 
     /**

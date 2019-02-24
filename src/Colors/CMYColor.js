@@ -6,27 +6,27 @@ class CMYColor extends BaseColor {
 
     /**
      * New CMYColor constructor
-     * @param {number} [c]
-     * @param {number} [m]
-     * @param {number} [y]
-     * @param {number} [a=1]
+     * @param {number} cyan
+     * @param {number} magenta
+     * @param {number} yellow
+     * @param {number} [alpha=1]
      * @returns {CMYColor}
      */
-    constructor(c, m, y, a = 1) {
-        super(a);
+    constructor(cyan, magenta, yellow, alpha = 1) {
+        super(alpha);
 
-        this.c = Color.clamp(c);
-        this.m = Color.clamp(m);
-        this.y = Color.clamp(y);
+        this.c = Color.clamp(cyan);
+        this.m = Color.clamp(magenta);
+        this.y = Color.clamp(yellow);
     }
 
     /**
      * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} a
+     * @param {number} alpha
      * @returns {CMYColor}
      */
-    setAlpha(a) {
-        return new CMYColor(this.c, this.m, this.y, a);
+    setAlpha(alpha) {
+        return new CMYColor(this.c, this.m, this.y, alpha);
     }
 
     /**

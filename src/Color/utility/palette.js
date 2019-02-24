@@ -24,7 +24,7 @@ Object.assign(Color.prototype, {
         return new Array(shades)
             .fill()
             .map((_, index) =>
-                this.color.shade(
+                this.getColor().shade(
                     index / (shades + 1)
                 )
             );
@@ -39,7 +39,7 @@ Object.assign(Color.prototype, {
         return new Array(tints)
             .fill()
             .map((_, index) =>
-                this.color.tint(
+                this.getColor().tint(
                     index / (tints + 1)
                 )
             );
@@ -54,7 +54,7 @@ Object.assign(Color.prototype, {
         return new Array(tones)
             .fill()
             .map((_, index) =>
-                this.color.tone(
+                this.getColor().tone(
                     index / (tones + 1)
                 )
             );

@@ -9,7 +9,7 @@ Object.assign(Color, {
      */
     mix(color1, color2, amount) {
         return new this(
-            color1.color.mix(color2.color, amount)
+            color1.getColor().mix(color2.getColor(), amount)
         );
     },
 
@@ -22,7 +22,7 @@ Object.assign(Color, {
      */
     multiply(color1, color2, amount) {
         return new this(
-            color1.color.multiply(color2.color, amount)
+            color1.getColor().multiply(color2.getColor(), amount)
         );
     }
 
