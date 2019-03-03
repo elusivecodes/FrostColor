@@ -38,7 +38,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   } else {
     Object.assign(global, factory());
   }
-})(window, function () {
+})(void 0, function () {
   'use strict';
   /**
    * Color class
@@ -531,29 +531,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   });
   Object.assign(Color, {
     /**
-     * Creates a new Color object by mixing two colors together by a specified amount (between 0 and 1)
-     * @param {Color} color1
-     * @param {Color} color2
-     * @param {number} amount
-     * @returns {Color}
-     */
-    mix: function mix(color1, color2, amount) {
-      return new this(color1.getColor().mix(color2.getColor(), amount));
-    },
-
-    /**
-     * Creates a new Color object by multiplying two colors together by a specified amount (between 0 and 1)
-     * @param {Color} color1
-     * @param {Color} color2
-     * @param {number} amount
-     * @returns {Color}
-     */
-    multiply: function multiply(color1, color2, amount) {
-      return new this(color1.getColor().multiply(color2.getColor(), amount));
-    }
-  });
-  Object.assign(Color, {
-    /**
      * Clamps a value between a min and max
      * @param {number} val
      * @param {number} [min=0]
@@ -575,6 +552,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     lerp: function lerp(a, b, amount) {
       return a * (1 - amount) + b * amount;
+    }
+  });
+  Object.assign(Color, {
+    /**
+     * Creates a new Color object by mixing two colors together by a specified amount (between 0 and 1)
+     * @param {Color} color1
+     * @param {Color} color2
+     * @param {number} amount
+     * @returns {Color}
+     */
+    mix: function mix(color1, color2, amount) {
+      return new this(color1.getColor().mix(color2.getColor(), amount));
+    },
+
+    /**
+     * Creates a new Color object by multiplying two colors together by a specified amount (between 0 and 1)
+     * @param {Color} color1
+     * @param {Color} color2
+     * @param {number} amount
+     * @returns {Color}
+     */
+    multiply: function multiply(color1, color2, amount) {
+      return new this(color1.getColor().multiply(color2.getColor(), amount));
     }
   });
   Object.assign(Color, {
