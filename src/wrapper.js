@@ -6,7 +6,7 @@
         Object.assign(global, factory());
     }
 
-})(window, function() {
+})(this, function() {
     'use strict';
 
     // {{code}}
