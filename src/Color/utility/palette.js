@@ -5,7 +5,7 @@ Object.assign(Color.prototype, {
      * @param {number} [shades=10]
      * @param {number} [tints=10]
      * @param {number} [tones=10]
-     * @returns {object}
+     * @returns {Object}
      */
     palette(shades = 10, tints = 10, tones = 10) {
         return {

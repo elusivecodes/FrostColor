@@ -868,7 +868,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @param {number} [shades=10]
      * @param {number} [tints=10]
      * @param {number} [tones=10]
-     * @returns {object}
+     * @returns {Object}
      */
     palette: function palette() {
       var shades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
