@@ -31,8 +31,11 @@ Object.assign(Color.prototype, {
      */
     shade(amount) {
         return this.setColor(
-            this.getColor()
-                .shade(amount)
+            Color.mix(
+                new Color(this),
+                new Color(0, 0, 0),
+                amount
+            ).getColor()
         );
     },
 
@@ -43,8 +46,11 @@ Object.assign(Color.prototype, {
      */
     tint(amount) {
         return this.setColor(
-            this.getColor()
-                .tint(amount)
+            Color.mix(
+                new Color(this),
+                new Color(255, 255, 255),
+                amount
+            ).getColor()
         );
     },
 
@@ -55,8 +61,11 @@ Object.assign(Color.prototype, {
      */
     tone(amount) {
         return this.setColor(
-            this.getColor()
-                .tone(amount)
+            Color.mix(
+                new Color(this),
+                new Color(127, 127, 127),
+                amount
+            ).getColor()
         );
     }
 

@@ -130,32 +130,6 @@ class BaseColor {
     }
 
     /**
-     * Shades the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {RGBColor}
-     */
-    shade(amount) {
-        return Color.mix(
-            this,
-            new RGBColor(0, 0, 0),
-            amount
-        );
-    }
-
-    /**
-     * Tints the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {RGBColor}
-     */
-    tint(amount) {
-        return Color.mix(
-            this,
-            new RGBColor(255, 255, 255),
-            amount
-        );
-    }
-
-    /**
      * Creates a CMY representation of the color
      * @returns {CMYColor}
      */
@@ -189,19 +163,6 @@ class BaseColor {
     toHSV() {
         return this.toRGB()
             .toHSV();
-    }
-
-    /**
-     * Tones the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {RGBColor}
-     */
-    tone(amount) {
-        return Color.mix(
-            this,
-            new RGB(127, 127, 127),
-            amount
-        );
     }
 
     /**

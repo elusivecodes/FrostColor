@@ -54,7 +54,7 @@ class HSLColor extends BaseColor {
      * @returns {HSLColor}
      */
     setAlpha(alpha) {
-        return new HSL(this._h, this._s, this._l, alpha);
+        return new HSLColor(this._h, this._s, this._l, alpha);
     }
 
     /**

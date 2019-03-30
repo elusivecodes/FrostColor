@@ -191,7 +191,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number[]}
      */
     CMY2RGB: function CMY2RGB(c, m, y) {
-      return [(100 - c) / 100 * 255, (100 - m) / 100 * 255, (100 - y) / 100 * 255];
+      return [(1 - c / 100) * 255, (1 - m / 100) * 255, (1 - y / 100) * 255];
     },
 
     /**
@@ -487,7 +487,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       if (hexMatch) {
         var rgb = hexMatch.slice(1, 4).map(function (value) {
-          return parsenumber(value, 16);
+          return parseInt(value, 16);
         });
         return new this(rgb[0], rgb[1], rgb[2]);
       }
@@ -496,7 +496,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       if (hexMatchShort) {
         var _rgb = hexMatchShort.slice(1, 4).map(function (value) {
-          return 0x11 * parsenumber(value, 16);
+          return 0x11 * parseInt(value, 16);
         });
 
         return new this(_rgb[0], _rgb[1], _rgb[2]);
@@ -733,11 +733,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     hexRegEx: /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i,
     hexRegExShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i,
     // HSL RegEx
-    HSLARegEx: /^hsla\((\d{1,3}),\s*(\d{1,3})\%,\s*(\d{1,3})\%,\s*(0?\.\d+)\)$/i,
-    HSLRegEx: /^hsl\((\d{1,3}),\s*(\d{1,3})\%,\s*(\d{1,3})\%\)$/i,
+    HSLARegEx: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\)$/i,
+    HSLRegEx: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
     // RGB RegEx
-    RGBARegEx: /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(0?\.\d+)\)$/i,
-    RGBRegEx: /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/i
+    RGBARegEx: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
+    RGBRegEx: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i
   });
   Object.assign(Color.prototype, {
     /**
@@ -841,7 +841,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     shade: function shade(amount) {
-      return this.setColor(this.getColor().shade(amount));
+      return this.setColor(Color.mix(new Color(this), new Color(0, 0, 0), amount).getColor());
     },
 
     /**
@@ -850,7 +850,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     tint: function tint(amount) {
-      return this.setColor(this.getColor().tint(amount));
+      return this.setColor(Color.mix(new Color(this), new Color(255, 255, 255), amount).getColor());
     },
 
     /**
@@ -859,7 +859,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color}
      */
     tone: function tone(amount) {
-      return this.setColor(this.getColor().tone(amount));
+      return this.setColor(Color.mix(new Color(this), new Color(127, 127, 127), amount).getColor());
     }
   });
   Object.assign(Color.prototype, {
@@ -1120,28 +1120,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return this.toHSV().setSaturation(saturation);
       }
       /**
-       * Shades the color by a specified amount (between 0 and 1)
-       * @param {number} amount
-       * @returns {RGBColor}
-       */
-
-    }, {
-      key: "shade",
-      value: function shade(amount) {
-        return Color.mix(this, new RGBColor(0, 0, 0), amount);
-      }
-      /**
-       * Tints the color by a specified amount (between 0 and 1)
-       * @param {number} amount
-       * @returns {RGBColor}
-       */
-
-    }, {
-      key: "tint",
-      value: function tint(amount) {
-        return Color.mix(this, new RGBColor(255, 255, 255), amount);
-      }
-      /**
        * Creates a CMY representation of the color
        * @returns {CMYColor}
        */
@@ -1180,17 +1158,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "toHSV",
       value: function toHSV() {
         return this.toRGB().toHSV();
-      }
-      /**
-       * Tones the color by a specified amount (between 0 and 1)
-       * @param {number} amount
-       * @returns {RGBColor}
-       */
-
-    }, {
-      key: "tone",
-      value: function tone(amount) {
-        return Color.mix(this, new RGB(127, 127, 127), amount);
       }
       /**
        * Returns a string representation of the color
@@ -1448,7 +1415,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "setAlpha",
       value: function setAlpha(alpha) {
-        return new HSL(this._h, this._s, this._l, alpha);
+        return new HSLColor(this._h, this._s, this._l, alpha);
       }
       /**
        * Creates a HSL representation of the color

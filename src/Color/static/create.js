@@ -89,13 +89,13 @@ Object.assign(Color, {
 
         const hexMatch = string.match(this.hexRegEx);
         if (hexMatch) {
-            const rgb = hexMatch.slice(1, 4).map(value => parsenumber(value, 16));
+            const rgb = hexMatch.slice(1, 4).map(value => parseInt(value, 16));
             return new this(rgb[0], rgb[1], rgb[2]);
         }
 
         const hexMatchShort = string.match(this.hexRegExShort);
         if (hexMatchShort) {
-            const rgb = hexMatchShort.slice(1, 4).map(value => 0x11 * parsenumber(value, 16));
+            const rgb = hexMatchShort.slice(1, 4).map(value => 0x11 * parseInt(value, 16));
             return new this(rgb[0], rgb[1], rgb[2]);
         }
 

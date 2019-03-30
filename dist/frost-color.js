@@ -133,9 +133,9 @@
          */
         CMY2RGB(c, m, y) {
             return [
-                (100 - c) / 100 * 255,
-                (100 - m) / 100 * 255,
-                (100 - y) / 100 * 255
+                (1 - c / 100) * 255,
+                (1 - m / 100) * 255,
+                (1 - y / 100) * 255
             ];
         },
 
@@ -482,13 +482,13 @@
 
             const hexMatch = string.match(this.hexRegEx);
             if (hexMatch) {
-                const rgb = hexMatch.slice(1, 4).map(value => parsenumber(value, 16));
+                const rgb = hexMatch.slice(1, 4).map(value => parseInt(value, 16));
                 return new this(rgb[0], rgb[1], rgb[2]);
             }
 
             const hexMatchShort = string.match(this.hexRegExShort);
             if (hexMatchShort) {
-                const rgb = hexMatchShort.slice(1, 4).map(value => 0x11 * parsenumber(value, 16));
+                const rgb = hexMatchShort.slice(1, 4).map(value => 0x11 * parseInt(value, 16));
                 return new this(rgb[0], rgb[1], rgb[2]);
             }
 
@@ -737,12 +737,12 @@
         hexRegExShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i,
 
         // HSL RegEx
-        HSLARegEx: /^hsla\((\d{1,3}),\s*(\d{1,3})\%,\s*(\d{1,3})\%,\s*(0?\.\d+)\)$/i,
-        HSLRegEx: /^hsl\((\d{1,3}),\s*(\d{1,3})\%,\s*(\d{1,3})\%\)$/i,
+        HSLARegEx: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\)$/i,
+        HSLRegEx: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
 
         // RGB RegEx
-        RGBARegEx: /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(0?\.\d+)\)$/i,
-        RGBRegEx: /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/i
+        RGBARegEx: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
+        RGBRegEx: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i
 
     });
 
@@ -876,8 +876,11 @@
          */
         shade(amount) {
             return this.setColor(
-                this.getColor()
-                    .shade(amount)
+                Color.mix(
+                    new Color(this),
+                    new Color(0, 0, 0),
+                    amount
+                ).getColor()
             );
         },
 
@@ -888,8 +891,11 @@
          */
         tint(amount) {
             return this.setColor(
-                this.getColor()
-                    .tint(amount)
+                Color.mix(
+                    new Color(this),
+                    new Color(255, 255, 255),
+                    amount
+                ).getColor()
             );
         },
 
@@ -900,8 +906,11 @@
          */
         tone(amount) {
             return this.setColor(
-                this.getColor()
-                    .tone(amount)
+                Color.mix(
+                    new Color(this),
+                    new Color(127, 127, 127),
+                    amount
+                ).getColor()
             );
         }
 
@@ -1224,32 +1233,6 @@
         }
 
         /**
-         * Shades the color by a specified amount (between 0 and 1)
-         * @param {number} amount
-         * @returns {RGBColor}
-         */
-        shade(amount) {
-            return Color.mix(
-                this,
-                new RGBColor(0, 0, 0),
-                amount
-            );
-        }
-
-        /**
-         * Tints the color by a specified amount (between 0 and 1)
-         * @param {number} amount
-         * @returns {RGBColor}
-         */
-        tint(amount) {
-            return Color.mix(
-                this,
-                new RGBColor(255, 255, 255),
-                amount
-            );
-        }
-
-        /**
          * Creates a CMY representation of the color
          * @returns {CMYColor}
          */
@@ -1283,19 +1266,6 @@
         toHSV() {
             return this.toRGB()
                 .toHSV();
-        }
-
-        /**
-         * Tones the color by a specified amount (between 0 and 1)
-         * @param {number} amount
-         * @returns {RGBColor}
-         */
-        tone(amount) {
-            return Color.mix(
-                this,
-                new RGB(127, 127, 127),
-                amount
-            );
         }
 
         /**
@@ -1500,7 +1470,7 @@
          * @returns {HSLColor}
          */
         setAlpha(alpha) {
-            return new HSL(this._h, this._s, this._l, alpha);
+            return new HSLColor(this._h, this._s, this._l, alpha);
         }
 
         /**
