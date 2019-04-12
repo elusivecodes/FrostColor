@@ -1,80 +1,84 @@
+/**
+ * Color Creation
+ */
+
 Object.assign(Color, {
 
     /**
-     * Creates a new Color object from CMY color values
-     * @param {number} cyan
-     * @param {number} magenta
-     * @param {number} yellow
-     * @param {number} [alpha=1]
-     * @returns {Color}
+     * Create a new Color from CMY values.
+     * @param {number} c The cyan value.
+     * @param {number} m The magenta value.
+     * @param {number} y The yellow value.
+     * @param {number} [a=1] The alpha value.
+     * @returns {Color} A new Color object.
      */
-    fromCMY(cyan, magenta, yellow, alpha = 1) {
+    fromCMY(c, m, y, a = 1) {
         return new this(
-            new CMYColor(cyan, magenta, yellow, alpha)
+            new CMYColor(c, m, y, a)
         );
     },
 
     /**
-     * Creates a new Color object from CMYK color values
-     * @param {number} cyan
-     * @param {number} magenta
-     * @param {number} yellow
-     * @param {number} key
-     * @param {number} [alpha=1]
-     * @returns {Color}
+     * Create a new Color from CMYK values.
+     * @param {number} c The cyan value.
+     * @param {number} m The magenta value.
+     * @param {number} y The yellow value.
+     * @param {number} k The key value.
+     * @param {number} [a=1] The alpha value.
+     * @returns {Color} A new Color object.
      */
-    fromCMYK(cyan, magenta, yellow, key, alpha = 1) {
+    fromCMYK(c, m, y, k, a = 1) {
         return new this(
-            new CMYKColor(cyan, magenta, yellow, key, alpha)
+            new CMYKColor(c, m, y, k, a)
         );
     },
 
     /**
-     * Creates a new Color object from HSL color values
-     * @param {number} hue
-     * @param {number} saturation
-     * @param {number} lightness
-     * @param {number} [alpha=1]
-     * @returns {Color}
+     * Create a new Color from HSL values.
+     * @param {number} h The hue value.
+     * @param {number} s The saturation value.
+     * @param {number} l The lightness value.
+     * @param {number} [a=1] The alpha value.
+     * @returns {Color} A new Color object.
      */
-    fromHSL(hue, saturation, lightness, alpha = 1) {
+    fromHSL(h, s, l, a = 1) {
         return new this(
-            new HSLColor(hue, saturation, lightness, alpha)
+            new HSLColor(h, s, l, a)
         );
     },
 
     /**
-     * Creates a new Color object from HSV color values
-     * @param {number} hue
-     * @param {number} saturation
-     * @param {number} brightness
-     * @param {number} [alpha=1]
-     * @returns {Color}
+     * Create a new Color from HSV values.
+     * @param {number} h The hue value.
+     * @param {number} s The saturation value.
+     * @param {number} v The brightness value.
+     * @param {number} [a=1] The alpha value.
+     * @returns {Color} A new Color object.
      */
-    fromHSV(hue, saturation, brightness, alpha = 1) {
+    fromHSV(h, s, v, a = 1) {
         return new this(
-            new HSVColor(hue, saturation, brightness, alpha)
+            new HSVColor(h, s, v, a)
         );
     },
 
     /**
-     * Creates a new Color object from RGB color values
-     * @param {number} red
-     * @param {number} green
-     * @param {number} blue
-     * @param {number} [alpha=1]
-     * @returns {Color}
+     * Create a new Color from RGB values.
+     * @param {number} r The red value.
+     * @param {number} g The green value.
+     * @param {number} b The blue value.
+     * @param {number} [a=1] The alpha value.
+     * @returns {Color} A new Color object.
      */
-    fromRGB(red, green, blue, alpha = 1) {
+    fromRGB(r, g, b, a = 1) {
         return new this(
-            new RGBColor(red, green, blue, alpha)
+            new RGBColor(r, g, b, a)
         );
     },
 
     /**
-     * Creates a new Color object from a HTML color string
-     * @param {string} string
-     * @returns {Color}
+     * Create a new Color from a HTML color string.
+     * @param {string} string The HTML color string.
+     * @returns {Color} A new Color object.
      */
     fromString(string) {
         string = string.toLowerCase();

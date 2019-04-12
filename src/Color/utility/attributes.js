@@ -1,8 +1,12 @@
+/**
+ * Color Attributes
+ */
+
 Object.assign(Color.prototype, {
 
     /**
-     * Gets the alpha value of the color (between 0 and 1)
-     * @returns {number}
+     * Get the alpha value of the color.
+     * @returns {number} The alpha value.
      */
     getAlpha() {
         return this.getColor()
@@ -10,8 +14,8 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Gets the brightness value of the color (between 0 and 100)
-     * @returns {number}
+     * Get the brightness value of the color.
+     * @returns {number} The brightness value.
      */
     getBrightness() {
         return this.getColor()
@@ -19,8 +23,8 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Gets the hue value of the color (between 0 and 360)
-     * @returns {number}
+     * Get the hue value of the color.
+     * @returns {number} The hue value.
      */
     getHue() {
         return this.getColor()
@@ -28,8 +32,8 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Gets the saturation value of the color (between 0 and 100)
-     * @returns {number}
+     * Get the saturation value of the color.
+     * @returns {number} The saturation value.
      */
     getSaturation() {
         return this.getColor()
@@ -37,8 +41,8 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Gets the luminance value of the color 
-     * @returns {number}
+     * Get the luminance value of the color 
+     * @returns {number} The luminance value.
      */
     luma() {
         return this.getColor()
@@ -46,50 +50,50 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} alpha
-     * @returns {Color}
+     * Set the alpha value of the color.
+     * @param {number} a The alpha value.
+     * @returns {Color} The modified Color object.
      */
-    setAlpha(alpha) {
+    setAlpha(a) {
         return this.setColor(
             this.getColor()
-                .setAlpha(alpha)
+                .setAlpha(a)
         );
     },
 
     /**
-     * Sets the brightness value of the color (between 0 and 100)
-     * @param {number} brightness
-     * @returns {Color}
+     * Set the brightness value of the color.
+     * @param {number} v The brightness value.
+     * @returns {Color} The modified Color object.
      */
-    setBrightness(brightness) {
+    setBrightness(v) {
         return this.setColor(
             this.getColor()
-                .setBrightness(brightness)
+                .setBrightness(v)
         );
     },
 
     /**
-     * Sets the hue value of the color (between 0 and 360)
-     * @param {number} hue
-     * @returns {Color}
+     * Set the hue value of the color.
+     * @param {number} h The hue value.
+     * @returns {Color} The modified Color object.
      */
-    setHue(hue) {
+    setHue(h) {
         return this.setColor(
             this.getColor()
-                .setHue(hue)
+                .setHue(h)
         );
     },
 
     /**
-     * Sets the saturation value of the color (between 0 and 100)
-     * @param {number} saturation
-     * @returns {Color}
+     * Set the saturation value of the color.
+     * @param {number} s The saturation value.
+     * @returns {Color} The modified Color object.
      */
-    setSaturation(saturation) {
+    setSaturation(s) {
         return this.setColor(
             this.getColor()
-                .setSaturation(saturation)
+                .setSaturation(s)
         );
     }
 

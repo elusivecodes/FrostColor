@@ -5,51 +5,54 @@
 class CMYKColor extends BaseColor {
 
     /**
-     * New CMYKColor constructor
-     * @param {number} cyan
-     * @param {number} magenta
-     * @param {number} yellow
-     * @param {number} key
-     * @param {number} [alpha=1]
-     * @returns {CMYKColor}
+     * New CMYKColor constructor.
+     * @param {number} c The cyan value.
+     * @param {number} m The magenta value.
+     * @param {number} y The yellow value.
+     * @param {number} k The key value.
+     * @param {number} [a=1] The alpha value.
+     * @returns {CMYKColor} A new CMYKColor object.
      */
-    constructor(cyan, magenta, yellow, key, alpha = 1) {
-        super(alpha);
+    constructor(c, m, y, k, a = 1) {
+        super(a);
 
-        this._c = Color.clamp(cyan);
-        this._m = Color.clamp(magenta);
-        this._y = Color.clamp(yellow);
-        this._k = Color.clamp(key);
+        this._c = Color.clamp(c);
+        this._m = Color.clamp(m);
+        this._y = Color.clamp(y);
+        this._k = Color.clamp(k);
     }
 
     /**
-     * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} alpha
-     * @returns {CMYKColor}
+     * Set the alpha value of the color.
+     * @param {number} a The alpha value.
+     * @returns {CMYKColor} A new CMYKColor object.
      */
-    setAlpha(alpha) {
-        return new CMYKColor(this._c, this._m, this._y, this._k, alpha);
+    setAlpha(a) {
+        return new CMYKColor(this._c, this._m, this._y, this._k, a);
     }
 
     /**
-     * Creates a CMY representation of the color
-     * @returns {CMYColor}
+     * Create a CMY representation of the color.
+     * @returns {CMYColor} A new CMYColor object.
      */
     toCMY() {
-        return new CMYColor(...Color.CMYK2CMY(this._c, this._m, this._y, this._k).concat([this._a]));
+        return new CMYColor(
+            ...Color.CMYK2CMY(this._c, this._m, this._y, this._k)
+                .concat([this._a])
+        );
     }
 
     /**
-     * Creates a CMYK representation of the color
-     * @returns {CMYKColor}
+     * Create a CMYK representation of the color.
+     * @returns {CMYKColor} A CMYKColor object.
      */
     toCMYK() {
         return this;
     }
 
     /**
-     * Creates a RGB representation of the color
-     * @returns {RGBColor}
+     * Create a RGB representation of the color.
+     * @returns {RGBColor} A new RGBColor object.
      */
     toRGB() {
         return this.toCMY()

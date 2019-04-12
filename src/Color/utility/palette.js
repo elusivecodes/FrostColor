@@ -1,11 +1,15 @@
+/**
+ * Color Palette
+ */
+
 Object.assign(Color.prototype, {
 
     /**
-     * Returns a palette object with a specified number of shades, tints and tone variations
-     * @param {number} [shades=10]
-     * @param {number} [tints=10]
-     * @param {number} [tones=10]
-     * @returns {Object}
+     * Create a palette object with a specified number of shades, tints and tone variations.
+     * @param {number} [shades=10] The number of shades to generate.
+     * @param {number} [tints=10] The number of tints to generate.
+     * @param {number} [tones=10] The number of tones to generate.
+     * @returns {Object} A palette object.
      */
     palette(shades = 10, tints = 10, tones = 10) {
         return {
@@ -16,9 +20,9 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Returns an Array with a specified number of shade variations
-     * @param {number} [shades=10]
-     * @returns {Color[]}
+     * Create an array with a specified number of shade variations.
+     * @param {number} [shades=10] The number of shades to generate.
+     * @returns {Color[]} An array containing shade variations.
      */
     shades(shades = 10) {
         const rgb = this.getColor()
@@ -34,9 +38,9 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Returns an Array with a specified number of tint variations
-     * @param {number} [tints=10]
-     * @returns {Color[]}
+     * Create an array with a specified number of tint variations.
+     * @param {number} [tints=10] The number of tints to generate.
+     * @returns {Color[]} An array containing tint variations.
      */
     tints(tints = 10) {
         const rgb = this.getColor()
@@ -52,9 +56,9 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Returns an Array with a specified number of tone variations
-     * @param {number} [tones=10]
-     * @returns {Color[]}
+     * Create an array with a specified number of tone variations.
+     * @param {number} [tones=10] The number of tones to generate.
+     * @returns {Color[]} An array containing tone variations.
      */
     tones(tones = 10) {
         const rgb = this.getColor()

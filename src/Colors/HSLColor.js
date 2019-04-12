@@ -5,25 +5,25 @@
 class HSLColor extends BaseColor {
 
     /**
-     * New HSLColor constructor
-     * @param {number} hue
-     * @param {number} saturation
-     * @param {number} lightness
-     * @param {number} [alpha=1]
-     * @returns {HSLColor}
+     * New HSLColor constructor.
+     * @param {number} h The hue value.
+     * @param {number} s The saturation value.
+     * @param {number} l The lightness value.
+     * @param {number} [a=1] The alpha value.
+     * @returns {HSLColor} A new HSLColor object.
      */
-    constructor(hue, saturation, lightness, alpha = 1) {
-        super(alpha);
+    constructor(h, s, l, a = 1) {
+        super(a);
 
-        this._h = hue % 360;
-        this._s = Color.clamp(saturation);
-        this._l = Color.clamp(lightness);
+        this._h = h % 360;
+        this._s = Color.clamp(s);
+        this._l = Color.clamp(l);
     }
 
     /**
-     * Darkens the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {HSLColor}
+     * Darken the color by a specified amount.
+     * @param {number} amount The amount to darken the color by.
+     * @returns {HSLColor} A new HSLColor object.
      */
     darken(amount) {
         return new HSLColor(
@@ -35,9 +35,9 @@ class HSLColor extends BaseColor {
     }
 
     /**
-     * Lightens the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {HSLColor}
+     * Lighten the color by a specified amount.
+     * @param {number} amount The amount to lighten the color by.
+     * @returns {HSLColor} A new HSLColor object.
      */
     lighten(amount) {
         return new HSLColor(
@@ -49,28 +49,31 @@ class HSLColor extends BaseColor {
     }
 
     /**
-     * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} alpha
-     * @returns {HSLColor}
+     * Set the alpha value of the color.
+     * @param {number} a The alpha value.
+     * @returns {HSLColor} A new HSLColor object.
      */
-    setAlpha(alpha) {
-        return new HSLColor(this._h, this._s, this._l, alpha);
+    setAlpha(a) {
+        return new HSLColor(this._h, this._s, this._l, a);
     }
 
     /**
-     * Creates a HSL representation of the color
-     * @returns {HSLColor}
+     * Create a HSL representation of the color.
+     * @returns {HSLColor} A HSLColor object.
      */
     toHSL() {
         return this;
     }
 
     /**
-     * Creates a RGB representation of the color
-     * @returns {RGBColor}
+     * Create a RGB representation of the color.
+     * @returns {RGBColor} A new RGBColor object.
      */
     toRGB() {
-        return new RGBColor(...Color.HSL2RGB(this._h, this._s, this._l).concat([this._a]));
+        return new RGBColor(
+            ...Color.HSL2RGB(this._h, this._s, this._l)
+                .concat([this._a])
+        );
     }
 
 }

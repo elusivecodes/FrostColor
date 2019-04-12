@@ -1,20 +1,24 @@
+/**
+ * Color Schemes
+ */
+
 Object.assign(Color.prototype, {
 
     /**
-     * Returns an Array with 2 analogous Color variations
-     * @returns {Color[]}
+     * Create an array with 2 analogous color variations.
+     * @returns {Color[]} An array containing 2 analogous color variations.
      */
     analogous() {
         const hsv = this.getColor()
             .toHSV();
 
         return [
-            new Color(
+            new this(
                 hsv.setHue(
                     hsv.getHue() + 30
                 )
             ),
-            new Color(
+            new this(
                 hsv.setHue(
                     hsv.getHue() - 30
                 )
@@ -23,14 +27,14 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Returns a complementary Color variation
-     * @returns {Color}
+     * Create a complementary color variation.
+     * @returns {Color} A complementary color variation.
      */
     complementary() {
         const hsv = this.getColor()
             .toHSV();
 
-        return new Color(
+        return new this(
             hsv.setHue(
                 hsv.getHue() + 180
             )
@@ -38,20 +42,20 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Returns an Array with 2 split Color variations
-     * @returns {Color[]}
+     * Create an array with 2 split color variations.
+     * @returns {Color[]} An array containing 2 split color variations.
      */
     split() {
         const hsv = this.getColor()
             .toHSV();
 
         return [
-            new Color(
+            new this(
                 hsv.setHue(
                     hsv.getHue() + 150
                 )
             ),
-            new Color(
+            new this(
                 hsv.setHue(
                     hsv.getHue() - 150
                 )
@@ -60,8 +64,8 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Returns an Array with 3 tetradic Color variations
-     * @returns {Color[]}
+     * Create an array with 3 tetradic color variations.
+     * @returns {Color[]} An array containing 3 tetradic color variations.
      */
     tetradic() {
         const hsv = this.getColor()
@@ -87,8 +91,8 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Returns an Array with 2 triadic Color variations
-     * @returns {Color[]}
+     * Create an array with 2 triadic color variations.
+     * @returns {Color[]} An array containing 2 triadic color variations.
      */
     triadic() {
         const hsv = this.getColor()

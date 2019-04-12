@@ -5,9 +5,9 @@
 class ColorImmutable extends Color {
 
     /**
-     * Creates a new ColorImmutable from a BaseColor
-     * @param {BaseColor} color
-     * @returns {ColorImmutable}
+     * Create a new ColorImmutable from a BaseColor.
+     * @param {BaseColor} color A new BaseColor.
+     * @returns {ColorImmutable} A new ColorImmutable object.
      */
     setColor(color) {
         return new ColorImmutable(color);

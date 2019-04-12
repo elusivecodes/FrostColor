@@ -1,9 +1,13 @@
+/**
+ * Color Manipulation
+ */
+
 Object.assign(Color.prototype, {
 
     /**
-     * Darkens the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {Color}
+     * Darken the color by a specified amount.
+     * @param {number} amount The amount to darken the color by.
+     * @returns {Color} The darkened Color object.
      */
     darken(amount) {
         return this.setColor(
@@ -13,9 +17,9 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Lightens the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {Color}
+     * Lighten the color by a specified amount.
+     * @param {number} amount The amount to lighten the color by.
+     * @returns {Color} The lightened Color object.
      */
     lighten(amount) {
         return this.setColor(
@@ -25,9 +29,9 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Shades the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {Color}
+     * Shade the color by a specified amount.
+     * @param {number} amount The amount to shade the color by.
+     * @returns {Color} The shaded Color object.
      */
     shade(amount) {
         return this.setColor(
@@ -40,9 +44,9 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Tints the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {Color}
+     * Tint the color by a specified amount.
+     * @param {number} amount The amount to tint the color by.
+     * @returns {Color} The tinted Color object.
      */
     tint(amount) {
         return this.setColor(
@@ -55,9 +59,9 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Tones the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {Color}
+     * Tone the color by a specified amount.
+     * @param {number} amount The amount to tone the color by.
+     * @returns {Color} The toned Color object.
      */
     tone(amount) {
         return this.setColor(

@@ -5,37 +5,37 @@
 class Color {
 
     /**
-     * New Color constructor
-     * @param {number|BaseColor|Color} [red=0]
-     * @param {number} [green=1]
-     * @param {null|number} [blue=null]
-     * @param {number} [alpha=1]
-     * @returns {Color}
+     * New Color constructor.
+     * @param {number|BaseColor|Color} [a=0] The red value, the brightness value, or a Color or BaseColor object.
+     * @param {number} [b=1] The green value or the alpha value.
+     * @param {null|number} [c=null] The blue value.
+     * @param {number} [d=1] The alpha value.
+     * @returns {Color} A new Color object.
      */
-    constructor(red = 0, green = 1, blue = null, alpha = 1) {
-        if (blue !== null) {
-            this._color = new RGBColor(red, green, blue, alpha);
-        } else if (red instanceof BaseColor) {
-            this._color = red;
-        } else if (red instanceof Color) {
-            this._color = red.getColor();
+    constructor(a = 0, b = 1, c = null, d = 1) {
+        if (c !== null) {
+            this._color = new RGBColor(a, b, c, d);
+        } else if (a instanceof BaseColor) {
+            this._color = a;
+        } else if (a instanceof Color) {
+            this._color = a.getColor();
         } else {
-            this._color = new HSLColor(0, 0, red, green);
+            this._color = new HSVColor(0, 0, a, b);
         }
     }
 
     /**
-     * Returns the internal BaseColor of the color
-     * @returns {BaseColor}
+     * Return the internal BaseColor of the Color object.
+     * @returns {BaseColor} The BaseColor.
      */
     getColor() {
         return this._color;
     }
 
     /**
-     * Sets the BaseColor of the color
-     * @param {BaseColor} color
-     * @returns {Color}
+     * Set the BaseColor of the Color object.
+     * @param {BaseColor} color A new BaseColor.
+     * @returns {Color} The Color object.
      */
     setColor(color) {
         this._color = color;
@@ -43,8 +43,8 @@ class Color {
     }
 
     /**
-     * Returns a string representation of the color
-     * @returns {string}
+     * Return a HTML string representation of the color.
+     * @returns {string} The HTML color string.
      */
     toString() {
         return this.getColor()
@@ -52,8 +52,8 @@ class Color {
     }
 
     /**
-     * Returns the luminance value of the color
-     * @returns {number}
+     * Return the luminance value of the color.
+     * @returns {number} The luminance value.
      */
     valueOf() {
         return this.getColor()
@@ -61,8 +61,8 @@ class Color {
     }
 
     /**
-     * Returns a primitive value of the color
-     * @returns {string|number}
+     * Return a primitive value of the color.
+     * @returns {string|number} The HTML color string, or the luminance value.
      */
     [Symbol.toPrimitive](hint) {
         return this.getColor()[Symbol.toPrimitive](hint);

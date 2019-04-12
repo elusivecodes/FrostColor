@@ -5,95 +5,98 @@
 class HSVColor extends BaseColor {
 
     /**
-     * New HSVColor constructor
-     * @param {number} hue
-     * @param {number} saturation
-     * @param {number} brightness
-     * @param {number} [alpha=1]
-     * @returns {HSVColor}
+     * New HSVColor constructor.
+     * @param {number} h The hue value.
+     * @param {number} s The saturation value.
+     * @param {number} v The brightness value.
+     * @param {number} [a=1] The alpha value.
+     * @returns {HSVColor} A new HSVColor object.
      */
-    constructor(hue, saturation, brightness, alpha = 1) {
-        super(alpha);
+    constructor(h, s, v, a = 1) {
+        super(a);
 
-        this._h = hue % 360;
-        this._s = Color.clamp(saturation);
-        this._v = Color.clamp(brightness);
+        this._h = h % 360;
+        this._s = Color.clamp(s);
+        this._v = Color.clamp(v);
     }
 
     /**
-     * Gets the brightness value of the color (between 0 and 100)
-     * @returns {number}
+     * Get the brightness value of the color.
+     * @returns {number} The brightess value.
      */
     getBrightness() {
         return this._v;
     }
 
     /**
-     * Gets the hue value of the color (between 0 and 360)
-     * @returns {number}
+     * Get the hue value of the color.
+     * @returns {number} The hue value.
      */
     getHue() {
         return this._h;
     }
 
     /**
-     * Gets the saturation value of the color (between 0 and 100)
-     * @returns {number}
+     * Get the saturation value of the color.
+     * @returns {number} The saturation value.
      */
     getSaturation() {
         return this._s;
     }
 
     /**
-     * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} alpha
-     * @returns {HSVColor}
+     * Set the alpha value of the color.
+     * @param {number} a The alpha value.
+     * @returns {HSVColor} A new HSVColor object.
      */
-    setAlpha(alpha) {
-        return new HSVColor(this._h, this._s, this._v, alpha);
+    setAlpha(a) {
+        return new HSVColor(this._h, this._s, this._v, a);
     }
 
     /**
-     * Sets the brightness value of the color (between 0 and 100)
-     * @param {number} brightness
-     * @returns {HSVColor}
+     * Set the brightness value of the color.
+     * @param {number} v The brightness value.
+     * @returns {HSVColor} A new HSVColor object.
      */
-    setBrightness(brightness) {
-        return new HSVColor(this._h, this._s, brightness, this._a);
+    setBrightness(v) {
+        return new HSVColor(this._h, this._s, v, this._a);
     }
 
     /**
-     * Sets the hue value of the color (between 0 and 360)
-     * @param {number} hue
-     * @returns {HSVColor}
+     * Set the hue value of the color.
+     * @param {number} h The hue value.
+     * @returns {HSVColor} A new HSVColor object.
      */
-    setHue(hue) {
-        return new HSVColor(hue, this._s, this._v, this._a);
+    setHue(h) {
+        return new HSVColor(h, this._s, this._v, this._a);
     }
 
     /**
-     * Sets the saturation value of the color (between 0 and 100)
-     * @param {number} saturation
-     * @returns {HSVColor}
+     * Set the saturation value of the color.
+     * @param {number} s The saturation value.
+     * @returns {HSVColor} A new HSVColor object.
      */
-    setSaturation(saturation) {
-        return new HSVColor(this._h, saturation, this._v, this._a);
+    setSaturation(s) {
+        return new HSVColor(this._h, s, this._v, this._a);
     }
 
     /**
-     * Creates a HSV representation of the color
-     * @returns {HSVColor}
+     * Create a HSV representation of the color.
+     * @returns {HSVColor} A HSVColor object.
      */
     toHSV() {
         return this;
     }
 
     /**
-     * Creates a RGB representation of the color
-     * @returns {RGBColor}
+     * Create a RGB representation of the color.
+     * @returns {RGBColor} A new RGBColor object.
      */
     toRGB() {
-        return new RGBColor(...Color.HSV2RGB(this._h, this._s, this._v).concat([this._a]));
+        return new RGBColor(
+            ...Color.HSV2RGB(this._h, this._s, this._v)
+                .concat([this._a])
+        );
     }
 
 }

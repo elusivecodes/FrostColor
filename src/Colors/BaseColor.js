@@ -5,18 +5,18 @@
 class BaseColor {
 
     /**
-     * New BaseColor constructor
-     * @param {number} [alpha=1]
-     * @returns {BaseColor}
+     * New BaseColor constructor.
+     * @param {number} [a=1] The alpha value.
+     * @returns {BaseColor} A new BaseColor object.
      */
-    constructor(alpha = 1) {
-        this._a = Color.clamp(alpha, 0, 1);
+    constructor(a = 1) {
+        this._a = Color.clamp(a, 0, 1);
     }
 
     /**
-     * Darkens the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {HSLColor}
+     * Darken the color by a specified amount.
+     * @param {number} amount The amount to darken the color by.
+     * @returns {HSLColor} A new HSLColor object.
      */
     darken(amount) {
         return this.toHSL()
@@ -24,16 +24,16 @@ class BaseColor {
     }
 
     /**
-     * Gets the alpha value of the color (between 0 and 1)
-     * @returns {number}
+     * Get the alpha value of the color.
+     * @returns {number} The alpha value.
      */
     getAlpha() {
         return this._a;
     }
 
     /**
-     * Gets the brightness value of the color (between 0 and 100)
-     * @returns {number}
+     * Get the brightness value of the color.
+     * @returns {number} The brightness value.
      */
     getBrightness() {
         return this.toHSV()
@@ -41,8 +41,8 @@ class BaseColor {
     }
 
     /**
-     * Gets the hue value of the color (between 0 and 360)
-     * @returns {number}
+     * Get the hue value of the color.
+     * @returns {number} The hue value.
      */
     getHue() {
         return this.toHSV()
@@ -50,8 +50,8 @@ class BaseColor {
     }
 
     /**
-     * Gets the saturation value of the color (between 0 and 100)
-     * @returns {number}
+     * Get the saturation value of the color.
+     * @returns {number} The saturation value.
      */
     getSaturation() {
         return this.toHSV()
@@ -59,9 +59,9 @@ class BaseColor {
     }
 
     /**
-     * Lightens the color by a specified amount (between 0 and 1)
-     * @param {number} amount
-     * @returns {HSLColor}
+     * Lighten the color by a specified amount.
+     * @param {number} amount The amount to lighten the color by.
+     * @returns {HSLColor} A new HSLColor object.
      */
     lighten(amount) {
         return this.toHSL()
@@ -69,8 +69,8 @@ class BaseColor {
     }
 
     /**
-     * Gets the luminance value of the color 
-     * @returns {number}
+     * Get the luminance value of the color.
+     * @returns {number} The luminance value.
      */
     luma() {
         return this.toRGB()
@@ -78,10 +78,10 @@ class BaseColor {
     }
 
     /**
-     * Mixes this color with another by a specified amount (between 0 and 1)
-     * @param {BaseColor} color
-     * @param {number} amount
-     * @returns {RGBColor}
+     * Mix this color with another by a specified amount.
+     * @param {BaseColor} color The color to mix with.
+     * @param {number} amount The amount to mix by.
+     * @returns {RGBColor} A new RGBColor object.
      */
     mix(color, amount) {
         return this.toRGB()
@@ -89,10 +89,10 @@ class BaseColor {
     }
 
     /**
-     * Multiplies this color with another by a specified amount (between 0 and 1)
-     * @param {BaseColor} color
-     * @param {number} amount
-     * @returns {RGBColor}
+     * Multiply this color with another by a specified amount.
+     * @param {BaseColor} color The color to multiply with.
+     * @param {number} amount The amount to multiply by.
+     * @returns {RGBColor} A new RGBColor object.
      */
     multiply(color, amount) {
         return this.toRGB()
@@ -100,38 +100,38 @@ class BaseColor {
     }
 
     /**
-     * Sets the brightness value of the color (between 0 and 100)
-     * @param {number} brightness
-     * @returns {HSVColor}
+     * Set the brightness value of the color.
+     * @param {number} v The brightness value.
+     * @returns {HSVColor} A new HSVColor object.
      */
-    setBrightness(brightness) {
+    setBrightness(v) {
         return this.toHSV()
-            .setBrightness(brightness);
+            .setBrightness(v);
     }
 
     /**
-     * Sets the hue value of the color (between 0 and 360)
-     * @param {number} hue
-     * @returns {HSVColor}
+     * Set the hue value of the color.
+     * @param {number} h The hue value.
+     * @returns {HSVColor} A new HSVColor object.
      */
-    setHue(hue) {
+    setHue(h) {
         return this.toHSV()
-            .setHue(hue);
+            .setHue(h);
     }
 
     /**
-     * Sets the saturation value of the color (between 0 and 100)
-     * @param {number} saturation
-     * @returns {HSVColor}
+     * Set the saturation value of the color.
+     * @param {number} s The saturation value.
+     * @returns {HSVColor} A new HSVColor object.
      */
-    setSaturation(saturation) {
+    setSaturation(s) {
         return this.toHSV()
-            .setSaturation(saturation);
+            .setSaturation(s);
     }
 
     /**
-     * Creates a CMY representation of the color
-     * @returns {CMYColor}
+     * Create a CMY representation of the color.
+     * @returns {CMYColor} A new CMYColor object.
      */
     toCMY() {
         return this.toRGB()
@@ -139,8 +139,8 @@ class BaseColor {
     }
 
     /**
-     * Creates a CMYK representation of the color
-     * @returns {CMYKColor}
+     * Create a CMYK representation of the color.
+     * @returns {CMYKColor} A new CMYKColor object.
      */
     toCMYK() {
         return this.toCMY()
@@ -148,8 +148,8 @@ class BaseColor {
     }
 
     /**
-     * Creates a HSL representation of the color
-     * @returns {HSLColor}
+     * Create a HSL representation of the color.
+     * @returns {HSLColor} A new HSLColor object.
      */
     toHSL() {
         return this.toRGB()
@@ -157,8 +157,8 @@ class BaseColor {
     }
 
     /**
-     * Creates a HSV representation of the color
-     * @returns {HSVColor}
+     * Create a HSV representation of the color.
+     * @returns {HSVColor} A new HSVColor object.
      */
     toHSV() {
         return this.toRGB()
@@ -166,8 +166,8 @@ class BaseColor {
     }
 
     /**
-     * Returns a string representation of the color
-     * @returns {string}
+     * Return a HTML string representation of the color.
+     * @returns {string} The HTML color string.
      */
     toString() {
         return this.toRGB()
@@ -175,16 +175,16 @@ class BaseColor {
     }
 
     /**
-     * Returns the luminance value of the color
-     * @returns {number}
+     * Get the luminance value of the color.
+     * @returns {number} The luminance value.
      */
     valueOf() {
         return this.luma();
     }
 
     /**
-     * Returns a primitive value of the color
-     * @returns {string|number}
+     * Return a primitive value of the color.
+     * @returns {string|number} The HTML color string, or the luminance value.
      */
     [Symbol.toPrimitive](hint) {
         return hint === 'number' ?

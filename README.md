@@ -21,7 +21,7 @@ It features full support for RGB, HSL, HSV, CMY and CMYK color-spaces.
 - `red` is a number between 0 and 255.
 - `green` is a number between 0 and 255.
 - `blue` is a number between 0 and 255.
-- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
+- `alpha` is a number between 0 and 1, and will default to *1*.
 
 ```javascript
 const color = new Color(red, green, blue, alpha);
@@ -30,7 +30,7 @@ const color = new Color(red, green, blue, alpha);
 #### From Brightness
 
 - `brightness` is a number between 0 and 100.
-- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
+- `alpha` is a number between 0 and 1, and will default to *1*.
 
 ```javascript
 const color = new Color(brightness, alpha);
@@ -72,7 +72,7 @@ const color = Color.fromString(colorString);
 - `cyan` is a number between 0 and 100.
 - `magenta` is a number between 0 and 100.
 - `yellow` is a number between 0 and 100.
-- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
+- `alpha` is a number between 0 and 1, and will default to *1*.
 
 ```javascript
 const color = Color.fromCMY(cyan, magenta, yellow, alpha);
@@ -84,7 +84,7 @@ const color = Color.fromCMY(cyan, magenta, yellow, alpha);
 - `magenta` is a number between 0 and 100.
 - `yellow` is a number between 0 and 100.
 - `key` is a number between 0 and 100.
-- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
+- `alpha` is a number between 0 and 1, and will default to *1*.
 
 ```javascript
 const color = Color.fromCMYK(cyan, magenta, yellow, key, alpha);
@@ -95,7 +95,7 @@ const color = Color.fromCMYK(cyan, magenta, yellow, key, alpha);
 - `hue` is a number between 0 and 360.
 - `saturation` is a number between 0 and 100.
 - `lightness` is a number between 0 and 100.
-- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
+- `alpha` is a number between 0 and 1, and will default to *1*.
 
 ```javascript
 const color = Color.fromHSL(hue, saturation, lightness, alpha);
@@ -106,7 +106,7 @@ const color = Color.fromHSL(hue, saturation, lightness, alpha);
 - `hue` is a number between 0 and 360.
 - `saturation` is a number between 0 and 100.
 - `value` is a number between 0 and 100.
-- `alpha` is a number between 0 and 1, and will default to 1 if it is omitted.
+- `alpha` is a number between 0 and 1, and will default to *1*.
 
 ```javascript
 const color = Color.fromHSV(hue, saturation, value, alpha);
@@ -295,7 +295,7 @@ Create a palette of colors from a Color object you have created using the follow
 
 #### Shades
 
-- `shades` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
+- `shades` is a number indicating how shades you wish to generate, and will default to *10*.
 
 ```javascript
 const shades = color.shades(shades);
@@ -303,7 +303,7 @@ const shades = color.shades(shades);
 
 #### Tints
 
-- `tints` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
+- `tints` is a number indicating how shades you wish to generate, and will default to *10*.
 
 ```javascript
 const tints = color.tints(tints);
@@ -311,7 +311,7 @@ const tints = color.tints(tints);
 
 #### Tones
 
-- `tones` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
+- `tones` is a number indicating how shades you wish to generate, and will default to *10*.
 
 ```javascript
 const tones = color.tones(tones);
@@ -319,9 +319,9 @@ const tones = color.tones(tones);
 
 #### Palette
 
-- `shades` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
-- `tints` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
-- `tones` is a number indicating how shades you wish to generate, and will default to 10 if it is omitted.
+- `shades` is a number indicating how shades you wish to generate, and will default to *10*.
+- `tints` is a number indicating how shades you wish to generate, and will default to *10*.
+- `tones` is a number indicating how shades you wish to generate, and will default to *10*.
 
 ```javascript
 const colorPalette = color.palette(shades, tints, tones);

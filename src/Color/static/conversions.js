@@ -1,11 +1,15 @@
+/**
+ * Color Conversions
+ */
+
 Object.assign(Color, {
 
     /**
-     * Converts CMY color values to CMYK
-     * @param {number} c
-     * @param {number} m
-     * @param {number} y
-     * @returns {number[]}
+     * Convert CMY color values to CMYK.
+     * @param {number} c The cyan value.
+     * @param {number} m The magenta value.
+     * @param {number} y The yellow value.
+     * @returns {number[]} An array containing the CMYK values.
      */
     CMY2CMYK(c, m, y) {
         const k = Math.min(c, m, y);
@@ -25,11 +29,11 @@ Object.assign(Color, {
     },
 
     /**
-     * Converts CMY color values to RGB
-     * @param {number} c
-     * @param {number} m
-     * @param {number} y
-     * @returns {number[]}
+     * Convert CMY color values to RGB.
+     * @param {number} c The cyan value.
+     * @param {number} m The magenta value.
+     * @param {number} y The yellow value.
+     * @returns {number[]} An array containing the RGB values.
      */
     CMY2RGB(c, m, y) {
         return [
@@ -40,12 +44,12 @@ Object.assign(Color, {
     },
 
     /**
-     * Converts CMYK color values to CMY
-     * @param {number} c
-     * @param {number} m
-     * @param {number} y
-     * @param {number} k
-     * @returns {number[]}
+     * Convert CMYK color values to CMY.
+     * @param {number} c The cyan value.
+     * @param {number} m The magenta value.
+     * @param {number} y The yellow value.
+     * @param {number} k The key value.
+     * @returns {number[]} An array containing the CMY values.
      */
     CMYK2CMY(c, m, y, k) {
         k /= 100;
@@ -58,11 +62,11 @@ Object.assign(Color, {
     },
 
     /**
-     * Converts HSL color values to RGB
-     * @param {number} h
-     * @param {number} s
-     * @param {number} l
-     * @returns {number[]}
+     * Convert HSL color values to RGB.
+     * @param {number} h The hue value.
+     * @param {number} s The saturation value.
+     * @param {number} l The lightness value.
+     * @returns {number[]} An array containing the RGB values.
      */
     HSL2RGB(h, s, l) {
         if (l == 0) {
@@ -86,11 +90,11 @@ Object.assign(Color, {
     },
 
     /**
-     * Converts HSV color values to RGB
-     * @param {number} h
-     * @param {number} s
-     * @param {number} v
-     * @returns {number[]}
+     * Convert HSV color values to RGB.
+     * @param {number} h The hue value.
+     * @param {number} s The saturation value.
+     * @param {number} v The brightness value
+     * @returns {number[]} An array containing the RGB values.
      */
     HSV2RGB(h, s, v) {
         v /= 100;
@@ -147,11 +151,11 @@ Object.assign(Color, {
     },
 
     /**
-     * Converts RGB color values to CMY
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
-     * @returns {number[]}
+     * Convert RGB color values to CMY.
+     * @param {number} r The red value.
+     * @param {number} g The green value.
+     * @param {number} b The blue value.
+     * @returns {number[]} An array containing the CMY values.
      */
     RGB2CMY(r, g, b) {
         return [
@@ -162,11 +166,11 @@ Object.assign(Color, {
     },
 
     /**
-     * Calculates the luminance of an RGB color
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
-     * @returns {number}
+     * Calculate the luminance of an RGB color.
+     * @param {number} r The red value.
+     * @param {number} g The green value.
+     * @param {number} b The blue value.
+     * @returns {number} The luminance value.
      */
     RGB2Luma(r, g, b) {
         return (0.2126 * (r / 255)) +
@@ -175,11 +179,11 @@ Object.assign(Color, {
     },
 
     /**
-     * Converts RGB color values to HSL
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
-     * @returns {number[]}
+     * Convert RGB color values to HSL.
+     * @param {number} r The red value.
+     * @param {number} g The green value.
+     * @param {number} b The blue value.
+     * @returns {number[]} An array containing the HSL values.
      */
     RGB2HSL(r, g, b) {
         r /= 255;
@@ -221,11 +225,11 @@ Object.assign(Color, {
     },
 
     /**
-     * Converts RGB color values to HSV
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
-     * @returns {number[]}
+     * Convert RGB color values to HSV.
+     * @param {number} r The red value.
+     * @param {number} g The green value.
+     * @param {number} b The blue value.
+     * @returns {number[]} An array containing the HSV values.
      */
     RGB2HSV(r, g, b) {
         r /= 255;
@@ -266,11 +270,11 @@ Object.assign(Color, {
     },
 
     /**
-     * Calculates the R, G or B value of a hue
-     * @param {number} v1
-     * @param {number} v2
-     * @param {number} vH
-     * @returns {number}
+     * Calculate the R, G or B value of a hue.
+     * @param {number} v1 The first value.
+     * @param {number} v2 The second value.
+     * @param {number} vH The hue value.
+     * @returns {number} The R, G or B value.
      */
     RGBHue(v1, v2, vH) {
         vH = (vH + 1) % 1;

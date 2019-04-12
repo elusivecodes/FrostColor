@@ -5,34 +5,34 @@
 class RGBColor extends BaseColor {
 
     /**
-     * New RGBColor constructor
-     * @param {number} red
-     * @param {number} green
-     * @param {number} blue
-     * @param {number} [alpha=1]
-     * @returns {RGBColor}
+     * New RGBColor constructor.
+     * @param {number} r The red value.
+     * @param {number} g The green value.
+     * @param {number} b The blue value.
+     * @param {number} [a=1] The alpha value.
+     * @returns {RGBColor} A new RGBColor object.
      */
-    constructor(red, green, blue, alpha = 1) {
-        super(alpha);
+    constructor(r, g, b, a = 1) {
+        super(a);
 
-        this._r = Color.clamp(red, 0, 255);
-        this._g = Color.clamp(green, 0, 255);
-        this._b = Color.clamp(blue, 0, 255);
+        this._r = Color.clamp(r, 0, 255);
+        this._g = Color.clamp(g, 0, 255);
+        this._b = Color.clamp(b, 0, 255);
     }
 
     /**
-     * Gets the luminance value of the color 
-     * @returns {number}
+     * Get the luminance value of the color.
+     * @returns {number} The luminance value.
      */
     luma() {
         return Color.RGB2Luma(this._r, this._g, this._b);
     }
 
     /**
-     * Mixes this color with another by a specified amount (between 0 and 1)
-     * @param {BaseColor} color
-     * @param {number} amount
-     * @returns {RGBColor}
+     * Mix this color with another by a specified amount.
+     * @param {BaseColor} color The color to mix with.
+     * @param {number} amount The amount to mix by.
+     * @returns {RGBColor} A new RGBColor object.
      */
     mix(color, amount) {
         const rgb = color.toRGB();
@@ -46,10 +46,10 @@ class RGBColor extends BaseColor {
     }
 
     /**
-     * Multiplies this color with another by a specified amount (between 0 and 1)
-     * @param {BaseColor} color
-     * @param {number} amount
-     * @returns {RGBColor}
+     * Multiply this color with another by a specified amount.
+     * @param {BaseColor} color The color to multiply with.
+     * @param {number} amount The amount to multiply by.
+     * @returns {RGBColor} A new RGBColor object.
      */
     multiply(color, amount) {
         const rgb = color.toRGB();
@@ -63,49 +63,58 @@ class RGBColor extends BaseColor {
     }
 
     /**
-     * Sets the alpha value of the color (between 0 and 1)
-     * @param {number} alpha
-     * @returns {RGBColor}
+     * Set the alpha value of the color.
+     * @param {number} a The alpha value.
+     * @returns {RGBColor} A new RGBColor object.
      */
-    setAlpha(alpha) {
-        return new RGBColor(this._r, this._g, this._b, alpha);
+    setAlpha(a) {
+        return new RGBColor(this._r, this._g, this._b, a);
     }
 
     /**
-     * Creates a CMY representation of the color
-     * @returns {CMYColor}
+     * Create a CMY representation of the color.
+     * @returns {CMYColor} A new CMYColor object.
      */
     toCMY() {
-        return new CMYColor(...Color.RGB2CMY(this._r, this._g, this._b).concat([this._a]));
+        return new CMYColor(
+            ...Color.RGB2CMY(this._r, this._g, this._b)
+                .concat([this._a])
+        );
     }
 
     /**
-     * Creates a HSL representation of the color
-     * @returns {HSLColor}
+     * Create a HSL representation of the color.
+     * @returns {HSLColor} A new HSLColor object.
      */
     toHSL() {
-        return new HSLColor(...Color.RGB2HSL(this._r, this._g, this._b).concat([this._a]));
+        return new HSLColor(
+            ...Color.RGB2HSL(this._r, this._g, this._b)
+                .concat([this._a])
+        );
     }
 
     /**
-     * Creates a HSLV representation of the color
-     * @returns {HSVColor}
+     * Create a HSLV representation of the color.
+     * @returns {HSVColor} A new HSVColor object.
      */
     toHSV() {
-        return new HSVColor(...Color.RGB2HSV(this._r, this._g, this._b).concat([this._a]));
+        return new HSVColor(
+            ...Color.RGB2HSV(this._r, this._g, this._b)
+                .concat([this._a])
+        );
     }
 
     /**
-     * Creates a RGB representation of the color
-     * @returns {RGBColor}
+     * Create a RGB representation of the color.
+     * @returns {RGBColor} An RGBColor object.
      */
     toRGB() {
         return this;
     }
 
     /**
-     * Returns a string representation of the color
-     * @returns {string}
+     * Return a HTML string representation of the color.
+     * @returns {string} The HTML color string.
      */
     toString() {
         const a = Math.round(this._a * 100) / 100;
