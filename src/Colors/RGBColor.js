@@ -15,9 +15,9 @@ class RGBColor extends BaseColor {
     constructor(r, g, b, a = 1) {
         super(a);
 
-        this._r = Color.clamp(r, 0, 255);
-        this._g = Color.clamp(g, 0, 255);
-        this._b = Color.clamp(b, 0, 255);
+        this._r = Color._clamp(r, 0, 255);
+        this._g = Color._clamp(g, 0, 255);
+        this._b = Color._clamp(b, 0, 255);
     }
 
     /**
@@ -38,10 +38,10 @@ class RGBColor extends BaseColor {
         const rgb = color.toRGB();
 
         return new RGBColor(
-            Color.lerp(this._r, rgb._r, amount),
-            Color.lerp(this._g, rgb._g, amount),
-            Color.lerp(this._b, rgb._b, amount),
-            Color.lerp(this._a, rgb._a, amount)
+            Color._lerp(this._r, rgb._r, amount),
+            Color._lerp(this._g, rgb._g, amount),
+            Color._lerp(this._b, rgb._b, amount),
+            Color._lerp(this._a, rgb._a, amount)
         );
     }
 
@@ -55,10 +55,10 @@ class RGBColor extends BaseColor {
         const rgb = color.toRGB();
 
         return new RGBColor(
-            Color.lerp(this._r, this._r * rgb._r / 255, amount),
-            Color.lerp(this._g, this._g * rgb._g / 255, amount),
-            Color.lerp(this._b, this._b * rgb._b / 255, amount),
-            Color.lerp(this._a, this._a * rgb._a, amount)
+            Color._lerp(this._r, this._r * rgb._r / 255, amount),
+            Color._lerp(this._g, this._g * rgb._g / 255, amount),
+            Color._lerp(this._b, this._b * rgb._b / 255, amount),
+            Color._lerp(this._a, this._a * rgb._a, amount)
         );
     }
 

@@ -10,7 +10,7 @@ class BaseColor {
      * @returns {BaseColor} A new BaseColor object.
      */
     constructor(a = 1) {
-        this._a = Color.clamp(a, 0, 1);
+        this._a = Color._clamp(a, 0, 1);
     }
 
     /**

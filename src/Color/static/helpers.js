@@ -11,7 +11,7 @@ Object.assign(Color, {
      * @param {number} [max=1] The maximum value of the clamped range.
      * @returns {number} The clamped value.
      */
-    clamp(val, min = 0, max = 100) {
+    _clamp(val, min = 0, max = 100) {
         return Math.max(
             min,
             Math.min(max, val)
@@ -25,7 +25,7 @@ Object.assign(Color, {
      * @param {number} amount The amount to interpolate.
      * @returns {number} The interpolated value.
      */
-    lerp(a, b, amount) {
+    _lerp(a, b, amount) {
         return a * (1 - amount) + b * amount;
     }
 

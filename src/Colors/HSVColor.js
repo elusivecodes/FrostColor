@@ -16,8 +16,8 @@ class HSVColor extends BaseColor {
         super(a);
 
         this._h = h % 360;
-        this._s = Color.clamp(s);
-        this._v = Color.clamp(v);
+        this._s = Color._clamp(s);
+        this._v = Color._clamp(v);
     }
 
     /**

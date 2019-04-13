@@ -16,8 +16,8 @@ class HSLColor extends BaseColor {
         super(a);
 
         this._h = h % 360;
-        this._s = Color.clamp(s);
-        this._l = Color.clamp(l);
+        this._s = Color._clamp(s);
+        this._l = Color._clamp(l);
     }
 
     /**

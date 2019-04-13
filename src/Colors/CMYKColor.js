@@ -16,10 +16,10 @@ class CMYKColor extends BaseColor {
     constructor(c, m, y, k, a = 1) {
         super(a);
 
-        this._c = Color.clamp(c);
-        this._m = Color.clamp(m);
-        this._y = Color.clamp(y);
-        this._k = Color.clamp(k);
+        this._c = Color._clamp(c);
+        this._m = Color._clamp(m);
+        this._y = Color._clamp(y);
+        this._k = Color._clamp(k);
     }
 
     /**
