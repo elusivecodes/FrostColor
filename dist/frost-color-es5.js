@@ -549,7 +549,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @param {number} [max=1] The maximum value of the clamped range.
      * @returns {number} The clamped value.
      */
-    clamp: function clamp(val) {
+    _clamp: function _clamp(val) {
       var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       var max = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 100;
       return Math.max(min, Math.min(max, val));
@@ -562,7 +562,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @param {number} amount The amount to interpolate.
      * @returns {number} The interpolated value.
      */
-    lerp: function lerp(a, b, amount) {
+    _lerp: function _lerp(a, b, amount) {
       return a * (1 - amount) + b * amount;
     }
   });
@@ -869,7 +869,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The shaded Color object.
      */
     shade: function shade(amount) {
-      return this.setColor(Color.mix(new Color(this), new Color(0, 0, 0), amount).getColor());
+      return this.setColor(Color.mix(new Color(this), new Color(0), amount).getColor());
     },
 
     /**
@@ -878,7 +878,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The tinted Color object.
      */
     tint: function tint(amount) {
-      return this.setColor(Color.mix(new Color(this), new Color(255, 255, 255), amount).getColor());
+      return this.setColor(Color.mix(new Color(this), new Color(100), amount).getColor());
     },
 
     /**
@@ -887,7 +887,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The toned Color object.
      */
     tone: function tone(amount) {
-      return this.setColor(Color.mix(new Color(this), new Color(127, 127, 127), amount).getColor());
+      return this.setColor(Color.mix(new Color(this), new Color(50), amount).getColor());
     }
   });
   /**
@@ -923,7 +923,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       var rgb = this.getColor().toRGB();
       return new Array(_shades).fill().map(function (_, index) {
-        return rgb.shade(index / (_shades + 1));
+        return new Color(rgb).shade(index / (_shades + 1));
       });
     },
 
@@ -937,7 +937,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       var rgb = this.getColor().toRGB();
       return new Array(_tints).fill().map(function (_, index) {
-        return rgb.tint(index / (_tints + 1));
+        return new Color(rgb).tint(index / (_tints + 1));
       });
     },
 
@@ -951,7 +951,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       var rgb = this.getColor().toRGB();
       return new Array(_tones).fill().map(function (_, index) {
-        return rgb.tone(index / (_tones + 1));
+        return new Color(rgb).tone(index / (_tones + 1));
       });
     }
   });
@@ -1023,7 +1023,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       _classCallCheck(this, BaseColor);
 
-      this._a = Color.clamp(a, 0, 1);
+      this._a = Color._clamp(a, 0, 1);
     }
     /**
      * Darken the color by a specified amount.
@@ -1256,9 +1256,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, CMYColor);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(CMYColor).call(this, a));
-      _this._c = Color.clamp(c);
-      _this._m = Color.clamp(m);
-      _this._y = Color.clamp(y);
+      _this._c = Color._clamp(c);
+      _this._m = Color._clamp(m);
+      _this._y = Color._clamp(y);
       return _this;
     }
     /**
@@ -1335,10 +1335,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, CMYKColor);
 
       _this2 = _possibleConstructorReturn(this, _getPrototypeOf(CMYKColor).call(this, a));
-      _this2._c = Color.clamp(c);
-      _this2._m = Color.clamp(m);
-      _this2._y = Color.clamp(y);
-      _this2._k = Color.clamp(k);
+      _this2._c = Color._clamp(c);
+      _this2._m = Color._clamp(m);
+      _this2._y = Color._clamp(y);
+      _this2._k = Color._clamp(k);
       return _this2;
     }
     /**
@@ -1415,8 +1415,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       _this3 = _possibleConstructorReturn(this, _getPrototypeOf(HSLColor).call(this, a));
       _this3._h = h % 360;
-      _this3._s = Color.clamp(s);
-      _this3._l = Color.clamp(l);
+      _this3._s = Color._clamp(s);
+      _this3._l = Color._clamp(l);
       return _this3;
     }
     /**
@@ -1505,8 +1505,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       _this4 = _possibleConstructorReturn(this, _getPrototypeOf(HSVColor).call(this, a));
       _this4._h = h % 360;
-      _this4._s = Color.clamp(s);
-      _this4._v = Color.clamp(v);
+      _this4._s = Color._clamp(s);
+      _this4._v = Color._clamp(v);
       return _this4;
     }
     /**
@@ -1635,9 +1635,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       _classCallCheck(this, RGBColor);
 
       _this5 = _possibleConstructorReturn(this, _getPrototypeOf(RGBColor).call(this, a));
-      _this5._r = Color.clamp(r, 0, 255);
-      _this5._g = Color.clamp(g, 0, 255);
-      _this5._b = Color.clamp(b, 0, 255);
+      _this5._r = Color._clamp(r, 0, 255);
+      _this5._g = Color._clamp(g, 0, 255);
+      _this5._b = Color._clamp(b, 0, 255);
       return _this5;
     }
     /**
@@ -1662,7 +1662,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "mix",
       value: function mix(color, amount) {
         var rgb = color.toRGB();
-        return new RGBColor(Color.lerp(this._r, rgb._r, amount), Color.lerp(this._g, rgb._g, amount), Color.lerp(this._b, rgb._b, amount), Color.lerp(this._a, rgb._a, amount));
+        return new RGBColor(Color._lerp(this._r, rgb._r, amount), Color._lerp(this._g, rgb._g, amount), Color._lerp(this._b, rgb._b, amount), Color._lerp(this._a, rgb._a, amount));
       }
       /**
        * Multiply this color with another by a specified amount.
@@ -1675,7 +1675,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "multiply",
       value: function multiply(color, amount) {
         var rgb = color.toRGB();
-        return new RGBColor(Color.lerp(this._r, this._r * rgb._r / 255, amount), Color.lerp(this._g, this._g * rgb._g / 255, amount), Color.lerp(this._b, this._b * rgb._b / 255, amount), Color.lerp(this._a, this._a * rgb._a, amount));
+        return new RGBColor(Color._lerp(this._r, this._r * rgb._r / 255, amount), Color._lerp(this._g, this._g * rgb._g / 255, amount), Color._lerp(this._b, this._b * rgb._b / 255, amount), Color._lerp(this._a, this._a * rgb._a, amount));
       }
       /**
        * Set the alpha value of the color.

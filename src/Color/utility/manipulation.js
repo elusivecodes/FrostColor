@@ -37,7 +37,7 @@ Object.assign(Color.prototype, {
         return this.setColor(
             Color.mix(
                 new Color(this),
-                new Color(0, 0, 0),
+                new Color(0),
                 amount
             ).getColor()
         );
@@ -52,7 +52,7 @@ Object.assign(Color.prototype, {
         return this.setColor(
             Color.mix(
                 new Color(this),
-                new Color(255, 255, 255),
+                new Color(100),
                 amount
             ).getColor()
         );
@@ -67,7 +67,7 @@ Object.assign(Color.prototype, {
         return this.setColor(
             Color.mix(
                 new Color(this),
-                new Color(127, 127, 127),
+                new Color(50),
                 amount
             ).getColor()
         );

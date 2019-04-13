@@ -538,7 +538,7 @@
          * @param {number} [max=1] The maximum value of the clamped range.
          * @returns {number} The clamped value.
          */
-        clamp(val, min = 0, max = 100) {
+        _clamp(val, min = 0, max = 100) {
             return Math.max(
                 min,
                 Math.min(max, val)
@@ -552,7 +552,7 @@
          * @param {number} amount The amount to interpolate.
          * @returns {number} The interpolated value.
          */
-        lerp(a, b, amount) {
+        _lerp(a, b, amount) {
             return a * (1 - amount) + b * amount;
         }
 
@@ -906,7 +906,7 @@
             return this.setColor(
                 Color.mix(
                     new Color(this),
-                    new Color(0, 0, 0),
+                    new Color(0),
                     amount
                 ).getColor()
             );
@@ -921,7 +921,7 @@
             return this.setColor(
                 Color.mix(
                     new Color(this),
-                    new Color(255, 255, 255),
+                    new Color(100),
                     amount
                 ).getColor()
             );
@@ -936,7 +936,7 @@
             return this.setColor(
                 Color.mix(
                     new Color(this),
-                    new Color(127, 127, 127),
+                    new Color(50),
                     amount
                 ).getColor()
             );
@@ -977,7 +977,7 @@
             return new Array(shades)
                 .fill()
                 .map((_, index) =>
-                    rgb.shade(
+                    new Color(rgb).shade(
                         index / (shades + 1)
                     )
                 );
@@ -995,7 +995,7 @@
             return new Array(tints)
                 .fill()
                 .map((_, index) =>
-                    rgb.tint(
+                    new Color(rgb).tint(
                         index / (tints + 1)
                     )
                 );
@@ -1013,7 +1013,7 @@
             return new Array(tones)
                 .fill()
                 .map((_, index) =>
-                    rgb.tone(
+                    new Color(rgb).tone(
                         index / (tones + 1)
                     )
                 );
@@ -1149,7 +1149,7 @@
          * @returns {BaseColor} A new BaseColor object.
          */
         constructor(a = 1) {
-            this._a = Color.clamp(a, 0, 1);
+            this._a = Color._clamp(a, 0, 1);
         }
 
         /**
@@ -1350,9 +1350,9 @@
         constructor(c, m, y, a = 1) {
             super(a);
 
-            this._c = Color.clamp(c);
-            this._m = Color.clamp(m);
-            this._y = Color.clamp(y);
+            this._c = Color._clamp(c);
+            this._m = Color._clamp(m);
+            this._y = Color._clamp(y);
         }
 
         /**
@@ -1414,10 +1414,10 @@
         constructor(c, m, y, k, a = 1) {
             super(a);
 
-            this._c = Color.clamp(c);
-            this._m = Color.clamp(m);
-            this._y = Color.clamp(y);
-            this._k = Color.clamp(k);
+            this._c = Color._clamp(c);
+            this._m = Color._clamp(m);
+            this._y = Color._clamp(y);
+            this._k = Color._clamp(k);
         }
 
         /**
@@ -1477,8 +1477,8 @@
             super(a);
 
             this._h = h % 360;
-            this._s = Color.clamp(s);
-            this._l = Color.clamp(l);
+            this._s = Color._clamp(s);
+            this._l = Color._clamp(l);
         }
 
         /**
@@ -1557,8 +1557,8 @@
             super(a);
 
             this._h = h % 360;
-            this._s = Color.clamp(s);
-            this._v = Color.clamp(v);
+            this._s = Color._clamp(s);
+            this._v = Color._clamp(v);
         }
 
         /**
@@ -1659,9 +1659,9 @@
         constructor(r, g, b, a = 1) {
             super(a);
 
-            this._r = Color.clamp(r, 0, 255);
-            this._g = Color.clamp(g, 0, 255);
-            this._b = Color.clamp(b, 0, 255);
+            this._r = Color._clamp(r, 0, 255);
+            this._g = Color._clamp(g, 0, 255);
+            this._b = Color._clamp(b, 0, 255);
         }
 
         /**
@@ -1682,10 +1682,10 @@
             const rgb = color.toRGB();
 
             return new RGBColor(
-                Color.lerp(this._r, rgb._r, amount),
-                Color.lerp(this._g, rgb._g, amount),
-                Color.lerp(this._b, rgb._b, amount),
-                Color.lerp(this._a, rgb._a, amount)
+                Color._lerp(this._r, rgb._r, amount),
+                Color._lerp(this._g, rgb._g, amount),
+                Color._lerp(this._b, rgb._b, amount),
+                Color._lerp(this._a, rgb._a, amount)
             );
         }
 
@@ -1699,10 +1699,10 @@
             const rgb = color.toRGB();
 
             return new RGBColor(
-                Color.lerp(this._r, this._r * rgb._r / 255, amount),
-                Color.lerp(this._g, this._g * rgb._g / 255, amount),
-                Color.lerp(this._b, this._b * rgb._b / 255, amount),
-                Color.lerp(this._a, this._a * rgb._a, amount)
+                Color._lerp(this._r, this._r * rgb._r / 255, amount),
+                Color._lerp(this._g, this._g * rgb._g / 255, amount),
+                Color._lerp(this._b, this._b * rgb._b / 255, amount),
+                Color._lerp(this._a, this._a * rgb._a, amount)
             );
         }
 
