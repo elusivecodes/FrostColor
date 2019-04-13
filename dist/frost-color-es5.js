@@ -900,7 +900,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @param {number} [shades=10] The number of shades to generate.
      * @param {number} [tints=10] The number of tints to generate.
      * @param {number} [tones=10] The number of tones to generate.
-     * @returns {Object} A palette object.
+     * @returns {object} A palette object.
      */
     palette: function palette() {
       var shades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;

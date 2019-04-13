@@ -955,7 +955,7 @@
          * @param {number} [shades=10] The number of shades to generate.
          * @param {number} [tints=10] The number of tints to generate.
          * @param {number} [tones=10] The number of tones to generate.
-         * @returns {Object} A palette object.
+         * @returns {object} A palette object.
          */
         palette(shades = 10, tints = 10, tones = 10) {
             return {
