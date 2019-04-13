@@ -1,3 +1,7 @@
+/**
+ * FrostColor v1.0
+ * https://github.com/elusivecodes/FrostColor
+ */
 (function(global, factory) {
 
     if (typeof module === 'object' && typeof module.exports === 'object') {
