@@ -166,6 +166,33 @@ class BaseColor {
     }
 
     /**
+     * Return a hexadecimal string representation of the color.
+     * @returns {string} The hexadecimal string.
+     */
+    toHexString() {
+        return this.toRGB()
+            .toHexString();
+    }
+
+    /**
+     * Return a HSL/HSLA string representation of the color.
+     * @returns {string} The HSL/HSLA string.
+     */
+    toHSLString() {
+        return this.toHSL()
+            .toHSLString();
+    }
+
+    /**
+     * Return a RGB/RGBA string representation of the color.
+     * @returns {string} The RGB/RGBA string.
+     */
+    toRGBString() {
+        return this.toRGB()
+            .toRGBString();
+    }
+
+    /**
      * Return a HTML string representation of the color.
      * @returns {string} The HTML color string.
      */

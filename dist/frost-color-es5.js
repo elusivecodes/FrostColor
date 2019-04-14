@@ -102,6 +102,36 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return this;
       }
       /**
+       * Return a hexadecimal string representation of the color.
+       * @returns {string} The hexadecimal string.
+       */
+
+    }, {
+      key: "toHexString",
+      value: function toHexString() {
+        return this.getColor().toHexString();
+      }
+      /**
+       * Return a HSL/HSLA string representation of the color.
+       * @returns {string} The HSL/HSLA string.
+       */
+
+    }, {
+      key: "toHSLString",
+      value: function toHSLString() {
+        return this.getColor().toHSLString();
+      }
+      /**
+       * Return a RGB/RGBA string representation of the color.
+       * @returns {string} The RGB/RGBA string.
+       */
+
+    }, {
+      key: "toRGBString",
+      value: function toRGBString() {
+        return this.getColor().toRGBString();
+      }
+      /**
        * Return a HTML string representation of the color.
        * @returns {string} The HTML color string.
        */
@@ -1200,6 +1230,36 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return this.toRGB().toHSV();
       }
       /**
+       * Return a hexadecimal string representation of the color.
+       * @returns {string} The hexadecimal string.
+       */
+
+    }, {
+      key: "toHexString",
+      value: function toHexString() {
+        return this.toRGB().toHexString();
+      }
+      /**
+       * Return a HSL/HSLA string representation of the color.
+       * @returns {string} The HSL/HSLA string.
+       */
+
+    }, {
+      key: "toHSLString",
+      value: function toHSLString() {
+        return this.toHSL().toHSLString();
+      }
+      /**
+       * Return a RGB/RGBA string representation of the color.
+       * @returns {string} The RGB/RGBA string.
+       */
+
+    }, {
+      key: "toRGBString",
+      value: function toRGBString() {
+        return this.toRGB().toRGBString();
+      }
+      /**
        * Return a HTML string representation of the color.
        * @returns {string} The HTML color string.
        */
@@ -1468,6 +1528,25 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return this;
       }
       /**
+       * Return a HSL/HSLA string representation of the color.
+       * @returns {string} The HSL/HSLA string.
+       */
+
+    }, {
+      key: "toHSLString",
+      value: function toHSLString() {
+        var h = Math.round(this._h);
+        var s = Math.round(this._s);
+        var l = Math.round(this._l);
+        var a = Math.round(this._a * 100) / 100;
+
+        if (a < 1) {
+          return "hsla(".concat(h, ", ").concat(s, "%, ").concat(l, "%, ").concat(a, ")");
+        }
+
+        return "hsl(".concat(h, ", ").concat(s, "%, ").concat(l, "%)");
+      }
+      /**
        * Create a RGB representation of the color.
        * @returns {RGBColor} A new RGBColor object.
        */
@@ -1733,6 +1812,41 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return this;
       }
       /**
+       * Return a hexadecimal string representation of the color.
+       * @returns {string} The hexadecimal string.
+       */
+
+    }, {
+      key: "toHexString",
+      value: function toHexString() {
+        var hex = this._getHex();
+
+        if (hex[1] === hex[2] && hex[3] === hex[4] && hex[5] === hex[6]) {
+          return "#".concat(hex[1]).concat(hex[3]).concat(hex[5]);
+        }
+
+        return hex;
+      }
+      /**
+       * Return a RGB/RGBA string representation of the color.
+       * @returns {string} The RGB/RGBA string.
+       */
+
+    }, {
+      key: "toRGBString",
+      value: function toRGBString() {
+        var r = Math.round(this._r);
+        var g = Math.round(this._g);
+        var b = Math.round(this._b);
+        var a = Math.round(this._a * 100) / 100;
+
+        if (a < 1) {
+          return "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");
+        }
+
+        return "rgb(".concat(r, ", ").concat(g, ", ").concat(b, ")");
+      }
+      /**
        * Return a HTML string representation of the color.
        * @returns {string} The HTML color string.
        */
@@ -1740,21 +1854,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toString",
       value: function toString() {
-        var a = Math.round(this._a * 100) / 100;
-
-        if (a === 0) {
+        if (!this._a) {
           return 'transparent';
         }
 
-        var r = Math.round(this._r);
-        var g = Math.round(this._g);
-        var b = Math.round(this._b);
-
-        if (a < 1) {
-          return "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");
+        if (this._a < 1) {
+          return this.toRGBString();
         }
 
-        var hex = "#".concat((0x1000000 + (b | g << 8 | r << 16)).toString(16).slice(1));
+        var hex = this._getHex();
+
         var name = Object.keys(Color.colors).find(function (name) {
           return Color.colors[name] === hex;
         });
@@ -1768,6 +1877,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }
 
         return hex;
+      }
+    }, {
+      key: "_getHex",
+      value: function _getHex() {
+        var r = Math.round(this._r);
+        var g = Math.round(this._g);
+        var b = Math.round(this._b);
+        return "#".concat((0x1000000 + (b | g << 8 | r << 16)).toString(16).slice(1));
       }
     }]);
 

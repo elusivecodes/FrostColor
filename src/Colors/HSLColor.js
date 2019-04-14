@@ -66,6 +66,23 @@ class HSLColor extends BaseColor {
     }
 
     /**
+     * Return a HSL/HSLA string representation of the color.
+     * @returns {string} The HSL/HSLA string.
+     */
+    toHSLString() {
+        const h = Math.round(this._h);
+        const s = Math.round(this._s);
+        const l = Math.round(this._l);
+        const a = Math.round(this._a * 100) / 100;
+
+        if (a < 1) {
+            return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+        }
+
+        return `hsl(${h}, ${s}%, ${l}%)`;
+    }
+
+    /**
      * Create a RGB representation of the color.
      * @returns {RGBColor} A new RGBColor object.
      */

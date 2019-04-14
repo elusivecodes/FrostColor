@@ -46,16 +46,6 @@ Immutable *Color* objects return a new *ColorImmutable* whenever they are modifi
 const color = new ColorImmutable(red, green, blue, alpha);
 ```
 
-#### To String
-
-After a *Color* object has been created, you can get the string representation using the `toString()` method.
-
-The `colorString` returned will be a string containing either a HTML color name (if one exists), a hexadecimal representation (if alpha is *1*) or an RGBA string.
-
-```javascript
-const colorString = color.toString();
-```
-
 
 ## Color Creation
 
@@ -120,6 +110,43 @@ Create a new *Color* from HSV values.
 
 ```javascript
 const color = Color.fromHSV(hue, saturation, value, alpha);
+```
+
+
+## Color Formatting
+
+#### To String
+
+Return a HTML string representation of the color.
+
+The `colorString` returned will be a string containing either a HTML color name (if one exists), a hexadecimal representation (if alpha is *1*) or an RGBA string.
+
+```javascript
+const colorString = color.toString();
+```
+
+#### To Hex String
+
+Return a hexadecimal string representation of the color.
+
+```javascript
+const hexString = color.toHexString();
+```
+
+#### To RGB String
+
+Return a RGB/RGBA string representation of the color.
+
+```javascript
+const rgbString = color.toRGBString();
+```
+
+#### To HSL String
+
+Return a HSL/HSLA string representation of the color.
+
+```javascript
+const hslString = color.toHSLString();
 ```
 
 

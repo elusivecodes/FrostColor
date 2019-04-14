@@ -58,6 +58,33 @@
         }
 
         /**
+         * Return a hexadecimal string representation of the color.
+         * @returns {string} The hexadecimal string.
+         */
+        toHexString() {
+            return this.getColor()
+                .toHexString();
+        }
+
+        /**
+         * Return a HSL/HSLA string representation of the color.
+         * @returns {string} The HSL/HSLA string.
+         */
+        toHSLString() {
+            return this.getColor()
+                .toHSLString();
+        }
+
+        /**
+         * Return a RGB/RGBA string representation of the color.
+         * @returns {string} The RGB/RGBA string.
+         */
+        toRGBString() {
+            return this.getColor()
+                .toRGBString();
+        }
+
+        /**
          * Return a HTML string representation of the color.
          * @returns {string} The HTML color string.
          */
@@ -1309,6 +1336,33 @@
         }
 
         /**
+         * Return a hexadecimal string representation of the color.
+         * @returns {string} The hexadecimal string.
+         */
+        toHexString() {
+            return this.toRGB()
+                .toHexString();
+        }
+
+        /**
+         * Return a HSL/HSLA string representation of the color.
+         * @returns {string} The HSL/HSLA string.
+         */
+        toHSLString() {
+            return this.toHSL()
+                .toHSLString();
+        }
+
+        /**
+         * Return a RGB/RGBA string representation of the color.
+         * @returns {string} The RGB/RGBA string.
+         */
+        toRGBString() {
+            return this.toRGB()
+                .toRGBString();
+        }
+
+        /**
          * Return a HTML string representation of the color.
          * @returns {string} The HTML color string.
          */
@@ -1528,6 +1582,23 @@
          */
         toHSL() {
             return this;
+        }
+
+        /**
+         * Return a HSL/HSLA string representation of the color.
+         * @returns {string} The HSL/HSLA string.
+         */
+        toHSLString() {
+            const h = Math.round(this._h);
+            const s = Math.round(this._s);
+            const l = Math.round(this._l);
+            const a = Math.round(this._a * 100) / 100;
+
+            if (a < 1) {
+                return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+            }
+
+            return `hsl(${h}, ${s}%, ${l}%)`;
         }
 
         /**
@@ -1761,29 +1832,52 @@
         }
 
         /**
-         * Return a HTML string representation of the color.
-         * @returns {string} The HTML color string.
+         * Return a hexadecimal string representation of the color.
+         * @returns {string} The hexadecimal string.
          */
-        toString() {
-            const a = Math.round(this._a * 100) / 100;
+        toHexString() {
+            const hex = this._getHex();
 
-            if (a === 0) {
-                return 'transparent';
+            if (hex[1] === hex[2] &&
+                hex[3] === hex[4] &&
+                hex[5] === hex[6]) {
+                return `#${hex[1]}${hex[3]}${hex[5]}`;
             }
 
+            return hex;
+        }
+
+        /**
+         * Return a RGB/RGBA string representation of the color.
+         * @returns {string} The RGB/RGBA string.
+         */
+        toRGBString() {
             const r = Math.round(this._r);
             const g = Math.round(this._g);
             const b = Math.round(this._b);
+            const a = Math.round(this._a * 100) / 100;
 
             if (a < 1) {
                 return `rgba(${r}, ${g}, ${b}, ${a})`;
             }
 
-            const hex = `#${
-                (0x1000000 + (b | (g << 8) | (r << 16)))
-                    .toString(16)
-                    .slice(1)
-                }`;
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        /**
+         * Return a HTML string representation of the color.
+         * @returns {string} The HTML color string.
+         */
+        toString() {
+            if (!this._a) {
+                return 'transparent';
+            }
+
+            if (this._a < 1) {
+                return this.toRGBString();
+            }
+
+            const hex = this._getHex();
 
             const name = Object.keys(Color.colors)
                 .find(name => Color.colors[name] === hex);
@@ -1799,6 +1893,18 @@
             }
 
             return hex;
+        }
+
+        _getHex() {
+            const r = Math.round(this._r);
+            const g = Math.round(this._g);
+            const b = Math.round(this._b);
+
+            return `#${
+                (0x1000000 + (b | (g << 8) | (r << 16)))
+                    .toString(16)
+                    .slice(1)
+                }`;
         }
 
     }

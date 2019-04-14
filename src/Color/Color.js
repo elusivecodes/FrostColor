@@ -43,6 +43,33 @@ class Color {
     }
 
     /**
+     * Return a hexadecimal string representation of the color.
+     * @returns {string} The hexadecimal string.
+     */
+    toHexString() {
+        return this.getColor()
+            .toHexString();
+    }
+
+    /**
+     * Return a HSL/HSLA string representation of the color.
+     * @returns {string} The HSL/HSLA string.
+     */
+    toHSLString() {
+        return this.getColor()
+            .toHSLString();
+    }
+
+    /**
+     * Return a RGB/RGBA string representation of the color.
+     * @returns {string} The RGB/RGBA string.
+     */
+    toRGBString() {
+        return this.getColor()
+            .toRGBString();
+    }
+
+    /**
      * Return a HTML string representation of the color.
      * @returns {string} The HTML color string.
      */
