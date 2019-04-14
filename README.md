@@ -7,7 +7,8 @@ It it a lightweight (~12kb) and modern library, and features full support for RG
 
 ## Table of contents
 - [Basic Usage](#basic-usage)
-- [Color Creation](#color-creation)
+- [Color Formatting](#color-formatting)
+- [Color Output](#color-output)
 - [Color Attributes](#color-attributes)
 - [Color Manipulation](#color-manipulation)
 - [Color Schemes](#color-schemes)
