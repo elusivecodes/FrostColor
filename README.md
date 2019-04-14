@@ -61,6 +61,8 @@ const colorString = color.toString();
 
 #### From String
 
+Create a new *Color* from a HTML color string.
+
 - `colorString` is a string containing a color value in either hexadecimal, RGB, RGBA, HSL, HSLA or a standard HTML color name.
 
 ```javascript
@@ -68,6 +70,8 @@ const color = Color.fromString(colorString);
 ```
 
 #### From CMY
+
+Create a new *Color* from CMY values.
 
 - `cyan` is a number between *0* and *100*.
 - `magenta` is a number between *0* and *100*.
@@ -79,6 +83,8 @@ const color = Color.fromCMY(cyan, magenta, yellow, alpha);
 ```
 
 #### From CMYK
+
+Create a new *Color* from CMYK values.
 
 - `cyan` is a number between *0* and *100*.
 - `magenta` is a number between *0* and *100*.
@@ -92,6 +98,8 @@ const color = Color.fromCMYK(cyan, magenta, yellow, key, alpha);
 
 #### From HSL
 
+Create a new *Color* from HSL values.
+
 - `hue` is a number between *0* and *360*.
 - `saturation` is a number between *0* and *100*.
 - `lightness` is a number between *0* and *100*.
@@ -102,6 +110,8 @@ const color = Color.fromHSL(hue, saturation, lightness, alpha);
 ```
 
 #### From HSV
+
+Create a new *Color* from HSV values.
 
 - `hue` is a number between *0* and *360*.
 - `saturation` is a number between *0* and *100*.
@@ -115,59 +125,74 @@ const color = Color.fromHSV(hue, saturation, value, alpha);
 
 ## Color Attributes
 
-Retrieve or set attributes on a *Color* object you have created using the following methods.
-
 #### Alpha
+
+Get the alpha value of the color (between *0* and *1*).
+
+```javascript
+const alpha = color.getAlpha();
+```
+
+Set the alpha value of the color.
 
 - `alpha` is a number between *0* and *1*.
 
 ```javascript
-// Get alpha
 const alpha = color.getAlpha();
-
-// Set alpha
 color.setAlpha(alpha);
 ```
 
 #### Brightness
 
+Get the brightness value of the color (between *0* and *100*).
+
+```javascript
+const brightness = color.getBrightness();
+```
+
+Get the brightness value of the color.
+
 - `brightness` is a number between *0* and *100*.
 
 ```javascript
-// Get brightness
-const brightness = color.getBrightness();
-
-// Set brightness
 color.setBrightness(brightness);
 ```
 
 #### Hue
 
+Get the hue value of the color (between *0* and *360*).
+
+```javascript
+const hue = color.getHue();
+```
+
+Set the hue value of the color.
+
 - `hue` is a number between *0* and *360*.
 
 ```javascript
-// Get hue
-const hue = color.getHue();
-
-// Set hue
 color.setHue(hue);
 ```
 
 #### Saturation
 
+Get the saturation value of the color (between *0* and *100*).
+
+```javascript
+const saturation = color.getSaturation();
+```
+
+Set the saturation value of the color.
+
 - `saturation` is a number between *0* and *100*.
 
 ```javascript
-// Get saturation
-const saturation = color.getSaturation();
-
-// Set saturation
 color.setSaturation(saturation);
 ```
 
 #### Luma
 
-The `luma` value returned is a number between *0* and *1*.
+Get the luminance value of the color (between *0* and *1*).
 
 ```javascript
 const luma = color.luma();
@@ -176,9 +201,9 @@ const luma = color.luma();
 
 ## Color Manipulation
 
-Manipulate a *Color* object you have created using the following methods.
-
 #### Darken
+
+Darken the color by a specified amount.
 
 - `amount` is a number between *0* and *1*.
 
@@ -188,6 +213,8 @@ color.darken(amount);
 
 #### Lighten
 
+Lighten the color by a specified amount.
+
 - `amount` is a number between *0* and *1*.
 
 ```javascript
@@ -195,6 +222,8 @@ color.lighten(amount);
 ```
 
 #### Shade
+
+Shade the color by a specified amount.
 
 - `amount` is a number between *0* and *1*.
 
@@ -204,6 +233,8 @@ color.shade(amount);
 
 #### Tint
 
+Tint the color by a specified amount.
+
 - `amount` is a number between *0* and *1*.
 
 ```javascript
@@ -211,6 +242,8 @@ color.tint(amount);
 ```
 
 #### Tone
+
+Tone the color by a specified amount.
 
 - `amount` is a number between *0* and *1*.
 
@@ -221,9 +254,9 @@ color.tone(amount);
 
 ## Color Mixing
 
-Mix two *Color* objects you have created using the following methods.
-
 #### Mix
+
+Create a new *Color* by mixing two colors together by a specified amount.
 
 - `color1` is a *Color* object.
 - `color2` is a *Color* object.
@@ -234,6 +267,8 @@ const mixed = Color.mix(color1, color2, amount);
 ```
 
 #### Multiply
+
+Create a new *Color* by multiplying two colors together by a specified amount.
 
 - `color1` is a *Color* object.
 - `color2` is a *Color* object.
@@ -246,11 +281,9 @@ const multiplied = Color.multiply(color1, color2, amount);
 
 ## Color Schemes
 
-Create schemes from a *Color* object you have created using the following methods.
-
 #### Complementary
 
-Create a complementary color.
+Create a complementary color variation.
 
 ```javascript
 const complementary = color.complementary();
@@ -258,7 +291,7 @@ const complementary = color.complementary();
 
 #### Split
 
-Create an array containing the 2 split complementary colors.
+Create an array with 2 split color variations.
 
 ```javascript
 const [secondary, accent] = color.split();
@@ -266,7 +299,7 @@ const [secondary, accent] = color.split();
 
 #### Analogous
 
-Create an array containing the 2 analogous colors.
+Create an array with 2 analogous color variations.
 
 ```javascript
 const [secondary, accent] = color.analogous();
@@ -274,7 +307,7 @@ const [secondary, accent] = color.analogous();
 
 #### Triadic
 
-Create an array containing the 2 triadic colors.
+Create an array with 2 triadic color variations.
 
 ```javascript
 const [secondary, accent] = color.triadic();
@@ -282,7 +315,7 @@ const [secondary, accent] = color.triadic();
 
 #### Tetradic
 
-Create an array containing the 3 tetradic colors.
+Create an array with 3 tetradic color variations.
 
 ```javascript
 const [secondary, alternate, accent] = color.tetradic();
@@ -295,6 +328,8 @@ Create a palette of colors from a *Color* object you have created using the foll
 
 #### Shades
 
+Create an array with a specified number of shade variations.
+
 - `shades` is a number indicating how shades you wish to generate, and will default to *10*.
 
 ```javascript
@@ -302,6 +337,8 @@ const colorShades = color.shades(shades);
 ```
 
 #### Tints
+
+Create an array with a specified number of tint variations.
 
 - `tints` is a number indicating how shades you wish to generate, and will default to *10*.
 
@@ -311,6 +348,8 @@ const colorTints = color.tints(tints);
 
 #### Tones
 
+Create an array with a specified number of tone variations.
+
 - `tones` is a number indicating how shades you wish to generate, and will default to *10*.
 
 ```javascript
@@ -318,6 +357,8 @@ const colorTones = color.tones(tones);
 ```
 
 #### Palette
+
+Create a palette object with a specified number of shades, tints and tone variations.
 
 - `shades` is a number indicating how shades you wish to generate, and will default to *10*.
 - `tints` is a number indicating how shades you wish to generate, and will default to *10*.
