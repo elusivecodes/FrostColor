@@ -53,7 +53,7 @@ class Color {
 
     /**
      * Return the luminance value of the color.
-     * @returns {number} The luminance value.
+     * @returns {number} The luminance value. (0, 1)
      */
     valueOf() {
         return this.getColor()

@@ -6,10 +6,10 @@ class HSLColor extends BaseColor {
 
     /**
      * New HSLColor constructor.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} l The lightness value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} l The lightness value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {HSLColor} A new HSLColor object.
      */
     constructor(h, s, l, a = 1) {
@@ -22,7 +22,7 @@ class HSLColor extends BaseColor {
 
     /**
      * Darken the color by a specified amount.
-     * @param {number} amount The amount to darken the color by.
+     * @param {number} amount The amount to darken the color by. (0, 1)
      * @returns {HSLColor} A new HSLColor object.
      */
     darken(amount) {
@@ -36,7 +36,7 @@ class HSLColor extends BaseColor {
 
     /**
      * Lighten the color by a specified amount.
-     * @param {number} amount The amount to lighten the color by.
+     * @param {number} amount The amount to lighten the color by. (0, 1)
      * @returns {HSLColor} A new HSLColor object.
      */
     lighten(amount) {
@@ -50,7 +50,7 @@ class HSLColor extends BaseColor {
 
     /**
      * Set the alpha value of the color.
-     * @param {number} a The alpha value.
+     * @param {number} a The alpha value. (0, 1)
      * @returns {HSLColor} A new HSLColor object.
      */
     setAlpha(a) {

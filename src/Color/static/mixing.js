@@ -8,7 +8,7 @@ Object.assign(Color, {
      * Create a new Color by mixing two colors together by a specified amount.
      * @param {Color} color1 The first Color.
      * @param {Color} color2 The second Color.
-     * @param {number} amount The amount to mix them by.
+     * @param {number} amount The amount to mix them by. (0, 1)
      * @returns {Color} A new Color object.
      */
     mix(color1, color2, amount) {
@@ -22,7 +22,7 @@ Object.assign(Color, {
      * Create a new Color by multiplying two colors together by a specified amount.
      * @param {Color} color1 The first Color.
      * @param {Color} color2 The second Color.
-     * @param {number} amount The amount to multiply them by.
+     * @param {number} amount The amount to multiply them by. (0, 1)
      * @returns {Color} A new Color object.
      */
     multiply(color1, color2, amount) {

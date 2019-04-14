@@ -37,6 +37,6 @@ console.log('\x1b[0m');
 console.log('Testing tone method');
 assert.equal(
     Color.fromHSV(120, 50, 50).tone(0.3).toString(),
-    '#537f53'
+    '#538053'
 );
 console.log('\x1b[32m', 'passed');

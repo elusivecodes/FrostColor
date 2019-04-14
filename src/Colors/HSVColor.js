@@ -6,10 +6,10 @@ class HSVColor extends BaseColor {
 
     /**
      * New HSVColor constructor.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} v The brightness value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} v The brightness value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {HSVColor} A new HSVColor object.
      */
     constructor(h, s, v, a = 1) {
@@ -22,7 +22,7 @@ class HSVColor extends BaseColor {
 
     /**
      * Get the brightness value of the color.
-     * @returns {number} The brightess value.
+     * @returns {number} The brightess value. (0, 100)
      */
     getBrightness() {
         return this._v;
@@ -30,7 +30,7 @@ class HSVColor extends BaseColor {
 
     /**
      * Get the hue value of the color.
-     * @returns {number} The hue value.
+     * @returns {number} The hue value. (0, 360)
      */
     getHue() {
         return this._h;
@@ -38,7 +38,7 @@ class HSVColor extends BaseColor {
 
     /**
      * Get the saturation value of the color.
-     * @returns {number} The saturation value.
+     * @returns {number} The saturation value. (0, 100)
      */
     getSaturation() {
         return this._s;
@@ -46,7 +46,7 @@ class HSVColor extends BaseColor {
 
     /**
      * Set the alpha value of the color.
-     * @param {number} a The alpha value.
+     * @param {number} a The alpha value. (0, 1)
      * @returns {HSVColor} A new HSVColor object.
      */
     setAlpha(a) {
@@ -55,7 +55,7 @@ class HSVColor extends BaseColor {
 
     /**
      * Set the brightness value of the color.
-     * @param {number} v The brightness value.
+     * @param {number} v The brightness value. (0, 100)
      * @returns {HSVColor} A new HSVColor object.
      */
     setBrightness(v) {
@@ -64,7 +64,7 @@ class HSVColor extends BaseColor {
 
     /**
      * Set the hue value of the color.
-     * @param {number} h The hue value.
+     * @param {number} h The hue value. (0, 360)
      * @returns {HSVColor} A new HSVColor object.
      */
     setHue(h) {
@@ -73,7 +73,7 @@ class HSVColor extends BaseColor {
 
     /**
      * Set the saturation value of the color.
-     * @param {number} s The saturation value.
+     * @param {number} s The saturation value. (0, 100)
      * @returns {HSVColor} A new HSVColor object.
      */
     setSaturation(s) {

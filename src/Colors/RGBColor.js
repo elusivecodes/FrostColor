@@ -6,10 +6,10 @@ class RGBColor extends BaseColor {
 
     /**
      * New RGBColor constructor.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {RGBColor} A new RGBColor object.
      */
     constructor(r, g, b, a = 1) {
@@ -22,7 +22,7 @@ class RGBColor extends BaseColor {
 
     /**
      * Get the luminance value of the color.
-     * @returns {number} The luminance value.
+     * @returns {number} The luminance value. (0, 1)
      */
     luma() {
         return Color.RGB2Luma(this._r, this._g, this._b);
@@ -31,7 +31,7 @@ class RGBColor extends BaseColor {
     /**
      * Mix this color with another by a specified amount.
      * @param {BaseColor} color The color to mix with.
-     * @param {number} amount The amount to mix by.
+     * @param {number} amount The amount to mix by. (0, 1)
      * @returns {RGBColor} A new RGBColor object.
      */
     mix(color, amount) {
@@ -48,7 +48,7 @@ class RGBColor extends BaseColor {
     /**
      * Multiply this color with another by a specified amount.
      * @param {BaseColor} color The color to multiply with.
-     * @param {number} amount The amount to multiply by.
+     * @param {number} amount The amount to multiply by. (0, 1)
      * @returns {RGBColor} A new RGBColor object.
      */
     multiply(color, amount) {
@@ -64,7 +64,7 @@ class RGBColor extends BaseColor {
 
     /**
      * Set the alpha value of the color.
-     * @param {number} a The alpha value.
+     * @param {number} a The alpha value. (0, 1)
      * @returns {RGBColor} A new RGBColor object.
      */
     setAlpha(a) {

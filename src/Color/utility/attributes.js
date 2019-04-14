@@ -6,7 +6,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Get the alpha value of the color.
-     * @returns {number} The alpha value.
+     * @returns {number} The alpha value. (0, 1)
      */
     getAlpha() {
         return this.getColor()
@@ -15,7 +15,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Get the brightness value of the color.
-     * @returns {number} The brightness value.
+     * @returns {number} The brightness value. (0, 100)
      */
     getBrightness() {
         return this.getColor()
@@ -24,7 +24,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Get the hue value of the color.
-     * @returns {number} The hue value.
+     * @returns {number} The hue value. (0, 360)
      */
     getHue() {
         return this.getColor()
@@ -33,7 +33,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Get the saturation value of the color.
-     * @returns {number} The saturation value.
+     * @returns {number} The saturation value. (0, 100)
      */
     getSaturation() {
         return this.getColor()
@@ -42,7 +42,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Get the luminance value of the color 
-     * @returns {number} The luminance value.
+     * @returns {number} The luminance value. (0, 1)
      */
     luma() {
         return this.getColor()
@@ -51,7 +51,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Set the alpha value of the color.
-     * @param {number} a The alpha value.
+     * @param {number} a The alpha value. (0, 1)
      * @returns {Color} The modified Color object.
      */
     setAlpha(a) {
@@ -63,7 +63,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Set the brightness value of the color.
-     * @param {number} v The brightness value.
+     * @param {number} v The brightness value. (0, 100)
      * @returns {Color} The modified Color object.
      */
     setBrightness(v) {
@@ -75,7 +75,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Set the hue value of the color.
-     * @param {number} h The hue value.
+     * @param {number} h The hue value. (0, 360)
      * @returns {Color} The modified Color object.
      */
     setHue(h) {
@@ -87,7 +87,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Set the saturation value of the color.
-     * @param {number} s The saturation value.
+     * @param {number} s The saturation value. (0, 100)
      * @returns {Color} The modified Color object.
      */
     setSaturation(s) {

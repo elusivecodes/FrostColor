@@ -113,7 +113,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Return the luminance value of the color.
-       * @returns {number} The luminance value.
+       * @returns {number} The luminance value. (0, 1)
        */
 
     }, {
@@ -175,9 +175,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   Object.assign(Color, {
     /**
      * Convert CMY color values to CMYK.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
      * @returns {number[]} An array containing the CMYK values.
      */
     CMY2CMYK: function CMY2CMYK(c, m, y) {
@@ -193,9 +193,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Convert CMY color values to RGB.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
      * @returns {number[]} An array containing the RGB values.
      */
     CMY2RGB: function CMY2RGB(c, m, y) {
@@ -204,10 +204,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Convert CMYK color values to CMY.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
-     * @param {number} k The key value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
+     * @param {number} k The key value. (0, 100)
      * @returns {number[]} An array containing the CMY values.
      */
     CMYK2CMY: function CMYK2CMY(c, m, y, k) {
@@ -217,9 +217,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Convert HSL color values to RGB.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} l The lightness value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} l The lightness value. (0, 100)
      * @returns {number[]} An array containing the RGB values.
      */
     HSL2RGB: function HSL2RGB(h, s, l) {
@@ -237,9 +237,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Convert HSV color values to RGB.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} v The brightness value
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} v The brightness value (0, 100)
      * @returns {number[]} An array containing the RGB values.
      */
     HSV2RGB: function HSV2RGB(h, s, v) {
@@ -288,9 +288,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Convert RGB color values to CMY.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
      * @returns {number[]} An array containing the CMY values.
      */
     RGB2CMY: function RGB2CMY(r, g, b) {
@@ -299,9 +299,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Calculate the luminance of an RGB color.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
      * @returns {number} The luminance value.
      */
     RGB2Luma: function RGB2Luma(r, g, b) {
@@ -310,9 +310,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Convert RGB color values to HSL.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
      * @returns {number[]} An array containing the HSL values.
      */
     RGB2HSL: function RGB2HSL(r, g, b) {
@@ -347,9 +347,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Convert RGB color values to HSV.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
      * @returns {number[]} An array containing the HSV values.
      */
     RGB2HSV: function RGB2HSV(r, g, b) {
@@ -415,10 +415,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   Object.assign(Color, {
     /**
      * Create a new Color from CMY values.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromCMY: function fromCMY(c, m, y) {
@@ -428,11 +428,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Create a new Color from CMYK values.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
-     * @param {number} k The key value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
+     * @param {number} k The key value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromCMYK: function fromCMYK(c, m, y, k) {
@@ -442,10 +442,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Create a new Color from HSL values.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} l The lightness value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} l The lightness value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromHSL: function fromHSL(h, s, l) {
@@ -455,10 +455,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Create a new Color from HSV values.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} v The brightness value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} v The brightness value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromHSV: function fromHSV(h, s, v) {
@@ -468,10 +468,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Create a new Color from RGB values.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromRGB: function fromRGB(r, g, b) {
@@ -579,7 +579,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Create a new Color by mixing two colors together by a specified amount.
      * @param {Color} color1 The first Color.
      * @param {Color} color2 The second Color.
-     * @param {number} amount The amount to mix them by.
+     * @param {number} amount The amount to mix them by. (0, 1)
      * @returns {Color} A new Color object.
      */
     mix: function mix(color1, color2, amount) {
@@ -590,7 +590,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Create a new Color by multiplying two colors together by a specified amount.
      * @param {Color} color1 The first Color.
      * @param {Color} color2 The second Color.
-     * @param {number} amount The amount to multiply them by.
+     * @param {number} amount The amount to multiply them by. (0, 1)
      * @returns {Color} A new Color object.
      */
     multiply: function multiply(color1, color2, amount) {
@@ -770,7 +770,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   Object.assign(Color.prototype, {
     /**
      * Get the alpha value of the color.
-     * @returns {number} The alpha value.
+     * @returns {number} The alpha value. (0, 1)
      */
     getAlpha: function getAlpha() {
       return this.getColor().getAlpha();
@@ -778,7 +778,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Get the brightness value of the color.
-     * @returns {number} The brightness value.
+     * @returns {number} The brightness value. (0, 100)
      */
     getBrightness: function getBrightness() {
       return this.getColor().getBrightness();
@@ -786,7 +786,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Get the hue value of the color.
-     * @returns {number} The hue value.
+     * @returns {number} The hue value. (0, 360)
      */
     getHue: function getHue() {
       return this.getColor().getHue();
@@ -794,7 +794,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Get the saturation value of the color.
-     * @returns {number} The saturation value.
+     * @returns {number} The saturation value. (0, 100)
      */
     getSaturation: function getSaturation() {
       return this.getColor().getSaturation();
@@ -802,7 +802,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Get the luminance value of the color 
-     * @returns {number} The luminance value.
+     * @returns {number} The luminance value. (0, 1)
      */
     luma: function luma() {
       return this.getColor().luma();
@@ -810,7 +810,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Set the alpha value of the color.
-     * @param {number} a The alpha value.
+     * @param {number} a The alpha value. (0, 1)
      * @returns {Color} The modified Color object.
      */
     setAlpha: function setAlpha(a) {
@@ -819,7 +819,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Set the brightness value of the color.
-     * @param {number} v The brightness value.
+     * @param {number} v The brightness value. (0, 100)
      * @returns {Color} The modified Color object.
      */
     setBrightness: function setBrightness(v) {
@@ -828,7 +828,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Set the hue value of the color.
-     * @param {number} h The hue value.
+     * @param {number} h The hue value. (0, 360)
      * @returns {Color} The modified Color object.
      */
     setHue: function setHue(h) {
@@ -837,7 +837,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Set the saturation value of the color.
-     * @param {number} s The saturation value.
+     * @param {number} s The saturation value. (0, 100)
      * @returns {Color} The modified Color object.
      */
     setSaturation: function setSaturation(s) {
@@ -851,7 +851,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   Object.assign(Color.prototype, {
     /**
      * Darken the color by a specified amount.
-     * @param {number} amount The amount to darken the color by.
+     * @param {number} amount The amount to darken the color by. (0, 1)
      * @returns {Color} The darkened Color object.
      */
     darken: function darken(amount) {
@@ -860,7 +860,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Lighten the color by a specified amount.
-     * @param {number} amount The amount to lighten the color by.
+     * @param {number} amount The amount to lighten the color by. (0, 1)
      * @returns {Color} The lightened Color object.
      */
     lighten: function lighten(amount) {
@@ -869,7 +869,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Shade the color by a specified amount.
-     * @param {number} amount The amount to shade the color by.
+     * @param {number} amount The amount to shade the color by. (0, 1)
      * @returns {Color} The shaded Color object.
      */
     shade: function shade(amount) {
@@ -878,7 +878,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Tint the color by a specified amount.
-     * @param {number} amount The amount to tint the color by.
+     * @param {number} amount The amount to tint the color by. (0, 1)
      * @returns {Color} The tinted Color object.
      */
     tint: function tint(amount) {
@@ -887,7 +887,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * Tone the color by a specified amount.
-     * @param {number} amount The amount to tone the color by.
+     * @param {number} amount The amount to tone the color by. (0, 1)
      * @returns {Color} The toned Color object.
      */
     tone: function tone(amount) {
@@ -1019,7 +1019,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   function () {
     /**
      * New BaseColor constructor.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {BaseColor} A new BaseColor object.
      */
     function BaseColor() {
@@ -1031,7 +1031,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }
     /**
      * Darken the color by a specified amount.
-     * @param {number} amount The amount to darken the color by.
+     * @param {number} amount The amount to darken the color by. (0, 1)
      * @returns {HSLColor} A new HSLColor object.
      */
 
@@ -1043,7 +1043,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Get the alpha value of the color.
-       * @returns {number} The alpha value.
+       * @returns {number} The alpha value. (0, 1)
        */
 
     }, {
@@ -1053,7 +1053,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Get the brightness value of the color.
-       * @returns {number} The brightness value.
+       * @returns {number} The brightness value. (0, 100)
        */
 
     }, {
@@ -1063,7 +1063,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Get the hue value of the color.
-       * @returns {number} The hue value.
+       * @returns {number} The hue value. (0, 360)
        */
 
     }, {
@@ -1073,7 +1073,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Get the saturation value of the color.
-       * @returns {number} The saturation value.
+       * @returns {number} The saturation value. (0, 100)
        */
 
     }, {
@@ -1083,7 +1083,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Lighten the color by a specified amount.
-       * @param {number} amount The amount to lighten the color by.
+       * @param {number} amount The amount to lighten the color by. (0, 1)
        * @returns {HSLColor} A new HSLColor object.
        */
 
@@ -1094,7 +1094,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Get the luminance value of the color.
-       * @returns {number} The luminance value.
+       * @returns {number} The luminance value. (0, 1)
        */
 
     }, {
@@ -1105,7 +1105,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       /**
        * Mix this color with another by a specified amount.
        * @param {BaseColor} color The color to mix with.
-       * @param {number} amount The amount to mix by.
+       * @param {number} amount The amount to mix by. (0, 1)
        * @returns {RGBColor} A new RGBColor object.
        */
 
@@ -1117,7 +1117,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       /**
        * Multiply this color with another by a specified amount.
        * @param {BaseColor} color The color to multiply with.
-       * @param {number} amount The amount to multiply by.
+       * @param {number} amount The amount to multiply by. (0, 1)
        * @returns {RGBColor} A new RGBColor object.
        */
 
@@ -1128,7 +1128,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Set the brightness value of the color.
-       * @param {number} v The brightness value.
+       * @param {number} v The brightness value. (0, 100)
        * @returns {HSVColor} A new HSVColor object.
        */
 
@@ -1139,7 +1139,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Set the hue value of the color.
-       * @param {number} h The hue value.
+       * @param {number} h The hue value. (0, 360)
        * @returns {HSVColor} A new HSVColor object.
        */
 
@@ -1150,7 +1150,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Set the saturation value of the color.
-       * @param {number} s The saturation value.
+       * @param {number} s The saturation value. (0, 100)
        * @returns {HSVColor} A new HSVColor object.
        */
 
@@ -1211,7 +1211,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Get the luminance value of the color.
-       * @returns {number} The luminance value.
+       * @returns {number} The luminance value. (0, 1)
        */
 
     }, {
@@ -1246,10 +1246,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New CMYColor constructor.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {CMYColor} A new CMYColor object.
      */
     function CMYColor(c, m, y) {
@@ -1267,7 +1267,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }
     /**
      * Set the alpha value of the color.
-     * @param {number} a The alpha value.
+     * @param {number} a The alpha value. (0, 1)
      * @returns {CMYColor} A new CMYColor object.
      */
 
@@ -1324,11 +1324,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New CMYKColor constructor.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
-     * @param {number} k The key value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
+     * @param {number} k The key value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {CMYKColor} A new CMYKColor object.
      */
     function CMYKColor(c, m, y, k) {
@@ -1347,7 +1347,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }
     /**
      * Set the alpha value of the color.
-     * @param {number} a The alpha value.
+     * @param {number} a The alpha value. (0, 1)
      * @returns {CMYKColor} A new CMYKColor object.
      */
 
@@ -1404,10 +1404,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New HSLColor constructor.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} l The lightness value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} l The lightness value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {HSLColor} A new HSLColor object.
      */
     function HSLColor(h, s, l) {
@@ -1425,7 +1425,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }
     /**
      * Darken the color by a specified amount.
-     * @param {number} amount The amount to darken the color by.
+     * @param {number} amount The amount to darken the color by. (0, 1)
      * @returns {HSLColor} A new HSLColor object.
      */
 
@@ -1437,7 +1437,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Lighten the color by a specified amount.
-       * @param {number} amount The amount to lighten the color by.
+       * @param {number} amount The amount to lighten the color by. (0, 1)
        * @returns {HSLColor} A new HSLColor object.
        */
 
@@ -1448,7 +1448,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Set the alpha value of the color.
-       * @param {number} a The alpha value.
+       * @param {number} a The alpha value. (0, 1)
        * @returns {HSLColor} A new HSLColor object.
        */
 
@@ -1494,10 +1494,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New HSVColor constructor.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} v The brightness value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} v The brightness value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {HSVColor} A new HSVColor object.
      */
     function HSVColor(h, s, v) {
@@ -1515,7 +1515,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }
     /**
      * Get the brightness value of the color.
-     * @returns {number} The brightess value.
+     * @returns {number} The brightess value. (0, 100)
      */
 
 
@@ -1526,7 +1526,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Get the hue value of the color.
-       * @returns {number} The hue value.
+       * @returns {number} The hue value. (0, 360)
        */
 
     }, {
@@ -1536,7 +1536,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Get the saturation value of the color.
-       * @returns {number} The saturation value.
+       * @returns {number} The saturation value. (0, 100)
        */
 
     }, {
@@ -1546,7 +1546,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Set the alpha value of the color.
-       * @param {number} a The alpha value.
+       * @param {number} a The alpha value. (0, 1)
        * @returns {HSVColor} A new HSVColor object.
        */
 
@@ -1557,7 +1557,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Set the brightness value of the color.
-       * @param {number} v The brightness value.
+       * @param {number} v The brightness value. (0, 100)
        * @returns {HSVColor} A new HSVColor object.
        */
 
@@ -1568,7 +1568,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Set the hue value of the color.
-       * @param {number} h The hue value.
+       * @param {number} h The hue value. (0, 360)
        * @returns {HSVColor} A new HSVColor object.
        */
 
@@ -1579,7 +1579,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Set the saturation value of the color.
-       * @param {number} s The saturation value.
+       * @param {number} s The saturation value. (0, 100)
        * @returns {HSVColor} A new HSVColor object.
        */
 
@@ -1625,10 +1625,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
     /**
      * New RGBColor constructor.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {RGBColor} A new RGBColor object.
      */
     function RGBColor(r, g, b) {
@@ -1646,7 +1646,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }
     /**
      * Get the luminance value of the color.
-     * @returns {number} The luminance value.
+     * @returns {number} The luminance value. (0, 1)
      */
 
 
@@ -1658,7 +1658,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       /**
        * Mix this color with another by a specified amount.
        * @param {BaseColor} color The color to mix with.
-       * @param {number} amount The amount to mix by.
+       * @param {number} amount The amount to mix by. (0, 1)
        * @returns {RGBColor} A new RGBColor object.
        */
 
@@ -1671,7 +1671,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       /**
        * Multiply this color with another by a specified amount.
        * @param {BaseColor} color The color to multiply with.
-       * @param {number} amount The amount to multiply by.
+       * @param {number} amount The amount to multiply by. (0, 1)
        * @returns {RGBColor} A new RGBColor object.
        */
 
@@ -1683,7 +1683,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       }
       /**
        * Set the alpha value of the color.
-       * @param {number} a The alpha value.
+       * @param {number} a The alpha value. (0, 1)
        * @returns {RGBColor} A new RGBColor object.
        */
 

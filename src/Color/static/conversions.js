@@ -6,9 +6,9 @@ Object.assign(Color, {
 
     /**
      * Convert CMY color values to CMYK.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
      * @returns {number[]} An array containing the CMYK values.
      */
     CMY2CMYK(c, m, y) {
@@ -30,9 +30,9 @@ Object.assign(Color, {
 
     /**
      * Convert CMY color values to RGB.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
      * @returns {number[]} An array containing the RGB values.
      */
     CMY2RGB(c, m, y) {
@@ -45,10 +45,10 @@ Object.assign(Color, {
 
     /**
      * Convert CMYK color values to CMY.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
-     * @param {number} k The key value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
+     * @param {number} k The key value. (0, 100)
      * @returns {number[]} An array containing the CMY values.
      */
     CMYK2CMY(c, m, y, k) {
@@ -63,9 +63,9 @@ Object.assign(Color, {
 
     /**
      * Convert HSL color values to RGB.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} l The lightness value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} l The lightness value. (0, 100)
      * @returns {number[]} An array containing the RGB values.
      */
     HSL2RGB(h, s, l) {
@@ -91,9 +91,9 @@ Object.assign(Color, {
 
     /**
      * Convert HSV color values to RGB.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} v The brightness value
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} v The brightness value (0, 100)
      * @returns {number[]} An array containing the RGB values.
      */
     HSV2RGB(h, s, v) {
@@ -152,9 +152,9 @@ Object.assign(Color, {
 
     /**
      * Convert RGB color values to CMY.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
      * @returns {number[]} An array containing the CMY values.
      */
     RGB2CMY(r, g, b) {
@@ -167,9 +167,9 @@ Object.assign(Color, {
 
     /**
      * Calculate the luminance of an RGB color.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
      * @returns {number} The luminance value.
      */
     RGB2Luma(r, g, b) {
@@ -180,9 +180,9 @@ Object.assign(Color, {
 
     /**
      * Convert RGB color values to HSL.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
      * @returns {number[]} An array containing the HSL values.
      */
     RGB2HSL(r, g, b) {
@@ -226,9 +226,9 @@ Object.assign(Color, {
 
     /**
      * Convert RGB color values to HSV.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
      * @returns {number[]} An array containing the HSV values.
      */
     RGB2HSV(r, g, b) {

@@ -6,7 +6,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Darken the color by a specified amount.
-     * @param {number} amount The amount to darken the color by.
+     * @param {number} amount The amount to darken the color by. (0, 1)
      * @returns {Color} The darkened Color object.
      */
     darken(amount) {
@@ -18,7 +18,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Lighten the color by a specified amount.
-     * @param {number} amount The amount to lighten the color by.
+     * @param {number} amount The amount to lighten the color by. (0, 1)
      * @returns {Color} The lightened Color object.
      */
     lighten(amount) {
@@ -30,7 +30,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Shade the color by a specified amount.
-     * @param {number} amount The amount to shade the color by.
+     * @param {number} amount The amount to shade the color by. (0, 1)
      * @returns {Color} The shaded Color object.
      */
     shade(amount) {
@@ -45,7 +45,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Tint the color by a specified amount.
-     * @param {number} amount The amount to tint the color by.
+     * @param {number} amount The amount to tint the color by. (0, 1)
      * @returns {Color} The tinted Color object.
      */
     tint(amount) {
@@ -60,7 +60,7 @@ Object.assign(Color.prototype, {
 
     /**
      * Tone the color by a specified amount.
-     * @param {number} amount The amount to tone the color by.
+     * @param {number} amount The amount to tone the color by. (0, 1)
      * @returns {Color} The toned Color object.
      */
     tone(amount) {

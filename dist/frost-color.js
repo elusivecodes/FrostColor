@@ -68,7 +68,7 @@
 
         /**
          * Return the luminance value of the color.
-         * @returns {number} The luminance value.
+         * @returns {number} The luminance value. (0, 1)
          */
         valueOf() {
             return this.getColor()
@@ -110,9 +110,9 @@
 
         /**
          * Convert CMY color values to CMYK.
-         * @param {number} c The cyan value.
-         * @param {number} m The magenta value.
-         * @param {number} y The yellow value.
+         * @param {number} c The cyan value. (0, 100)
+         * @param {number} m The magenta value. (0, 100)
+         * @param {number} y The yellow value. (0, 100)
          * @returns {number[]} An array containing the CMYK values.
          */
         CMY2CMYK(c, m, y) {
@@ -134,9 +134,9 @@
 
         /**
          * Convert CMY color values to RGB.
-         * @param {number} c The cyan value.
-         * @param {number} m The magenta value.
-         * @param {number} y The yellow value.
+         * @param {number} c The cyan value. (0, 100)
+         * @param {number} m The magenta value. (0, 100)
+         * @param {number} y The yellow value. (0, 100)
          * @returns {number[]} An array containing the RGB values.
          */
         CMY2RGB(c, m, y) {
@@ -149,10 +149,10 @@
 
         /**
          * Convert CMYK color values to CMY.
-         * @param {number} c The cyan value.
-         * @param {number} m The magenta value.
-         * @param {number} y The yellow value.
-         * @param {number} k The key value.
+         * @param {number} c The cyan value. (0, 100)
+         * @param {number} m The magenta value. (0, 100)
+         * @param {number} y The yellow value. (0, 100)
+         * @param {number} k The key value. (0, 100)
          * @returns {number[]} An array containing the CMY values.
          */
         CMYK2CMY(c, m, y, k) {
@@ -167,9 +167,9 @@
 
         /**
          * Convert HSL color values to RGB.
-         * @param {number} h The hue value.
-         * @param {number} s The saturation value.
-         * @param {number} l The lightness value.
+         * @param {number} h The hue value. (0, 360)
+         * @param {number} s The saturation value. (0, 100)
+         * @param {number} l The lightness value. (0, 100)
          * @returns {number[]} An array containing the RGB values.
          */
         HSL2RGB(h, s, l) {
@@ -195,9 +195,9 @@
 
         /**
          * Convert HSV color values to RGB.
-         * @param {number} h The hue value.
-         * @param {number} s The saturation value.
-         * @param {number} v The brightness value
+         * @param {number} h The hue value. (0, 360)
+         * @param {number} s The saturation value. (0, 100)
+         * @param {number} v The brightness value (0, 100)
          * @returns {number[]} An array containing the RGB values.
          */
         HSV2RGB(h, s, v) {
@@ -256,9 +256,9 @@
 
         /**
          * Convert RGB color values to CMY.
-         * @param {number} r The red value.
-         * @param {number} g The green value.
-         * @param {number} b The blue value.
+         * @param {number} r The red value. (0, 255)
+         * @param {number} g The green value. (0, 255)
+         * @param {number} b The blue value. (0, 255)
          * @returns {number[]} An array containing the CMY values.
          */
         RGB2CMY(r, g, b) {
@@ -271,9 +271,9 @@
 
         /**
          * Calculate the luminance of an RGB color.
-         * @param {number} r The red value.
-         * @param {number} g The green value.
-         * @param {number} b The blue value.
+         * @param {number} r The red value. (0, 255)
+         * @param {number} g The green value. (0, 255)
+         * @param {number} b The blue value. (0, 255)
          * @returns {number} The luminance value.
          */
         RGB2Luma(r, g, b) {
@@ -284,9 +284,9 @@
 
         /**
          * Convert RGB color values to HSL.
-         * @param {number} r The red value.
-         * @param {number} g The green value.
-         * @param {number} b The blue value.
+         * @param {number} r The red value. (0, 255)
+         * @param {number} g The green value. (0, 255)
+         * @param {number} b The blue value. (0, 255)
          * @returns {number[]} An array containing the HSL values.
          */
         RGB2HSL(r, g, b) {
@@ -330,9 +330,9 @@
 
         /**
          * Convert RGB color values to HSV.
-         * @param {number} r The red value.
-         * @param {number} g The green value.
-         * @param {number} b The blue value.
+         * @param {number} r The red value. (0, 255)
+         * @param {number} g The green value. (0, 255)
+         * @param {number} b The blue value. (0, 255)
          * @returns {number[]} An array containing the HSV values.
          */
         RGB2HSV(r, g, b) {
@@ -407,10 +407,10 @@
 
         /**
          * Create a new Color from CMY values.
-         * @param {number} c The cyan value.
-         * @param {number} m The magenta value.
-         * @param {number} y The yellow value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} c The cyan value. (0, 100)
+         * @param {number} m The magenta value. (0, 100)
+         * @param {number} y The yellow value. (0, 100)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {Color} A new Color object.
          */
         fromCMY(c, m, y, a = 1) {
@@ -421,11 +421,11 @@
 
         /**
          * Create a new Color from CMYK values.
-         * @param {number} c The cyan value.
-         * @param {number} m The magenta value.
-         * @param {number} y The yellow value.
-         * @param {number} k The key value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} c The cyan value. (0, 100)
+         * @param {number} m The magenta value. (0, 100)
+         * @param {number} y The yellow value. (0, 100)
+         * @param {number} k The key value. (0, 100)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {Color} A new Color object.
          */
         fromCMYK(c, m, y, k, a = 1) {
@@ -436,10 +436,10 @@
 
         /**
          * Create a new Color from HSL values.
-         * @param {number} h The hue value.
-         * @param {number} s The saturation value.
-         * @param {number} l The lightness value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} h The hue value. (0, 360)
+         * @param {number} s The saturation value. (0, 100)
+         * @param {number} l The lightness value. (0, 100)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {Color} A new Color object.
          */
         fromHSL(h, s, l, a = 1) {
@@ -450,10 +450,10 @@
 
         /**
          * Create a new Color from HSV values.
-         * @param {number} h The hue value.
-         * @param {number} s The saturation value.
-         * @param {number} v The brightness value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} h The hue value. (0, 360)
+         * @param {number} s The saturation value. (0, 100)
+         * @param {number} v The brightness value. (0, 100)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {Color} A new Color object.
          */
         fromHSV(h, s, v, a = 1) {
@@ -464,10 +464,10 @@
 
         /**
          * Create a new Color from RGB values.
-         * @param {number} r The red value.
-         * @param {number} g The green value.
-         * @param {number} b The blue value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} r The red value. (0, 255)
+         * @param {number} g The green value. (0, 255)
+         * @param {number} b The blue value. (0, 255)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {Color} A new Color object.
          */
         fromRGB(r, g, b, a = 1) {
@@ -572,7 +572,7 @@
          * Create a new Color by mixing two colors together by a specified amount.
          * @param {Color} color1 The first Color.
          * @param {Color} color2 The second Color.
-         * @param {number} amount The amount to mix them by.
+         * @param {number} amount The amount to mix them by. (0, 1)
          * @returns {Color} A new Color object.
          */
         mix(color1, color2, amount) {
@@ -586,7 +586,7 @@
          * Create a new Color by multiplying two colors together by a specified amount.
          * @param {Color} color1 The first Color.
          * @param {Color} color2 The second Color.
-         * @param {number} amount The amount to multiply them by.
+         * @param {number} amount The amount to multiply them by. (0, 1)
          * @returns {Color} A new Color object.
          */
         multiply(color1, color2, amount) {
@@ -778,7 +778,7 @@
 
         /**
          * Get the alpha value of the color.
-         * @returns {number} The alpha value.
+         * @returns {number} The alpha value. (0, 1)
          */
         getAlpha() {
             return this.getColor()
@@ -787,7 +787,7 @@
 
         /**
          * Get the brightness value of the color.
-         * @returns {number} The brightness value.
+         * @returns {number} The brightness value. (0, 100)
          */
         getBrightness() {
             return this.getColor()
@@ -796,7 +796,7 @@
 
         /**
          * Get the hue value of the color.
-         * @returns {number} The hue value.
+         * @returns {number} The hue value. (0, 360)
          */
         getHue() {
             return this.getColor()
@@ -805,7 +805,7 @@
 
         /**
          * Get the saturation value of the color.
-         * @returns {number} The saturation value.
+         * @returns {number} The saturation value. (0, 100)
          */
         getSaturation() {
             return this.getColor()
@@ -814,7 +814,7 @@
 
         /**
          * Get the luminance value of the color 
-         * @returns {number} The luminance value.
+         * @returns {number} The luminance value. (0, 1)
          */
         luma() {
             return this.getColor()
@@ -823,7 +823,7 @@
 
         /**
          * Set the alpha value of the color.
-         * @param {number} a The alpha value.
+         * @param {number} a The alpha value. (0, 1)
          * @returns {Color} The modified Color object.
          */
         setAlpha(a) {
@@ -835,7 +835,7 @@
 
         /**
          * Set the brightness value of the color.
-         * @param {number} v The brightness value.
+         * @param {number} v The brightness value. (0, 100)
          * @returns {Color} The modified Color object.
          */
         setBrightness(v) {
@@ -847,7 +847,7 @@
 
         /**
          * Set the hue value of the color.
-         * @param {number} h The hue value.
+         * @param {number} h The hue value. (0, 360)
          * @returns {Color} The modified Color object.
          */
         setHue(h) {
@@ -859,7 +859,7 @@
 
         /**
          * Set the saturation value of the color.
-         * @param {number} s The saturation value.
+         * @param {number} s The saturation value. (0, 100)
          * @returns {Color} The modified Color object.
          */
         setSaturation(s) {
@@ -879,7 +879,7 @@
 
         /**
          * Darken the color by a specified amount.
-         * @param {number} amount The amount to darken the color by.
+         * @param {number} amount The amount to darken the color by. (0, 1)
          * @returns {Color} The darkened Color object.
          */
         darken(amount) {
@@ -891,7 +891,7 @@
 
         /**
          * Lighten the color by a specified amount.
-         * @param {number} amount The amount to lighten the color by.
+         * @param {number} amount The amount to lighten the color by. (0, 1)
          * @returns {Color} The lightened Color object.
          */
         lighten(amount) {
@@ -903,7 +903,7 @@
 
         /**
          * Shade the color by a specified amount.
-         * @param {number} amount The amount to shade the color by.
+         * @param {number} amount The amount to shade the color by. (0, 1)
          * @returns {Color} The shaded Color object.
          */
         shade(amount) {
@@ -918,7 +918,7 @@
 
         /**
          * Tint the color by a specified amount.
-         * @param {number} amount The amount to tint the color by.
+         * @param {number} amount The amount to tint the color by. (0, 1)
          * @returns {Color} The tinted Color object.
          */
         tint(amount) {
@@ -933,7 +933,7 @@
 
         /**
          * Tone the color by a specified amount.
-         * @param {number} amount The amount to tone the color by.
+         * @param {number} amount The amount to tone the color by. (0, 1)
          * @returns {Color} The toned Color object.
          */
         tone(amount) {
@@ -1149,7 +1149,7 @@
 
         /**
          * New BaseColor constructor.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {BaseColor} A new BaseColor object.
          */
         constructor(a = 1) {
@@ -1158,7 +1158,7 @@
 
         /**
          * Darken the color by a specified amount.
-         * @param {number} amount The amount to darken the color by.
+         * @param {number} amount The amount to darken the color by. (0, 1)
          * @returns {HSLColor} A new HSLColor object.
          */
         darken(amount) {
@@ -1168,7 +1168,7 @@
 
         /**
          * Get the alpha value of the color.
-         * @returns {number} The alpha value.
+         * @returns {number} The alpha value. (0, 1)
          */
         getAlpha() {
             return this._a;
@@ -1176,7 +1176,7 @@
 
         /**
          * Get the brightness value of the color.
-         * @returns {number} The brightness value.
+         * @returns {number} The brightness value. (0, 100)
          */
         getBrightness() {
             return this.toHSV()
@@ -1185,7 +1185,7 @@
 
         /**
          * Get the hue value of the color.
-         * @returns {number} The hue value.
+         * @returns {number} The hue value. (0, 360)
          */
         getHue() {
             return this.toHSV()
@@ -1194,7 +1194,7 @@
 
         /**
          * Get the saturation value of the color.
-         * @returns {number} The saturation value.
+         * @returns {number} The saturation value. (0, 100)
          */
         getSaturation() {
             return this.toHSV()
@@ -1203,7 +1203,7 @@
 
         /**
          * Lighten the color by a specified amount.
-         * @param {number} amount The amount to lighten the color by.
+         * @param {number} amount The amount to lighten the color by. (0, 1)
          * @returns {HSLColor} A new HSLColor object.
          */
         lighten(amount) {
@@ -1213,7 +1213,7 @@
 
         /**
          * Get the luminance value of the color.
-         * @returns {number} The luminance value.
+         * @returns {number} The luminance value. (0, 1)
          */
         luma() {
             return this.toRGB()
@@ -1223,7 +1223,7 @@
         /**
          * Mix this color with another by a specified amount.
          * @param {BaseColor} color The color to mix with.
-         * @param {number} amount The amount to mix by.
+         * @param {number} amount The amount to mix by. (0, 1)
          * @returns {RGBColor} A new RGBColor object.
          */
         mix(color, amount) {
@@ -1234,7 +1234,7 @@
         /**
          * Multiply this color with another by a specified amount.
          * @param {BaseColor} color The color to multiply with.
-         * @param {number} amount The amount to multiply by.
+         * @param {number} amount The amount to multiply by. (0, 1)
          * @returns {RGBColor} A new RGBColor object.
          */
         multiply(color, amount) {
@@ -1244,7 +1244,7 @@
 
         /**
          * Set the brightness value of the color.
-         * @param {number} v The brightness value.
+         * @param {number} v The brightness value. (0, 100)
          * @returns {HSVColor} A new HSVColor object.
          */
         setBrightness(v) {
@@ -1254,7 +1254,7 @@
 
         /**
          * Set the hue value of the color.
-         * @param {number} h The hue value.
+         * @param {number} h The hue value. (0, 360)
          * @returns {HSVColor} A new HSVColor object.
          */
         setHue(h) {
@@ -1264,7 +1264,7 @@
 
         /**
          * Set the saturation value of the color.
-         * @param {number} s The saturation value.
+         * @param {number} s The saturation value. (0, 100)
          * @returns {HSVColor} A new HSVColor object.
          */
         setSaturation(s) {
@@ -1319,7 +1319,7 @@
 
         /**
          * Get the luminance value of the color.
-         * @returns {number} The luminance value.
+         * @returns {number} The luminance value. (0, 1)
          */
         valueOf() {
             return this.luma();
@@ -1345,10 +1345,10 @@
 
         /**
          * New CMYColor constructor.
-         * @param {number} c The cyan value.
-         * @param {number} m The magenta value.
-         * @param {number} y The yellow value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} c The cyan value. (0, 100)
+         * @param {number} m The magenta value. (0, 100)
+         * @param {number} y The yellow value. (0, 100)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {CMYColor} A new CMYColor object.
          */
         constructor(c, m, y, a = 1) {
@@ -1361,7 +1361,7 @@
 
         /**
          * Set the alpha value of the color.
-         * @param {number} a The alpha value.
+         * @param {number} a The alpha value. (0, 1)
          * @returns {CMYColor} A new CMYColor object.
          */
         setAlpha(a) {
@@ -1408,11 +1408,11 @@
 
         /**
          * New CMYKColor constructor.
-         * @param {number} c The cyan value.
-         * @param {number} m The magenta value.
-         * @param {number} y The yellow value.
-         * @param {number} k The key value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} c The cyan value. (0, 100)
+         * @param {number} m The magenta value. (0, 100)
+         * @param {number} y The yellow value. (0, 100)
+         * @param {number} k The key value. (0, 100)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {CMYKColor} A new CMYKColor object.
          */
         constructor(c, m, y, k, a = 1) {
@@ -1426,7 +1426,7 @@
 
         /**
          * Set the alpha value of the color.
-         * @param {number} a The alpha value.
+         * @param {number} a The alpha value. (0, 1)
          * @returns {CMYKColor} A new CMYKColor object.
          */
         setAlpha(a) {
@@ -1471,10 +1471,10 @@
 
         /**
          * New HSLColor constructor.
-         * @param {number} h The hue value.
-         * @param {number} s The saturation value.
-         * @param {number} l The lightness value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} h The hue value. (0, 360)
+         * @param {number} s The saturation value. (0, 100)
+         * @param {number} l The lightness value. (0, 100)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {HSLColor} A new HSLColor object.
          */
         constructor(h, s, l, a = 1) {
@@ -1487,7 +1487,7 @@
 
         /**
          * Darken the color by a specified amount.
-         * @param {number} amount The amount to darken the color by.
+         * @param {number} amount The amount to darken the color by. (0, 1)
          * @returns {HSLColor} A new HSLColor object.
          */
         darken(amount) {
@@ -1501,7 +1501,7 @@
 
         /**
          * Lighten the color by a specified amount.
-         * @param {number} amount The amount to lighten the color by.
+         * @param {number} amount The amount to lighten the color by. (0, 1)
          * @returns {HSLColor} A new HSLColor object.
          */
         lighten(amount) {
@@ -1515,7 +1515,7 @@
 
         /**
          * Set the alpha value of the color.
-         * @param {number} a The alpha value.
+         * @param {number} a The alpha value. (0, 1)
          * @returns {HSLColor} A new HSLColor object.
          */
         setAlpha(a) {
@@ -1551,10 +1551,10 @@
 
         /**
          * New HSVColor constructor.
-         * @param {number} h The hue value.
-         * @param {number} s The saturation value.
-         * @param {number} v The brightness value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} h The hue value. (0, 360)
+         * @param {number} s The saturation value. (0, 100)
+         * @param {number} v The brightness value. (0, 100)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {HSVColor} A new HSVColor object.
          */
         constructor(h, s, v, a = 1) {
@@ -1567,7 +1567,7 @@
 
         /**
          * Get the brightness value of the color.
-         * @returns {number} The brightess value.
+         * @returns {number} The brightess value. (0, 100)
          */
         getBrightness() {
             return this._v;
@@ -1575,7 +1575,7 @@
 
         /**
          * Get the hue value of the color.
-         * @returns {number} The hue value.
+         * @returns {number} The hue value. (0, 360)
          */
         getHue() {
             return this._h;
@@ -1583,7 +1583,7 @@
 
         /**
          * Get the saturation value of the color.
-         * @returns {number} The saturation value.
+         * @returns {number} The saturation value. (0, 100)
          */
         getSaturation() {
             return this._s;
@@ -1591,7 +1591,7 @@
 
         /**
          * Set the alpha value of the color.
-         * @param {number} a The alpha value.
+         * @param {number} a The alpha value. (0, 1)
          * @returns {HSVColor} A new HSVColor object.
          */
         setAlpha(a) {
@@ -1600,7 +1600,7 @@
 
         /**
          * Set the brightness value of the color.
-         * @param {number} v The brightness value.
+         * @param {number} v The brightness value. (0, 100)
          * @returns {HSVColor} A new HSVColor object.
          */
         setBrightness(v) {
@@ -1609,7 +1609,7 @@
 
         /**
          * Set the hue value of the color.
-         * @param {number} h The hue value.
+         * @param {number} h The hue value. (0, 360)
          * @returns {HSVColor} A new HSVColor object.
          */
         setHue(h) {
@@ -1618,7 +1618,7 @@
 
         /**
          * Set the saturation value of the color.
-         * @param {number} s The saturation value.
+         * @param {number} s The saturation value. (0, 100)
          * @returns {HSVColor} A new HSVColor object.
          */
         setSaturation(s) {
@@ -1654,10 +1654,10 @@
 
         /**
          * New RGBColor constructor.
-         * @param {number} r The red value.
-         * @param {number} g The green value.
-         * @param {number} b The blue value.
-         * @param {number} [a=1] The alpha value.
+         * @param {number} r The red value. (0, 255)
+         * @param {number} g The green value. (0, 255)
+         * @param {number} b The blue value. (0, 255)
+         * @param {number} [a=1] The alpha value. (0, 1)
          * @returns {RGBColor} A new RGBColor object.
          */
         constructor(r, g, b, a = 1) {
@@ -1670,7 +1670,7 @@
 
         /**
          * Get the luminance value of the color.
-         * @returns {number} The luminance value.
+         * @returns {number} The luminance value. (0, 1)
          */
         luma() {
             return Color.RGB2Luma(this._r, this._g, this._b);
@@ -1679,7 +1679,7 @@
         /**
          * Mix this color with another by a specified amount.
          * @param {BaseColor} color The color to mix with.
-         * @param {number} amount The amount to mix by.
+         * @param {number} amount The amount to mix by. (0, 1)
          * @returns {RGBColor} A new RGBColor object.
          */
         mix(color, amount) {
@@ -1696,7 +1696,7 @@
         /**
          * Multiply this color with another by a specified amount.
          * @param {BaseColor} color The color to multiply with.
-         * @param {number} amount The amount to multiply by.
+         * @param {number} amount The amount to multiply by. (0, 1)
          * @returns {RGBColor} A new RGBColor object.
          */
         multiply(color, amount) {
@@ -1712,7 +1712,7 @@
 
         /**
          * Set the alpha value of the color.
-         * @param {number} a The alpha value.
+         * @param {number} a The alpha value. (0, 1)
          * @returns {RGBColor} A new RGBColor object.
          */
         setAlpha(a) {

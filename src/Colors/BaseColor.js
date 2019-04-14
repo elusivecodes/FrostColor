@@ -6,7 +6,7 @@ class BaseColor {
 
     /**
      * New BaseColor constructor.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {BaseColor} A new BaseColor object.
      */
     constructor(a = 1) {
@@ -15,7 +15,7 @@ class BaseColor {
 
     /**
      * Darken the color by a specified amount.
-     * @param {number} amount The amount to darken the color by.
+     * @param {number} amount The amount to darken the color by. (0, 1)
      * @returns {HSLColor} A new HSLColor object.
      */
     darken(amount) {
@@ -25,7 +25,7 @@ class BaseColor {
 
     /**
      * Get the alpha value of the color.
-     * @returns {number} The alpha value.
+     * @returns {number} The alpha value. (0, 1)
      */
     getAlpha() {
         return this._a;
@@ -33,7 +33,7 @@ class BaseColor {
 
     /**
      * Get the brightness value of the color.
-     * @returns {number} The brightness value.
+     * @returns {number} The brightness value. (0, 100)
      */
     getBrightness() {
         return this.toHSV()
@@ -42,7 +42,7 @@ class BaseColor {
 
     /**
      * Get the hue value of the color.
-     * @returns {number} The hue value.
+     * @returns {number} The hue value. (0, 360)
      */
     getHue() {
         return this.toHSV()
@@ -51,7 +51,7 @@ class BaseColor {
 
     /**
      * Get the saturation value of the color.
-     * @returns {number} The saturation value.
+     * @returns {number} The saturation value. (0, 100)
      */
     getSaturation() {
         return this.toHSV()
@@ -60,7 +60,7 @@ class BaseColor {
 
     /**
      * Lighten the color by a specified amount.
-     * @param {number} amount The amount to lighten the color by.
+     * @param {number} amount The amount to lighten the color by. (0, 1)
      * @returns {HSLColor} A new HSLColor object.
      */
     lighten(amount) {
@@ -70,7 +70,7 @@ class BaseColor {
 
     /**
      * Get the luminance value of the color.
-     * @returns {number} The luminance value.
+     * @returns {number} The luminance value. (0, 1)
      */
     luma() {
         return this.toRGB()
@@ -80,7 +80,7 @@ class BaseColor {
     /**
      * Mix this color with another by a specified amount.
      * @param {BaseColor} color The color to mix with.
-     * @param {number} amount The amount to mix by.
+     * @param {number} amount The amount to mix by. (0, 1)
      * @returns {RGBColor} A new RGBColor object.
      */
     mix(color, amount) {
@@ -91,7 +91,7 @@ class BaseColor {
     /**
      * Multiply this color with another by a specified amount.
      * @param {BaseColor} color The color to multiply with.
-     * @param {number} amount The amount to multiply by.
+     * @param {number} amount The amount to multiply by. (0, 1)
      * @returns {RGBColor} A new RGBColor object.
      */
     multiply(color, amount) {
@@ -101,7 +101,7 @@ class BaseColor {
 
     /**
      * Set the brightness value of the color.
-     * @param {number} v The brightness value.
+     * @param {number} v The brightness value. (0, 100)
      * @returns {HSVColor} A new HSVColor object.
      */
     setBrightness(v) {
@@ -111,7 +111,7 @@ class BaseColor {
 
     /**
      * Set the hue value of the color.
-     * @param {number} h The hue value.
+     * @param {number} h The hue value. (0, 360)
      * @returns {HSVColor} A new HSVColor object.
      */
     setHue(h) {
@@ -121,7 +121,7 @@ class BaseColor {
 
     /**
      * Set the saturation value of the color.
-     * @param {number} s The saturation value.
+     * @param {number} s The saturation value. (0, 100)
      * @returns {HSVColor} A new HSVColor object.
      */
     setSaturation(s) {
@@ -176,7 +176,7 @@ class BaseColor {
 
     /**
      * Get the luminance value of the color.
-     * @returns {number} The luminance value.
+     * @returns {number} The luminance value. (0, 1)
      */
     valueOf() {
         return this.luma();

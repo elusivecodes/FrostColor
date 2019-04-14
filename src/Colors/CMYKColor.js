@@ -6,11 +6,11 @@ class CMYKColor extends BaseColor {
 
     /**
      * New CMYKColor constructor.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
-     * @param {number} k The key value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
+     * @param {number} k The key value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {CMYKColor} A new CMYKColor object.
      */
     constructor(c, m, y, k, a = 1) {
@@ -24,7 +24,7 @@ class CMYKColor extends BaseColor {
 
     /**
      * Set the alpha value of the color.
-     * @param {number} a The alpha value.
+     * @param {number} a The alpha value. (0, 1)
      * @returns {CMYKColor} A new CMYKColor object.
      */
     setAlpha(a) {

@@ -6,10 +6,10 @@ Object.assign(Color, {
 
     /**
      * Create a new Color from CMY values.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromCMY(c, m, y, a = 1) {
@@ -20,11 +20,11 @@ Object.assign(Color, {
 
     /**
      * Create a new Color from CMYK values.
-     * @param {number} c The cyan value.
-     * @param {number} m The magenta value.
-     * @param {number} y The yellow value.
-     * @param {number} k The key value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} c The cyan value. (0, 100)
+     * @param {number} m The magenta value. (0, 100)
+     * @param {number} y The yellow value. (0, 100)
+     * @param {number} k The key value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromCMYK(c, m, y, k, a = 1) {
@@ -35,10 +35,10 @@ Object.assign(Color, {
 
     /**
      * Create a new Color from HSL values.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} l The lightness value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} l The lightness value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromHSL(h, s, l, a = 1) {
@@ -49,10 +49,10 @@ Object.assign(Color, {
 
     /**
      * Create a new Color from HSV values.
-     * @param {number} h The hue value.
-     * @param {number} s The saturation value.
-     * @param {number} v The brightness value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} h The hue value. (0, 360)
+     * @param {number} s The saturation value. (0, 100)
+     * @param {number} v The brightness value. (0, 100)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromHSV(h, s, v, a = 1) {
@@ -63,10 +63,10 @@ Object.assign(Color, {
 
     /**
      * Create a new Color from RGB values.
-     * @param {number} r The red value.
-     * @param {number} g The green value.
-     * @param {number} b The blue value.
-     * @param {number} [a=1] The alpha value.
+     * @param {number} r The red value. (0, 255)
+     * @param {number} g The green value. (0, 255)
+     * @param {number} b The blue value. (0, 255)
+     * @param {number} [a=1] The alpha value. (0, 1)
      * @returns {Color} A new Color object.
      */
     fromRGB(r, g, b, a = 1) {
