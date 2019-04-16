@@ -166,7 +166,6 @@ Set the alpha value of the color.
 - `alpha` is a number between *0* and *1*.
 
 ```javascript
-const alpha = color.getAlpha();
 color.setAlpha(alpha);
 ```
 
