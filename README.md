@@ -2,7 +2,7 @@
 
 **FrostColor** is a free, open-source color manipulation library for *JavaScript*.
 
-It it a lightweight (~12kb) and modern library, and features full support for RGB, HSL, HSV, CMY and CMYK color-spaces.
+It it a lightweight (~14kb) and modern library, and features full support for RGB, HSL, HSV, CMY and CMYK color-spaces.
 
 
 ## Table of contents
@@ -120,7 +120,7 @@ const color = Color.fromHSV(hue, saturation, value, alpha);
 
 Return a HTML string representation of the color.
 
-The `colorString` returned will be a string containing either a HTML color name (if one exists), a hexadecimal representation (if alpha is *1*) or an RGBA string.
+The `colorString` returned will be a string containing either a HTML color name (if one exists), a hexadecimal string (if alpha is *1*) or an RGBA string.
 
 ```javascript
 const colorString = color.toString();

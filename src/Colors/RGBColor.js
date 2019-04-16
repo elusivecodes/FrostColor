@@ -119,7 +119,16 @@ class RGBColor extends BaseColor {
     toHexString() {
         const hex = this._getHex();
 
-        if (hex[1] === hex[2] &&
+        if (hex.length === 9 &&
+            hex[1] === hex[2] &&
+            hex[3] === hex[4] &&
+            hex[5] === hex[6] &&
+            hex[7] === hex[8]) {
+            return `#${hex[1]}${hex[3]}${hex[5]}${hex[7]}`;
+        }
+
+        if (hex.length === 7 &&
+            hex[1] === hex[2] &&
             hex[3] === hex[4] &&
             hex[5] === hex[6]) {
             return `#${hex[1]}${hex[3]}${hex[5]}`;
@@ -136,7 +145,7 @@ class RGBColor extends BaseColor {
         const r = Math.round(this._r);
         const g = Math.round(this._g);
         const b = Math.round(this._b);
-        const a = Math.round(this._a * 100) / 100;
+        const a = Math.round(this._a * 1000) / 1000;
 
         if (a < 1) {
             return `rgba(${r}, ${g}, ${b}, ${a})`;
@@ -177,15 +186,16 @@ class RGBColor extends BaseColor {
     }
 
     _getHex() {
-        const r = Math.round(this._r);
-        const g = Math.round(this._g);
-        const b = Math.round(this._b);
+        const hex = '#' +
+            (Math.round(this._r) | 1 << 8).toString(16).slice(1) +
+            (Math.round(this._g) | 1 << 8).toString(16).slice(1) +
+            (Math.round(this._b) | 1 << 8).toString(16).slice(1);
 
-        return `#${
-            (0x1000000 + (b | (g << 8) | (r << 16)))
-                .toString(16)
-                .slice(1)
-            }`;
+        if (this._a < 1) {
+            return hex + (this._a * 255 | 1 << 8).toString(16).slice(1);
+        }
+
+        return hex;
     }
 
 }

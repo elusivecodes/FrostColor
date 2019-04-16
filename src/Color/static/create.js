@@ -89,41 +89,109 @@ Object.assign(Color, {
 
         if (this.colors[string]) {
             string = this.colors[string];
+        } else {
+            string = string.trim();
         }
 
-        const hexMatch = string.match(this.hexRegEx);
-        if (hexMatch) {
-            const rgb = hexMatch.slice(1, 4).map(value => parseInt(value, 16));
-            return new this(rgb[0], rgb[1], rgb[2]);
+        if (string.substring(0, 1) === '#') {
+            return this.fromHexString(string);
         }
 
-        const hexMatchShort = string.match(this.hexRegExShort);
-        if (hexMatchShort) {
-            const rgb = hexMatchShort.slice(1, 4).map(value => 0x11 * parseInt(value, 16));
-            return new this(rgb[0], rgb[1], rgb[2]);
+        if (string.substring(0, 4).toLowerCase() === 'rgba') {
+            return this.fromRGBAString(string);
         }
 
-        const RGBAMatch = string.match(this.RGBARegEx);
-        if (RGBAMatch) {
-            return new this(RGBAMatch[1], RGBAMatch[2], RGBAMatch[3], RGBAMatch[4]);
+        if (string.substring(0, 3).toLowerCase() === 'rgb') {
+            return this.fromRGBString(string);
         }
 
-        const RGBMatch = string.match(this.RGBRegEx);
-        if (RGBMatch) {
-            return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
+        if (string.substring(0, 4).toLowerCase() === 'hsla') {
+            return this.fromHSLAString(string);
         }
 
-        const HSLAMatch = string.match(this.HSLARegEx);
-        if (HSLAMatch) {
-            return this.fromHSL(HSLAMatch[1], HSLAMatch[2], HSLAMatch[3], HSLAMatch[4]);
+        if (string.substring(0, 3).toLowerCase() === 'hsl') {
+            return this.fromHSLString(string);
         }
 
-        const HSLMatch = string.match(this.HSLRegEx);
-        if (HSLMatch) {
-            return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
+        throw new Error('Invalid color string');
+    },
+
+    fromHexString(string) {
+        string = string.trim();
+
+        const hexMatch = string.length > 6 ?
+            string.match(this._hexRegEx) :
+            string.match(this._hexRegExShort);
+
+        if (!hexMatch) {
+            throw new Error('Invalid hex string');
         }
 
-        return new this(0, 0, 0);
+        const rgb = hexMatch.slice(1, 5).map(value =>
+            value ?
+                parseInt(
+                    value.length == 2 ?
+                        value :
+                        value + value,
+                    16
+                ) :
+                null
+        );
+
+        return new this(rgb[0], rgb[1], rgb[2], rgb[3] ? rgb[3] / 255 : 1);
+    },
+
+    fromHSLString(string) {
+        const HSLMatch = string.match(this._HSLRegEx);
+
+        if (!HSLMatch) {
+            throw new Error('Invalid HSL string');
+        }
+
+        return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
+    },
+
+    fromHSLAString(string) {
+        const HSLAMatch = string.match(this._HSLARegEx);
+        if (!HSLAMatch) {
+            throw new Error('Invalid HSLA string');
+        }
+
+        return this.fromHSL(
+            HSLAMatch[1],
+            HSLAMatch[2],
+            HSLAMatch[3],
+            HSLAMatch[5] ?
+                HSLAMatch[4] / 100 :
+                HSLAMatch[4]
+        );
+    },
+
+    fromRGBString(string) {
+        const RGBMatch = string.match(this._RGBRegEx);
+
+        if (!RGBMatch) {
+            throw new Error('Invalid RGB string');
+        }
+
+        return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
+    },
+
+    fromRGBAString(string) {
+        const RGBAMatch = string.match(this._RGBARegEx);
+
+        if (!RGBAMatch) {
+            throw new Error('Invalid RGBA string');
+        }
+
+        return new this(
+            RGBAMatch[1],
+            RGBAMatch[2],
+            RGBAMatch[3],
+            RGBAMatch[5] ?
+                RGBAMatch[4] / 100 :
+                RGBAMatch[4]
+        );
     }
 
 });

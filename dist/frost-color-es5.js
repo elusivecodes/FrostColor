@@ -523,52 +523,80 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       if (this.colors[string]) {
         string = this.colors[string];
+      } else {
+        string = string.trim();
       }
 
-      var hexMatch = string.match(this.hexRegEx);
-
-      if (hexMatch) {
-        var rgb = hexMatch.slice(1, 4).map(function (value) {
-          return parseInt(value, 16);
-        });
-        return new this(rgb[0], rgb[1], rgb[2]);
+      if (string.substring(0, 1) === '#') {
+        return this.fromHexString(string);
       }
 
-      var hexMatchShort = string.match(this.hexRegExShort);
-
-      if (hexMatchShort) {
-        var _rgb = hexMatchShort.slice(1, 4).map(function (value) {
-          return 0x11 * parseInt(value, 16);
-        });
-
-        return new this(_rgb[0], _rgb[1], _rgb[2]);
+      if (string.substring(0, 4).toLowerCase() === 'rgba') {
+        return this.fromRGBAString(string);
       }
 
-      var RGBAMatch = string.match(this.RGBARegEx);
-
-      if (RGBAMatch) {
-        return new this(RGBAMatch[1], RGBAMatch[2], RGBAMatch[3], RGBAMatch[4]);
+      if (string.substring(0, 3).toLowerCase() === 'rgb') {
+        return this.fromRGBString(string);
       }
 
-      var RGBMatch = string.match(this.RGBRegEx);
-
-      if (RGBMatch) {
-        return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
+      if (string.substring(0, 4).toLowerCase() === 'hsla') {
+        return this.fromHSLAString(string);
       }
 
-      var HSLAMatch = string.match(this.HSLARegEx);
-
-      if (HSLAMatch) {
-        return this.fromHSL(HSLAMatch[1], HSLAMatch[2], HSLAMatch[3], HSLAMatch[4]);
+      if (string.substring(0, 3).toLowerCase() === 'hsl') {
+        return this.fromHSLString(string);
       }
 
-      var HSLMatch = string.match(this.HSLRegEx);
+      throw new Error('Invalid color string');
+    },
+    fromHexString: function fromHexString(string) {
+      string = string.trim();
+      var hexMatch = string.length > 6 ? string.match(this._hexRegEx) : string.match(this._hexRegExShort);
 
-      if (HSLMatch) {
-        return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
+      if (!hexMatch) {
+        throw new Error('Invalid hex string');
       }
 
-      return new this(0, 0, 0);
+      var rgb = hexMatch.slice(1, 5).map(function (value) {
+        return value ? parseInt(value.length == 2 ? value : value + value, 16) : null;
+      });
+      return new this(rgb[0], rgb[1], rgb[2], rgb[3] ? rgb[3] / 255 : 1);
+    },
+    fromHSLString: function fromHSLString(string) {
+      var HSLMatch = string.match(this._HSLRegEx);
+
+      if (!HSLMatch) {
+        throw new Error('Invalid HSL string');
+      }
+
+      return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
+    },
+    fromHSLAString: function fromHSLAString(string) {
+      var HSLAMatch = string.match(this._HSLARegEx);
+
+      if (!HSLAMatch) {
+        throw new Error('Invalid HSLA string');
+      }
+
+      return this.fromHSL(HSLAMatch[1], HSLAMatch[2], HSLAMatch[3], HSLAMatch[5] ? HSLAMatch[4] / 100 : HSLAMatch[4]);
+    },
+    fromRGBString: function fromRGBString(string) {
+      var RGBMatch = string.match(this._RGBRegEx);
+
+      if (!RGBMatch) {
+        throw new Error('Invalid RGB string');
+      }
+
+      return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
+    },
+    fromRGBAString: function fromRGBAString(string) {
+      var RGBAMatch = string.match(this._RGBARegEx);
+
+      if (!RGBAMatch) {
+        throw new Error('Invalid RGBA string');
+      }
+
+      return new this(RGBAMatch[1], RGBAMatch[2], RGBAMatch[3], RGBAMatch[5] ? RGBAMatch[4] / 100 : RGBAMatch[4]);
     }
   });
   /**
@@ -784,14 +812,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       yellowgreen: '#9acd32'
     },
     // Hex RegEx
-    hexRegEx: /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i,
-    hexRegExShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i,
+    _hexRegExShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f]?)$/i,
+    _hexRegEx: /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i,
     // HSL RegEx
-    HSLRegEx: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
-    HSLARegEx: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\)$/i,
+    _HSLRegEx: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
+    _HSLARegEx: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)(\%?)\)$/i,
     // RGB RegEx
-    RGBRegEx: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
-    RGBARegEx: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i
+    _RGBRegEx: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
+    _RGBARegEx: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)(\%?)\)$/i
   });
   /**
    * Color Attributes
@@ -1821,7 +1849,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       value: function toHexString() {
         var hex = this._getHex();
 
-        if (hex[1] === hex[2] && hex[3] === hex[4] && hex[5] === hex[6]) {
+        if (hex.length === 9 && hex[1] === hex[2] && hex[3] === hex[4] && hex[5] === hex[6] && hex[7] === hex[8]) {
+          return "#".concat(hex[1]).concat(hex[3]).concat(hex[5]).concat(hex[7]);
+        }
+
+        if (hex.length === 7 && hex[1] === hex[2] && hex[3] === hex[4] && hex[5] === hex[6]) {
           return "#".concat(hex[1]).concat(hex[3]).concat(hex[5]);
         }
 
@@ -1838,7 +1870,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var r = Math.round(this._r);
         var g = Math.round(this._g);
         var b = Math.round(this._b);
-        var a = Math.round(this._a * 100) / 100;
+        var a = Math.round(this._a * 1000) / 1000;
 
         if (a < 1) {
           return "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");
@@ -1881,10 +1913,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "_getHex",
       value: function _getHex() {
-        var r = Math.round(this._r);
-        var g = Math.round(this._g);
-        var b = Math.round(this._b);
-        return "#".concat((0x1000000 + (b | g << 8 | r << 16)).toString(16).slice(1));
+        var hex = '#' + (Math.round(this._r) | 1 << 8).toString(16).slice(1) + (Math.round(this._g) | 1 << 8).toString(16).slice(1) + (Math.round(this._b) | 1 << 8).toString(16).slice(1);
+
+        if (this._a < 1) {
+          return hex + (this._a * 255 | 1 << 8).toString(16).slice(1);
+        }
+
+        return hex;
       }
     }]);
 
