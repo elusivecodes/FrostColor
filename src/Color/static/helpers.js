@@ -5,6 +5,23 @@
 Object.assign(Color, {
 
     /**
+     * Calculate the distance between two colors.
+     * @param {Color} color1 The first Color.
+     * @param {Color} color2 The second Color.
+     * @returns {number} The distance between the colors.
+     */
+    dist(color1, color2) {
+        const rgb1 = color1.getColor().toRGB();
+        const rgb2 = color2.getColor().toRGB();
+
+        return Math.hypot(
+            rgb1.r - rgb2.r,
+            rgb1.g - rgb2.g,
+            rgb1.b - rgb2.b
+        );
+    },
+
+    /**
      * Clamp a value between a min and max.
      * @param {number} value The value to clamp.
      * @param {number} [min=0] The minimum value of the clamped range.
