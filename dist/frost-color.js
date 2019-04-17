@@ -631,6 +631,23 @@
     Object.assign(Color, {
 
         /**
+         * Calculate the distance between two colors.
+         * @param {Color} color1 The first Color.
+         * @param {Color} color2 The second Color.
+         * @returns {number} The distance between the colors.
+         */
+        dist(color1, color2) {
+            const rgb1 = color1.getColor().toRGB();
+            const rgb2 = color2.getColor().toRGB();
+
+            return Math.hypot(
+                rgb1._r - rgb2._r,
+                rgb1._g - rgb2._g,
+                rgb1._b - rgb2._b
+            );
+        },
+
+        /**
          * Clamp a value between a min and max.
          * @param {number} value The value to clamp.
          * @param {number} [min=0] The minimum value of the clamped range.
@@ -896,6 +913,27 @@
         getHue() {
             return this.getColor()
                 .getHue();
+        },
+
+        /**
+         * Get the closest color name for the color.
+         * @returns {string} The name.
+         */
+        getName() {
+            let closest,
+                closestDist = Number.MAX_SAFE_INTEGER;
+
+            for (label in Color.colors) {
+                const color = Color.fromString(label);
+                const dist = Color.dist(this, color);
+
+                if (dist < closestDist) {
+                    closest = label;
+                    closestDist = dist;
+                }
+            }
+
+            return closest;
         },
 
         /**

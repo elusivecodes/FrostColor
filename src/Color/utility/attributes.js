@@ -32,6 +32,27 @@ Object.assign(Color.prototype, {
     },
 
     /**
+     * Get the closest color name for the color.
+     * @returns {string} The name.
+     */
+    getName() {
+        let closest,
+            closestDist = Number.MAX_SAFE_INTEGER;
+
+        for (label in Color.colors) {
+            const color = Color.fromString(label);
+            const dist = Color.dist(this, color);
+
+            if (dist < closestDist) {
+                closest = label;
+                closestDist = dist;
+            }
+        }
+
+        return closest;
+    },
+
+    /**
      * Get the saturation value of the color.
      * @returns {number} The saturation value. (0, 100)
      */

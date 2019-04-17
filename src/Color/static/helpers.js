@@ -15,9 +15,9 @@ Object.assign(Color, {
         const rgb2 = color2.getColor().toRGB();
 
         return Math.hypot(
-            rgb1.r - rgb2.r,
-            rgb1.g - rgb2.g,
-            rgb1.b - rgb2.b
+            rgb1._r - rgb2._r,
+            rgb1._g - rgb2._g,
+            rgb1._b - rgb2._b
         );
     },
 
