@@ -32,15 +32,24 @@ Object.assign(Color.prototype, {
     },
 
     /**
+     * Get the saturation value of the color.
+     * @returns {number} The saturation value. (0, 100)
+     */
+    getSaturation() {
+        return this.getColor()
+            .getSaturation();
+    },
+
+    /**
      * Get the closest color name for the color.
      * @returns {string} The name.
      */
-    getName() {
+    label() {
         let closest,
             closestDist = Number.MAX_SAFE_INTEGER;
 
-        for (label in Color.colors) {
-            const color = Color.fromString(label);
+        for (const label in Color.colors) {
+            const color = Color.fromHexString(Color.colors[label]);
             const dist = Color.dist(this, color);
 
             if (dist < closestDist) {
@@ -50,15 +59,6 @@ Object.assign(Color.prototype, {
         }
 
         return closest;
-    },
-
-    /**
-     * Get the saturation value of the color.
-     * @returns {number} The saturation value. (0, 100)
-     */
-    getSaturation() {
-        return this.getColor()
-            .getSaturation();
     },
 
     /**

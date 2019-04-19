@@ -1,5 +1,5 @@
 /**
- * Helpers
+ * Color (Static) Helpers
  */
 
 Object.assign(Color, {

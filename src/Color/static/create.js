@@ -1,5 +1,5 @@
 /**
- * Color Creation
+ * Color (Static) Creation
  */
 
 Object.assign(Color, {
@@ -34,6 +34,36 @@ Object.assign(Color, {
     },
 
     /**
+     * Create a new Color from a hex color string.
+     * @param {string} string The hex color string.
+     * @returns {Color} A new Color object.
+     */
+    fromHexString(string) {
+        string = string.trim();
+
+        const hexMatch = string.length > 6 ?
+            string.match(this._hexRegEx) :
+            string.match(this._hexRegExShort);
+
+        if (!hexMatch) {
+            throw new Error('Invalid hex string');
+        }
+
+        const rgb = hexMatch.slice(1, 5).map(value =>
+            value ?
+                parseInt(
+                    value.length == 2 ?
+                        value :
+                        value + value,
+                    16
+                ) :
+                null
+        );
+
+        return new this(rgb[0], rgb[1], rgb[2], rgb[3] ? rgb[3] / 255 : 1);
+    },
+
+    /**
      * Create a new Color from HSL values.
      * @param {number} h The hue value. (0, 360)
      * @param {number} s The saturation value. (0, 100)
@@ -44,6 +74,42 @@ Object.assign(Color, {
     fromHSL(h, s, l, a = 1) {
         return new this(
             new HSLColor(h, s, l, a)
+        );
+    },
+
+    /**
+     * Create a new Color from a HSL color string.
+     * @param {string} string The HSL color string.
+     * @returns {Color} A new Color object.
+     */
+    fromHSLString(string) {
+        const HSLMatch = string.match(this._HSLRegEx);
+
+        if (!HSLMatch) {
+            throw new Error('Invalid HSL string');
+        }
+
+        return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
+    },
+
+    /**
+     * Create a new Color from a HSLA color string.
+     * @param {string} string The HSLA color string.
+     * @returns {Color} A new Color object.
+     */
+    fromHSLAString(string) {
+        const HSLAMatch = string.match(this._HSLARegEx);
+        if (!HSLAMatch) {
+            throw new Error('Invalid HSLA string');
+        }
+
+        return this.fromHSL(
+            HSLAMatch[1],
+            HSLAMatch[2],
+            HSLAMatch[3],
+            HSLAMatch[5] ?
+                HSLAMatch[4] / 100 :
+                HSLAMatch[4]
         );
     },
 
@@ -72,6 +138,43 @@ Object.assign(Color, {
     fromRGB(r, g, b, a = 1) {
         return new this(
             new RGBColor(r, g, b, a)
+        );
+    },
+
+    /**
+     * Create a new Color from a RGB color string.
+     * @param {string} string The RGB color string.
+     * @returns {Color} A new Color object.
+     */
+    fromRGBString(string) {
+        const RGBMatch = string.match(this._RGBRegEx);
+
+        if (!RGBMatch) {
+            throw new Error('Invalid RGB string');
+        }
+
+        return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
+    },
+
+    /**
+     * Create a new Color from a RGBA color string.
+     * @param {string} string The RGBA color string.
+     * @returns {Color} A new Color object.
+     */
+    fromRGBAString(string) {
+        const RGBAMatch = string.match(this._RGBARegEx);
+
+        if (!RGBAMatch) {
+            throw new Error('Invalid RGBA string');
+        }
+
+        return new this(
+            RGBAMatch[1],
+            RGBAMatch[2],
+            RGBAMatch[3],
+            RGBAMatch[5] ?
+                RGBAMatch[4] / 100 :
+                RGBAMatch[4]
         );
     },
 
@@ -114,84 +217,6 @@ Object.assign(Color, {
         }
 
         throw new Error('Invalid color string');
-    },
-
-    fromHexString(string) {
-        string = string.trim();
-
-        const hexMatch = string.length > 6 ?
-            string.match(this._hexRegEx) :
-            string.match(this._hexRegExShort);
-
-        if (!hexMatch) {
-            throw new Error('Invalid hex string');
-        }
-
-        const rgb = hexMatch.slice(1, 5).map(value =>
-            value ?
-                parseInt(
-                    value.length == 2 ?
-                        value :
-                        value + value,
-                    16
-                ) :
-                null
-        );
-
-        return new this(rgb[0], rgb[1], rgb[2], rgb[3] ? rgb[3] / 255 : 1);
-    },
-
-    fromHSLString(string) {
-        const HSLMatch = string.match(this._HSLRegEx);
-
-        if (!HSLMatch) {
-            throw new Error('Invalid HSL string');
-        }
-
-        return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
-    },
-
-    fromHSLAString(string) {
-        const HSLAMatch = string.match(this._HSLARegEx);
-        if (!HSLAMatch) {
-            throw new Error('Invalid HSLA string');
-        }
-
-        return this.fromHSL(
-            HSLAMatch[1],
-            HSLAMatch[2],
-            HSLAMatch[3],
-            HSLAMatch[5] ?
-                HSLAMatch[4] / 100 :
-                HSLAMatch[4]
-        );
-    },
-
-    fromRGBString(string) {
-        const RGBMatch = string.match(this._RGBRegEx);
-
-        if (!RGBMatch) {
-            throw new Error('Invalid RGB string');
-        }
-
-        return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
-    },
-
-    fromRGBAString(string) {
-        const RGBAMatch = string.match(this._RGBARegEx);
-
-        if (!RGBAMatch) {
-            throw new Error('Invalid RGBA string');
-        }
-
-        return new this(
-            RGBAMatch[1],
-            RGBAMatch[2],
-            RGBAMatch[3],
-            RGBAMatch[5] ?
-                RGBAMatch[4] / 100 :
-                RGBAMatch[4]
-        );
     }
 
 });

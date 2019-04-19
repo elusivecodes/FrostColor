@@ -13,6 +13,7 @@ It it a lightweight (~14kb) and modern library, and features full support for RG
 - [Color Manipulation](#color-manipulation)
 - [Color Schemes](#color-schemes)
 - [Color Palettes](#color-palettes)
+- [Static Methods](#static-methods)
 
 
 ## Basic Usage
@@ -201,6 +202,22 @@ Set the hue value of the color.
 color.setHue(hue);
 ```
 
+#### Label
+
+Get the closest color name for the color.
+
+```javascript
+const label = color.label();
+```
+
+#### Luma
+
+Get the luminance value of the color (between *0* and *1*).
+
+```javascript
+const luma = color.luma();
+```
+
 #### Saturation
 
 Get the saturation value of the color (between *0* and *100*).
@@ -215,14 +232,6 @@ Set the saturation value of the color.
 
 ```javascript
 color.setSaturation(saturation);
-```
-
-#### Luma
-
-Get the luminance value of the color (between *0* and *1*).
-
-```javascript
-const luma = color.luma();
 ```
 
 
@@ -276,33 +285,6 @@ Tone the color by a specified amount.
 
 ```javascript
 color.tone(amount);
-```
-
-
-## Color Mixing
-
-#### Mix
-
-Create a new *Color* by mixing two colors together by a specified amount.
-
-- `color1` is a *Color* object.
-- `color2` is a *Color* object.
-- `amount` is a number between *0* and *1*.
-
-```javascript
-const mixed = Color.mix(color1, color2, amount);
-```
-
-#### Multiply
-
-Create a new *Color* by multiplying two colors together by a specified amount.
-
-- `color1` is a *Color* object.
-- `color2` is a *Color* object.
-- `amount` is a number between *0* and *1*.
-
-```javascript
-const multiplied = Color.multiply(color1, color2, amount);
 ```
 
 
@@ -393,4 +375,42 @@ Create a palette object with a specified number of shades, tints and tone variat
 
 ```javascript
 const colorPalette = color.palette(shades, tints, tones);
+```
+
+
+## Static Methods
+
+#### Mix
+
+Create a new *Color* by mixing two colors together by a specified amount.
+
+- `color1` is a *Color* object.
+- `color2` is a *Color* object.
+- `amount` is a number between *0* and *1*.
+
+```javascript
+const mixed = Color.mix(color1, color2, amount);
+```
+
+#### Multiply
+
+Create a new *Color* by multiplying two colors together by a specified amount.
+
+- `color1` is a *Color* object.
+- `color2` is a *Color* object.
+- `amount` is a number between *0* and *1*.
+
+```javascript
+const multiplied = Color.multiply(color1, color2, amount);
+```
+
+#### Distance
+
+Calculate the distance between two colors.
+
+- `color1` is a *Color* object.
+- `color2` is a *Color* object.
+
+```javascript
+const distance = Color.dist(color1, color2);
 ```

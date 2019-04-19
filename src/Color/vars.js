@@ -1,5 +1,5 @@
 /**
- * Color Properties
+ * Color (Static) Properties
  */
 
 Object.assign(Color, {

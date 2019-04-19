@@ -1,5 +1,5 @@
 /**
- * Color Mixing
+ * Color (Static) Mixing
  */
 
 Object.assign(Color, {

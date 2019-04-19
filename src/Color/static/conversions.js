@@ -1,5 +1,5 @@
 /**
- * Color Conversions
+ * Color (Static) Conversions
  */
 
 Object.assign(Color, {
