@@ -380,6 +380,17 @@ const colorPalette = color.palette(shades, tints, tones);
 
 ## Static Methods
 
+#### Distance
+
+Calculate the distance between two colors.
+
+- `color1` is a *Color* object.
+- `color2` is a *Color* object.
+
+```javascript
+const distance = Color.dist(color1, color2);
+```
+
 #### Mix
 
 Create a new *Color* by mixing two colors together by a specified amount.
@@ -402,15 +413,4 @@ Create a new *Color* by multiplying two colors together by a specified amount.
 
 ```javascript
 const multiplied = Color.multiply(color1, color2, amount);
-```
-
-#### Distance
-
-Calculate the distance between two colors.
-
-- `color1` is a *Color* object.
-- `color2` is a *Color* object.
-
-```javascript
-const distance = Color.dist(color1, color2);
 ```
