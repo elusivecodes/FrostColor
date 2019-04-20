@@ -169,11 +169,10 @@ class RGBColor extends BaseColor {
 
         const hex = this._getHex();
 
-        const name = Object.keys(Color.colors)
-            .find(name => Color.colors[name] === hex);
-
-        if (name) {
-            return name;
+        for (const name in Color.colors) {
+            if (Color.colors[name] === hex) {
+                return name;
+            }
         }
 
         if (hex[1] === hex[2] &&

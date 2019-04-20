@@ -1959,12 +1959,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         var hex = this._getHex();
 
-        var name = Object.keys(Color.colors).find(function (name) {
-          return Color.colors[name] === hex;
-        });
-
-        if (name) {
-          return name;
+        for (var name in Color.colors) {
+          if (Color.colors[name] === hex) {
+            return name;
+          }
         }
 
         if (hex[1] === hex[2] && hex[3] === hex[4] && hex[5] === hex[6]) {
