@@ -6,6 +6,7 @@ It it a lightweight (~14kb) and modern library, and features full support for RG
 
 
 ## Table of contents
+- [Installation](#installation)
 - [Basic Usage](#basic-usage)
 - [Color Formatting](#color-formatting)
 - [Color Output](#color-output)
@@ -16,7 +17,14 @@ It it a lightweight (~14kb) and modern library, and features full support for RG
 - [Static Methods](#static-methods)
 
 
-## Basic Usage
+## Installation
+
+```html
+<script type="text/javascript" src="/path/to/frost-color.min.js"></script>
+```
+
+
+### Basic Usage
 
 #### From RGB
 
