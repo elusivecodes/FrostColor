@@ -5,9 +5,10 @@
 It it a lightweight (~14kb) and modern library, and features full support for RGB, HSL, HSV, CMY and CMYK color-spaces.
 
 
-## Table of contents
+## Table Of Contents
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
+- [Color Creation](#color-creation)
 - [Color Formatting](#color-formatting)
 - [Color Output](#color-output)
 - [Color Attributes](#color-attributes)
@@ -24,9 +25,9 @@ It it a lightweight (~14kb) and modern library, and features full support for RG
 ```
 
 
-### Basic Usage
+## Basic Usage
 
-#### From RGB
+**From RGB**
 
 - `red` is a number between *0* and *255*.
 - `green` is a number between *0* and *255*.
@@ -37,7 +38,7 @@ It it a lightweight (~14kb) and modern library, and features full support for RG
 const color = new Color(red, green, blue, alpha);
 ```
 
-#### From Brightness
+**From Brightness**
 
 - `brightness` is a number between *0* and *100*.
 - `alpha` is a number between *0* and *1*, and will default to *1*.
@@ -46,7 +47,7 @@ const color = new Color(red, green, blue, alpha);
 const color = new Color(brightness, alpha);
 ```
 
-#### Immutable Colors
+**Immutable Colors**
 
 By default, *Color* objects are mutable, but if you wish to create an immutable reference you can use the following syntax.
 
@@ -59,7 +60,7 @@ const color = new ColorImmutable(red, green, blue, alpha);
 
 ## Color Creation
 
-#### From String
+**From String**
 
 Create a new *Color* from a HTML color string.
 
@@ -69,7 +70,7 @@ Create a new *Color* from a HTML color string.
 const color = Color.fromString(colorString);
 ```
 
-#### From CMY
+**From CMY**
 
 Create a new *Color* from CMY values.
 
@@ -82,7 +83,7 @@ Create a new *Color* from CMY values.
 const color = Color.fromCMY(cyan, magenta, yellow, alpha);
 ```
 
-#### From CMYK
+**From CMYK**
 
 Create a new *Color* from CMYK values.
 
@@ -96,7 +97,7 @@ Create a new *Color* from CMYK values.
 const color = Color.fromCMYK(cyan, magenta, yellow, key, alpha);
 ```
 
-#### From HSL
+**From HSL**
 
 Create a new *Color* from HSL values.
 
@@ -109,7 +110,7 @@ Create a new *Color* from HSL values.
 const color = Color.fromHSL(hue, saturation, lightness, alpha);
 ```
 
-#### From HSV
+**From HSV**
 
 Create a new *Color* from HSV values.
 
@@ -125,7 +126,7 @@ const color = Color.fromHSV(hue, saturation, value, alpha);
 
 ## Color Formatting
 
-#### To String
+**To String**
 
 Return a HTML string representation of the color.
 
@@ -135,7 +136,7 @@ The `colorString` returned will be a string containing either a HTML color name 
 const colorString = color.toString();
 ```
 
-#### To Hex String
+**To Hex String**
 
 Return a hexadecimal string representation of the color.
 
@@ -143,7 +144,7 @@ Return a hexadecimal string representation of the color.
 const hexString = color.toHexString();
 ```
 
-#### To RGB String
+**To RGB String**
 
 Return a RGB/RGBA string representation of the color.
 
@@ -151,7 +152,7 @@ Return a RGB/RGBA string representation of the color.
 const rgbString = color.toRGBString();
 ```
 
-#### To HSL String
+**To HSL String**
 
 Return a HSL/HSLA string representation of the color.
 
@@ -162,7 +163,7 @@ const hslString = color.toHSLString();
 
 ## Color Attributes
 
-#### Alpha
+**Alpha**
 
 Get the alpha value of the color (between *0* and *1*).
 
@@ -178,7 +179,7 @@ Set the alpha value of the color.
 color.setAlpha(alpha);
 ```
 
-#### Brightness
+**Brightness**
 
 Get the brightness value of the color (between *0* and *100*).
 
@@ -194,7 +195,7 @@ Get the brightness value of the color.
 color.setBrightness(brightness);
 ```
 
-#### Hue
+**Hue**
 
 Get the hue value of the color (between *0* and *360*).
 
@@ -210,7 +211,7 @@ Set the hue value of the color.
 color.setHue(hue);
 ```
 
-#### Label
+**Label**
 
 Get the closest color name for the color.
 
@@ -218,7 +219,7 @@ Get the closest color name for the color.
 const label = color.label();
 ```
 
-#### Luma
+**Luma**
 
 Get the luminance value of the color (between *0* and *1*).
 
@@ -226,7 +227,7 @@ Get the luminance value of the color (between *0* and *1*).
 const luma = color.luma();
 ```
 
-#### Saturation
+**Saturation**
 
 Get the saturation value of the color (between *0* and *100*).
 
@@ -245,7 +246,7 @@ color.setSaturation(saturation);
 
 ## Color Manipulation
 
-#### Darken
+**Darken**
 
 Darken the color by a specified amount.
 
@@ -255,7 +256,7 @@ Darken the color by a specified amount.
 color.darken(amount);
 ```
 
-#### Lighten
+**Lighten**
 
 Lighten the color by a specified amount.
 
@@ -265,7 +266,7 @@ Lighten the color by a specified amount.
 color.lighten(amount);
 ```
 
-#### Shade
+**Shade**
 
 Shade the color by a specified amount.
 
@@ -275,7 +276,7 @@ Shade the color by a specified amount.
 color.shade(amount);
 ```
 
-#### Tint
+**Tint**
 
 Tint the color by a specified amount.
 
@@ -285,7 +286,7 @@ Tint the color by a specified amount.
 color.tint(amount);
 ```
 
-#### Tone
+**Tone**
 
 Tone the color by a specified amount.
 
@@ -298,7 +299,7 @@ color.tone(amount);
 
 ## Color Schemes
 
-#### Complementary
+**Complementary**
 
 Create a complementary color variation.
 
@@ -306,7 +307,7 @@ Create a complementary color variation.
 const complementary = color.complementary();
 ```
 
-#### Split
+**Split**
 
 Create an array with 2 split color variations.
 
@@ -314,7 +315,7 @@ Create an array with 2 split color variations.
 const [secondary, accent] = color.split();
 ```
 
-#### Analogous
+**Analogous**
 
 Create an array with 2 analogous color variations.
 
@@ -322,7 +323,7 @@ Create an array with 2 analogous color variations.
 const [secondary, accent] = color.analogous();
 ```
 
-#### Triadic
+**Triadic**
 
 Create an array with 2 triadic color variations.
 
@@ -330,7 +331,7 @@ Create an array with 2 triadic color variations.
 const [secondary, accent] = color.triadic();
 ```
 
-#### Tetradic
+**Tetradic**
 
 Create an array with 3 tetradic color variations.
 
@@ -343,7 +344,7 @@ const [secondary, alternate, accent] = color.tetradic();
 
 Create a palette of colors from a *Color* object you have created using the following methods.
 
-#### Shades
+**Shades**
 
 Create an array with a specified number of shade variations.
 
@@ -353,7 +354,7 @@ Create an array with a specified number of shade variations.
 const colorShades = color.shades(shades);
 ```
 
-#### Tints
+**Tints**
 
 Create an array with a specified number of tint variations.
 
@@ -363,7 +364,7 @@ Create an array with a specified number of tint variations.
 const colorTints = color.tints(tints);
 ```
 
-#### Tones
+**Tones**
 
 Create an array with a specified number of tone variations.
 
@@ -373,7 +374,7 @@ Create an array with a specified number of tone variations.
 const colorTones = color.tones(tones);
 ```
 
-#### Palette
+**Palette**
 
 Create a palette object with a specified number of shades, tints and tone variations.
 
@@ -388,7 +389,7 @@ const colorPalette = color.palette(shades, tints, tones);
 
 ## Static Methods
 
-#### Distance
+**Distance**
 
 Calculate the distance between two colors.
 
@@ -399,7 +400,7 @@ Calculate the distance between two colors.
 const distance = Color.dist(color1, color2);
 ```
 
-#### Mix
+**Mix**
 
 Create a new *Color* by mixing two colors together by a specified amount.
 
@@ -411,7 +412,7 @@ Create a new *Color* by mixing two colors together by a specified amount.
 const mixed = Color.mix(color1, color2, amount);
 ```
 
-#### Multiply
+**Multiply**
 
 Create a new *Color* by multiplying two colors together by a specified amount.
 
