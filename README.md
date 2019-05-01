@@ -163,7 +163,7 @@ const hslString = color.toHSLString();
 
 ## Color Attributes
 
-**Alpha**
+**Get Alpha**
 
 Get the alpha value of the color (between *0* and *1*).
 
@@ -171,15 +171,7 @@ Get the alpha value of the color (between *0* and *1*).
 const alpha = color.getAlpha();
 ```
 
-Set the alpha value of the color.
-
-- `alpha` is a number between *0* and *1*.
-
-```javascript
-color.setAlpha(alpha);
-```
-
-**Brightness**
+**Get Brightness**
 
 Get the brightness value of the color (between *0* and *100*).
 
@@ -187,15 +179,7 @@ Get the brightness value of the color (between *0* and *100*).
 const brightness = color.getBrightness();
 ```
 
-Get the brightness value of the color.
-
-- `brightness` is a number between *0* and *100*.
-
-```javascript
-color.setBrightness(brightness);
-```
-
-**Hue**
+**Get Hue**
 
 Get the hue value of the color (between *0* and *360*).
 
@@ -203,12 +187,12 @@ Get the hue value of the color (between *0* and *360*).
 const hue = color.getHue();
 ```
 
-Set the hue value of the color.
+**Get Saturation**
 
-- `hue` is a number between *0* and *360*.
+Get the saturation value of the color (between *0* and *100*).
 
 ```javascript
-color.setHue(hue);
+const saturation = color.getSaturation();
 ```
 
 **Label**
@@ -227,13 +211,37 @@ Get the luminance value of the color (between *0* and *1*).
 const luma = color.luma();
 ```
 
-**Saturation**
+**Set Alpha**
 
-Get the saturation value of the color (between *0* and *100*).
+Set the alpha value of the color.
+
+- `alpha` is a number between *0* and *1*.
 
 ```javascript
-const saturation = color.getSaturation();
+color.setAlpha(alpha);
 ```
+
+**Set Brightness**
+
+Set the brightness value of the color.
+
+- `brightness` is a number between *0* and *100*.
+
+```javascript
+color.setBrightness(brightness);
+```
+
+**Set Hue**
+
+Set the hue value of the color.
+
+- `hue` is a number between *0* and *360*.
+
+```javascript
+color.setHue(hue);
+```
+
+**Set Saturation**
 
 Set the saturation value of the color.
 
