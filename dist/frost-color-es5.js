@@ -37,6 +37,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
  * https://github.com/elusivecodes/FrostColor
  */
 (function (global, factory) {
+  'use strict';
+
   if ((typeof module === "undefined" ? "undefined" : _typeof(module)) === 'object' && _typeof(module.exports) === 'object') {
     module.exports = factory();
   } else {
