@@ -13,12 +13,12 @@ Object.assign(Color.prototype, {
             .toHSV();
 
         return [
-            new this(
+            new this.constructor(
                 hsv.setHue(
                     hsv.getHue() + 30
                 )
             ),
-            new this(
+            new this.constructor(
                 hsv.setHue(
                     hsv.getHue() - 30
                 )
@@ -34,7 +34,7 @@ Object.assign(Color.prototype, {
         const hsv = this.getColor()
             .toHSV();
 
-        return new this(
+        return new this.constructor(
             hsv.setHue(
                 hsv.getHue() + 180
             )
@@ -50,12 +50,12 @@ Object.assign(Color.prototype, {
             .toHSV();
 
         return [
-            new this(
+            new this.constructor(
                 hsv.setHue(
                     hsv.getHue() + 150
                 )
             ),
-            new this(
+            new this.constructor(
                 hsv.setHue(
                     hsv.getHue() - 150
                 )
@@ -72,17 +72,17 @@ Object.assign(Color.prototype, {
             .toHSV();
 
         return [
-            new Color(
+            new this.constructor(
                 hsv.setHue(
                     hsv.getHue() + 60
                 )
             ),
-            new Color(
+            new this.constructor(
                 hsv.setHue(
                     hsv.getHue() + 180
                 )
             ),
-            new Color(
+            new this.constructor(
                 hsv.setHue(
                     hsv.getHue() + 240
                 )
@@ -99,12 +99,12 @@ Object.assign(Color.prototype, {
             .toHSV();
 
         return [
-            new Color(
+            new this.constructor(
                 hsv.setHue(
                     hsv.getHue() + 120
                 )
             ),
-            new Color(
+            new this.constructor(
                 hsv.setHue(
                     hsv.getHue() + 240
                 )

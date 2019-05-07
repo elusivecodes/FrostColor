@@ -968,7 +968,7 @@
             return new Array(shades)
                 .fill()
                 .map((_, index) =>
-                    new Color(rgb).shade(
+                    new this.constructor(rgb).shade(
                         index / (shades + 1)
                     )
                 );
@@ -986,7 +986,7 @@
             return new Array(tints)
                 .fill()
                 .map((_, index) =>
-                    new Color(rgb).tint(
+                    new this.constructor(rgb).tint(
                         index / (tints + 1)
                     )
                 );
@@ -1004,7 +1004,7 @@
             return new Array(tones)
                 .fill()
                 .map((_, index) =>
-                    new Color(rgb).tone(
+                    new this.constructor(rgb).tone(
                         index / (tones + 1)
                     )
                 );
@@ -1027,12 +1027,12 @@
                 .toHSV();
 
             return [
-                new this(
+                new this.constructor(
                     hsv.setHue(
                         hsv.getHue() + 30
                     )
                 ),
-                new this(
+                new this.constructor(
                     hsv.setHue(
                         hsv.getHue() - 30
                     )
@@ -1048,7 +1048,7 @@
             const hsv = this.getColor()
                 .toHSV();
 
-            return new this(
+            return new this.constructor(
                 hsv.setHue(
                     hsv.getHue() + 180
                 )
@@ -1064,12 +1064,12 @@
                 .toHSV();
 
             return [
-                new this(
+                new this.constructor(
                     hsv.setHue(
                         hsv.getHue() + 150
                     )
                 ),
-                new this(
+                new this.constructor(
                     hsv.setHue(
                         hsv.getHue() - 150
                     )
@@ -1086,17 +1086,17 @@
                 .toHSV();
 
             return [
-                new Color(
+                new this.constructor(
                     hsv.setHue(
                         hsv.getHue() + 60
                     )
                 ),
-                new Color(
+                new this.constructor(
                     hsv.setHue(
                         hsv.getHue() + 180
                     )
                 ),
-                new Color(
+                new this.constructor(
                     hsv.setHue(
                         hsv.getHue() + 240
                     )
@@ -1113,12 +1113,12 @@
                 .toHSV();
 
             return [
-                new Color(
+                new this.constructor(
                     hsv.setHue(
                         hsv.getHue() + 120
                     )
                 ),
-                new Color(
+                new this.constructor(
                     hsv.setHue(
                         hsv.getHue() + 240
                     )

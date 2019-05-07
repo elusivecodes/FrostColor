@@ -880,11 +880,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]} An array containing shade variations.
      */
     shades: function shades() {
+      var _this = this;
+
       var _shades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
       var rgb = this.getColor().toRGB();
       return new Array(_shades).fill().map(function (_, index) {
-        return new Color(rgb).shade(index / (_shades + 1));
+        return new _this.constructor(rgb).shade(index / (_shades + 1));
       });
     },
 
@@ -894,11 +896,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]} An array containing tint variations.
      */
     tints: function tints() {
+      var _this2 = this;
+
       var _tints = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
       var rgb = this.getColor().toRGB();
       return new Array(_tints).fill().map(function (_, index) {
-        return new Color(rgb).tint(index / (_tints + 1));
+        return new _this2.constructor(rgb).tint(index / (_tints + 1));
       });
     },
 
@@ -908,11 +912,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]} An array containing tone variations.
      */
     tones: function tones() {
+      var _this3 = this;
+
       var _tones = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
       var rgb = this.getColor().toRGB();
       return new Array(_tones).fill().map(function (_, index) {
-        return new Color(rgb).tone(index / (_tones + 1));
+        return new _this3.constructor(rgb).tone(index / (_tones + 1));
       });
     }
   });
@@ -927,7 +933,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     analogous: function analogous() {
       var hsv = this.getColor().toHSV();
-      return [new this(hsv.setHue(hsv.getHue() + 30)), new this(hsv.setHue(hsv.getHue() - 30))];
+      return [new this.constructor(hsv.setHue(hsv.getHue() + 30)), new this.constructor(hsv.setHue(hsv.getHue() - 30))];
     },
 
     /**
@@ -936,7 +942,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     complementary: function complementary() {
       var hsv = this.getColor().toHSV();
-      return new this(hsv.setHue(hsv.getHue() + 180));
+      return new this.constructor(hsv.setHue(hsv.getHue() + 180));
     },
 
     /**
@@ -945,7 +951,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     split: function split() {
       var hsv = this.getColor().toHSV();
-      return [new this(hsv.setHue(hsv.getHue() + 150)), new this(hsv.setHue(hsv.getHue() - 150))];
+      return [new this.constructor(hsv.setHue(hsv.getHue() + 150)), new this.constructor(hsv.setHue(hsv.getHue() - 150))];
     },
 
     /**
@@ -954,7 +960,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     tetradic: function tetradic() {
       var hsv = this.getColor().toHSV();
-      return [new Color(hsv.setHue(hsv.getHue() + 60)), new Color(hsv.setHue(hsv.getHue() + 180)), new Color(hsv.setHue(hsv.getHue() + 240))];
+      return [new this.constructor(hsv.setHue(hsv.getHue() + 60)), new this.constructor(hsv.setHue(hsv.getHue() + 180)), new this.constructor(hsv.setHue(hsv.getHue() + 240))];
     },
 
     /**
@@ -963,7 +969,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     triadic: function triadic() {
       var hsv = this.getColor().toHSV();
-      return [new Color(hsv.setHue(hsv.getHue() + 120)), new Color(hsv.setHue(hsv.getHue() + 240))];
+      return [new this.constructor(hsv.setHue(hsv.getHue() + 120)), new this.constructor(hsv.setHue(hsv.getHue() + 240))];
     }
   });
   /**
@@ -1406,17 +1412,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {CMYColor} A new CMYColor object.
      */
     function CMYColor(c, m, y) {
-      var _this;
+      var _this4;
 
       var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, CMYColor);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(CMYColor).call(this, a));
-      _this._c = Color._clamp(c);
-      _this._m = Color._clamp(m);
-      _this._y = Color._clamp(y);
-      return _this;
+      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(CMYColor).call(this, a));
+      _this4._c = Color._clamp(c);
+      _this4._m = Color._clamp(m);
+      _this4._y = Color._clamp(y);
+      return _this4;
     }
     /**
      * Set the alpha value of the color.
@@ -1485,18 +1491,18 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {CMYKColor} A new CMYKColor object.
      */
     function CMYKColor(c, m, y, k) {
-      var _this2;
+      var _this5;
 
       var a = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
 
       _classCallCheck(this, CMYKColor);
 
-      _this2 = _possibleConstructorReturn(this, _getPrototypeOf(CMYKColor).call(this, a));
-      _this2._c = Color._clamp(c);
-      _this2._m = Color._clamp(m);
-      _this2._y = Color._clamp(y);
-      _this2._k = Color._clamp(k);
-      return _this2;
+      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(CMYKColor).call(this, a));
+      _this5._c = Color._clamp(c);
+      _this5._m = Color._clamp(m);
+      _this5._y = Color._clamp(y);
+      _this5._k = Color._clamp(k);
+      return _this5;
     }
     /**
      * Set the alpha value of the color.
@@ -1564,17 +1570,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {HSLColor} A new HSLColor object.
      */
     function HSLColor(h, s, l) {
-      var _this3;
+      var _this6;
 
       var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, HSLColor);
 
-      _this3 = _possibleConstructorReturn(this, _getPrototypeOf(HSLColor).call(this, a));
-      _this3._h = h % 360;
-      _this3._s = Color._clamp(s);
-      _this3._l = Color._clamp(l);
-      return _this3;
+      _this6 = _possibleConstructorReturn(this, _getPrototypeOf(HSLColor).call(this, a));
+      _this6._h = h % 360;
+      _this6._s = Color._clamp(s);
+      _this6._l = Color._clamp(l);
+      return _this6;
     }
     /**
      * Darken the color by a specified amount.
@@ -1673,17 +1679,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {HSVColor} A new HSVColor object.
      */
     function HSVColor(h, s, v) {
-      var _this4;
+      var _this7;
 
       var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, HSVColor);
 
-      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(HSVColor).call(this, a));
-      _this4._h = h % 360;
-      _this4._s = Color._clamp(s);
-      _this4._v = Color._clamp(v);
-      return _this4;
+      _this7 = _possibleConstructorReturn(this, _getPrototypeOf(HSVColor).call(this, a));
+      _this7._h = h % 360;
+      _this7._s = Color._clamp(s);
+      _this7._v = Color._clamp(v);
+      return _this7;
     }
     /**
      * Get the brightness value of the color.
@@ -1804,17 +1810,17 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {RGBColor} A new RGBColor object.
      */
     function RGBColor(r, g, b) {
-      var _this5;
+      var _this8;
 
       var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
       _classCallCheck(this, RGBColor);
 
-      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(RGBColor).call(this, a));
-      _this5._r = Color._clamp(r, 0, 255);
-      _this5._g = Color._clamp(g, 0, 255);
-      _this5._b = Color._clamp(b, 0, 255);
-      return _this5;
+      _this8 = _possibleConstructorReturn(this, _getPrototypeOf(RGBColor).call(this, a));
+      _this8._r = Color._clamp(r, 0, 255);
+      _this8._g = Color._clamp(g, 0, 255);
+      _this8._b = Color._clamp(b, 0, 255);
+      return _this8;
     }
     /**
      * Get the luminance value of the color.
