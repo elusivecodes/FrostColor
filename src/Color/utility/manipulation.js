@@ -17,6 +17,17 @@ Object.assign(Color.prototype, {
     },
 
     /**
+     * Invert the color.
+     * @returns {Color} The inverted Color object.
+     */
+    invert() {
+        return this.setColor(
+            this.getColor()
+                .invert()
+        );
+    },
+
+    /**
      * Lighten the color by a specified amount.
      * @param {number} amount The amount to lighten the color by. (0, 1)
      * @returns {Color} The lightened Color object.

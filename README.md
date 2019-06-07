@@ -264,6 +264,14 @@ Darken the color by a specified amount.
 color.darken(amount);
 ```
 
+**Invert**
+
+Invert the color.
+
+```javascript
+color.invert();
+```
+
 **Lighten**
 
 Lighten the color by a specified amount.
@@ -356,7 +364,7 @@ Create a palette of colors from a *Color* object you have created using the foll
 
 Create an array with a specified number of shade variations.
 
-- `shades` is a number indicating how shades you wish to generate, and will default to *10*.
+- `shades` is a number indicating how many shades you wish to generate, and will default to *10*.
 
 ```javascript
 const colorShades = color.shades(shades);
@@ -366,7 +374,7 @@ const colorShades = color.shades(shades);
 
 Create an array with a specified number of tint variations.
 
-- `tints` is a number indicating how shades you wish to generate, and will default to *10*.
+- `tints` is a number indicating how many tints you wish to generate, and will default to *10*.
 
 ```javascript
 const colorTints = color.tints(tints);
@@ -376,7 +384,7 @@ const colorTints = color.tints(tints);
 
 Create an array with a specified number of tone variations.
 
-- `tones` is a number indicating how shades you wish to generate, and will default to *10*.
+- `tones` is a number indicating how many tones you wish to generate, and will default to *10*.
 
 ```javascript
 const colorTones = color.tones(tones);
@@ -386,9 +394,9 @@ const colorTones = color.tones(tones);
 
 Create a palette object with a specified number of shades, tints and tone variations.
 
-- `shades` is a number indicating how shades you wish to generate, and will default to *10*.
-- `tints` is a number indicating how shades you wish to generate, and will default to *10*.
-- `tones` is a number indicating how shades you wish to generate, and will default to *10*.
+- `shades` is a number indicating how many shades you wish to generate, and will default to *10*.
+- `tints` is a number indicating how many tints you wish to generate, and will default to *10*.
+- `tones` is a number indicating how many tones you wish to generate, and will default to *10*.
 
 ```javascript
 const colorPalette = color.palette(shades, tints, tones);

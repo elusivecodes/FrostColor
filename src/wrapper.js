@@ -1,5 +1,5 @@
 /**
- * FrostColor v1.0.1
+ * FrostColor v1.0.2
  * https://github.com/elusivecodes/FrostColor
  */
 (function(global, factory) {

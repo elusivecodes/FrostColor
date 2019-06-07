@@ -59,6 +59,15 @@ class BaseColor {
     }
 
     /**
+     * Invert the color.
+     * @returns {RGBColor} A new RGBColor object.
+     */
+    invert() {
+        return this.toRGB()
+            .invert();
+    }
+
+    /**
      * Lighten the color by a specified amount.
      * @param {number} amount The amount to lighten the color by. (0, 1)
      * @returns {HSLColor} A new HSLColor object.

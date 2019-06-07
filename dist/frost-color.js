@@ -1,5 +1,5 @@
 /**
- * FrostColor v1.0.1
+ * FrostColor v1.0.2
  * https://github.com/elusivecodes/FrostColor
  */
 (function(global, factory) {
@@ -877,6 +877,17 @@
         },
 
         /**
+         * Invert the color.
+         * @returns {Color} The inverted Color object.
+         */
+        invert() {
+            return this.setColor(
+                this.getColor()
+                    .invert()
+            );
+        },
+
+        /**
          * Lighten the color by a specified amount.
          * @param {number} amount The amount to lighten the color by. (0, 1)
          * @returns {Color} The lightened Color object.
@@ -1358,6 +1369,15 @@
         getSaturation() {
             return this.toHSV()
                 .getSaturation();
+        }
+
+        /**
+         * Invert the color.
+         * @returns {RGBColor} A new RGBColor object.
+         */
+        invert() {
+            return this.toRGB()
+                .invert();
         }
 
         /**
@@ -1869,6 +1889,19 @@
             this._r = Color._clamp(r, 0, 255);
             this._g = Color._clamp(g, 0, 255);
             this._b = Color._clamp(b, 0, 255);
+        }
+
+        /**
+         * Invert the color.
+         * @returns {RGBColor} A new RGBColor object.
+         */
+        invert() {
+            return new RGBColor(
+                255 - this._r,
+                255 - this._g,
+                255 - this._b,
+                this._a
+            );
         }
 
         /**

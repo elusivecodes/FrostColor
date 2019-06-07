@@ -10,6 +10,14 @@ assert.equal(
 console.log('\x1b[32m', 'passed');
 
 console.log('\x1b[0m');
+console.log('Testing invert method');
+assert.equal(
+    Color.fromRGB(120, 50, 50).invert().toString(),
+    '#87cdcd'
+);
+console.log('\x1b[32m', 'passed');
+
+console.log('\x1b[0m');
 console.log('Testing lighten method');
 assert.equal(
     Color.fromHSV(120, 50, 50).lighten(0.5).toString(),

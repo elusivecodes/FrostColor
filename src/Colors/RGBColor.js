@@ -21,6 +21,19 @@ class RGBColor extends BaseColor {
     }
 
     /**
+     * Invert the color.
+     * @returns {RGBColor} A new RGBColor object.
+     */
+    invert() {
+        return new RGBColor(
+            255 - this._r,
+            255 - this._g,
+            255 - this._b,
+            this._a
+        );
+    }
+
+    /**
      * Get the luminance value of the color.
      * @returns {number} The luminance value. (0, 1)
      */

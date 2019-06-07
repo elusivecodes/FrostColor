@@ -33,7 +33,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /**
- * FrostColor v1.0.1
+ * FrostColor v1.0.2
  * https://github.com/elusivecodes/FrostColor
  */
 (function (global, factory) {
@@ -816,6 +816,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     },
 
     /**
+     * Invert the color.
+     * @returns {Color} The inverted Color object.
+     */
+    invert: function invert() {
+      return this.setColor(this.getColor().invert());
+    },
+
+    /**
      * Lighten the color by a specified amount.
      * @param {number} amount The amount to lighten the color by. (0, 1)
      * @returns {Color} The lightened Color object.
@@ -1209,6 +1217,16 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "getSaturation",
       value: function getSaturation() {
         return this.toHSV().getSaturation();
+      }
+      /**
+       * Invert the color.
+       * @returns {RGBColor} A new RGBColor object.
+       */
+
+    }, {
+      key: "invert",
+      value: function invert() {
+        return this.toRGB().invert();
       }
       /**
        * Lighten the color by a specified amount.
@@ -1823,12 +1841,22 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       return _this8;
     }
     /**
-     * Get the luminance value of the color.
-     * @returns {number} The luminance value. (0, 1)
+     * Invert the color.
+     * @returns {RGBColor} A new RGBColor object.
      */
 
 
     _createClass(RGBColor, [{
+      key: "invert",
+      value: function invert() {
+        return new RGBColor(255 - this._r, 255 - this._g, 255 - this._b, this._a);
+      }
+      /**
+       * Get the luminance value of the color.
+       * @returns {number} The luminance value. (0, 1)
+       */
+
+    }, {
       key: "luma",
       value: function luma() {
         return Color.RGB2Luma(this._r, this._g, this._b);

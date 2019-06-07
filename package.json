@@ -1,6 +1,6 @@
 {
     "name": "frostcolor",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "FrostColor is a free, open-source color manipulation library for JavaScript.",
     "main": "build.js",
     "scripts": {
