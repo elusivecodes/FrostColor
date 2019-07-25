@@ -10,8 +10,8 @@
     "author": "Elusive",
     "license": "MIT",
     "devDependencies": {
-        "@babel/core": "^7.5.4",
-        "@babel/preset-env": "^7.5.4",
+        "@babel/core": "^7.5.5",
+        "@babel/preset-env": "^7.5.5",
         "filepath": "^1.1.0",
         "uglify-es": "^3.3.9"
     }

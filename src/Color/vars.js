@@ -156,16 +156,16 @@ Object.assign(Color, {
         yellowgreen: '#9acd32'
     },
 
-    // Hex RegEx
-    _hexRegExShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f]?)$/i,
-    _hexRegEx: /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i,
+    // Hex RegExp
+    _hexRegExpShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f]?)$/i,
+    _hexRegExp: /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i,
 
-    // HSL RegEx
-    _HSLRegEx: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
-    _HSLARegEx: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)(\%?)\)$/i,
+    // HSL RegExp
+    _hslRegExp: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
+    _hslaRegExp: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)(\%?)\)$/i,
 
-    // RGB RegEx
-    _RGBRegEx: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
-    _RGBARegEx: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)(\%?)\)$/i
+    // RGB RegExp
+    _rgbRegExp: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
+    _rgbaRegExp: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)(\%?)\)$/i
 
 });

@@ -42,8 +42,8 @@ Object.assign(Color, {
         string = string.trim();
 
         const hexMatch = string.length > 6 ?
-            string.match(this._hexRegEx) :
-            string.match(this._hexRegExShort);
+            string.match(this._hexRegExp) :
+            string.match(this._hexRegExpShort);
 
         if (!hexMatch) {
             throw new Error('Invalid hex string');
@@ -83,7 +83,7 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromHSLString(string) {
-        const HSLMatch = string.match(this._HSLRegEx);
+        const HSLMatch = string.match(this._hslRegExp);
 
         if (!HSLMatch) {
             throw new Error('Invalid HSL string');
@@ -98,7 +98,7 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromHSLAString(string) {
-        const HSLAMatch = string.match(this._HSLARegEx);
+        const HSLAMatch = string.match(this._hslaRegExp);
         if (!HSLAMatch) {
             throw new Error('Invalid HSLA string');
         }
@@ -147,7 +147,7 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromRGBString(string) {
-        const RGBMatch = string.match(this._RGBRegEx);
+        const RGBMatch = string.match(this._rbgRegExp);
 
         if (!RGBMatch) {
             throw new Error('Invalid RGB string');
@@ -162,7 +162,7 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromRGBAString(string) {
-        const RGBAMatch = string.match(this._RGBARegEx);
+        const RGBAMatch = string.match(this._rgbaRegExp);
 
         if (!RGBAMatch) {
             throw new Error('Invalid RGBA string');
