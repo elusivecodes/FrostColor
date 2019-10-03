@@ -13,12 +13,12 @@ class Color {
      * @returns {Color} A new Color object.
      */
     constructor(a = 0, b = 1, c = null, d = 1) {
-        if (c !== null) {
-            this._color = new RGBColor(a, b, c, d);
-        } else if (a instanceof BaseColor) {
+        if (a instanceof BaseColor) {
             this._color = a;
         } else if (a instanceof Color) {
             this._color = a.getColor();
+        } else if (c !== null) {
+            this._color = new RGBColor(a, b, c, d);
         } else {
             this._color = new HSVColor(0, 0, a, b);
         }
@@ -30,6 +30,27 @@ class Color {
      */
     getColor() {
         return this._color;
+    }
+
+    /**
+     * Get the closest color name for the color.
+     * @returns {string} The name.
+     */
+    label() {
+        let closest,
+            closestDist = Number.MAX_SAFE_INTEGER;
+
+        for (const label in Color.colors) {
+            const color = Color.fromHexString(Color.colors[label]);
+            const dist = Color.dist(this, color);
+
+            if (dist < closestDist) {
+                closest = label;
+                closestDist = dist;
+            }
+        }
+
+        return closest;
     }
 
     /**

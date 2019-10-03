@@ -29,12 +29,12 @@
          * @returns {Color} A new Color object.
          */
         constructor(a = 0, b = 1, c = null, d = 1) {
-            if (c !== null) {
-                this._color = new RGBColor(a, b, c, d);
-            } else if (a instanceof BaseColor) {
+            if (a instanceof BaseColor) {
                 this._color = a;
             } else if (a instanceof Color) {
                 this._color = a.getColor();
+            } else if (c !== null) {
+                this._color = new RGBColor(a, b, c, d);
             } else {
                 this._color = new HSVColor(0, 0, a, b);
             }
@@ -46,6 +46,27 @@
          */
         getColor() {
             return this._color;
+        }
+
+        /**
+         * Get the closest color name for the color.
+         * @returns {string} The name.
+         */
+        label() {
+            let closest,
+                closestDist = Number.MAX_SAFE_INTEGER;
+
+            for (const label in Color.colors) {
+                const color = Color.fromHexString(Color.colors[label]);
+                const dist = Color.dist(this, color);
+
+                if (dist < closestDist) {
+                    closest = label;
+                    closestDist = dist;
+                }
+            }
+
+            return closest;
         }
 
         /**
@@ -471,8 +492,8 @@
             string = string.trim();
 
             const hexMatch = string.length > 6 ?
-                string.match(this._hexRegEx) :
-                string.match(this._hexRegExShort);
+                string.match(this._hexRegExp) :
+                string.match(this._hexRegExpShort);
 
             if (!hexMatch) {
                 throw new Error('Invalid hex string');
@@ -512,7 +533,7 @@
          * @returns {Color} A new Color object.
          */
         fromHSLString(string) {
-            const HSLMatch = string.match(this._HSLRegEx);
+            const HSLMatch = string.match(this._hslRegExp);
 
             if (!HSLMatch) {
                 throw new Error('Invalid HSL string');
@@ -527,7 +548,7 @@
          * @returns {Color} A new Color object.
          */
         fromHSLAString(string) {
-            const HSLAMatch = string.match(this._HSLARegEx);
+            const HSLAMatch = string.match(this._hslaRegExp);
             if (!HSLAMatch) {
                 throw new Error('Invalid HSLA string');
             }
@@ -576,7 +597,7 @@
          * @returns {Color} A new Color object.
          */
         fromRGBString(string) {
-            const RGBMatch = string.match(this._RGBRegEx);
+            const RGBMatch = string.match(this._rgbRegExp);
 
             if (!RGBMatch) {
                 throw new Error('Invalid RGB string');
@@ -591,7 +612,7 @@
          * @returns {Color} A new Color object.
          */
         fromRGBAString(string) {
-            const RGBAMatch = string.match(this._RGBARegEx);
+            const RGBAMatch = string.match(this._rgbaRegExp);
 
             if (!RGBAMatch) {
                 throw new Error('Invalid RGBA string');
@@ -776,27 +797,6 @@
         getSaturation() {
             return this.getColor()
                 .getSaturation();
-        },
-
-        /**
-         * Get the closest color name for the color.
-         * @returns {string} The name.
-         */
-        label() {
-            let closest,
-                closestDist = Number.MAX_SAFE_INTEGER;
-
-            for (const label in Color.colors) {
-                const color = Color.fromHexString(Color.colors[label]);
-                const dist = Color.dist(this, color);
-
-                if (dist < closestDist) {
-                    closest = label;
-                    closestDist = dist;
-                }
-            }
-
-            return closest;
         },
 
         /**
@@ -1297,17 +1297,17 @@
             yellowgreen: '#9acd32'
         },
 
-        // Hex RegEx
-        _hexRegExShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f]?)$/i,
-        _hexRegEx: /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i,
+        // Hex RegExp
+        _hexRegExpShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f]?)$/i,
+        _hexRegExp: /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i,
 
-        // HSL RegEx
-        _HSLRegEx: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
-        _HSLARegEx: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)(\%?)\)$/i,
+        // HSL RegExp
+        _hslRegExp: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
+        _hslaRegExp: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)(\%?)\)$/i,
 
-        // RGB RegEx
-        _RGBRegEx: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
-        _RGBARegEx: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)(\%?)\)$/i
+        // RGB RegExp
+        _rgbRegExp: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
+        _rgbaRegExp: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)(\%?)\)$/i
 
     });
 
@@ -2069,10 +2069,11 @@
         }
 
         _getHex() {
-            const hex = '#' +
-                (Math.round(this._r) | 1 << 8).toString(16).slice(1) +
-                (Math.round(this._g) | 1 << 8).toString(16).slice(1) +
-                (Math.round(this._b) | 1 << 8).toString(16).slice(1);
+            const
+                r = (Math.round(this._r) | 1 << 8).toString(16).slice(1),
+                g = (Math.round(this._g) | 1 << 8).toString(16).slice(1),
+                b = (Math.round(this._b) | 1 << 8).toString(16).slice(1),
+                hex = `#${r}${g}${b}`;
 
             if (this._a < 1) {
                 return hex + (this._a * 255 | 1 << 8).toString(16).slice(1);

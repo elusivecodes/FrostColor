@@ -160,6 +160,14 @@ Return a HSL/HSLA string representation of the color.
 const hslString = color.toHSLString();
 ```
 
+**Label**
+
+Get the closest color name for the color.
+
+```javascript
+const label = color.label();
+```
+
 
 ## Color Attributes
 
@@ -193,14 +201,6 @@ Get the saturation value of the color (between *0* and *100*).
 
 ```javascript
 const saturation = color.getSaturation();
-```
-
-**Label**
-
-Get the closest color name for the color.
-
-```javascript
-const label = color.label();
 ```
 
 **Luma**

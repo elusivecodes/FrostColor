@@ -70,12 +70,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       _classCallCheck(this, Color);
 
-      if (c !== null) {
-        this._color = new RGBColor(a, b, c, d);
-      } else if (a instanceof BaseColor) {
+      if (a instanceof BaseColor) {
         this._color = a;
       } else if (a instanceof Color) {
         this._color = a.getColor();
+      } else if (c !== null) {
+        this._color = new RGBColor(a, b, c, d);
       } else {
         this._color = new HSVColor(0, 0, a, b);
       }
@@ -90,6 +90,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "getColor",
       value: function getColor() {
         return this._color;
+      }
+      /**
+       * Get the closest color name for the color.
+       * @returns {string} The name.
+       */
+
+    }, {
+      key: "label",
+      value: function label() {
+        var closest,
+            closestDist = Number.MAX_SAFE_INTEGER;
+
+        for (var label in Color.colors) {
+          var color = Color.fromHexString(Color.colors[label]);
+          var dist = Color.dist(this, color);
+
+          if (dist < closestDist) {
+            closest = label;
+            closestDist = dist;
+          }
+        }
+
+        return closest;
       }
       /**
        * Set the BaseColor of the Color object.
@@ -479,7 +502,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     fromHexString: function fromHexString(string) {
       string = string.trim();
-      var hexMatch = string.length > 6 ? string.match(this._hexRegEx) : string.match(this._hexRegExShort);
+      var hexMatch = string.length > 6 ? string.match(this._hexRegExp) : string.match(this._hexRegExpShort);
 
       if (!hexMatch) {
         throw new Error('Invalid hex string');
@@ -510,7 +533,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} A new Color object.
      */
     fromHSLString: function fromHSLString(string) {
-      var HSLMatch = string.match(this._HSLRegEx);
+      var HSLMatch = string.match(this._hslRegExp);
 
       if (!HSLMatch) {
         throw new Error('Invalid HSL string');
@@ -525,7 +548,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} A new Color object.
      */
     fromHSLAString: function fromHSLAString(string) {
-      var HSLAMatch = string.match(this._HSLARegEx);
+      var HSLAMatch = string.match(this._hslaRegExp);
 
       if (!HSLAMatch) {
         throw new Error('Invalid HSLA string');
@@ -566,7 +589,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} A new Color object.
      */
     fromRGBString: function fromRGBString(string) {
-      var RGBMatch = string.match(this._RGBRegEx);
+      var RGBMatch = string.match(this._rgbRegExp);
 
       if (!RGBMatch) {
         throw new Error('Invalid RGB string');
@@ -581,7 +604,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} A new Color object.
      */
     fromRGBAString: function fromRGBAString(string) {
-      var RGBAMatch = string.match(this._RGBARegEx);
+      var RGBAMatch = string.match(this._rgbaRegExp);
 
       if (!RGBAMatch) {
         throw new Error('Invalid RGBA string');
@@ -734,27 +757,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      */
     getSaturation: function getSaturation() {
       return this.getColor().getSaturation();
-    },
-
-    /**
-     * Get the closest color name for the color.
-     * @returns {string} The name.
-     */
-    label: function label() {
-      var closest,
-          closestDist = Number.MAX_SAFE_INTEGER;
-
-      for (var label in Color.colors) {
-        var color = Color.fromHexString(Color.colors[label]);
-        var dist = Color.dist(this, color);
-
-        if (dist < closestDist) {
-          closest = label;
-          closestDist = dist;
-        }
-      }
-
-      return closest;
     },
 
     /**
@@ -1136,15 +1138,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       yellow: '#ffff00',
       yellowgreen: '#9acd32'
     },
-    // Hex RegEx
-    _hexRegExShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f]?)$/i,
-    _hexRegEx: /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i,
-    // HSL RegEx
-    _HSLRegEx: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
-    _HSLARegEx: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)(\%?)\)$/i,
-    // RGB RegEx
-    _RGBRegEx: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
-    _RGBARegEx: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)(\%?)\)$/i
+    // Hex RegExp
+    _hexRegExpShort: /^#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f]?)$/i,
+    _hexRegExp: /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i,
+    // HSL RegExp
+    _hslRegExp: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
+    _hslaRegExp: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)(\%?)\)$/i,
+    // RGB RegExp
+    _rgbRegExp: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
+    _rgbaRegExp: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)(\%?)\)$/i
   });
   /**
    * BaseColor class
@@ -2010,7 +2012,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "_getHex",
       value: function _getHex() {
-        var hex = '#' + (Math.round(this._r) | 1 << 8).toString(16).slice(1) + (Math.round(this._g) | 1 << 8).toString(16).slice(1) + (Math.round(this._b) | 1 << 8).toString(16).slice(1);
+        var r = (Math.round(this._r) | 1 << 8).toString(16).slice(1),
+            g = (Math.round(this._g) | 1 << 8).toString(16).slice(1),
+            b = (Math.round(this._b) | 1 << 8).toString(16).slice(1),
+            hex = "#".concat(r).concat(g).concat(b);
 
         if (this._a < 1) {
           return hex + (this._a * 255 | 1 << 8).toString(16).slice(1);

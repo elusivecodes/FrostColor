@@ -198,10 +198,11 @@ class RGBColor extends BaseColor {
     }
 
     _getHex() {
-        const hex = '#' +
-            (Math.round(this._r) | 1 << 8).toString(16).slice(1) +
-            (Math.round(this._g) | 1 << 8).toString(16).slice(1) +
-            (Math.round(this._b) | 1 << 8).toString(16).slice(1);
+        const
+            r = (Math.round(this._r) | 1 << 8).toString(16).slice(1),
+            g = (Math.round(this._g) | 1 << 8).toString(16).slice(1),
+            b = (Math.round(this._b) | 1 << 8).toString(16).slice(1),
+            hex = `#${r}${g}${b}`;
 
         if (this._a < 1) {
             return hex + (this._a * 255 | 1 << 8).toString(16).slice(1);

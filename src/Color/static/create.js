@@ -147,7 +147,7 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromRGBString(string) {
-        const RGBMatch = string.match(this._rbgRegExp);
+        const RGBMatch = string.match(this._rgbRegExp);
 
         if (!RGBMatch) {
             throw new Error('Invalid RGB string');

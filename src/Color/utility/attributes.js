@@ -41,27 +41,6 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Get the closest color name for the color.
-     * @returns {string} The name.
-     */
-    label() {
-        let closest,
-            closestDist = Number.MAX_SAFE_INTEGER;
-
-        for (const label in Color.colors) {
-            const color = Color.fromHexString(Color.colors[label]);
-            const dist = Color.dist(this, color);
-
-            if (dist < closestDist) {
-                closest = label;
-                closestDist = dist;
-            }
-        }
-
-        return closest;
-    },
-
-    /**
      * Get the luminance value of the color 
      * @returns {number} The luminance value. (0, 1)
      */
