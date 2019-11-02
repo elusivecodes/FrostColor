@@ -69,7 +69,7 @@ Object.assign(Color, {
      * @returns {number[]} An array containing the RGB values.
      */
     HSL2RGB(h, s, l) {
-        if (l == 0) {
+        if (!l) {
             return [0, 0, 0];
         }
 
@@ -99,7 +99,7 @@ Object.assign(Color, {
     HSV2RGB(h, s, v) {
         v /= 100;
 
-        if (s == 0) {
+        if (!s) {
             return [
                 v * 255,
                 v * 255,
@@ -117,30 +117,37 @@ Object.assign(Color, {
 
         let r, g, b;
 
-        if (vi == 0) {
-            r = v;
-            g = v3;
-            b = v1;
-        } else if (vi == 1) {
-            r = v2;
-            g = v;
-            b = v1;
-        } else if (vi == 2) {
-            r = v1;
-            g = v;
-            b = v3;
-        } else if (vi == 3) {
-            r = v1;
-            g = v2;
-            b = v;
-        } else if (vi == 4) {
-            r = v3;
-            g = v1;
-            b = v;
-        } else {
-            r = v;
-            g = v1;
-            b = v2;
+        switch (vi) {
+            case 0:
+                r = v;
+                g = v3;
+                b = v1;
+                break;
+            case 1:
+                r = v2;
+                g = v;
+                b = v1;
+                break;
+            case 2:
+                r = v1;
+                g = v;
+                b = v3;
+                break;
+            case 3:
+                r = v1;
+                g = v2;
+                b = v;
+                break;
+            case 4:
+                r = v3;
+                g = v1;
+                b = v;
+                break;
+            default:
+                r = v;
+                g = v1;
+                b = v2;
+                break;
         }
 
         return [
@@ -195,7 +202,7 @@ Object.assign(Color, {
             diff = max - min,
             l = (max + min) / 2;
 
-        if (diff == 0) {
+        if (!diff) {
             return [0, 0, l * 100];
         }
 
@@ -209,12 +216,16 @@ Object.assign(Color, {
 
         let h = 0;
 
-        if (r == max) {
-            h = deltaB - deltaG;
-        } else if (g == max) {
-            h = (1 / 2) + deltaR - deltaB;
-        } else if (b == max) {
-            h = (2 / 3) + deltaG - deltaR;
+        switch (max) {
+            case r:
+                h = deltaB - deltaG;
+                break;
+            case g:
+                h = (1 / 2) + deltaR - deltaB;
+                break;
+            case b:
+                h = (2 / 3) + deltaG - deltaR;
+                break;
         }
 
         return [
@@ -241,7 +252,7 @@ Object.assign(Color, {
             diff = max - min,
             v = max;
 
-        if (diff == 0) {
+        if (!diff) {
             return [0, 0, v * 100];
         }
 
@@ -252,12 +263,16 @@ Object.assign(Color, {
 
         let h = 0;
 
-        if (r == max) {
-            h = deltaB - deltaG;
-        } else if (g == max) {
-            h = (1 / 2) + deltaR - deltaB;
-        } else if (b == max) {
-            h = (2 / 3) + deltaG - deltaR;
+        switch (max) {
+            case r:
+                h = deltaB - deltaG;
+                break;
+            case g:
+                h = (1 / 2) + deltaR - deltaB;
+                break;
+            case b:
+                h = (2 / 3) + deltaG - deltaR;
+                break;
         }
 
         h = (h + 1) % 1;
