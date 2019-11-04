@@ -11,8 +11,7 @@ Object.assign(Color.prototype, {
      */
     darken(amount) {
         return this.setColor(
-            this.getColor()
-                .darken(amount)
+            this._color.darken(amount)
         );
     },
 
@@ -22,8 +21,7 @@ Object.assign(Color.prototype, {
      */
     invert() {
         return this.setColor(
-            this.getColor()
-                .invert()
+            this._color.invert()
         );
     },
 
@@ -34,8 +32,7 @@ Object.assign(Color.prototype, {
      */
     lighten(amount) {
         return this.setColor(
-            this.getColor()
-                .lighten(amount)
+            this._color.lighten(amount)
         );
     },
 

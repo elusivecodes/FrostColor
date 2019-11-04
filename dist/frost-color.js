@@ -84,8 +84,7 @@
          * @returns {string} The hexadecimal string.
          */
         toHexString() {
-            return this.getColor()
-                .toHexString();
+            return this._color.toHexString();
         }
 
         /**
@@ -93,8 +92,7 @@
          * @returns {string} The HSL/HSLA string.
          */
         toHSLString() {
-            return this.getColor()
-                .toHSLString();
+            return this._color.toHSLString();
         }
 
         /**
@@ -102,8 +100,7 @@
          * @returns {string} The RGB/RGBA string.
          */
         toRGBString() {
-            return this.getColor()
-                .toRGBString();
+            return this._color.toRGBString();
         }
 
         /**
@@ -111,8 +108,7 @@
          * @returns {string} The HTML color string.
          */
         toString() {
-            return this.getColor()
-                .toString();
+            return this._color.toString();
         }
 
         /**
@@ -120,8 +116,7 @@
          * @returns {number} The luminance value. (0, 1)
          */
         valueOf() {
-            return this.getColor()
-                .valueOf();
+            return this._color.valueOf();
         }
 
         /**
@@ -129,7 +124,7 @@
          * @returns {string|number} The HTML color string, or the luminance value.
          */
         [Symbol.toPrimitive](hint) {
-            return this.getColor()[Symbol.toPrimitive](hint);
+            return this._color[Symbol.toPrimitive](hint);
         }
 
     }
@@ -174,9 +169,12 @@
             k /= 100;
 
             return [
-                (c / 100 - k) / (1 - k) * 100,
-                (m / 100 - k) / (1 - k) * 100,
-                (y / 100 - k) / (1 - k) * 100,
+                (c / 100 - k)
+                / (1 - k) * 100,
+                (m / 100 - k)
+                / (1 - k) * 100,
+                (y / 100 - k)
+                / (1 - k) * 100,
                 k * 100
             ];
         },
@@ -190,9 +188,12 @@
          */
         CMY2RGB(c, m, y) {
             return [
-                (1 - c / 100) * 255,
-                (1 - m / 100) * 255,
-                (1 - y / 100) * 255
+                (1 - c / 100)
+                * 255,
+                (1 - m / 100)
+                * 255,
+                (1 - y / 100)
+                * 255
             ];
         },
 
@@ -208,9 +209,21 @@
             k /= 100;
 
             return [
-                (c / 100 * (1 - k) + k) * 100,
-                (m / 100 * (1 - k) + k) * 100,
-                (y / 100 * (1 - k) + k) * 100
+                (
+                    c / 100
+                    * (1 - k)
+                    + k
+                ) * 100,
+                (
+                    m / 100
+                    * (1 - k)
+                    + k
+                ) * 100,
+                (
+                    y / 100
+                    * (1 - k)
+                    + k
+                ) * 100
             ];
         },
 
@@ -236,9 +249,21 @@
                 v1 = 2 * l - v2;
 
             return [
-                this.RGBHue(v1, v2, h + (1 / 3)) * 255,
-                this.RGBHue(v1, v2, h) * 255,
-                this.RGBHue(v1, v2, h - (1 / 3)) * 255
+                this.RGBHue(
+                    v1,
+                    v2,
+                    h + (1 / 3)
+                ) * 255,
+                this.RGBHue(
+                    v1,
+                    v2,
+                    h
+                ) * 255,
+                this.RGBHue(
+                    v1,
+                    v2,
+                    h - (1 / 3)
+                ) * 255
             ];
         },
 
@@ -264,9 +289,21 @@
             s /= 100;
 
             const vi = Math.floor(h),
-                v1 = v * (1 - s),
-                v2 = v * (1 - s * (h - vi)),
-                v3 = v * (1 - s * (1 - (h - vi)));
+                v1 = v
+                    * (1 - s),
+                v2 = v
+                    * (
+                        1 - s
+                        * (h - vi)
+                    ),
+                v3 = v
+                    * (
+                        1 - s
+                        * (
+                            1
+                            - (h - vi)
+                        )
+                    );
 
             let r, g, b;
 
@@ -319,9 +356,18 @@
          */
         RGB2CMY(r, g, b) {
             return [
-                (1 - (r / 255)) * 100,
-                (1 - (g / 255)) * 100,
-                (1 - (b / 255)) * 100
+                (
+                    1
+                    - (r / 255)
+                ) * 100,
+                (
+                    1 -
+                    (g / 255)
+                ) * 100,
+                (
+                    1
+                    - (b / 255)
+                ) * 100
             ];
         },
 
@@ -333,9 +379,9 @@
          * @returns {number} The luminance value.
          */
         RGB2Luma(r, g, b) {
-            return (0.2126 * (r / 255)) +
-                (0.7152 * (g / 255)) +
-                (0.0722 * (b / 255));
+            return (0.2126 * (r / 255))
+                + (0.7152 * (g / 255))
+                + (0.0722 * (b / 255));
         },
 
         /**
@@ -361,11 +407,28 @@
 
             const s = l < 0.5 ?
                 diff / (max + min) :
-                diff / (2 - max - min);
-
-            const deltaR = (((max - r) / 6) + (diff / 2)) / diff,
-                deltaG = (((max - g) / 6) + (diff / 2)) / diff,
-                deltaB = (((max - b) / 6) + (diff / 2)) / diff;
+                diff / (2 - max - min),
+                deltaR = (
+                    (
+                        (max - r)
+                        / 6
+                    )
+                    + (diff / 2)
+                ) / diff,
+                deltaG = (
+                    (
+                        (max - g)
+                        / 6
+                    )
+                    + (diff / 2)
+                ) / diff,
+                deltaB = (
+                    (
+                        (max - b)
+                        / 6
+                    )
+                    + (diff / 2)
+                ) / diff;
 
             let h = 0;
 
@@ -374,15 +437,21 @@
                     h = deltaB - deltaG;
                     break;
                 case g:
-                    h = (1 / 2) + deltaR - deltaB;
+                    h = 1 / 2
+                        + deltaR
+                        - deltaB;
                     break;
                 case b:
-                    h = (2 / 3) + deltaG - deltaR;
+                    h = 2 / 3
+                        + deltaG
+                        - deltaR;
                     break;
             }
 
             return [
-                ((h + 1) % 1) * 360,
+                (
+                    (h + 1) % 1
+                ) * 360,
                 s * 100,
                 l * 100
             ];
@@ -410,9 +479,27 @@
             }
 
             const s = diff / max,
-                deltaR = (((max - r) / 6) + (diff / 2)) / diff,
-                deltaG = (((max - g) / 6) + (diff / 2)) / diff,
-                deltaB = (((max - b) / 6) + (diff / 2)) / diff;
+                deltaR = (
+                    (
+                        (max - r)
+                        / 6
+                    )
+                    + (diff / 2)
+                ) / diff,
+                deltaG = (
+                    (
+                        (max - g)
+                        / 6
+                    )
+                    + (diff / 2)
+                ) / diff,
+                deltaB = (
+                    (
+                        (max - b)
+                        / 6
+                    )
+                    + (diff / 2)
+                ) / diff;
 
             let h = 0;
 
@@ -421,10 +508,12 @@
                     h = deltaB - deltaG;
                     break;
                 case g:
-                    h = (1 / 2) + deltaR - deltaB;
+                    h = 1 / 2
+                        + deltaR - deltaB;
                     break;
                 case b:
-                    h = (2 / 3) + deltaG - deltaR;
+                    h = 2 / 3
+                        + deltaG - deltaR;
                     break;
             }
 
@@ -448,7 +537,10 @@
             vH = (vH + 1) % 1;
 
             if (6 * vH < 1) {
-                return v1 + (v2 - v1) * 6 * vH;
+                return v1
+                    + (v2 - v1)
+                    * 6
+                    * vH;
             }
 
             if (2 * vH < 1) {
@@ -456,7 +548,13 @@
             }
 
             if (3 * vH < 2) {
-                return v1 + (v2 - v1) * ((2 / 3) - vH) * 6;
+                return v1
+                    + (v2 - v1)
+                    * (
+                        (2 / 3)
+                        - vH
+                    )
+                    * 6;
             }
 
             return v1;
@@ -525,7 +623,14 @@
                     null
             );
 
-            return new this(rgb[0], rgb[1], rgb[2], rgb[3] ? rgb[3] / 255 : 1);
+            return new this(
+                rgb[0],
+                rgb[1],
+                rgb[2],
+                rgb[3] ?
+                    rgb[3] / 255 :
+                    1
+            );
         },
 
         /**
@@ -714,7 +819,9 @@
          * @returns {number} The interpolated value.
          */
         _lerp(a, b, amount) {
-            return a * (1 - amount) + b * amount;
+            return a
+                * (1 - amount)
+                + b * amount;
         }
 
     });
@@ -752,7 +859,10 @@
         mix(color1, color2, amount) {
             return new this(
                 color1.getColor()
-                    .mix(color2.getColor(), amount)
+                    .mix(
+                        color2.getColor(),
+                        amount
+                    )
             );
         },
 
@@ -766,7 +876,10 @@
         multiply(color1, color2, amount) {
             return new this(
                 color1.getColor()
-                    .multiply(color2.getColor(), amount)
+                    .multiply(
+                        color2.getColor(),
+                        amount
+                    )
             );
         }
 
@@ -783,8 +896,7 @@
          * @returns {number} The alpha value. (0, 1)
          */
         getAlpha() {
-            return this.getColor()
-                .getAlpha();
+            return this._color.getAlpha();
         },
 
         /**
@@ -792,8 +904,7 @@
          * @returns {number} The brightness value. (0, 100)
          */
         getBrightness() {
-            return this.getColor()
-                .getBrightness();
+            return this._color.getBrightness();
         },
 
         /**
@@ -801,8 +912,7 @@
          * @returns {number} The hue value. (0, 360)
          */
         getHue() {
-            return this.getColor()
-                .getHue();
+            return this._color.getHue();
         },
 
         /**
@@ -810,8 +920,7 @@
          * @returns {number} The saturation value. (0, 100)
          */
         getSaturation() {
-            return this.getColor()
-                .getSaturation();
+            return this._color.getSaturation();
         },
 
         /**
@@ -819,8 +928,7 @@
          * @returns {number} The luminance value. (0, 1)
          */
         luma() {
-            return this.getColor()
-                .luma();
+            return this._color.luma();
         },
 
         /**
@@ -830,8 +938,7 @@
          */
         setAlpha(a) {
             return this.setColor(
-                this.getColor()
-                    .setAlpha(a)
+                this._color.setAlpha(a)
             );
         },
 
@@ -842,8 +949,7 @@
          */
         setBrightness(v) {
             return this.setColor(
-                this.getColor()
-                    .setBrightness(v)
+                this._color.setBrightness(v)
             );
         },
 
@@ -854,8 +960,7 @@
          */
         setHue(h) {
             return this.setColor(
-                this.getColor()
-                    .setHue(h)
+                this._color.setHue(h)
             );
         },
 
@@ -866,8 +971,7 @@
          */
         setSaturation(s) {
             return this.setColor(
-                this.getColor()
-                    .setSaturation(s)
+                this._color.setSaturation(s)
             );
         }
 
@@ -886,8 +990,7 @@
          */
         darken(amount) {
             return this.setColor(
-                this.getColor()
-                    .darken(amount)
+                this._color.darken(amount)
             );
         },
 
@@ -897,8 +1000,7 @@
          */
         invert() {
             return this.setColor(
-                this.getColor()
-                    .invert()
+                this._color.invert()
             );
         },
 
@@ -909,8 +1011,7 @@
          */
         lighten(amount) {
             return this.setColor(
-                this.getColor()
-                    .lighten(amount)
+                this._color.lighten(amount)
             );
         },
 
@@ -988,15 +1089,16 @@
          * @returns {Color[]} An array containing shade variations.
          */
         shades(shades = 10) {
-            const rgb = this.getColor()
-                .toRGB();
+            const rgb = this._color.toRGB();
 
             return new Array(shades)
                 .fill()
-                .map((_, index) =>
-                    new this.constructor(rgb).shade(
-                        index / (shades + 1)
-                    )
+                .map(
+                    (_, index) =>
+                        new this.constructor(rgb).shade(
+                            index
+                            / (shades + 1)
+                        )
                 );
         },
 
@@ -1006,15 +1108,16 @@
          * @returns {Color[]} An array containing tint variations.
          */
         tints(tints = 10) {
-            const rgb = this.getColor()
-                .toRGB();
+            const rgb = this._color.toRGB();
 
             return new Array(tints)
                 .fill()
-                .map((_, index) =>
-                    new this.constructor(rgb).tint(
-                        index / (tints + 1)
-                    )
+                .map(
+                    (_, index) =>
+                        new this.constructor(rgb).tint(
+                            index
+                            / (tints + 1)
+                        )
                 );
         },
 
@@ -1024,15 +1127,16 @@
          * @returns {Color[]} An array containing tone variations.
          */
         tones(tones = 10) {
-            const rgb = this.getColor()
-                .toRGB();
+            const rgb = this._color.toRGB();
 
             return new Array(tones)
                 .fill()
-                .map((_, index) =>
-                    new this.constructor(rgb).tone(
-                        index / (tones + 1)
-                    )
+                .map(
+                    (_, index) =>
+                        new this.constructor(rgb).tone(
+                            index
+                            / (tones + 1)
+                        )
                 );
         }
 
@@ -1049,8 +1153,7 @@
          * @returns {Color[]} An array containing 2 analogous color variations.
          */
         analogous() {
-            const hsv = this.getColor()
-                .toHSV();
+            const hsv = this._color.toHSV();
 
             return [
                 new this.constructor(
@@ -1071,8 +1174,7 @@
          * @returns {Color} A complementary color variation.
          */
         complementary() {
-            const hsv = this.getColor()
-                .toHSV();
+            const hsv = this._color.toHSV();
 
             return new this.constructor(
                 hsv.setHue(
@@ -1086,8 +1188,7 @@
          * @returns {Color[]} An array containing 2 split color variations.
          */
         split() {
-            const hsv = this.getColor()
-                .toHSV();
+            const hsv = this._color.toHSV();
 
             return [
                 new this.constructor(
@@ -1108,8 +1209,7 @@
          * @returns {Color[]} An array containing 3 tetradic color variations.
          */
         tetradic() {
-            const hsv = this.getColor()
-                .toHSV();
+            const hsv = this._color.toHSV();
 
             return [
                 new this.constructor(
@@ -1135,8 +1235,7 @@
          * @returns {Color[]} An array containing 2 triadic color variations.
          */
         triadic() {
-            const hsv = this.getColor()
-                .toHSV();
+            const hsv = this._color.toHSV();
 
             return [
                 new this.constructor(
@@ -1715,7 +1814,8 @@
             return new HSLColor(
                 this._h,
                 this._s,
-                this._l - (this._l * amount),
+                this._l
+                - (this._l * amount),
                 this._a
             );
         }
@@ -1729,7 +1829,11 @@
             return new HSLColor(
                 this._h,
                 this._s,
-                this._l + ((100 - this._l) * amount),
+                this._l
+                + (
+                    (100 - this._l)
+                    * amount
+                ),
                 this._a
             );
         }
@@ -1954,10 +2058,26 @@
             const rgb = color.toRGB();
 
             return new RGBColor(
-                Color._lerp(this._r, this._r * rgb._r / 255, amount),
-                Color._lerp(this._g, this._g * rgb._g / 255, amount),
-                Color._lerp(this._b, this._b * rgb._b / 255, amount),
-                Color._lerp(this._a, this._a * rgb._a, amount)
+                Color._lerp(
+                    this._r,
+                    this._r * rgb._r / 255,
+                    amount
+                ),
+                Color._lerp(
+                    this._g,
+                    this._g * rgb._g / 255,
+                    amount
+                ),
+                Color._lerp(
+                    this._b,
+                    this._b * rgb._b / 255,
+                    amount
+                ),
+                Color._lerp(
+                    this._a,
+                    this._a * rgb._a,
+                    mount
+                )
             );
         }
 
@@ -2085,13 +2205,22 @@
 
         _getHex() {
             const
-                r = (Math.round(this._r) | 1 << 8).toString(16).slice(1),
-                g = (Math.round(this._g) | 1 << 8).toString(16).slice(1),
-                b = (Math.round(this._b) | 1 << 8).toString(16).slice(1),
+                r = (Math.round(this._r) | 1 << 8)
+                    .toString(16)
+                    .slice(1),
+                g = (Math.round(this._g) | 1 << 8)
+                    .toString(16)
+                    .slice(1),
+                b = (Math.round(this._b) | 1 << 8)
+                    .toString(16)
+                    .slice(1),
                 hex = `#${r}${g}${b}`;
 
             if (this._a < 1) {
-                return hex + (this._a * 255 | 1 << 8).toString(16).slice(1);
+                return hex +
+                    (this._a * 255 | 1 << 8)
+                        .toString(16)
+                        .slice(1);
             }
 
             return hex;

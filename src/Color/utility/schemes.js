@@ -9,8 +9,7 @@ Object.assign(Color.prototype, {
      * @returns {Color[]} An array containing 2 analogous color variations.
      */
     analogous() {
-        const hsv = this.getColor()
-            .toHSV();
+        const hsv = this._color.toHSV();
 
         return [
             new this.constructor(
@@ -31,8 +30,7 @@ Object.assign(Color.prototype, {
      * @returns {Color} A complementary color variation.
      */
     complementary() {
-        const hsv = this.getColor()
-            .toHSV();
+        const hsv = this._color.toHSV();
 
         return new this.constructor(
             hsv.setHue(
@@ -46,8 +44,7 @@ Object.assign(Color.prototype, {
      * @returns {Color[]} An array containing 2 split color variations.
      */
     split() {
-        const hsv = this.getColor()
-            .toHSV();
+        const hsv = this._color.toHSV();
 
         return [
             new this.constructor(
@@ -68,8 +65,7 @@ Object.assign(Color.prototype, {
      * @returns {Color[]} An array containing 3 tetradic color variations.
      */
     tetradic() {
-        const hsv = this.getColor()
-            .toHSV();
+        const hsv = this._color.toHSV();
 
         return [
             new this.constructor(
@@ -95,8 +91,7 @@ Object.assign(Color.prototype, {
      * @returns {Color[]} An array containing 2 triadic color variations.
      */
     triadic() {
-        const hsv = this.getColor()
-            .toHSV();
+        const hsv = this._color.toHSV();
 
         return [
             new this.constructor(

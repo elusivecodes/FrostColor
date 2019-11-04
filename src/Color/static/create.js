@@ -60,7 +60,14 @@ Object.assign(Color, {
                 null
         );
 
-        return new this(rgb[0], rgb[1], rgb[2], rgb[3] ? rgb[3] / 255 : 1);
+        return new this(
+            rgb[0],
+            rgb[1],
+            rgb[2],
+            rgb[3] ?
+                rgb[3] / 255 :
+                1
+        );
     },
 
     /**

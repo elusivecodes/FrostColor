@@ -68,10 +68,26 @@ class RGBColor extends BaseColor {
         const rgb = color.toRGB();
 
         return new RGBColor(
-            Color._lerp(this._r, this._r * rgb._r / 255, amount),
-            Color._lerp(this._g, this._g * rgb._g / 255, amount),
-            Color._lerp(this._b, this._b * rgb._b / 255, amount),
-            Color._lerp(this._a, this._a * rgb._a, amount)
+            Color._lerp(
+                this._r,
+                this._r * rgb._r / 255,
+                amount
+            ),
+            Color._lerp(
+                this._g,
+                this._g * rgb._g / 255,
+                amount
+            ),
+            Color._lerp(
+                this._b,
+                this._b * rgb._b / 255,
+                amount
+            ),
+            Color._lerp(
+                this._a,
+                this._a * rgb._a,
+                mount
+            )
         );
     }
 
@@ -199,13 +215,22 @@ class RGBColor extends BaseColor {
 
     _getHex() {
         const
-            r = (Math.round(this._r) | 1 << 8).toString(16).slice(1),
-            g = (Math.round(this._g) | 1 << 8).toString(16).slice(1),
-            b = (Math.round(this._b) | 1 << 8).toString(16).slice(1),
+            r = (Math.round(this._r) | 1 << 8)
+                .toString(16)
+                .slice(1),
+            g = (Math.round(this._g) | 1 << 8)
+                .toString(16)
+                .slice(1),
+            b = (Math.round(this._b) | 1 << 8)
+                .toString(16)
+                .slice(1),
             hex = `#${r}${g}${b}`;
 
         if (this._a < 1) {
-            return hex + (this._a * 255 | 1 << 8).toString(16).slice(1);
+            return hex +
+                (this._a * 255 | 1 << 8)
+                    .toString(16)
+                    .slice(1);
         }
 
         return hex;

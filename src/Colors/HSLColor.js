@@ -29,7 +29,8 @@ class HSLColor extends BaseColor {
         return new HSLColor(
             this._h,
             this._s,
-            this._l - (this._l * amount),
+            this._l
+            - (this._l * amount),
             this._a
         );
     }
@@ -43,7 +44,11 @@ class HSLColor extends BaseColor {
         return new HSLColor(
             this._h,
             this._s,
-            this._l + ((100 - this._l) * amount),
+            this._l
+            + (
+                (100 - this._l)
+                * amount
+            ),
             this._a
         );
     }

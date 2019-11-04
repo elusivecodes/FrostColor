@@ -134,7 +134,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toHexString",
       value: function toHexString() {
-        return this.getColor().toHexString();
+        return this._color.toHexString();
       }
       /**
        * Return a HSL/HSLA string representation of the color.
@@ -144,7 +144,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toHSLString",
       value: function toHSLString() {
-        return this.getColor().toHSLString();
+        return this._color.toHSLString();
       }
       /**
        * Return a RGB/RGBA string representation of the color.
@@ -154,7 +154,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toRGBString",
       value: function toRGBString() {
-        return this.getColor().toRGBString();
+        return this._color.toRGBString();
       }
       /**
        * Return a HTML string representation of the color.
@@ -164,7 +164,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "toString",
       value: function toString() {
-        return this.getColor().toString();
+        return this._color.toString();
       }
       /**
        * Return the luminance value of the color.
@@ -174,7 +174,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: "valueOf",
       value: function valueOf() {
-        return this.getColor().valueOf();
+        return this._color.valueOf();
       }
       /**
        * Return a primitive value of the color.
@@ -184,7 +184,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }, {
       key: Symbol.toPrimitive,
       value: function value(hint) {
-        return this.getColor()[Symbol.toPrimitive](hint);
+        return this._color[Symbol.toPrimitive](hint);
       }
     }]);
 
@@ -395,8 +395,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return [0, 0, l * 100];
       }
 
-      var s = l < 0.5 ? diff / (max + min) : diff / (2 - max - min);
-      var deltaR = ((max - r) / 6 + diff / 2) / diff,
+      var s = l < 0.5 ? diff / (max + min) : diff / (2 - max - min),
+          deltaR = ((max - r) / 6 + diff / 2) / diff,
           deltaG = ((max - g) / 6 + diff / 2) / diff,
           deltaB = ((max - b) / 6 + diff / 2) / diff;
       var h = 0;
@@ -756,7 +756,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number} The alpha value. (0, 1)
      */
     getAlpha: function getAlpha() {
-      return this.getColor().getAlpha();
+      return this._color.getAlpha();
     },
 
     /**
@@ -764,7 +764,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number} The brightness value. (0, 100)
      */
     getBrightness: function getBrightness() {
-      return this.getColor().getBrightness();
+      return this._color.getBrightness();
     },
 
     /**
@@ -772,7 +772,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number} The hue value. (0, 360)
      */
     getHue: function getHue() {
-      return this.getColor().getHue();
+      return this._color.getHue();
     },
 
     /**
@@ -780,7 +780,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number} The saturation value. (0, 100)
      */
     getSaturation: function getSaturation() {
-      return this.getColor().getSaturation();
+      return this._color.getSaturation();
     },
 
     /**
@@ -788,7 +788,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {number} The luminance value. (0, 1)
      */
     luma: function luma() {
-      return this.getColor().luma();
+      return this._color.luma();
     },
 
     /**
@@ -797,7 +797,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The modified Color object.
      */
     setAlpha: function setAlpha(a) {
-      return this.setColor(this.getColor().setAlpha(a));
+      return this.setColor(this._color.setAlpha(a));
     },
 
     /**
@@ -806,7 +806,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The modified Color object.
      */
     setBrightness: function setBrightness(v) {
-      return this.setColor(this.getColor().setBrightness(v));
+      return this.setColor(this._color.setBrightness(v));
     },
 
     /**
@@ -815,7 +815,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The modified Color object.
      */
     setHue: function setHue(h) {
-      return this.setColor(this.getColor().setHue(h));
+      return this.setColor(this._color.setHue(h));
     },
 
     /**
@@ -824,7 +824,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The modified Color object.
      */
     setSaturation: function setSaturation(s) {
-      return this.setColor(this.getColor().setSaturation(s));
+      return this.setColor(this._color.setSaturation(s));
     }
   });
   /**
@@ -838,7 +838,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The darkened Color object.
      */
     darken: function darken(amount) {
-      return this.setColor(this.getColor().darken(amount));
+      return this.setColor(this._color.darken(amount));
     },
 
     /**
@@ -846,7 +846,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The inverted Color object.
      */
     invert: function invert() {
-      return this.setColor(this.getColor().invert());
+      return this.setColor(this._color.invert());
     },
 
     /**
@@ -855,7 +855,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} The lightened Color object.
      */
     lighten: function lighten(amount) {
-      return this.setColor(this.getColor().lighten(amount));
+      return this.setColor(this._color.lighten(amount));
     },
 
     /**
@@ -918,7 +918,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       var _shades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
-      var rgb = this.getColor().toRGB();
+      var rgb = this._color.toRGB();
+
       return new Array(_shades).fill().map(function (_, index) {
         return new _this.constructor(rgb).shade(index / (_shades + 1));
       });
@@ -934,7 +935,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       var _tints = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
-      var rgb = this.getColor().toRGB();
+      var rgb = this._color.toRGB();
+
       return new Array(_tints).fill().map(function (_, index) {
         return new _this2.constructor(rgb).tint(index / (_tints + 1));
       });
@@ -950,7 +952,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
       var _tones = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
-      var rgb = this.getColor().toRGB();
+      var rgb = this._color.toRGB();
+
       return new Array(_tones).fill().map(function (_, index) {
         return new _this3.constructor(rgb).tone(index / (_tones + 1));
       });
@@ -966,7 +969,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]} An array containing 2 analogous color variations.
      */
     analogous: function analogous() {
-      var hsv = this.getColor().toHSV();
+      var hsv = this._color.toHSV();
+
       return [new this.constructor(hsv.setHue(hsv.getHue() + 30)), new this.constructor(hsv.setHue(hsv.getHue() - 30))];
     },
 
@@ -975,7 +979,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color} A complementary color variation.
      */
     complementary: function complementary() {
-      var hsv = this.getColor().toHSV();
+      var hsv = this._color.toHSV();
+
       return new this.constructor(hsv.setHue(hsv.getHue() + 180));
     },
 
@@ -984,7 +989,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]} An array containing 2 split color variations.
      */
     split: function split() {
-      var hsv = this.getColor().toHSV();
+      var hsv = this._color.toHSV();
+
       return [new this.constructor(hsv.setHue(hsv.getHue() + 150)), new this.constructor(hsv.setHue(hsv.getHue() - 150))];
     },
 
@@ -993,7 +999,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]} An array containing 3 tetradic color variations.
      */
     tetradic: function tetradic() {
-      var hsv = this.getColor().toHSV();
+      var hsv = this._color.toHSV();
+
       return [new this.constructor(hsv.setHue(hsv.getHue() + 60)), new this.constructor(hsv.setHue(hsv.getHue() + 180)), new this.constructor(hsv.setHue(hsv.getHue() + 240))];
     },
 
@@ -1002,7 +1009,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * @returns {Color[]} An array containing 2 triadic color variations.
      */
     triadic: function triadic() {
-      var hsv = this.getColor().toHSV();
+      var hsv = this._color.toHSV();
+
       return [new this.constructor(hsv.setHue(hsv.getHue() + 120)), new this.constructor(hsv.setHue(hsv.getHue() + 240))];
     }
   });
@@ -1911,7 +1919,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "multiply",
       value: function multiply(color, amount) {
         var rgb = color.toRGB();
-        return new RGBColor(Color._lerp(this._r, this._r * rgb._r / 255, amount), Color._lerp(this._g, this._g * rgb._g / 255, amount), Color._lerp(this._b, this._b * rgb._b / 255, amount), Color._lerp(this._a, this._a * rgb._a, amount));
+        return new RGBColor(Color._lerp(this._r, this._r * rgb._r / 255, amount), Color._lerp(this._g, this._g * rgb._g / 255, amount), Color._lerp(this._b, this._b * rgb._b / 255, amount), Color._lerp(this._a, this._a * rgb._a, mount));
       }
       /**
        * Set the alpha value of the color.

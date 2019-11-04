@@ -9,8 +9,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The alpha value. (0, 1)
      */
     getAlpha() {
-        return this.getColor()
-            .getAlpha();
+        return this._color.getAlpha();
     },
 
     /**
@@ -18,8 +17,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The brightness value. (0, 100)
      */
     getBrightness() {
-        return this.getColor()
-            .getBrightness();
+        return this._color.getBrightness();
     },
 
     /**
@@ -27,8 +25,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The hue value. (0, 360)
      */
     getHue() {
-        return this.getColor()
-            .getHue();
+        return this._color.getHue();
     },
 
     /**
@@ -36,8 +33,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The saturation value. (0, 100)
      */
     getSaturation() {
-        return this.getColor()
-            .getSaturation();
+        return this._color.getSaturation();
     },
 
     /**
@@ -45,8 +41,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The luminance value. (0, 1)
      */
     luma() {
-        return this.getColor()
-            .luma();
+        return this._color.luma();
     },
 
     /**
@@ -56,8 +51,7 @@ Object.assign(Color.prototype, {
      */
     setAlpha(a) {
         return this.setColor(
-            this.getColor()
-                .setAlpha(a)
+            this._color.setAlpha(a)
         );
     },
 
@@ -68,8 +62,7 @@ Object.assign(Color.prototype, {
      */
     setBrightness(v) {
         return this.setColor(
-            this.getColor()
-                .setBrightness(v)
+            this._color.setBrightness(v)
         );
     },
 
@@ -80,8 +73,7 @@ Object.assign(Color.prototype, {
      */
     setHue(h) {
         return this.setColor(
-            this.getColor()
-                .setHue(h)
+            this._color.setHue(h)
         );
     },
 
@@ -92,8 +84,7 @@ Object.assign(Color.prototype, {
      */
     setSaturation(s) {
         return this.setColor(
-            this.getColor()
-                .setSaturation(s)
+            this._color.setSaturation(s)
         );
     }
 

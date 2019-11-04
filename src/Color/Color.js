@@ -68,8 +68,7 @@ class Color {
      * @returns {string} The hexadecimal string.
      */
     toHexString() {
-        return this.getColor()
-            .toHexString();
+        return this._color.toHexString();
     }
 
     /**
@@ -77,8 +76,7 @@ class Color {
      * @returns {string} The HSL/HSLA string.
      */
     toHSLString() {
-        return this.getColor()
-            .toHSLString();
+        return this._color.toHSLString();
     }
 
     /**
@@ -86,8 +84,7 @@ class Color {
      * @returns {string} The RGB/RGBA string.
      */
     toRGBString() {
-        return this.getColor()
-            .toRGBString();
+        return this._color.toRGBString();
     }
 
     /**
@@ -95,8 +92,7 @@ class Color {
      * @returns {string} The HTML color string.
      */
     toString() {
-        return this.getColor()
-            .toString();
+        return this._color.toString();
     }
 
     /**
@@ -104,8 +100,7 @@ class Color {
      * @returns {number} The luminance value. (0, 1)
      */
     valueOf() {
-        return this.getColor()
-            .valueOf();
+        return this._color.valueOf();
     }
 
     /**
@@ -113,7 +108,7 @@ class Color {
      * @returns {string|number} The HTML color string, or the luminance value.
      */
     [Symbol.toPrimitive](hint) {
-        return this.getColor()[Symbol.toPrimitive](hint);
+        return this._color[Symbol.toPrimitive](hint);
     }
 
 }

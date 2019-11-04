@@ -31,7 +31,10 @@ Object.assign(Color, {
     mix(color1, color2, amount) {
         return new this(
             color1.getColor()
-                .mix(color2.getColor(), amount)
+                .mix(
+                    color2.getColor(),
+                    amount
+                )
         );
     },
 
@@ -45,7 +48,10 @@ Object.assign(Color, {
     multiply(color1, color2, amount) {
         return new this(
             color1.getColor()
-                .multiply(color2.getColor(), amount)
+                .multiply(
+                    color2.getColor(),
+                    amount
+                )
         );
     }
 

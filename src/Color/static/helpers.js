@@ -26,7 +26,9 @@ Object.assign(Color, {
      * @returns {number} The interpolated value.
      */
     _lerp(a, b, amount) {
-        return a * (1 - amount) + b * amount;
+        return a
+            * (1 - amount)
+            + b * amount;
     }
 
 });
