@@ -1,117 +1,188 @@
 const assert = require('assert').strict;
 const Color = require('../dist/frost-color.min').Color;
 
-console.log('\x1b[0m');
-console.log('Testing new Color constructor');
+describe('Color Creation Tests', function() {
 
-assert.equal(
-    new Color(255, 0, 0).toString(),
-    'red'
-);
-assert.equal(
-    new Color(0, 255, 0).toString(),
-    'lime'
-);
-assert.equal(
-    new Color(0, 0, 255).toString(),
-    'blue'
-);
-assert.equal(
-    new Color(255, 255, 255, 0.5).toString(),
-    'rgba(255, 255, 255, 0.5)'
-);
-assert.equal(
-    new Color(100).toString(),
-    'white'
-);
-assert.equal(
-    new Color(100, 0.5).toString(),
-    'rgba(255, 255, 255, 0.5)'
-);
+    describe('#constructor', function() {
+        it('works with red argument', function() {
+            assert.equal(
+                new Color(255, 0, 0)
+                    .toString(),
+                'red'
+            );
+        });
 
-console.log('\x1b[32m', 'passed');
+        it('works with green argument', function() {
+            assert.equal(
+                new Color(0, 255, 0)
+                    .toString(),
+                'lime'
+            );
+        });
 
-console.log('\x1b[0m');
-console.log('Testing fromString method');
+        it('works with blue argument', function() {
+            assert.equal(
+                new Color(0, 0, 255)
+                    .toString(),
+                'blue'
+            );
+        });
 
-assert.equal(
-    Color.fromString('red').toString(),
-    'red'
-);
-assert.equal(
-    Color.fromString('#f00').toString(),
-    'red'
-);
-assert.equal(
-    Color.fromString('#ff0000').toString(),
-    'red'
-);
-assert.equal(
-    Color.fromString('rgb(255, 0, 0)').toString(),
-    'red'
-);
-assert.equal(
-    Color.fromString('rgba(255, 0, 0, 1)').toString(),
-    'red'
-);
+        it('works with alpha argument', function() {
+            assert.equal(
+                new Color(255, 255, 255, 0.5)
+                    .toString(),
+                'rgba(255, 255, 255, 0.5)'
+            );
+        });
 
-console.log('\x1b[32m', 'passed');
+        it('works with brightness argument', function() {
+            assert.equal(
+                new Color(100)
+                    .toString(),
+                'white'
+            );
+        });
 
-assert.equal(
-    Color.fromRGB(153, 51, 0).toString(),
-    '#930'
-);
+        it('works with brightness and alpha arguments', function() {
+            assert.equal(
+                new Color(100, 0.5)
+                    .toString(),
+                'rgba(255, 255, 255, 0.5)'
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing fromHSL method');
+    describe('#fromString', function() {
+        it('works with color name', function() {
+            assert.equal(
+                Color.fromString('red')
+                    .toString(),
+                'red'
+            );
+        });
 
-assert.equal(
-    Color.fromHSL(120, 50, 50).toString(),
-    '#40bf40'
-);
-assert.equal(
-    Color.fromHSL(300, 100, 70).toString(),
-    '#f6f'
-);
-assert.equal(
-    Color.fromHSL(180, 100, 30, 0.5).toString(),
-    'rgba(0, 153, 153, 0.5)'
-);
+        it('works with hex string', function() {
+            assert.equal(
+                Color.fromString('#ff0000')
+                    .toString(),
+                'red'
+            );
+        });
 
-console.log('\x1b[32m', 'passed');
+        it('works with short hex string', function() {
+            assert.equal(
+                Color.fromString('#f00')
+                    .toString(),
+                'red'
+            );
+        });
 
-console.log('\x1b[0m');
-console.log('Testing fromHSV method');
+        it('works with rgb string', function() {
+            assert.equal(
+                Color.fromString('rgb(255, 0, 0)')
+                    .toString(),
+                'red'
+            );
+        });
 
-assert.equal(
-    Color.fromHSV(20, 100, 60).toString(),
-    '#930'
-);
-assert.equal(
-    Color.fromHSV(120, 50, 50).toString(),
-    '#408040'
-);
-assert.equal(
-    Color.fromHSV(195, 85, 30, 0.5).toString(),
-    'rgba(11, 60, 77, 0.5)'
-);
+        it('works with rgba string', function() {
+            assert.equal(
+                Color.fromString('rgba(255, 0, 0, 1)')
+                    .toString(),
+                'red'
+            );
+        });
+    });
 
-console.log('\x1b[32m', 'passed');
+    describe('#fromRGB', function() {
+        it('works with rgb arguments', function() {
+            assert.equal(
+                Color.fromRGB(155, 30, 70)
+                    .toString(),
+                '#9b1e46'
+            );
+        });
 
-console.log('\x1b[0m');
-console.log('Testing fromCMYK method');
+        it('works with alpha argument', function() {
+            assert.equal(
+                Color.fromRGB(180, 100, 30, .5)
+                    .toString(),
+                'rgba(180, 100, 30, 0.5)'
+            );
+        });
+    });
 
-assert.equal(
-    Color.fromCMYK(26, 88, 100, 24).toString(),
-    '#8f1700'
-);
-assert.equal(
-    Color.fromCMYK(57, 56, 58, 48).toString(),
-    '#393a38'
-);
-assert.equal(
-    Color.fromCMYK(29, 14, 76, 9).toString(),
-    '#a5c838'
-);
+    describe('#fromHSL', function() {
+        it('works with hsl arguments', function() {
+            assert.equal(
+                Color.fromHSL(155, 30, 70)
+                    .toString(),
+                '#9cc9b6'
+            );
+        });
 
-console.log('\x1b[32m', 'passed');
+        it('works with alpha argument', function() {
+            assert.equal(
+                Color.fromHSL(180, 100, 30, .5)
+                    .toString(),
+                'rgba(0, 153, 153, 0.5)'
+            );
+        });
+    });
+
+    describe('#fromHSV', function() {
+        it('works with hsv arguments', function() {
+            assert.equal(
+                Color.fromHSV(155, 30, 70)
+                    .toString(),
+                '#7db39c'
+            );
+        });
+
+        it('works with alpha argument', function() {
+            assert.equal(
+                Color.fromHSV(180, 100, 30, .5)
+                    .toString(),
+                'rgba(0, 77, 77, 0.5)'
+            );
+        });
+    });
+
+    describe('#fromCMY', function() {
+        it('works with cmy arguments', function() {
+            assert.equal(
+                Color.fromCMY(77, 15, 35)
+                    .toString(),
+                '#3bd9a6'
+            );
+        });
+
+        it('works with alpha argument', function() {
+            assert.equal(
+                Color.fromCMY(90, 50, 15, .5)
+                    .toString(),
+                'rgba(25, 128, 217, 0.5)'
+            );
+        });
+    });
+
+    describe('#fromCMYK', function() {
+        it('works with cmyk arguments', function() {
+            assert.equal(
+                Color.fromCMYK(77, 15, 35, 45)
+                    .toString(),
+                '#20775b'
+            );
+        });
+
+        it('works with alpha argument', function() {
+            assert.equal(
+                Color.fromCMYK(90, 50, 15, 55, .5)
+                    .toString(),
+                'rgba(11, 57, 98, 0.5)'
+            );
+        });
+    });
+
+});

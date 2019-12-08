@@ -1,50 +1,70 @@
 const assert = require('assert').strict;
 const Color = require('../dist/frost-color.min').Color;
 
-console.log('\x1b[0m');
-console.log('Testing darken method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).darken(0.5).toString(),
-    '#204040'
-);
-console.log('\x1b[32m', 'passed');
+describe('Color Manipulation Tests', function() {
 
-console.log('\x1b[0m');
-console.log('Testing invert method');
-assert.equal(
-    Color.fromRGB(120, 50, 50).invert().toString(),
-    '#87cdcd'
-);
-console.log('\x1b[32m', 'passed');
+    describe('#darken', function() {
+        it('darkens the color', function() {
+            assert.equal(
+                Color.fromHSV(120, 50, 50)
+                    .darken(.5)
+                    .toString(),
+                '#204040'
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing lighten method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).lighten(0.5).toString(),
-    '#95caca'
-);
-console.log('\x1b[32m', 'passed');
+    describe('#invert', function() {
+        it('inverts the color', function() {
+            assert.equal(
+                Color.fromRGB(120, 50, 50)
+                    .invert()
+                    .toString(),
+                '#87cdcd'
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing shade method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).shade(0.3).toString(),
-    '#2d592d'
-);
-console.log('\x1b[32m', 'passed');
+    describe('#lighten', function() {
+        it('lightens the color', function() {
+            assert.equal(
+                Color.fromHSV(120, 50, 50)
+                    .lighten(.5)
+                    .toString(),
+                '#95caca'
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing tint method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).tint(0.3).toString(),
-    '#79a679'
-);
-console.log('\x1b[32m', 'passed');
+    describe('#shade', function() {
+        it('shades the color', function() {
+            assert.equal(
+                Color.fromHSV(120, 50, 50)
+                    .shade(.3)
+                    .toString(),
+                '#2d592d'
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing tone method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).tone(0.3).toString(),
-    '#538053'
-);
-console.log('\x1b[32m', 'passed');
+    describe('#tint', function() {
+        it('tints the color', function() {
+            assert.equal(
+                Color.fromHSV(120, 50, 50)
+                    .tint(.3)
+                    .toString(),
+                '#79a679'
+            );
+        });
+    });
+
+    describe('#tone', function() {
+        assert.equal(
+            Color.fromHSV(120, 50, 50)
+                .tone(.3)
+                .toString(),
+            '#538053'
+        );
+    });
+
+});

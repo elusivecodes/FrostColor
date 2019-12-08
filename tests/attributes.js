@@ -1,74 +1,101 @@
 const assert = require('assert').strict;
 const Color = require('../dist/frost-color.min').Color;
 
-console.log('\x1b[0m');
-console.log('Testing getAlpha method');
-assert.equal(
-    new Color(255, 0, 0, 0.5).getAlpha(),
-    0.5
-);
-console.log('\x1b[32m', 'passed');
 
-console.log('\x1b[0m');
-console.log('Testing getBrightness method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).getBrightness(),
-    50
-);
-console.log('\x1b[32m', 'passed');
+describe('Color Attribute Tests', function() {
 
-console.log('\x1b[0m');
-console.log('Testing getHue method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).getHue(),
-    120
-);
-console.log('\x1b[32m', 'passed');
+    describe('#getAlpha', function() {
+        it('returns the alpha value', function() {
+            assert.equal(
+                new Color(0, 0, 0, .75)
+                    .getAlpha(),
+                0.75
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing getSaturation method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).getSaturation(),
-    50
-);
-console.log('\x1b[32m', 'passed');
+    describe('#getBrightness', function() {
+        it('returns the brightness value', function() {
+            assert.equal(
+                Color.fromHSV(180, 50, 75)
+                    .getBrightness(),
+                75
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing luma method');
-assert.equal(
-    Color.fromHSV(120, 50, 80).luma(),
-    0.68608
-);
-console.log('\x1b[32m', 'passed');
+    describe('#getHue', function() {
+        it('returns the hue value', function() {
+            assert.equal(
+                Color.fromHSV(270, 50, 50)
+                    .getHue(),
+                270
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing setAlpha method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).setAlpha(0.5).getAlpha(),
-    0.5
-);
-console.log('\x1b[32m', 'passed');
+    describe('#getSaturation', function() {
+        it('returns the saturation value', function() {
+            assert.equal(
+                Color.fromHSV(180, 25, 50)
+                    .getSaturation(),
+                25
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing setBrightness method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).setBrightness(30).getBrightness(),
-    30
-);
-console.log('\x1b[32m', 'passed');
+    describe('#luma', function() {
+        it('returns the luma value', function() {
+            assert.equal(
+                Color.fromHSV(180, 50, 50)
+                    .luma(),
+                0.44684999999999997
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing setHue method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).setHue(240).getHue(),
-    240
-);
-console.log('\x1b[32m', 'passed');
+    describe('#setAlpha', function() {
+        it('sets the alpha value', function() {
+            assert.equal(
+                Color.fromHSV(120, 50, 50)
+                    .setAlpha(0.75)
+                    .getAlpha(),
+                0.75
+            );
+        });
+    });
 
-console.log('\x1b[0m');
-console.log('Testing setSaturation method');
-assert.equal(
-    Color.fromHSV(120, 50, 50).setSaturation(70).getSaturation(),
-    70
-);
-console.log('\x1b[32m', 'passed');
+    describe('#setBrightness', function() {
+        it('sets the brightness value', function() {
+            assert.equal(
+                Color.fromHSV(180, 50, 50)
+                    .setBrightness(75)
+                    .getBrightness(),
+                75
+            );
+        });
+    });
+
+    describe('#setHue', function() {
+        it('sets the hue value', function() {
+            assert.equal(
+                Color.fromHSV(180, 50, 50)
+                    .setHue(270)
+                    .getHue(),
+                270
+            );
+        });
+    });
+
+    describe('#setSaturation', function() {
+        it('sets the saturation value', function() {
+            assert.equal(
+                Color.fromHSV(180, 50, 50)
+                    .setSaturation(25)
+                    .getSaturation(),
+                25
+            );
+        });
+    });
+
+});
