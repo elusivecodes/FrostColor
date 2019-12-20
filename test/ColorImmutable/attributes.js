@@ -1,15 +1,14 @@
 const assert = require('assert').strict;
-const Color = require('../dist/frost-color.min').Color;
+const { ColorImmutable } = require('../../dist/frost-color.min');
 
-
-describe('Color Attribute Tests', function() {
+describe('ColorImmutable Attribute Tests', function() {
 
     describe('#getAlpha', function() {
         it('returns the alpha value', function() {
             assert.equal(
-                new Color(0, 0, 0, .75)
+                new ColorImmutable(0, 0, 0, .75)
                     .getAlpha(),
-                0.75
+                .75
             );
         });
     });
@@ -17,7 +16,7 @@ describe('Color Attribute Tests', function() {
     describe('#getBrightness', function() {
         it('returns the brightness value', function() {
             assert.equal(
-                Color.fromHSV(180, 50, 75)
+                ColorImmutable.fromHSV(180, 50, 75)
                     .getBrightness(),
                 75
             );
@@ -27,7 +26,7 @@ describe('Color Attribute Tests', function() {
     describe('#getHue', function() {
         it('returns the hue value', function() {
             assert.equal(
-                Color.fromHSV(270, 50, 50)
+                ColorImmutable.fromHSV(270, 50, 50)
                     .getHue(),
                 270
             );
@@ -37,7 +36,7 @@ describe('Color Attribute Tests', function() {
     describe('#getSaturation', function() {
         it('returns the saturation value', function() {
             assert.equal(
-                Color.fromHSV(180, 25, 50)
+                ColorImmutable.fromHSV(180, 25, 50)
                     .getSaturation(),
                 25
             );
@@ -47,7 +46,7 @@ describe('Color Attribute Tests', function() {
     describe('#luma', function() {
         it('returns the luma value', function() {
             assert.equal(
-                Color.fromHSV(180, 50, 50)
+                ColorImmutable.fromHSV(180, 50, 50)
                     .luma(),
                 0.44684999999999997
             );
@@ -56,21 +55,29 @@ describe('Color Attribute Tests', function() {
 
     describe('#setAlpha', function() {
         it('sets the alpha value', function() {
+            const color1 = ColorImmutable.fromHSV(120, 50, 50);
+            const color2 = color1.setAlpha(.75);
             assert.equal(
-                Color.fromHSV(120, 50, 50)
-                    .setAlpha(0.75)
-                    .getAlpha(),
-                0.75
+                color1.getAlpha(),
+                1
+            );
+            assert.equal(
+                color2.getAlpha(),
+                .75
             );
         });
     });
 
     describe('#setBrightness', function() {
         it('sets the brightness value', function() {
+            const color1 = ColorImmutable.fromHSV(180, 50, 50);
+            const color2 = color1.setBrightness(75);
             assert.equal(
-                Color.fromHSV(180, 50, 50)
-                    .setBrightness(75)
-                    .getBrightness(),
+                color1.getBrightness(),
+                50
+            );
+            assert.equal(
+                color2.getBrightness(),
                 75
             );
         });
@@ -78,10 +85,14 @@ describe('Color Attribute Tests', function() {
 
     describe('#setHue', function() {
         it('sets the hue value', function() {
+            const color1 = ColorImmutable.fromHSV(180, 50, 50);
+            const color2 = color1.setHue(270);
             assert.equal(
-                Color.fromHSV(180, 50, 50)
-                    .setHue(270)
-                    .getHue(),
+                color1.getHue(),
+                180
+            );
+            assert.equal(
+                color2.getHue(),
                 270
             );
         });
@@ -89,10 +100,14 @@ describe('Color Attribute Tests', function() {
 
     describe('#setSaturation', function() {
         it('sets the saturation value', function() {
+            const color1 = ColorImmutable.fromHSV(180, 50, 50);
+            const color2 = color1.setSaturation(25);
             assert.equal(
-                Color.fromHSV(180, 50, 50)
-                    .setSaturation(25)
-                    .getSaturation(),
+                color1.getSaturation(),
+                50
+            );
+            assert.equal(
+                color2.getSaturation(),
                 25
             );
         });

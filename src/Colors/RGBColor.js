@@ -86,7 +86,7 @@ class RGBColor extends BaseColor {
             Color._lerp(
                 this._a,
                 this._a * rgb._a,
-                mount
+                amount
             )
         );
     }

@@ -1919,7 +1919,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       key: "multiply",
       value: function multiply(color, amount) {
         var rgb = color.toRGB();
-        return new RGBColor(Color._lerp(this._r, this._r * rgb._r / 255, amount), Color._lerp(this._g, this._g * rgb._g / 255, amount), Color._lerp(this._b, this._b * rgb._b / 255, amount), Color._lerp(this._a, this._a * rgb._a, mount));
+        return new RGBColor(Color._lerp(this._r, this._r * rgb._r / 255, amount), Color._lerp(this._g, this._g * rgb._g / 255, amount), Color._lerp(this._b, this._b * rgb._b / 255, amount), Color._lerp(this._a, this._a * rgb._a, amount));
       }
       /**
        * Set the alpha value of the color.

@@ -1,12 +1,12 @@
 const assert = require('assert').strict;
-const Color = require('../dist/frost-color.min').Color;
+const { Color, ColorImmutable } = require('../../dist/frost-color.min');
 
-describe('Color Creation Tests', function() {
+describe('ColorImmutable Creation Tests', function() {
 
     describe('#constructor', function() {
         it('works with red argument', function() {
             assert.equal(
-                new Color(255, 0, 0)
+                new ColorImmutable(255, 0, 0)
                     .toString(),
                 'red'
             );
@@ -14,7 +14,7 @@ describe('Color Creation Tests', function() {
 
         it('works with green argument', function() {
             assert.equal(
-                new Color(0, 255, 0)
+                new ColorImmutable(0, 255, 0)
                     .toString(),
                 'lime'
             );
@@ -22,7 +22,7 @@ describe('Color Creation Tests', function() {
 
         it('works with blue argument', function() {
             assert.equal(
-                new Color(0, 0, 255)
+                new ColorImmutable(0, 0, 255)
                     .toString(),
                 'blue'
             );
@@ -30,7 +30,7 @@ describe('Color Creation Tests', function() {
 
         it('works with alpha argument', function() {
             assert.equal(
-                new Color(255, 255, 255, 0.5)
+                new ColorImmutable(255, 255, 255, 0.5)
                     .toString(),
                 'rgba(255, 255, 255, 0.5)'
             );
@@ -38,7 +38,7 @@ describe('Color Creation Tests', function() {
 
         it('works with brightness argument', function() {
             assert.equal(
-                new Color(100)
+                new ColorImmutable(100)
                     .toString(),
                 'white'
             );
@@ -46,9 +46,45 @@ describe('Color Creation Tests', function() {
 
         it('works with brightness and alpha arguments', function() {
             assert.equal(
-                new Color(100, 0.5)
+                new ColorImmutable(100, 0.5)
                     .toString(),
                 'rgba(255, 255, 255, 0.5)'
+            );
+        });
+
+        it('works with Color argument', function() {
+            const color1 = new Color(255, 0, 0);
+            const color2 = new ColorImmutable(color1);
+            const color3 = color2.setAlpha(.5);
+            assert.equal(
+                color1.toString(),
+                'red'
+            );
+            assert.equal(
+                color2.toString(),
+                'red'
+            );
+            assert.equal(
+                color3.toString(),
+                'rgba(255, 0, 0, 0.5)'
+            );
+        });
+
+        it('works with ColorImmutable argument', function() {
+            const color1 = new ColorImmutable(255, 0, 0);
+            const color2 = new ColorImmutable(color1);
+            const color3 = color2.setAlpha(.5);
+            assert.equal(
+                color1.toString(),
+                'red'
+            );
+            assert.equal(
+                color2.toString(),
+                'red'
+            );
+            assert.equal(
+                color3.toString(),
+                'rgba(255, 0, 0, 0.5)'
             );
         });
     });
@@ -56,7 +92,7 @@ describe('Color Creation Tests', function() {
     describe('#fromString', function() {
         it('works with color name', function() {
             assert.equal(
-                Color.fromString('red')
+                ColorImmutable.fromString('red')
                     .toString(),
                 'red'
             );
@@ -64,7 +100,7 @@ describe('Color Creation Tests', function() {
 
         it('works with hex string', function() {
             assert.equal(
-                Color.fromString('#ff0000')
+                ColorImmutable.fromString('#ff0000')
                     .toString(),
                 'red'
             );
@@ -72,7 +108,7 @@ describe('Color Creation Tests', function() {
 
         it('works with short hex string', function() {
             assert.equal(
-                Color.fromString('#f00')
+                ColorImmutable.fromString('#f00')
                     .toString(),
                 'red'
             );
@@ -80,7 +116,7 @@ describe('Color Creation Tests', function() {
 
         it('works with rgb string', function() {
             assert.equal(
-                Color.fromString('rgb(255, 0, 0)')
+                ColorImmutable.fromString('rgb(255, 0, 0)')
                     .toString(),
                 'red'
             );
@@ -88,7 +124,7 @@ describe('Color Creation Tests', function() {
 
         it('works with rgba string', function() {
             assert.equal(
-                Color.fromString('rgba(255, 0, 0, 1)')
+                ColorImmutable.fromString('rgba(255, 0, 0, 1)')
                     .toString(),
                 'red'
             );
@@ -98,7 +134,7 @@ describe('Color Creation Tests', function() {
     describe('#fromRGB', function() {
         it('works with rgb arguments', function() {
             assert.equal(
-                Color.fromRGB(155, 30, 70)
+                ColorImmutable.fromRGB(155, 30, 70)
                     .toString(),
                 '#9b1e46'
             );
@@ -106,7 +142,7 @@ describe('Color Creation Tests', function() {
 
         it('works with alpha argument', function() {
             assert.equal(
-                Color.fromRGB(180, 100, 30, .5)
+                ColorImmutable.fromRGB(180, 100, 30, .5)
                     .toString(),
                 'rgba(180, 100, 30, 0.5)'
             );
@@ -116,7 +152,7 @@ describe('Color Creation Tests', function() {
     describe('#fromHSL', function() {
         it('works with hsl arguments', function() {
             assert.equal(
-                Color.fromHSL(155, 30, 70)
+                ColorImmutable.fromHSL(155, 30, 70)
                     .toString(),
                 '#9cc9b6'
             );
@@ -124,7 +160,7 @@ describe('Color Creation Tests', function() {
 
         it('works with alpha argument', function() {
             assert.equal(
-                Color.fromHSL(180, 100, 30, .5)
+                ColorImmutable.fromHSL(180, 100, 30, .5)
                     .toString(),
                 'rgba(0, 153, 153, 0.5)'
             );
@@ -134,7 +170,7 @@ describe('Color Creation Tests', function() {
     describe('#fromHSV', function() {
         it('works with hsv arguments', function() {
             assert.equal(
-                Color.fromHSV(155, 30, 70)
+                ColorImmutable.fromHSV(155, 30, 70)
                     .toString(),
                 '#7db39c'
             );
@@ -142,7 +178,7 @@ describe('Color Creation Tests', function() {
 
         it('works with alpha argument', function() {
             assert.equal(
-                Color.fromHSV(180, 100, 30, .5)
+                ColorImmutable.fromHSV(180, 100, 30, .5)
                     .toString(),
                 'rgba(0, 77, 77, 0.5)'
             );
@@ -152,7 +188,7 @@ describe('Color Creation Tests', function() {
     describe('#fromCMY', function() {
         it('works with cmy arguments', function() {
             assert.equal(
-                Color.fromCMY(77, 15, 35)
+                ColorImmutable.fromCMY(77, 15, 35)
                     .toString(),
                 '#3bd9a6'
             );
@@ -160,7 +196,7 @@ describe('Color Creation Tests', function() {
 
         it('works with alpha argument', function() {
             assert.equal(
-                Color.fromCMY(90, 50, 15, .5)
+                ColorImmutable.fromCMY(90, 50, 15, .5)
                     .toString(),
                 'rgba(25, 128, 217, 0.5)'
             );
@@ -170,7 +206,7 @@ describe('Color Creation Tests', function() {
     describe('#fromCMYK', function() {
         it('works with cmyk arguments', function() {
             assert.equal(
-                Color.fromCMYK(77, 15, 35, 45)
+                ColorImmutable.fromCMYK(77, 15, 35, 45)
                     .toString(),
                 '#20775b'
             );
@@ -178,7 +214,7 @@ describe('Color Creation Tests', function() {
 
         it('works with alpha argument', function() {
             assert.equal(
-                Color.fromCMYK(90, 50, 15, 55, .5)
+                ColorImmutable.fromCMYK(90, 50, 15, 55, .5)
                     .toString(),
                 'rgba(11, 57, 98, 0.5)'
             );

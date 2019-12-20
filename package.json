@@ -5,7 +5,7 @@
     "main": "build.js",
     "scripts": {
         "start": "node build.js",
-        "test": "./node_modules/mocha/bin/mocha"
+        "test": "./node_modules/mocha/bin/mocha --recursive"
     },
     "author": "Elusive",
     "license": "MIT",

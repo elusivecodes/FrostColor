@@ -1,16 +1,15 @@
 const assert = require('assert').strict;
-const Color = require('../dist/frost-color.min').Color;
+const { Color } = require('../../dist/frost-color.min');
 
 describe('Color Palette Tests', function() {
 
     describe('#shades', function() {
         it('creates a shades palette', function() {
+            const shades = Color.fromHSV(120, 50, 50).shades();
             assert.deepEqual(
-                Color.fromHSV(120, 50, 50)
-                    .shades()
-                    .map(
-                        color => color.toString()
-                    ),
+                shades.map(
+                    color => color.toString()
+                ),
                 [
                     '#408040',
                     '#3a743a',
@@ -24,15 +23,20 @@ describe('Color Palette Tests', function() {
                     '#0c170c'
                 ]
             );
+
+            assert.ok(
+                shades.every(
+                    color => color instanceof Color
+                )
+            );
         });
 
         it('works with shades argument', function() {
+            const shades = Color.fromHSV(120, 50, 50).shades(5);
             assert.deepEqual(
-                Color.fromHSV(120, 50, 50)
-                    .shades(5)
-                    .map(
-                        color => color.toString()
-                    ),
+                shades.map(
+                    color => color.toString()
+                ),
                 [
                     '#408040',
                     '#356a35',
@@ -41,17 +45,22 @@ describe('Color Palette Tests', function() {
                     '#152b15'
                 ]
             );
+
+            assert.ok(
+                shades.every(
+                    color => color instanceof Color
+                )
+            );
         });
     });
 
     describe('#tints', function() {
         it('creates a tints palette', function() {
+            const tints = Color.fromHSV(120, 50, 50).tints();
             assert.deepEqual(
-                Color.fromHSV(120, 50, 50)
-                    .tints()
-                    .map(
-                        color => color.toString()
-                    ),
+                tints.map(
+                    color => color.toString()
+                ),
                 [
                     '#408040',
                     '#518b51',
@@ -65,15 +74,20 @@ describe('Color Palette Tests', function() {
                     '#dce8dc'
                 ]
             );
+
+            assert.ok(
+                tints.every(
+                    color => color instanceof Color
+                )
+            );
         });
 
         it('works with tints argument', function() {
+            const tints = Color.fromHSV(120, 50, 50).tints(5);
             assert.deepEqual(
-                Color.fromHSV(120, 50, 50)
-                    .tints(5)
-                    .map(
-                        color => color.toString()
-                    ),
+                tints.map(
+                    color => color.toString()
+                ),
                 [
                     '#408040',
                     '#609560',
@@ -82,17 +96,22 @@ describe('Color Palette Tests', function() {
                     '#bfd5bf'
                 ]
             );
+
+            assert.ok(
+                tints.every(
+                    color => color instanceof Color
+                )
+            );
         });
     });
 
     describe('#tones', function() {
         it('creates a tones palette', function() {
+            const tones = Color.fromHSV(120, 50, 50).tones();
             assert.deepEqual(
-                Color.fromHSV(120, 50, 50)
-                    .tones()
-                    .map(
-                        color => color.toString()
-                    ),
+                tones.map(
+                    color => color.toString()
+                ),
                 [
                     '#408040',
                     '#468046',
@@ -106,15 +125,20 @@ describe('Color Palette Tests', function() {
                     '#748074'
                 ]
             );
+
+            assert.ok(
+                tones.every(
+                    color => color instanceof Color
+                )
+            );
         });
 
         it('works with tones argument', function() {
+            const tones = Color.fromHSV(120, 50, 50).tones(5);
             assert.deepEqual(
-                Color.fromHSV(120, 50, 50)
-                    .tones(5)
-                    .map(
-                        color => color.toString()
-                    ),
+                tones.map(
+                    color => color.toString()
+                ),
                 [
                     '#408040',
                     '#4a804a',
@@ -122,6 +146,12 @@ describe('Color Palette Tests', function() {
                     '#608060',
                     '#6a806a'
                 ]
+            );
+
+            assert.ok(
+                tones.every(
+                    color => color instanceof Color
+                )
             );
         });
     });
@@ -189,16 +219,32 @@ describe('Color Palette Tests', function() {
                     ]
                 }
             );
+
+            assert.ok(
+                palette.shades.every(
+                    color => color instanceof Color
+                )
+            );
+            assert.ok(
+                palette.tints.every(
+                    color => color instanceof Color
+                )
+            );
+            assert.ok(
+                palette.tones.every(
+                    color => color instanceof Color
+                )
+            );
         });
 
         it('works with shades argument', function() {
+            const palette = Color.fromHSV(120, 50, 50)
+                .palette(5, 0, 0);
+
             assert.deepEqual(
-                Color.fromHSV(120, 50, 50)
-                    .palette(5, 0, 0)
-                    .shades
-                    .map(
-                        color => color.toString()
-                    ),
+                palette.shades.map(
+                    color => color.toString()
+                ),
                 [
                     '#408040',
                     '#356a35',
@@ -207,16 +253,30 @@ describe('Color Palette Tests', function() {
                     '#152b15'
                 ]
             );
+
+            assert.equal(
+                palette.tints.length,
+                0
+            );
+            assert.equal(
+                palette.tones.length,
+                0
+            );
+            assert.ok(
+                palette.shades.every(
+                    color => color instanceof Color
+                )
+            );
         });
 
         it('works with tints argument', function() {
+            const palette = Color.fromHSV(120, 50, 50)
+                .palette(0, 5, 0);
+
             assert.deepEqual(
-                Color.fromHSV(120, 50, 50)
-                    .palette(0, 5, 0)
-                    .tints
-                    .map(
-                        color => color.toString()
-                    ),
+                palette.tints.map(
+                    color => color.toString()
+                ),
                 [
                     '#408040',
                     '#609560',
@@ -225,16 +285,30 @@ describe('Color Palette Tests', function() {
                     '#bfd5bf'
                 ]
             );
+
+            assert.equal(
+                palette.shades.length,
+                0
+            );
+            assert.equal(
+                palette.tones.length,
+                0
+            );
+            assert.ok(
+                palette.tints.every(
+                    color => color instanceof Color
+                )
+            );
         });
 
         it('works with tones argument', function() {
+            const palette = Color.fromHSV(120, 50, 50)
+                .palette(0, 0, 5);
+
             assert.deepEqual(
-                Color.fromHSV(120, 50, 50)
-                    .palette(0, 0, 5)
-                    .tones
-                    .map(
-                        color => color.toString()
-                    ),
+                palette.tones.map(
+                    color => color.toString()
+                ),
                 [
                     '#408040',
                     '#4a804a',
@@ -242,6 +316,20 @@ describe('Color Palette Tests', function() {
                     '#608060',
                     '#6a806a'
                 ]
+            );
+
+            assert.equal(
+                palette.shades.length,
+                0
+            );
+            assert.equal(
+                palette.tints.length,
+                0
+            );
+            assert.ok(
+                palette.tones.every(
+                    color => color instanceof Color
+                )
             );
         });
     });
