@@ -41,7 +41,7 @@ describe('Color Primitive Tests', function() {
         it('returns the luma value', function() {
             assert.equal(
                 Color.fromHSV(180, 50, 50)
-                    .luma(),
+                    .valueOf(),
                 0.44684999999999997
             );
         });
