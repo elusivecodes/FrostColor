@@ -30,7 +30,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /**
  * FrostColor v1.0.0
@@ -51,9 +51,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    * @class
    */
 
-  var Color =
-  /*#__PURE__*/
-  function () {
+  var Color = /*#__PURE__*/function () {
     /**
      * New Color constructor.
      * @param {number|BaseColor|Color} [a=0] The red value, the brightness value, or a Color or BaseColor object.
@@ -196,9 +194,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    */
 
 
-  var ColorImmutable =
-  /*#__PURE__*/
-  function (_Color) {
+  var ColorImmutable = /*#__PURE__*/function (_Color) {
     _inherits(ColorImmutable, _Color);
 
     function ColorImmutable() {
@@ -1185,9 +1181,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    * @class
    */
 
-  var BaseColor =
-  /*#__PURE__*/
-  function () {
+  var BaseColor = /*#__PURE__*/function () {
     /**
      * New BaseColor constructor.
      * @param {number} [a=1] The alpha value. (0, 1)
@@ -1450,9 +1444,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    */
 
 
-  var CMYColor =
-  /*#__PURE__*/
-  function (_BaseColor) {
+  var CMYColor = /*#__PURE__*/function (_BaseColor) {
     _inherits(CMYColor, _BaseColor);
 
     /**
@@ -1528,9 +1520,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    */
 
 
-  var CMYKColor =
-  /*#__PURE__*/
-  function (_BaseColor2) {
+  var CMYKColor = /*#__PURE__*/function (_BaseColor2) {
     _inherits(CMYKColor, _BaseColor2);
 
     /**
@@ -1608,9 +1598,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    */
 
 
-  var HSLColor =
-  /*#__PURE__*/
-  function (_BaseColor3) {
+  var HSLColor = /*#__PURE__*/function (_BaseColor3) {
     _inherits(HSLColor, _BaseColor3);
 
     /**
@@ -1717,9 +1705,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    */
 
 
-  var HSVColor =
-  /*#__PURE__*/
-  function (_BaseColor4) {
+  var HSVColor = /*#__PURE__*/function (_BaseColor4) {
     _inherits(HSVColor, _BaseColor4);
 
     /**
@@ -1848,9 +1834,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    */
 
 
-  var RGBColor =
-  /*#__PURE__*/
-  function (_BaseColor5) {
+  var RGBColor = /*#__PURE__*/function (_BaseColor5) {
     _inherits(RGBColor, _BaseColor5);
 
     /**
