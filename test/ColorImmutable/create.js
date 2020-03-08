@@ -129,6 +129,58 @@ describe('ColorImmutable Creation Tests', function() {
                 'red'
             );
         });
+
+        it('works with hsl string', function() {
+            assert.equal(
+                ColorImmutable.fromString('hsl(155, 30%, 70%)')
+                    .toString(),
+                '#9cc9b6'
+            );
+        });
+
+        it('works with hsla string', function() {
+            assert.equal(
+                ColorImmutable.fromString('hsla(180, 100%, 30%, .5)')
+                    .toString(),
+                'rgba(0, 153, 153, 0.5)'
+            );
+        });
+
+        it('throws error with invalid hex string', function() {
+            assert.throws(_ => {
+                ColorImmutable.fromString('#INVALID');
+            });
+        });
+
+        it('throws error with invalid rgb string', function() {
+            assert.throws(_ => {
+                ColorImmutable.fromString('rgb(INVALID)');
+            });
+        });
+
+        it('throws error with invalid rgba string', function() {
+            assert.throws(_ => {
+                ColorImmutable.fromString('rgba(INVALID)');
+            });
+        });
+
+        it('throws error with invalid hsl string', function() {
+            assert.throws(_ => {
+                ColorImmutable.fromString('hsl(INVALID)');
+            });
+        });
+
+        it('throws error with invalid hsla string', function() {
+            assert.throws(_ => {
+                ColorImmutable.fromString('hsla(INVALID)');
+            });
+        });
+
+        it('throws error with invalid string', function() {
+            assert.throws(_ => {
+                ColorImmutable.fromString('INVALID');
+            });
+        });
     });
 
     describe('#fromRGB', function() {
