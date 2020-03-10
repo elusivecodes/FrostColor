@@ -51,7 +51,7 @@ describe('Color Primitive Tests', function() {
         it('returns a html color name', function() {
             const color = new Color(255, 0, 0);
             assert.equal(
-                `${color}`,
+                color[Symbol.toPrimitive]('string'),
                 'red'
             );
         });
@@ -59,7 +59,7 @@ describe('Color Primitive Tests', function() {
         it('returns a short hex string', function() {
             const color = new Color(17, 17, 17);
             assert.equal(
-                `${color}`,
+                color[Symbol.toPrimitive]('string'),
                 '#111'
             );
         });
@@ -67,7 +67,7 @@ describe('Color Primitive Tests', function() {
         it('returns a hex string', function() {
             const color = new Color(120, 50, 50);
             assert.equal(
-                `${color}`,
+                color[Symbol.toPrimitive]('string'),
                 '#783232'
             );
         });
@@ -75,14 +75,17 @@ describe('Color Primitive Tests', function() {
         it('returns a rgba string', function() {
             const color = new Color(120, 50, 50, .5);
             assert.equal(
-                `${color}`,
+                color[Symbol.toPrimitive]('string'),
                 'rgba(120, 50, 50, 0.5)'
             );
         });
 
         it('returns the luma value', function() {
             const color = Color.fromHSV(180, 50, 50);
-            assert.ok(color < .5);
+            assert.equal(
+                color[Symbol.toPrimitive]('number'),
+                0.44684999999999997
+            );
         });
     });
 
