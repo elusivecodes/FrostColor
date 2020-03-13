@@ -2,7 +2,7 @@
 
 **FrostColor** is a free, open-source color manipulation library for *JavaScript*.
 
-It is a lightweight (~4kb gzipped) and modern library, and features full support for RGB, HSL, HSV, CMY and CMYK color-spaces.
+It is a lightweight (~5kb gzipped) and modern library, and features full support for RGB, HSL, HSV, CMY and CMYK color-spaces.
 
 
 ## Table Of Contents
