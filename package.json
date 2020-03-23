@@ -13,7 +13,7 @@
         "@babel/core": "^7.8.7",
         "@babel/preset-env": "^7.8.7",
         "filepath": "^1.1.0",
-        "mocha": "^6.2.2",
+        "mocha": "^7.1.1",
         "terser": "^4.6.6"
     }
 }
