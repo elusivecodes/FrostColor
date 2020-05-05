@@ -1,28 +1,34 @@
 "use strict";
 
-function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
 
-function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -197,10 +203,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   var ColorImmutable = /*#__PURE__*/function (_Color) {
     _inherits(ColorImmutable, _Color);
 
+    var _super = _createSuper(ColorImmutable);
+
     function ColorImmutable() {
       _classCallCheck(this, ColorImmutable);
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(ColorImmutable).apply(this, arguments));
+      return _super.apply(this, arguments);
     }
 
     _createClass(ColorImmutable, [{
@@ -912,12 +920,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     shades: function shades() {
       var _this = this;
 
-      var _shades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
+      var shades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
       var rgb = this._color.toRGB();
 
-      return new Array(_shades).fill().map(function (_, index) {
-        return new _this.constructor(rgb).shade(index / (_shades + 1));
+      return new Array(shades).fill().map(function (_, index) {
+        return new _this.constructor(rgb).shade(index / (shades + 1));
       });
     },
 
@@ -929,12 +937,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     tints: function tints() {
       var _this2 = this;
 
-      var _tints = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
+      var tints = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
       var rgb = this._color.toRGB();
 
-      return new Array(_tints).fill().map(function (_, index) {
-        return new _this2.constructor(rgb).tint(index / (_tints + 1));
+      return new Array(tints).fill().map(function (_, index) {
+        return new _this2.constructor(rgb).tint(index / (tints + 1));
       });
     },
 
@@ -946,12 +954,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     tones: function tones() {
       var _this3 = this;
 
-      var _tones = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
+      var tones = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
 
       var rgb = this._color.toRGB();
 
-      return new Array(_tones).fill().map(function (_, index) {
-        return new _this3.constructor(rgb).tone(index / (_tones + 1));
+      return new Array(tones).fill().map(function (_, index) {
+        return new _this3.constructor(rgb).tone(index / (tones + 1));
       });
     }
   });
@@ -1447,6 +1455,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   var CMYColor = /*#__PURE__*/function (_BaseColor) {
     _inherits(CMYColor, _BaseColor);
 
+    var _super2 = _createSuper(CMYColor);
+
     /**
      * New CMYColor constructor.
      * @param {number} c The cyan value. (0, 100)
@@ -1462,7 +1472,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       _classCallCheck(this, CMYColor);
 
-      _this4 = _possibleConstructorReturn(this, _getPrototypeOf(CMYColor).call(this, a));
+      _this4 = _super2.call(this, a);
       _this4._c = Color._clamp(c);
       _this4._m = Color._clamp(m);
       _this4._y = Color._clamp(y);
@@ -1523,6 +1533,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   var CMYKColor = /*#__PURE__*/function (_BaseColor2) {
     _inherits(CMYKColor, _BaseColor2);
 
+    var _super3 = _createSuper(CMYKColor);
+
     /**
      * New CMYKColor constructor.
      * @param {number} c The cyan value. (0, 100)
@@ -1539,7 +1551,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       _classCallCheck(this, CMYKColor);
 
-      _this5 = _possibleConstructorReturn(this, _getPrototypeOf(CMYKColor).call(this, a));
+      _this5 = _super3.call(this, a);
       _this5._c = Color._clamp(c);
       _this5._m = Color._clamp(m);
       _this5._y = Color._clamp(y);
@@ -1601,6 +1613,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   var HSLColor = /*#__PURE__*/function (_BaseColor3) {
     _inherits(HSLColor, _BaseColor3);
 
+    var _super4 = _createSuper(HSLColor);
+
     /**
      * New HSLColor constructor.
      * @param {number} h The hue value. (0, 360)
@@ -1616,7 +1630,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       _classCallCheck(this, HSLColor);
 
-      _this6 = _possibleConstructorReturn(this, _getPrototypeOf(HSLColor).call(this, a));
+      _this6 = _super4.call(this, a);
       _this6._h = h % 360;
       _this6._s = Color._clamp(s);
       _this6._l = Color._clamp(l);
@@ -1708,6 +1722,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   var HSVColor = /*#__PURE__*/function (_BaseColor4) {
     _inherits(HSVColor, _BaseColor4);
 
+    var _super5 = _createSuper(HSVColor);
+
     /**
      * New HSVColor constructor.
      * @param {number} h The hue value. (0, 360)
@@ -1723,7 +1739,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       _classCallCheck(this, HSVColor);
 
-      _this7 = _possibleConstructorReturn(this, _getPrototypeOf(HSVColor).call(this, a));
+      _this7 = _super5.call(this, a);
       _this7._h = h % 360;
       _this7._s = Color._clamp(s);
       _this7._v = Color._clamp(v);
@@ -1837,6 +1853,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   var RGBColor = /*#__PURE__*/function (_BaseColor5) {
     _inherits(RGBColor, _BaseColor5);
 
+    var _super6 = _createSuper(RGBColor);
+
     /**
      * New RGBColor constructor.
      * @param {number} r The red value. (0, 255)
@@ -1852,7 +1870,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       _classCallCheck(this, RGBColor);
 
-      _this8 = _possibleConstructorReturn(this, _getPrototypeOf(RGBColor).call(this, a));
+      _this8 = _super6.call(this, a);
       _this8._r = Color._clamp(r, 0, 255);
       _this8._g = Color._clamp(g, 0, 255);
       _this8._b = Color._clamp(b, 0, 255);

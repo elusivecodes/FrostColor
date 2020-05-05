@@ -10,10 +10,10 @@
     "author": "Elusive",
     "license": "MIT",
     "devDependencies": {
-        "@babel/core": "^7.8.7",
-        "@babel/preset-env": "^7.8.7",
+        "@babel/core": "^7.9.6",
+        "@babel/preset-env": "^7.9.6",
         "filepath": "^1.1.0",
-        "mocha": "^7.1.1",
-        "terser": "^4.6.6"
+        "mocha": "^7.1.2",
+        "terser": "^4.6.13"
     }
 }
