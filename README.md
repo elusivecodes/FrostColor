@@ -20,8 +20,22 @@ It is a lightweight (~5kb gzipped) and modern library, and features full support
 
 ## Installation
 
+**In Browser**
+
 ```html
 <script type="text/javascript" src="/path/to/frost-color.min.js"></script>
+```
+
+**Using NPM**
+
+```
+npm install frostcolor
+```
+
+In Node.js:
+
+```javascript
+const { Color, ColorImmutable } = require('frostcolor');
 ```
 
 

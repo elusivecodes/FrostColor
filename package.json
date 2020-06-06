@@ -2,13 +2,38 @@
     "name": "frostcolor",
     "version": "1.0.0",
     "description": "FrostColor is a free, open-source color manipulation library for JavaScript.",
-    "main": "build.js",
+    "keywords": [
+        "color",
+        "rgb",
+        "rgba",
+        "hex",
+        "hsl",
+        "hsv",
+        "cmy",
+        "cmyk"
+    ],
+    "homepage": "https://github.com/elusivecodes/FrostColor",
+    "bugs": {
+        "url": "https://github.com/elusivecodes/FrostColor/issues",
+        "email": "elusivecodes@gmail.com"
+    },
+    "main": "./dist/frost-color.js",
+    "files": [
+        "/dist/frost-color.js",
+        "/LICENSE",
+        "/README.md"
+    ],
     "scripts": {
-        "start": "node build.js",
+        "build": "node build.js",
         "test": "./node_modules/mocha/bin/mocha --recursive"
     },
-    "author": "Elusive",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/elusivecodes/FrostColor.git"
+    },
+    "author": "Elusive <elusivecodes@gmail.com>",
     "license": "MIT",
+    "private": false,
     "devDependencies": {
         "@babel/core": "^7.9.6",
         "@babel/preset-env": "^7.9.6",
