@@ -29,7 +29,7 @@ It is a lightweight (~5kb gzipped) and modern library, and features full support
 **Using NPM**
 
 ```
-npm install frostcolor
+npm i frostcolor
 ```
 
 In Node.js:
