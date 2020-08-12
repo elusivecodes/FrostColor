@@ -38,7 +38,7 @@ filepath.create(srcFolder).recurse(fullPath => {
 // inject code to wrapper
 const code = wrapper.replace(
     '    // {{code}}',
-    files.join('\r\n')
+    _ => files.join('\r\n')
         .replace(
             /^(?!\s*$)/mg,
             ' '.repeat(4)
