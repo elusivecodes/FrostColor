@@ -106,6 +106,7 @@ Object.assign(Color, {
      */
     fromHSLAString(string) {
         const HSLAMatch = string.match(this._hslaRegExp);
+
         if (!HSLAMatch) {
             throw new Error('Invalid HSLA string');
         }
