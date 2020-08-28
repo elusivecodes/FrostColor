@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { Color } = require('../../dist/frost-color.min');
 
-describe('Color Attribute Tests', function() {
+describe('Color Attributes', function() {
 
     describe('#getAlpha', function() {
         it('returns the alpha value', function() {

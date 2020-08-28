@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { ColorImmutable } = require('../../dist/frost-color.min');
 
-describe('ColorImmutable Formatting Tests', function() {
+describe('ColorImmutable Formatting', function() {
 
     describe('#toHexString', function() {
         it('returns a short hex string', function() {

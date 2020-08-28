@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { Color } = require('../../dist/frost-color.min');
 
-describe('Color Palette Tests', function() {
+describe('Color Palette', function() {
 
     describe('#shades', function() {
         it('creates a shades palette', function() {

@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { ColorImmutable } = require('../../dist/frost-color.min');
 
-describe('ColorImmutable Attribute Tests', function() {
+describe('ColorImmutable Attributes', function() {
 
     describe('#getAlpha', function() {
         it('returns the alpha value', function() {

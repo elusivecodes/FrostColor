@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { Color } = require('../../dist/frost-color.min');
 
-describe('Color Manipulation Tests', function() {
+describe('Color Manipulation', function() {
 
     describe('#darken', function() {
         it('darkens the color', function() {

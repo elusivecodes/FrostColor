@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { Color } = require('../../dist/frost-color.min');
 
-describe('Color Formatting Tests', function() {
+describe('Color Formatting', function() {
 
     describe('#toHexString', function() {
         it('returns a short hex string', function() {

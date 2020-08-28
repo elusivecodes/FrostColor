@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { Color, ColorImmutable } = require('../../dist/frost-color.min');
 
-describe('ColorImmutable Creation Tests', function() {
+describe('ColorImmutable Creation', function() {
 
     describe('#constructor', function() {
         it('works with red argument', function() {

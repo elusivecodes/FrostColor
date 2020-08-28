@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { ColorImmutable } = require('../../dist/frost-color.min');
 
-describe('ColorImmutable Palette Tests', function() {
+describe('ColorImmutable Palette', function() {
 
     describe('#shades', function() {
         it('creates a shades palette', function() {

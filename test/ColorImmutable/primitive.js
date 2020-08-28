@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { ColorImmutable } = require('../../dist/frost-color.min');
 
-describe('ColorImmutable Primitive Tests', function() {
+describe('ColorImmutable Primitive', function() {
 
     describe('#toString', function() {
         it('returns a html color name', function() {

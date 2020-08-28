@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { Color } = require('../../dist/frost-color.min');
 
-describe('Color Scheme Tests', function() {
+describe('Color Schemes', function() {
 
     describe('#analogous', function() {
         it('returns 2 analogous colors', function() {

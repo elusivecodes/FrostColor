@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { Color, ColorImmutable } = require('../../dist/frost-color.min');
 
-describe('ColorImmutable Static Tests', function() {
+describe('ColorImmutable Static', function() {
 
     describe('#dist', function() {
         it('returns the distance between two colors', function() {

@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const { ColorImmutable } = require('../../dist/frost-color.min');
 
-describe('ColorImmutable Scheme Tests', function() {
+describe('ColorImmutable Schemes', function() {
 
     describe('#analogous', function() {
         it('returns 2 analogous colors', function() {
