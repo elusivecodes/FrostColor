@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const filepath = require('filepath');
 const terser = require('terser');
-const babel = require('@babel/core');
 
 const srcFolder = 'src';
 const distFolder = 'dist';
@@ -65,28 +64,5 @@ if (minified.error) {
     fs.writeFileSync(
         path.join(distFolder, name + '.min.js'),
         minified.code
-    );
-}
-
-// es5 transpile
-const es5 = babel.transformSync(code, { presets: ['@babel/env'] });
-
-// write file
-fs.writeFileSync(
-    path.join(distFolder, name + '-es5.js'),
-    es5.code
-);
-
-// minify
-const minifiedes5 = terser.minify(es5.code, {
-    ecma: 5
-});
-
-if (minifiedes5.error) {
-    console.error(minifiedes5.error);
-} else {
-    fs.writeFileSync(
-        path.join(distFolder, name + '-es5.min.js'),
-        minifiedes5.code
     );
 }
