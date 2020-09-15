@@ -51,42 +51,6 @@ describe('ColorImmutable Creation', function() {
                 'rgba(255, 255, 255, 0.5)'
             );
         });
-
-        it('works with Color argument', function() {
-            const color1 = new Color(255, 0, 0);
-            const color2 = new ColorImmutable(color1);
-            const color3 = color2.setAlpha(.5);
-            assert.equal(
-                color1.toString(),
-                'red'
-            );
-            assert.equal(
-                color2.toString(),
-                'red'
-            );
-            assert.equal(
-                color3.toString(),
-                'rgba(255, 0, 0, 0.5)'
-            );
-        });
-
-        it('works with ColorImmutable argument', function() {
-            const color1 = new ColorImmutable(255, 0, 0);
-            const color2 = new ColorImmutable(color1);
-            const color3 = color2.setAlpha(.5);
-            assert.equal(
-                color1.toString(),
-                'red'
-            );
-            assert.equal(
-                color2.toString(),
-                'red'
-            );
-            assert.equal(
-                color3.toString(),
-                'rgba(255, 0, 0, 0.5)'
-            );
-        });
     });
 
     describe('#fromString', function() {

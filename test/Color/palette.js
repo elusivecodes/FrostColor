@@ -93,7 +93,7 @@ describe('Color Palette', function() {
                     '#609560',
                     '#80aa80',
                     '#9fbf9f',
-                    '#bfd5bf'
+                    '#bfd4bf'
                 ]
             );
 
@@ -122,7 +122,7 @@ describe('Color Palette', function() {
                     '#638063',
                     '#688068',
                     '#6e806e',
-                    '#748074'
+                    '#747f74'
                 ]
             );
 
@@ -215,7 +215,7 @@ describe('Color Palette', function() {
                         '#638063',
                         '#688068',
                         '#6e806e',
-                        '#748074'
+                        '#747f74'
                     ]
                 }
             );
@@ -282,7 +282,7 @@ describe('Color Palette', function() {
                     '#609560',
                     '#80aa80',
                     '#9fbf9f',
-                    '#bfd5bf'
+                    '#bfd4bf'
                 ]
             );
 

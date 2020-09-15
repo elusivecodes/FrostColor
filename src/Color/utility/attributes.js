@@ -9,7 +9,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The alpha value. (0, 1)
      */
     getAlpha() {
-        return this._color.getAlpha();
+        return this._a;
     },
 
     /**
@@ -17,7 +17,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The brightness value. (0, 100)
      */
     getBrightness() {
-        return this._color.getBrightness();
+        return this._getHSV()[2];
     },
 
     /**
@@ -25,7 +25,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The hue value. (0, 360)
      */
     getHue() {
-        return this._color.getHue();
+        return this._getHSV()[0];
     },
 
     /**
@@ -33,7 +33,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The saturation value. (0, 100)
      */
     getSaturation() {
-        return this._color.getSaturation();
+        return this._getHSV()[1];
     },
 
     /**
@@ -41,7 +41,7 @@ Object.assign(Color.prototype, {
      * @returns {number} The luminance value. (0, 1)
      */
     luma() {
-        return this._color.luma();
+        return this.constructor.RGB2Luma(this._r, this._g, this._b);
     },
 
     /**
@@ -51,7 +51,10 @@ Object.assign(Color.prototype, {
      */
     setAlpha(a) {
         return this.setColor(
-            this._color.setAlpha(a)
+            this._r,
+            this._g,
+            this._b,
+            a
         );
     },
 
@@ -61,8 +64,13 @@ Object.assign(Color.prototype, {
      * @returns {Color} The modified Color object.
      */
     setBrightness(v) {
+        const [h, s, _] = this._getHSV();
+        const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
         return this.setColor(
-            this._color.setBrightness(v)
+            r,
+            g,
+            b,
+            this._a
         );
     },
 
@@ -72,8 +80,13 @@ Object.assign(Color.prototype, {
      * @returns {Color} The modified Color object.
      */
     setHue(h) {
+        const [_, s, v] = this._getHSV();
+        const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
         return this.setColor(
-            this._color.setHue(h)
+            r,
+            g,
+            b,
+            this._a
         );
     },
 
@@ -83,8 +96,13 @@ Object.assign(Color.prototype, {
      * @returns {Color} The modified Color object.
      */
     setSaturation(s) {
+        const [h, _, v] = this._getHSV();
+        const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
         return this.setColor(
-            this._color.setSaturation(s)
+            r,
+            g,
+            b,
+            this._a
         );
     }
 

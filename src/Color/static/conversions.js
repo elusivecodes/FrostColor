@@ -289,7 +289,7 @@ Object.assign(Color, {
                 h = deltaB - deltaG;
                 break;
             case g:
-                h = 1 / 2
+                h = 1 / 3
                     + deltaR
                     - deltaB;
                 break;
@@ -360,7 +360,7 @@ Object.assign(Color, {
                 h = deltaB - deltaG;
                 break;
             case g:
-                h = 1 / 2
+                h = 1 / 3
                     + deltaR - deltaB;
                 break;
             case b:

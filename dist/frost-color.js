@@ -1,5 +1,5 @@
 /**
- * FrostColor v1.0.5
+ * FrostColor v2.0.0
  * https://github.com/elusivecodes/FrostColor
  */
 (function(global, factory) {
@@ -22,30 +22,31 @@
 
         /**
          * New Color constructor.
-         * @param {number|BaseColor|Color} [a=0] The red value, the brightness value, or a Color or BaseColor object.
-         * @param {number} [b=1] The green value or the alpha value.
-         * @param {null|number} [c=null] The blue value.
-         * @param {number} [d=1] The alpha value.
+         * @param {number} [r=0] The red value, or the brightness value.
+         * @param {number} [g=1] The green value or the alpha value.
+         * @param {null|number} [b=null] The blue value.
+         * @param {number} [a=1] The alpha value.
          * @returns {Color} A new Color object.
          */
-        constructor(a = 0, b = 1, c = null, d = 1) {
-            if (a instanceof BaseColor) {
-                this._color = a;
-            } else if (a instanceof Color) {
-                this._color = a.getColor();
-            } else if (c !== null) {
-                this._color = new RGBColor(a, b, c, d);
-            } else {
-                this._color = new HSVColor(0, 0, a, b);
+        constructor(r = 0, g = 1, b = null, a = 1) {
+            if (b === null) {
+                a = g;
+                r *= 2.55;
+                b = g = r;
             }
+
+            this._r = this.constructor._clamp(r, 0, 255);
+            this._g = this.constructor._clamp(g, 0, 255);
+            this._b = this.constructor._clamp(b, 0, 255);
+            this._a = this.constructor._clamp(a, 0, 1);
         }
 
         /**
-         * Return the internal BaseColor of the Color object.
-         * @returns {BaseColor} The BaseColor.
+         * Clone the Color.
+         * @returns {Color} A new Color object.
          */
-        getColor() {
-            return this._color;
+        clone() {
+            return new this.constructor(this._r, this._g, this._b, this._a);
         }
 
         /**
@@ -56,9 +57,9 @@
             let closest,
                 closestDist = Number.MAX_SAFE_INTEGER;
 
-            for (const label in Color.colors) {
-                const color = Color.fromHexString(Color.colors[label]);
-                const dist = Color.dist(this, color);
+            for (const label in this.constructor.colors) {
+                const color = this.constructor.fromHexString(this.constructor.colors[label]);
+                const dist = this.constructor.dist(this, color);
 
                 if (dist < closestDist) {
                     closest = label;
@@ -70,12 +71,19 @@
         }
 
         /**
-         * Set the BaseColor of the Color object.
-         * @param {BaseColor} color A new BaseColor.
+         * Set the RGBA values of the Color.
+         * @param {number} r The red value.
+         * @param {number} g The green value.
+         * @param {number} b The blue value.
+         * @param {number} a The alpha value.
          * @returns {Color} The Color object.
          */
-        setColor(color) {
-            this._color = color;
+        setColor(r, g, b, a) {
+            this._r = this.constructor._clamp(r, 0, 255);
+            this._g = this.constructor._clamp(g, 0, 255);
+            this._b = this.constructor._clamp(b, 0, 255);
+            this._a = this.constructor._clamp(a, 0, 1);
+
             return this;
         }
 
@@ -84,7 +92,9 @@
          * @returns {string} The hexadecimal string.
          */
         toHexString() {
-            return this._color.toHexString();
+            const hex = this._getHex();
+
+            return this.constructor._toHex(hex);
         }
 
         /**
@@ -92,7 +102,18 @@
          * @returns {string} The HSL/HSLA string.
          */
         toHSLString() {
-            return this._color.toHSLString();
+            let [h, s, l] = this.constructor.RGB2HSL(this._r, this._g, this._b);
+
+            h = Math.round(h);
+            s = Math.round(s);
+            l = Math.round(l);
+            const a = Math.round(this._a * 100) / 100;
+
+            if (a < 1) {
+                return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+            }
+
+            return `hsl(${h}, ${s}%, ${l}%)`;
         }
 
         /**
@@ -100,7 +121,16 @@
          * @returns {string} The RGB/RGBA string.
          */
         toRGBString() {
-            return this._color.toRGBString();
+            const r = Math.round(this._r);
+            const g = Math.round(this._g);
+            const b = Math.round(this._b);
+            const a = Math.round(this._a * 1000) / 1000;
+
+            if (a < 1) {
+                return `rgba(${r}, ${g}, ${b}, ${a})`;
+            }
+
+            return `rgb(${r}, ${g}, ${b})`;
         }
 
         /**
@@ -108,7 +138,23 @@
          * @returns {string} The HTML color string.
          */
         toString() {
-            return this._color.toString();
+            if (!this._a) {
+                return 'transparent';
+            }
+
+            if (this._a < 1) {
+                return this.toRGBString();
+            }
+
+            const hex = this._getHex();
+
+            for (const name in this.constructor.colors) {
+                if (this.constructor.colors[name] === hex) {
+                    return name;
+                }
+            }
+
+            return this.constructor._toHex(hex);
         }
 
         /**
@@ -116,7 +162,7 @@
          * @returns {number} The luminance value. (0, 1)
          */
         valueOf() {
-            return this._color.valueOf();
+            return this.luma();
         }
 
         /**
@@ -124,7 +170,9 @@
          * @returns {string|number} The HTML color string, or the luminance value.
          */
         [Symbol.toPrimitive](hint) {
-            return this._color[Symbol.toPrimitive](hint);
+            return hint === 'number' ?
+                this.valueOf() :
+                this.toString();
         }
 
     }
@@ -136,12 +184,15 @@
     class ColorImmutable extends Color {
 
         /**
-         * Create a new ColorImmutable from a BaseColor.
-         * @param {BaseColor} color A new BaseColor.
+         * Create a new ColorImmutable from RGBA values.
+         * @param {number} r The red value.
+         * @param {number} g The green value.
+         * @param {number} b The blue value.
+         * @param {number} a The alpha value.
          * @returns {ColorImmutable} A new ColorImmutable object.
          */
-        setColor(color) {
-            return new ColorImmutable(color);
+        setColor(r, g, b, a) {
+            return new this.constructor(r, g, b, a);
         }
 
     }
@@ -437,7 +488,7 @@
                     h = deltaB - deltaG;
                     break;
                 case g:
-                    h = 1 / 2
+                    h = 1 / 3
                         + deltaR
                         - deltaB;
                     break;
@@ -508,7 +559,7 @@
                     h = deltaB - deltaG;
                     break;
                 case g:
-                    h = 1 / 2
+                    h = 1 / 3
                         + deltaR - deltaB;
                     break;
                 case b:
@@ -576,9 +627,8 @@
          * @returns {Color} A new Color object.
          */
         fromCMY(c, m, y, a = 1) {
-            return new this(
-                new CMYColor(c, m, y, a)
-            );
+            const [r, g, b] = this.CMY2RGB(c, m, y);
+            return new this(r, g, b, a);
         },
 
         /**
@@ -591,9 +641,8 @@
          * @returns {Color} A new Color object.
          */
         fromCMYK(c, m, y, k, a = 1) {
-            return new this(
-                new CMYKColor(c, m, y, k, a)
-            );
+            [c, m, y] = this.CMYK2CMY(c, m, y, k);
+            return this.fromCMY(c, m, y, a);
         },
 
         /**
@@ -642,9 +691,8 @@
          * @returns {Color} A new Color object.
          */
         fromHSL(h, s, l, a = 1) {
-            return new this(
-                new HSLColor(h, s, l, a)
-            );
+            const [r, g, b] = this.HSL2RGB(h, s, l);
+            return new this(r, g, b, a);
         },
 
         /**
@@ -693,9 +741,8 @@
          * @returns {Color} A new Color object.
          */
         fromHSV(h, s, v, a = 1) {
-            return new this(
-                new HSVColor(h, s, v, a)
-            );
+            const [r, g, b] = this.HSV2RGB(h, s, v);
+            return new this(r, g, b, a);
         },
 
         /**
@@ -707,9 +754,7 @@
          * @returns {Color} A new Color object.
          */
         fromRGB(r, g, b, a = 1) {
-            return new this(
-                new RGBColor(r, g, b, a)
-            );
+            return new this(r, g, b, a);
         },
 
         /**
@@ -823,6 +868,25 @@
             return a
                 * (1 - amount)
                 + b * amount;
+        },
+
+        _toHex(hex) {
+            if (hex.length === 9 &&
+                hex[1] === hex[2] &&
+                hex[3] === hex[4] &&
+                hex[5] === hex[6] &&
+                hex[7] === hex[8]) {
+                return `#${hex[1]}${hex[3]}${hex[5]}${hex[7]}`;
+            }
+
+            if (hex.length === 7 &&
+                hex[1] === hex[2] &&
+                hex[3] === hex[4] &&
+                hex[5] === hex[6]) {
+                return `#${hex[1]}${hex[3]}${hex[5]}`;
+            }
+
+            return hex;
         }
 
     });
@@ -840,13 +904,10 @@
          * @returns {number} The distance between the colors.
          */
         dist(color1, color2) {
-            const rgb1 = color1.getColor().toRGB();
-            const rgb2 = color2.getColor().toRGB();
-
             return Math.hypot(
-                rgb1._r - rgb2._r,
-                rgb1._g - rgb2._g,
-                rgb1._b - rgb2._b
+                color1._r - color2._r,
+                color1._g - color2._g,
+                color1._b - color2._b
             );
         },
 
@@ -859,11 +920,10 @@
          */
         mix(color1, color2, amount) {
             return new this(
-                color1.getColor()
-                    .mix(
-                        color2.getColor(),
-                        amount
-                    )
+                Color._lerp(color1._r, color2._r, amount),
+                Color._lerp(color1._g, color2._g, amount),
+                Color._lerp(color1._b, color2._b, amount),
+                Color._lerp(color1._a, color2._a, amount)
             );
         },
 
@@ -876,11 +936,26 @@
          */
         multiply(color1, color2, amount) {
             return new this(
-                color1.getColor()
-                    .multiply(
-                        color2.getColor(),
-                        amount
-                    )
+                Color._lerp(
+                    color1._r,
+                    color1._r * color2._r / 255,
+                    amount
+                ),
+                Color._lerp(
+                    color1._g,
+                    color1._g * color2._g / 255,
+                    amount
+                ),
+                Color._lerp(
+                    color1._b,
+                    color1._b * color2._b / 255,
+                    amount
+                ),
+                Color._lerp(
+                    color1._a,
+                    color1._a * color2._a,
+                    amount
+                )
             );
         }
 
@@ -897,7 +972,7 @@
          * @returns {number} The alpha value. (0, 1)
          */
         getAlpha() {
-            return this._color.getAlpha();
+            return this._a;
         },
 
         /**
@@ -905,7 +980,7 @@
          * @returns {number} The brightness value. (0, 100)
          */
         getBrightness() {
-            return this._color.getBrightness();
+            return this._getHSV()[2];
         },
 
         /**
@@ -913,7 +988,7 @@
          * @returns {number} The hue value. (0, 360)
          */
         getHue() {
-            return this._color.getHue();
+            return this._getHSV()[0];
         },
 
         /**
@@ -921,7 +996,7 @@
          * @returns {number} The saturation value. (0, 100)
          */
         getSaturation() {
-            return this._color.getSaturation();
+            return this._getHSV()[1];
         },
 
         /**
@@ -929,7 +1004,7 @@
          * @returns {number} The luminance value. (0, 1)
          */
         luma() {
-            return this._color.luma();
+            return this.constructor.RGB2Luma(this._r, this._g, this._b);
         },
 
         /**
@@ -939,7 +1014,10 @@
          */
         setAlpha(a) {
             return this.setColor(
-                this._color.setAlpha(a)
+                this._r,
+                this._g,
+                this._b,
+                a
             );
         },
 
@@ -949,8 +1027,13 @@
          * @returns {Color} The modified Color object.
          */
         setBrightness(v) {
+            const [h, s, _] = this._getHSV();
+            const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
             return this.setColor(
-                this._color.setBrightness(v)
+                r,
+                g,
+                b,
+                this._a
             );
         },
 
@@ -960,8 +1043,13 @@
          * @returns {Color} The modified Color object.
          */
         setHue(h) {
+            const [_, s, v] = this._getHSV();
+            const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
             return this.setColor(
-                this._color.setHue(h)
+                r,
+                g,
+                b,
+                this._a
             );
         },
 
@@ -971,10 +1059,57 @@
          * @returns {Color} The modified Color object.
          */
         setSaturation(s) {
+            const [h, _, v] = this._getHSV();
+            const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
             return this.setColor(
-                this._color.setSaturation(s)
+                r,
+                g,
+                b,
+                this._a
             );
         }
+
+    });
+
+    Object.assign(Color.prototype, {
+
+        /**
+         * Get the hex string of the Colour.
+         * @returns {string} The hex string.
+         */
+        _getHex() {
+            const [r, g, b] = [this._r, this._g, this._b].map(
+                value => (Math.round(value) | 1 << 8)
+                    .toString(16)
+                    .slice(1)
+            );
+            const hex = `#${r}${g}${b}`;
+
+            if (this._a < 1) {
+                return hex +
+                    (this._a * 255 | 1 << 8)
+                        .toString(16)
+                        .slice(1);
+            }
+
+            return hex;
+        },
+
+        /**
+         * Get the HSL values of the Colour.
+         * @returns {number[]} The HSL values.
+         */
+        _getHSL() {
+            return this.constructor.RGB2HSL(this._r, this._g, this._b);
+        },
+
+        /**
+         * Get the HSV values of the Colour.
+         * @returns {number[]} The HSV values.
+         */
+        _getHSV() {
+            return this.constructor.RGB2HSV(this._r, this._g, this._b);
+        },
 
     });
 
@@ -990,8 +1125,14 @@
          * @returns {Color} The darkened Color object.
          */
         darken(amount) {
+            let [h, s, l] = this._getHSL();
+            l -= l * amount;
+            const [r, g, b] = this.constructor.HSL2RGB(h, s, l);
             return this.setColor(
-                this._color.darken(amount)
+                r,
+                g,
+                b,
+                this._a
             );
         },
 
@@ -1001,7 +1142,10 @@
          */
         invert() {
             return this.setColor(
-                this._color.invert()
+                255 - this._r,
+                255 - this._g,
+                255 - this._b,
+                this._a
             );
         },
 
@@ -1011,8 +1155,14 @@
          * @returns {Color} The lightened Color object.
          */
         lighten(amount) {
+            let [h, s, l] = this._getHSL();
+            l += (100 - l) * amount;
+            const [r, g, b] = this.constructor.HSL2RGB(h, s, l);
             return this.setColor(
-                this._color.lighten(amount)
+                r,
+                g,
+                b,
+                this._a
             );
         },
 
@@ -1022,12 +1172,16 @@
          * @returns {Color} The shaded Color object.
          */
         shade(amount) {
+            const color = this.constructor.mix(
+                this,
+                new this.constructor(0),
+                amount
+            );
             return this.setColor(
-                Color.mix(
-                    new Color(this),
-                    new Color(0),
-                    amount
-                ).getColor()
+                color._r,
+                color._g,
+                color._b,
+                this._a
             );
         },
 
@@ -1037,12 +1191,16 @@
          * @returns {Color} The tinted Color object.
          */
         tint(amount) {
+            const color = this.constructor.mix(
+                this,
+                new this.constructor(100),
+                amount
+            );
             return this.setColor(
-                Color.mix(
-                    new Color(this),
-                    new Color(100),
-                    amount
-                ).getColor()
+                color._r,
+                color._g,
+                color._b,
+                this._a
             );
         },
 
@@ -1052,12 +1210,16 @@
          * @returns {Color} The toned Color object.
          */
         tone(amount) {
+            const color = this.constructor.mix(
+                this,
+                new this.constructor(50),
+                amount
+            );
             return this.setColor(
-                Color.mix(
-                    new Color(this),
-                    new Color(50),
-                    amount
-                ).getColor()
+                color._r,
+                color._g,
+                color._b,
+                this._a
             );
         }
 
@@ -1090,13 +1252,11 @@
          * @returns {Color[]} An array containing shade variations.
          */
         shades(shades = 10) {
-            const rgb = this._color.toRGB();
-
             return new Array(shades)
                 .fill()
                 .map(
-                    (_, index) =>
-                        new this.constructor(rgb).shade(
+                    (_, index) => this.clone()
+                        .shade(
                             index
                             / (shades + 1)
                         )
@@ -1109,13 +1269,11 @@
          * @returns {Color[]} An array containing tint variations.
          */
         tints(tints = 10) {
-            const rgb = this._color.toRGB();
-
             return new Array(tints)
                 .fill()
                 .map(
-                    (_, index) =>
-                        new this.constructor(rgb).tint(
+                    (_, index) => this.clone()
+                        .tint(
                             index
                             / (tints + 1)
                         )
@@ -1128,13 +1286,11 @@
          * @returns {Color[]} An array containing tone variations.
          */
         tones(tones = 10) {
-            const rgb = this._color.toRGB();
-
             return new Array(tones)
                 .fill()
                 .map(
-                    (_, index) =>
-                        new this.constructor(rgb).tone(
+                    (_, index) => this.clone()
+                        .tone(
                             index
                             / (tones + 1)
                         )
@@ -1154,19 +1310,12 @@
          * @returns {Color[]} An array containing 2 analogous color variations.
          */
         analogous() {
-            const hsv = this._color.toHSV();
-
+            const [h, s, v] = this.constructor.RGB2HSV(this._r, this._g, this._b);
+            const [r1, g1, b1] = this.constructor.HSV2RGB(h + 30, s, v);
+            const [r2, g2, b2] = this.constructor.HSV2RGB(h - 30, s, v);
             return [
-                new this.constructor(
-                    hsv.setHue(
-                        hsv.getHue() + 30
-                    )
-                ),
-                new this.constructor(
-                    hsv.setHue(
-                        hsv.getHue() - 30
-                    )
-                )
+                new this.constructor(r1, g1, b1, this._a),
+                new this.constructor(r2, g2, b2, this._a)
             ];
         },
 
@@ -1175,13 +1324,9 @@
          * @returns {Color} A complementary color variation.
          */
         complementary() {
-            const hsv = this._color.toHSV();
-
-            return new this.constructor(
-                hsv.setHue(
-                    hsv.getHue() + 180
-                )
-            );
+            const [h, s, v] = this.constructor.RGB2HSV(this._r, this._g, this._b);
+            const [r, g, b] = this.constructor.HSV2RGB(h + 180, s, v);
+            return new this.constructor(r, g, b, this._a)
         },
 
         /**
@@ -1189,19 +1334,12 @@
          * @returns {Color[]} An array containing 2 split color variations.
          */
         split() {
-            const hsv = this._color.toHSV();
-
+            const [h, s, v] = this.constructor.RGB2HSV(this._r, this._g, this._b);
+            const [r1, g1, b1] = this.constructor.HSV2RGB(h + 150, s, v);
+            const [r2, g2, b2] = this.constructor.HSV2RGB(h - 150, s, v);
             return [
-                new this.constructor(
-                    hsv.setHue(
-                        hsv.getHue() + 150
-                    )
-                ),
-                new this.constructor(
-                    hsv.setHue(
-                        hsv.getHue() - 150
-                    )
-                )
+                new this.constructor(r1, g1, b1, this._a),
+                new this.constructor(r2, g2, b2, this._a)
             ];
         },
 
@@ -1210,24 +1348,14 @@
          * @returns {Color[]} An array containing 3 tetradic color variations.
          */
         tetradic() {
-            const hsv = this._color.toHSV();
-
+            const [h, s, v] = this.constructor.RGB2HSV(this._r, this._g, this._b);
+            const [r1, g1, b1] = this.constructor.HSV2RGB(h + 60, s, v);
+            const [r2, g2, b2] = this.constructor.HSV2RGB(h + 180, s, v);
+            const [r3, g3, b3] = this.constructor.HSV2RGB(h - 120, s, v);
             return [
-                new this.constructor(
-                    hsv.setHue(
-                        hsv.getHue() + 60
-                    )
-                ),
-                new this.constructor(
-                    hsv.setHue(
-                        hsv.getHue() + 180
-                    )
-                ),
-                new this.constructor(
-                    hsv.setHue(
-                        hsv.getHue() + 240
-                    )
-                )
+                new this.constructor(r1, g1, b1, this._a),
+                new this.constructor(r2, g2, b2, this._a),
+                new this.constructor(r3, g3, b3, this._a)
             ];
         },
 
@@ -1236,19 +1364,12 @@
          * @returns {Color[]} An array containing 2 triadic color variations.
          */
         triadic() {
-            const hsv = this._color.toHSV();
-
+            const [h, s, v] = this.constructor.RGB2HSV(this._r, this._g, this._b);
+            const [r1, g1, b1] = this.constructor.HSV2RGB(h + 120, s, v);
+            const [r2, g2, b2] = this.constructor.HSV2RGB(h - 120, s, v);
             return [
-                new this.constructor(
-                    hsv.setHue(
-                        hsv.getHue() + 120
-                    )
-                ),
-                new this.constructor(
-                    hsv.setHue(
-                        hsv.getHue() + 240
-                    )
-                )
+                new this.constructor(r1, g1, b1, this._a),
+                new this.constructor(r2, g2, b2, this._a)
             ];
         }
 
@@ -1426,818 +1547,9 @@
 
     });
 
-    /**
-     * BaseColor class
-     * @class
-     */
-    class BaseColor {
-
-        /**
-         * New BaseColor constructor.
-         * @param {number} [a=1] The alpha value. (0, 1)
-         * @returns {BaseColor} A new BaseColor object.
-         */
-        constructor(a = 1) {
-            this._a = Color._clamp(a, 0, 1);
-        }
-
-        /**
-         * Darken the color by a specified amount.
-         * @param {number} amount The amount to darken the color by. (0, 1)
-         * @returns {HSLColor} A new HSLColor object.
-         */
-        darken(amount) {
-            return this.toHSL()
-                .darken(amount);
-        }
-
-        /**
-         * Get the alpha value of the color.
-         * @returns {number} The alpha value. (0, 1)
-         */
-        getAlpha() {
-            return this._a;
-        }
-
-        /**
-         * Get the brightness value of the color.
-         * @returns {number} The brightness value. (0, 100)
-         */
-        getBrightness() {
-            return this.toHSV()
-                .getBrightness();
-        }
-
-        /**
-         * Get the hue value of the color.
-         * @returns {number} The hue value. (0, 360)
-         */
-        getHue() {
-            return this.toHSV()
-                .getHue();
-        }
-
-        /**
-         * Get the saturation value of the color.
-         * @returns {number} The saturation value. (0, 100)
-         */
-        getSaturation() {
-            return this.toHSV()
-                .getSaturation();
-        }
-
-        /**
-         * Invert the color.
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        invert() {
-            return this.toRGB()
-                .invert();
-        }
-
-        /**
-         * Lighten the color by a specified amount.
-         * @param {number} amount The amount to lighten the color by. (0, 1)
-         * @returns {HSLColor} A new HSLColor object.
-         */
-        lighten(amount) {
-            return this.toHSL()
-                .lighten(amount);
-        }
-
-        /**
-         * Get the luminance value of the color.
-         * @returns {number} The luminance value. (0, 1)
-         */
-        luma() {
-            return this.toRGB()
-                .luma();
-        }
-
-        /**
-         * Mix this color with another by a specified amount.
-         * @param {BaseColor} color The color to mix with.
-         * @param {number} amount The amount to mix by. (0, 1)
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        mix(color, amount) {
-            return this.toRGB()
-                .mix(color, amount);
-        }
-
-        /**
-         * Multiply this color with another by a specified amount.
-         * @param {BaseColor} color The color to multiply with.
-         * @param {number} amount The amount to multiply by. (0, 1)
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        multiply(color, amount) {
-            return this.toRGB()
-                .multiply(color, amount);
-        }
-
-        /**
-         * Set the brightness value of the color.
-         * @param {number} v The brightness value. (0, 100)
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        setBrightness(v) {
-            return this.toHSV()
-                .setBrightness(v);
-        }
-
-        /**
-         * Set the hue value of the color.
-         * @param {number} h The hue value. (0, 360)
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        setHue(h) {
-            return this.toHSV()
-                .setHue(h);
-        }
-
-        /**
-         * Set the saturation value of the color.
-         * @param {number} s The saturation value. (0, 100)
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        setSaturation(s) {
-            return this.toHSV()
-                .setSaturation(s);
-        }
-
-        /**
-         * Create a CMY representation of the color.
-         * @returns {CMYColor} A new CMYColor object.
-         */
-        toCMY() {
-            return this.toRGB()
-                .toCMY();
-        }
-
-        /**
-         * Create a CMYK representation of the color.
-         * @returns {CMYKColor} A new CMYKColor object.
-         */
-        toCMYK() {
-            return this.toCMY()
-                .toCMYK();
-        }
-
-        /**
-         * Create a HSL representation of the color.
-         * @returns {HSLColor} A new HSLColor object.
-         */
-        toHSL() {
-            return this.toRGB()
-                .toHSL();
-        }
-
-        /**
-         * Create a HSV representation of the color.
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        toHSV() {
-            return this.toRGB()
-                .toHSV();
-        }
-
-        /**
-         * Return a hexadecimal string representation of the color.
-         * @returns {string} The hexadecimal string.
-         */
-        toHexString() {
-            return this.toRGB()
-                .toHexString();
-        }
-
-        /**
-         * Return a HSL/HSLA string representation of the color.
-         * @returns {string} The HSL/HSLA string.
-         */
-        toHSLString() {
-            return this.toHSL()
-                .toHSLString();
-        }
-
-        /**
-         * Return a RGB/RGBA string representation of the color.
-         * @returns {string} The RGB/RGBA string.
-         */
-        toRGBString() {
-            return this.toRGB()
-                .toRGBString();
-        }
-
-        /**
-         * Return a HTML string representation of the color.
-         * @returns {string} The HTML color string.
-         */
-        toString() {
-            return this.toRGB()
-                .toString();
-        }
-
-        /**
-         * Get the luminance value of the color.
-         * @returns {number} The luminance value. (0, 1)
-         */
-        valueOf() {
-            return this.luma();
-        }
-
-        /**
-         * Return a primitive value of the color.
-         * @returns {string|number} The HTML color string, or the luminance value.
-         */
-        [Symbol.toPrimitive](hint) {
-            return hint === 'number' ?
-                this.valueOf() :
-                this.toString();
-        }
-
-    }
-
-    /**
-     * CMYColor class
-     * @class
-     */
-    class CMYColor extends BaseColor {
-
-        /**
-         * New CMYColor constructor.
-         * @param {number} c The cyan value. (0, 100)
-         * @param {number} m The magenta value. (0, 100)
-         * @param {number} y The yellow value. (0, 100)
-         * @param {number} [a=1] The alpha value. (0, 1)
-         * @returns {CMYColor} A new CMYColor object.
-         */
-        constructor(c, m, y, a = 1) {
-            super(a);
-
-            this._c = Color._clamp(c);
-            this._m = Color._clamp(m);
-            this._y = Color._clamp(y);
-        }
-
-        /**
-         * Set the alpha value of the color.
-         * @param {number} a The alpha value. (0, 1)
-         * @returns {CMYColor} A new CMYColor object.
-         */
-        setAlpha(a) {
-            return new CMYColor(this._c, this._m, this._y, a);
-        }
-
-        /**
-         * Create a CMY representation of the color.
-         * @returns {CMYColor} A CMYColor object.
-         */
-        toCMY() {
-            return this;
-        }
-
-        /**
-         * Create a CMYK representation of the color.
-         * @returns {CMYKColor} A new CMYKColor object.
-         */
-        toCMYK() {
-            return new CMYKColor(
-                ...Color.CMY2CMYK(this._c, this._m, this._y)
-                    .concat([this._a])
-            );
-        }
-
-        /**
-         * Create a RGB representation of the color.
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        toRGB() {
-            return new RGBColor(
-                ...Color.CMY2RGB(this._c, this._m, this._y)
-                    .concat([this._a])
-            );
-        }
-
-    }
-
-    /**
-     * CMYKColor class
-     * @class
-     */
-    class CMYKColor extends BaseColor {
-
-        /**
-         * New CMYKColor constructor.
-         * @param {number} c The cyan value. (0, 100)
-         * @param {number} m The magenta value. (0, 100)
-         * @param {number} y The yellow value. (0, 100)
-         * @param {number} k The key value. (0, 100)
-         * @param {number} [a=1] The alpha value. (0, 1)
-         * @returns {CMYKColor} A new CMYKColor object.
-         */
-        constructor(c, m, y, k, a = 1) {
-            super(a);
-
-            this._c = Color._clamp(c);
-            this._m = Color._clamp(m);
-            this._y = Color._clamp(y);
-            this._k = Color._clamp(k);
-        }
-
-        /**
-         * Set the alpha value of the color.
-         * @param {number} a The alpha value. (0, 1)
-         * @returns {CMYKColor} A new CMYKColor object.
-         */
-        setAlpha(a) {
-            return new CMYKColor(this._c, this._m, this._y, this._k, a);
-        }
-
-        /**
-         * Create a CMY representation of the color.
-         * @returns {CMYColor} A new CMYColor object.
-         */
-        toCMY() {
-            return new CMYColor(
-                ...Color.CMYK2CMY(this._c, this._m, this._y, this._k)
-                    .concat([this._a])
-            );
-        }
-
-        /**
-         * Create a CMYK representation of the color.
-         * @returns {CMYKColor} A CMYKColor object.
-         */
-        toCMYK() {
-            return this;
-        }
-
-        /**
-         * Create a RGB representation of the color.
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        toRGB() {
-            return this.toCMY()
-                .toRGB();
-        }
-
-    }
-
-    /**
-     * HSLColor class
-     * @class
-     */
-    class HSLColor extends BaseColor {
-
-        /**
-         * New HSLColor constructor.
-         * @param {number} h The hue value. (0, 360)
-         * @param {number} s The saturation value. (0, 100)
-         * @param {number} l The lightness value. (0, 100)
-         * @param {number} [a=1] The alpha value. (0, 1)
-         * @returns {HSLColor} A new HSLColor object.
-         */
-        constructor(h, s, l, a = 1) {
-            super(a);
-
-            this._h = h % 360;
-            this._s = Color._clamp(s);
-            this._l = Color._clamp(l);
-        }
-
-        /**
-         * Darken the color by a specified amount.
-         * @param {number} amount The amount to darken the color by. (0, 1)
-         * @returns {HSLColor} A new HSLColor object.
-         */
-        darken(amount) {
-            return new HSLColor(
-                this._h,
-                this._s,
-                this._l
-                - (this._l * amount),
-                this._a
-            );
-        }
-
-        /**
-         * Lighten the color by a specified amount.
-         * @param {number} amount The amount to lighten the color by. (0, 1)
-         * @returns {HSLColor} A new HSLColor object.
-         */
-        lighten(amount) {
-            return new HSLColor(
-                this._h,
-                this._s,
-                this._l
-                + (
-                    (100 - this._l)
-                    * amount
-                ),
-                this._a
-            );
-        }
-
-        /**
-         * Set the alpha value of the color.
-         * @param {number} a The alpha value. (0, 1)
-         * @returns {HSLColor} A new HSLColor object.
-         */
-        setAlpha(a) {
-            return new HSLColor(this._h, this._s, this._l, a);
-        }
-
-        /**
-         * Create a HSL representation of the color.
-         * @returns {HSLColor} A HSLColor object.
-         */
-        toHSL() {
-            return this;
-        }
-
-        /**
-         * Return a HSL/HSLA string representation of the color.
-         * @returns {string} The HSL/HSLA string.
-         */
-        toHSLString() {
-            const h = Math.round(this._h);
-            const s = Math.round(this._s);
-            const l = Math.round(this._l);
-            const a = Math.round(this._a * 100) / 100;
-
-            if (a < 1) {
-                return `hsla(${h}, ${s}%, ${l}%, ${a})`;
-            }
-
-            return `hsl(${h}, ${s}%, ${l}%)`;
-        }
-
-        /**
-         * Create a RGB representation of the color.
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        toRGB() {
-            return new RGBColor(
-                ...Color.HSL2RGB(this._h, this._s, this._l)
-                    .concat([this._a])
-            );
-        }
-
-    }
-
-    /**
-     * HSVColor class
-     * @class
-     */
-    class HSVColor extends BaseColor {
-
-        /**
-         * New HSVColor constructor.
-         * @param {number} h The hue value. (0, 360)
-         * @param {number} s The saturation value. (0, 100)
-         * @param {number} v The brightness value. (0, 100)
-         * @param {number} [a=1] The alpha value. (0, 1)
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        constructor(h, s, v, a = 1) {
-            super(a);
-
-            this._h = h % 360;
-            this._s = Color._clamp(s);
-            this._v = Color._clamp(v);
-        }
-
-        /**
-         * Get the brightness value of the color.
-         * @returns {number} The brightess value. (0, 100)
-         */
-        getBrightness() {
-            return this._v;
-        }
-
-        /**
-         * Get the hue value of the color.
-         * @returns {number} The hue value. (0, 360)
-         */
-        getHue() {
-            return this._h;
-        }
-
-        /**
-         * Get the saturation value of the color.
-         * @returns {number} The saturation value. (0, 100)
-         */
-        getSaturation() {
-            return this._s;
-        }
-
-        /**
-         * Set the alpha value of the color.
-         * @param {number} a The alpha value. (0, 1)
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        setAlpha(a) {
-            return new HSVColor(this._h, this._s, this._v, a);
-        }
-
-        /**
-         * Set the brightness value of the color.
-         * @param {number} v The brightness value. (0, 100)
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        setBrightness(v) {
-            return new HSVColor(this._h, this._s, v, this._a);
-        }
-
-        /**
-         * Set the hue value of the color.
-         * @param {number} h The hue value. (0, 360)
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        setHue(h) {
-            return new HSVColor(h, this._s, this._v, this._a);
-        }
-
-        /**
-         * Set the saturation value of the color.
-         * @param {number} s The saturation value. (0, 100)
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        setSaturation(s) {
-            return new HSVColor(this._h, s, this._v, this._a);
-        }
-
-        /**
-         * Create a HSV representation of the color.
-         * @returns {HSVColor} A HSVColor object.
-         */
-        toHSV() {
-            return this;
-        }
-
-        /**
-         * Create a RGB representation of the color.
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        toRGB() {
-            return new RGBColor(
-                ...Color.HSV2RGB(this._h, this._s, this._v)
-                    .concat([this._a])
-            );
-        }
-
-    }
-
-    /**
-     * RGBColor class
-     * @class
-     */
-    class RGBColor extends BaseColor {
-
-        /**
-         * New RGBColor constructor.
-         * @param {number} r The red value. (0, 255)
-         * @param {number} g The green value. (0, 255)
-         * @param {number} b The blue value. (0, 255)
-         * @param {number} [a=1] The alpha value. (0, 1)
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        constructor(r, g, b, a = 1) {
-            super(a);
-
-            this._r = Color._clamp(r, 0, 255);
-            this._g = Color._clamp(g, 0, 255);
-            this._b = Color._clamp(b, 0, 255);
-        }
-
-        /**
-         * Invert the color.
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        invert() {
-            return new RGBColor(
-                255 - this._r,
-                255 - this._g,
-                255 - this._b,
-                this._a
-            );
-        }
-
-        /**
-         * Get the luminance value of the color.
-         * @returns {number} The luminance value. (0, 1)
-         */
-        luma() {
-            return Color.RGB2Luma(this._r, this._g, this._b);
-        }
-
-        /**
-         * Mix this color with another by a specified amount.
-         * @param {BaseColor} color The color to mix with.
-         * @param {number} amount The amount to mix by. (0, 1)
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        mix(color, amount) {
-            const rgb = color.toRGB();
-
-            return new RGBColor(
-                Color._lerp(this._r, rgb._r, amount),
-                Color._lerp(this._g, rgb._g, amount),
-                Color._lerp(this._b, rgb._b, amount),
-                Color._lerp(this._a, rgb._a, amount)
-            );
-        }
-
-        /**
-         * Multiply this color with another by a specified amount.
-         * @param {BaseColor} color The color to multiply with.
-         * @param {number} amount The amount to multiply by. (0, 1)
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        multiply(color, amount) {
-            const rgb = color.toRGB();
-
-            return new RGBColor(
-                Color._lerp(
-                    this._r,
-                    this._r * rgb._r / 255,
-                    amount
-                ),
-                Color._lerp(
-                    this._g,
-                    this._g * rgb._g / 255,
-                    amount
-                ),
-                Color._lerp(
-                    this._b,
-                    this._b * rgb._b / 255,
-                    amount
-                ),
-                Color._lerp(
-                    this._a,
-                    this._a * rgb._a,
-                    amount
-                )
-            );
-        }
-
-        /**
-         * Set the alpha value of the color.
-         * @param {number} a The alpha value. (0, 1)
-         * @returns {RGBColor} A new RGBColor object.
-         */
-        setAlpha(a) {
-            return new RGBColor(this._r, this._g, this._b, a);
-        }
-
-        /**
-         * Create a CMY representation of the color.
-         * @returns {CMYColor} A new CMYColor object.
-         */
-        toCMY() {
-            return new CMYColor(
-                ...Color.RGB2CMY(this._r, this._g, this._b)
-                    .concat([this._a])
-            );
-        }
-
-        /**
-         * Create a HSL representation of the color.
-         * @returns {HSLColor} A new HSLColor object.
-         */
-        toHSL() {
-            return new HSLColor(
-                ...Color.RGB2HSL(this._r, this._g, this._b)
-                    .concat([this._a])
-            );
-        }
-
-        /**
-         * Create a HSLV representation of the color.
-         * @returns {HSVColor} A new HSVColor object.
-         */
-        toHSV() {
-            return new HSVColor(
-                ...Color.RGB2HSV(this._r, this._g, this._b)
-                    .concat([this._a])
-            );
-        }
-
-        /**
-         * Create a RGB representation of the color.
-         * @returns {RGBColor} An RGBColor object.
-         */
-        toRGB() {
-            return this;
-        }
-
-        /**
-         * Return a hexadecimal string representation of the color.
-         * @returns {string} The hexadecimal string.
-         */
-        toHexString() {
-            const hex = this._getHex();
-
-            if (hex.length === 9 &&
-                hex[1] === hex[2] &&
-                hex[3] === hex[4] &&
-                hex[5] === hex[6] &&
-                hex[7] === hex[8]) {
-                return `#${hex[1]}${hex[3]}${hex[5]}${hex[7]}`;
-            }
-
-            if (hex.length === 7 &&
-                hex[1] === hex[2] &&
-                hex[3] === hex[4] &&
-                hex[5] === hex[6]) {
-                return `#${hex[1]}${hex[3]}${hex[5]}`;
-            }
-
-            return hex;
-        }
-
-        /**
-         * Return a RGB/RGBA string representation of the color.
-         * @returns {string} The RGB/RGBA string.
-         */
-        toRGBString() {
-            const r = Math.round(this._r);
-            const g = Math.round(this._g);
-            const b = Math.round(this._b);
-            const a = Math.round(this._a * 1000) / 1000;
-
-            if (a < 1) {
-                return `rgba(${r}, ${g}, ${b}, ${a})`;
-            }
-
-            return `rgb(${r}, ${g}, ${b})`;
-        }
-
-        /**
-         * Return a HTML string representation of the color.
-         * @returns {string} The HTML color string.
-         */
-        toString() {
-            if (!this._a) {
-                return 'transparent';
-            }
-
-            if (this._a < 1) {
-                return this.toRGBString();
-            }
-
-            const hex = this._getHex();
-
-            for (const name in Color.colors) {
-                if (Color.colors[name] === hex) {
-                    return name;
-                }
-            }
-
-            if (hex[1] === hex[2] &&
-                hex[3] === hex[4] &&
-                hex[5] === hex[6]) {
-                return `#${hex[1]}${hex[3]}${hex[5]}`;
-            }
-
-            return hex;
-        }
-
-        _getHex() {
-            const
-                r = (Math.round(this._r) | 1 << 8)
-                    .toString(16)
-                    .slice(1),
-                g = (Math.round(this._g) | 1 << 8)
-                    .toString(16)
-                    .slice(1),
-                b = (Math.round(this._b) | 1 << 8)
-                    .toString(16)
-                    .slice(1),
-                hex = `#${r}${g}${b}`;
-
-            if (this._a < 1) {
-                return hex +
-                    (this._a * 255 | 1 << 8)
-                        .toString(16)
-                        .slice(1);
-            }
-
-            return hex;
-        }
-
-    }
-
     return {
         Color,
-        ColorImmutable,
-        BaseColor,
-        CMYColor,
-        CMYKColor,
-        HSLColor,
-        HSVColor,
-        RGBColor
+        ColorImmutable
     };
 
 });

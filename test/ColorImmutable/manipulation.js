@@ -13,7 +13,7 @@ describe('ColorImmutable Manipulation', function() {
             );
             assert.equal(
                 color2.toString(),
-                '#204040'
+                '#204020'
             );
         });
     });
@@ -43,7 +43,7 @@ describe('ColorImmutable Manipulation', function() {
             );
             assert.equal(
                 color2.toString(),
-                '#95caca'
+                '#95ca95'
             );
         });
     });

@@ -11,13 +11,10 @@ Object.assign(Color, {
      * @returns {number} The distance between the colors.
      */
     dist(color1, color2) {
-        const rgb1 = color1.getColor().toRGB();
-        const rgb2 = color2.getColor().toRGB();
-
         return Math.hypot(
-            rgb1._r - rgb2._r,
-            rgb1._g - rgb2._g,
-            rgb1._b - rgb2._b
+            color1._r - color2._r,
+            color1._g - color2._g,
+            color1._b - color2._b
         );
     },
 
@@ -30,11 +27,10 @@ Object.assign(Color, {
      */
     mix(color1, color2, amount) {
         return new this(
-            color1.getColor()
-                .mix(
-                    color2.getColor(),
-                    amount
-                )
+            Color._lerp(color1._r, color2._r, amount),
+            Color._lerp(color1._g, color2._g, amount),
+            Color._lerp(color1._b, color2._b, amount),
+            Color._lerp(color1._a, color2._a, amount)
         );
     },
 
@@ -47,11 +43,26 @@ Object.assign(Color, {
      */
     multiply(color1, color2, amount) {
         return new this(
-            color1.getColor()
-                .multiply(
-                    color2.getColor(),
-                    amount
-                )
+            Color._lerp(
+                color1._r,
+                color1._r * color2._r / 255,
+                amount
+            ),
+            Color._lerp(
+                color1._g,
+                color1._g * color2._g / 255,
+                amount
+            ),
+            Color._lerp(
+                color1._b,
+                color1._b * color2._b / 255,
+                amount
+            ),
+            Color._lerp(
+                color1._a,
+                color1._a * color2._a,
+                amount
+            )
         );
     }
 

@@ -5,12 +5,15 @@
 class ColorImmutable extends Color {
 
     /**
-     * Create a new ColorImmutable from a BaseColor.
-     * @param {BaseColor} color A new BaseColor.
+     * Create a new ColorImmutable from RGBA values.
+     * @param {number} r The red value.
+     * @param {number} g The green value.
+     * @param {number} b The blue value.
+     * @param {number} a The alpha value.
      * @returns {ColorImmutable} A new ColorImmutable object.
      */
-    setColor(color) {
-        return new ColorImmutable(color);
+    setColor(r, g, b, a) {
+        return new this.constructor(r, g, b, a);
     }
 
 }

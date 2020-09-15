@@ -13,9 +13,8 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromCMY(c, m, y, a = 1) {
-        return new this(
-            new CMYColor(c, m, y, a)
-        );
+        const [r, g, b] = this.CMY2RGB(c, m, y);
+        return new this(r, g, b, a);
     },
 
     /**
@@ -28,9 +27,8 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromCMYK(c, m, y, k, a = 1) {
-        return new this(
-            new CMYKColor(c, m, y, k, a)
-        );
+        [c, m, y] = this.CMYK2CMY(c, m, y, k);
+        return this.fromCMY(c, m, y, a);
     },
 
     /**
@@ -79,9 +77,8 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromHSL(h, s, l, a = 1) {
-        return new this(
-            new HSLColor(h, s, l, a)
-        );
+        const [r, g, b] = this.HSL2RGB(h, s, l);
+        return new this(r, g, b, a);
     },
 
     /**
@@ -130,9 +127,8 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromHSV(h, s, v, a = 1) {
-        return new this(
-            new HSVColor(h, s, v, a)
-        );
+        const [r, g, b] = this.HSV2RGB(h, s, v);
+        return new this(r, g, b, a);
     },
 
     /**
@@ -144,9 +140,7 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromRGB(r, g, b, a = 1) {
-        return new this(
-            new RGBColor(r, g, b, a)
-        );
+        return new this(r, g, b, a);
     },
 
     /**

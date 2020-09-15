@@ -29,6 +29,25 @@ Object.assign(Color, {
         return a
             * (1 - amount)
             + b * amount;
+    },
+
+    _toHex(hex) {
+        if (hex.length === 9 &&
+            hex[1] === hex[2] &&
+            hex[3] === hex[4] &&
+            hex[5] === hex[6] &&
+            hex[7] === hex[8]) {
+            return `#${hex[1]}${hex[3]}${hex[5]}${hex[7]}`;
+        }
+
+        if (hex.length === 7 &&
+            hex[1] === hex[2] &&
+            hex[3] === hex[4] &&
+            hex[5] === hex[6]) {
+            return `#${hex[1]}${hex[3]}${hex[5]}`;
+        }
+
+        return hex;
     }
 
 });

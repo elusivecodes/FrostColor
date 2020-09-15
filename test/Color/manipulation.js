@@ -9,7 +9,7 @@ describe('Color Manipulation', function() {
             const color2 = color1.darken(.5);
             assert.equal(
                 color1.toString(),
-                '#204040'
+                '#204020'
             );
             assert.equal(
                 color1,
@@ -39,7 +39,7 @@ describe('Color Manipulation', function() {
             const color2 = color1.lighten(.5);
             assert.equal(
                 color1.toString(),
-                '#95caca'
+                '#95ca95'
             );
             assert.equal(
                 color1,

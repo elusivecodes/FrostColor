@@ -6,30 +6,31 @@ class Color {
 
     /**
      * New Color constructor.
-     * @param {number|BaseColor|Color} [a=0] The red value, the brightness value, or a Color or BaseColor object.
-     * @param {number} [b=1] The green value or the alpha value.
-     * @param {null|number} [c=null] The blue value.
-     * @param {number} [d=1] The alpha value.
+     * @param {number} [r=0] The red value, or the brightness value.
+     * @param {number} [g=1] The green value or the alpha value.
+     * @param {null|number} [b=null] The blue value.
+     * @param {number} [a=1] The alpha value.
      * @returns {Color} A new Color object.
      */
-    constructor(a = 0, b = 1, c = null, d = 1) {
-        if (a instanceof BaseColor) {
-            this._color = a;
-        } else if (a instanceof Color) {
-            this._color = a.getColor();
-        } else if (c !== null) {
-            this._color = new RGBColor(a, b, c, d);
-        } else {
-            this._color = new HSVColor(0, 0, a, b);
+    constructor(r = 0, g = 1, b = null, a = 1) {
+        if (b === null) {
+            a = g;
+            r *= 2.55;
+            b = g = r;
         }
+
+        this._r = this.constructor._clamp(r, 0, 255);
+        this._g = this.constructor._clamp(g, 0, 255);
+        this._b = this.constructor._clamp(b, 0, 255);
+        this._a = this.constructor._clamp(a, 0, 1);
     }
 
     /**
-     * Return the internal BaseColor of the Color object.
-     * @returns {BaseColor} The BaseColor.
+     * Clone the Color.
+     * @returns {Color} A new Color object.
      */
-    getColor() {
-        return this._color;
+    clone() {
+        return new this.constructor(this._r, this._g, this._b, this._a);
     }
 
     /**
@@ -40,9 +41,9 @@ class Color {
         let closest,
             closestDist = Number.MAX_SAFE_INTEGER;
 
-        for (const label in Color.colors) {
-            const color = Color.fromHexString(Color.colors[label]);
-            const dist = Color.dist(this, color);
+        for (const label in this.constructor.colors) {
+            const color = this.constructor.fromHexString(this.constructor.colors[label]);
+            const dist = this.constructor.dist(this, color);
 
             if (dist < closestDist) {
                 closest = label;
@@ -54,12 +55,19 @@ class Color {
     }
 
     /**
-     * Set the BaseColor of the Color object.
-     * @param {BaseColor} color A new BaseColor.
+     * Set the RGBA values of the Color.
+     * @param {number} r The red value.
+     * @param {number} g The green value.
+     * @param {number} b The blue value.
+     * @param {number} a The alpha value.
      * @returns {Color} The Color object.
      */
-    setColor(color) {
-        this._color = color;
+    setColor(r, g, b, a) {
+        this._r = this.constructor._clamp(r, 0, 255);
+        this._g = this.constructor._clamp(g, 0, 255);
+        this._b = this.constructor._clamp(b, 0, 255);
+        this._a = this.constructor._clamp(a, 0, 1);
+
         return this;
     }
 
@@ -68,7 +76,9 @@ class Color {
      * @returns {string} The hexadecimal string.
      */
     toHexString() {
-        return this._color.toHexString();
+        const hex = this._getHex();
+
+        return this.constructor._toHex(hex);
     }
 
     /**
@@ -76,7 +86,18 @@ class Color {
      * @returns {string} The HSL/HSLA string.
      */
     toHSLString() {
-        return this._color.toHSLString();
+        let [h, s, l] = this.constructor.RGB2HSL(this._r, this._g, this._b);
+
+        h = Math.round(h);
+        s = Math.round(s);
+        l = Math.round(l);
+        const a = Math.round(this._a * 100) / 100;
+
+        if (a < 1) {
+            return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+        }
+
+        return `hsl(${h}, ${s}%, ${l}%)`;
     }
 
     /**
@@ -84,7 +105,16 @@ class Color {
      * @returns {string} The RGB/RGBA string.
      */
     toRGBString() {
-        return this._color.toRGBString();
+        const r = Math.round(this._r);
+        const g = Math.round(this._g);
+        const b = Math.round(this._b);
+        const a = Math.round(this._a * 1000) / 1000;
+
+        if (a < 1) {
+            return `rgba(${r}, ${g}, ${b}, ${a})`;
+        }
+
+        return `rgb(${r}, ${g}, ${b})`;
     }
 
     /**
@@ -92,7 +122,23 @@ class Color {
      * @returns {string} The HTML color string.
      */
     toString() {
-        return this._color.toString();
+        if (!this._a) {
+            return 'transparent';
+        }
+
+        if (this._a < 1) {
+            return this.toRGBString();
+        }
+
+        const hex = this._getHex();
+
+        for (const name in this.constructor.colors) {
+            if (this.constructor.colors[name] === hex) {
+                return name;
+            }
+        }
+
+        return this.constructor._toHex(hex);
     }
 
     /**
@@ -100,7 +146,7 @@ class Color {
      * @returns {number} The luminance value. (0, 1)
      */
     valueOf() {
-        return this._color.valueOf();
+        return this.luma();
     }
 
     /**
@@ -108,7 +154,9 @@ class Color {
      * @returns {string|number} The HTML color string, or the luminance value.
      */
     [Symbol.toPrimitive](hint) {
-        return this._color[Symbol.toPrimitive](hint);
+        return hint === 'number' ?
+            this.valueOf() :
+            this.toString();
     }
 
 }

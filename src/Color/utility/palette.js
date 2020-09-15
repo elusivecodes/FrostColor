@@ -25,13 +25,11 @@ Object.assign(Color.prototype, {
      * @returns {Color[]} An array containing shade variations.
      */
     shades(shades = 10) {
-        const rgb = this._color.toRGB();
-
         return new Array(shades)
             .fill()
             .map(
-                (_, index) =>
-                    new this.constructor(rgb).shade(
+                (_, index) => this.clone()
+                    .shade(
                         index
                         / (shades + 1)
                     )
@@ -44,13 +42,11 @@ Object.assign(Color.prototype, {
      * @returns {Color[]} An array containing tint variations.
      */
     tints(tints = 10) {
-        const rgb = this._color.toRGB();
-
         return new Array(tints)
             .fill()
             .map(
-                (_, index) =>
-                    new this.constructor(rgb).tint(
+                (_, index) => this.clone()
+                    .tint(
                         index
                         / (tints + 1)
                     )
@@ -63,13 +59,11 @@ Object.assign(Color.prototype, {
      * @returns {Color[]} An array containing tone variations.
      */
     tones(tones = 10) {
-        const rgb = this._color.toRGB();
-
         return new Array(tones)
             .fill()
             .map(
-                (_, index) =>
-                    new this.constructor(rgb).tone(
+                (_, index) => this.clone()
+                    .tone(
                         index
                         / (tones + 1)
                     )

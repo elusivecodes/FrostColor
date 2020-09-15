@@ -10,8 +10,14 @@ Object.assign(Color.prototype, {
      * @returns {Color} The darkened Color object.
      */
     darken(amount) {
+        let [h, s, l] = this._getHSL();
+        l -= l * amount;
+        const [r, g, b] = this.constructor.HSL2RGB(h, s, l);
         return this.setColor(
-            this._color.darken(amount)
+            r,
+            g,
+            b,
+            this._a
         );
     },
 
@@ -21,7 +27,10 @@ Object.assign(Color.prototype, {
      */
     invert() {
         return this.setColor(
-            this._color.invert()
+            255 - this._r,
+            255 - this._g,
+            255 - this._b,
+            this._a
         );
     },
 
@@ -31,8 +40,14 @@ Object.assign(Color.prototype, {
      * @returns {Color} The lightened Color object.
      */
     lighten(amount) {
+        let [h, s, l] = this._getHSL();
+        l += (100 - l) * amount;
+        const [r, g, b] = this.constructor.HSL2RGB(h, s, l);
         return this.setColor(
-            this._color.lighten(amount)
+            r,
+            g,
+            b,
+            this._a
         );
     },
 
@@ -42,12 +57,16 @@ Object.assign(Color.prototype, {
      * @returns {Color} The shaded Color object.
      */
     shade(amount) {
+        const color = this.constructor.mix(
+            this,
+            new this.constructor(0),
+            amount
+        );
         return this.setColor(
-            Color.mix(
-                new Color(this),
-                new Color(0),
-                amount
-            ).getColor()
+            color._r,
+            color._g,
+            color._b,
+            this._a
         );
     },
 
@@ -57,12 +76,16 @@ Object.assign(Color.prototype, {
      * @returns {Color} The tinted Color object.
      */
     tint(amount) {
+        const color = this.constructor.mix(
+            this,
+            new this.constructor(100),
+            amount
+        );
         return this.setColor(
-            Color.mix(
-                new Color(this),
-                new Color(100),
-                amount
-            ).getColor()
+            color._r,
+            color._g,
+            color._b,
+            this._a
         );
     },
 
@@ -72,12 +95,16 @@ Object.assign(Color.prototype, {
      * @returns {Color} The toned Color object.
      */
     tone(amount) {
+        const color = this.constructor.mix(
+            this,
+            new this.constructor(50),
+            amount
+        );
         return this.setColor(
-            Color.mix(
-                new Color(this),
-                new Color(50),
-                amount
-            ).getColor()
+            color._r,
+            color._g,
+            color._b,
+            this._a
         );
     }
 

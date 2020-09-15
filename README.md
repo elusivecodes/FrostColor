@@ -137,6 +137,14 @@ Create a new *Color* from HSV values.
 const color = Color.fromHSV(hue, saturation, value, alpha);
 ```
 
+**Clone**
+
+Create a new *Color* from an existing *Color*.
+
+```javascript
+const clone = color.clone();
+```
+
 
 ## Color Formatting
 

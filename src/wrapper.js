@@ -1,5 +1,5 @@
 /**
- * FrostColor v1.0.5
+ * FrostColor v2.0.0
  * https://github.com/elusivecodes/FrostColor
  */
 (function(global, factory) {
@@ -17,13 +17,7 @@
     // {{code}}
     return {
         Color,
-        ColorImmutable,
-        BaseColor,
-        CMYColor,
-        CMYKColor,
-        HSLColor,
-        HSVColor,
-        RGBColor
+        ColorImmutable
     };
 
 });
