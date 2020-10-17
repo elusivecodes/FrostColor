@@ -1,4 +1,4 @@
-const assert = require('assert').strict;
+const assert = require('assert');
 const { ColorImmutable } = require('../../dist/frost-color.min');
 
 describe('ColorImmutable Schemes', function() {
@@ -6,7 +6,7 @@ describe('ColorImmutable Schemes', function() {
     describe('#analogous', function() {
         it('returns 2 analogous colors', function() {
             const analogous = ColorImmutable.fromHSV(120, 50, 50).analogous();
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 analogous.map(
                     color => color.toString()
                 ),
@@ -27,7 +27,7 @@ describe('ColorImmutable Schemes', function() {
     describe('#complementary', function() {
         it('returns the complementary color', function() {
             const complementary = ColorImmutable.fromHSV(120, 50, 50).complementary();
-            assert.equal(
+            assert.strictEqual(
                 complementary.toString(),
                 '#80407f'
             );
@@ -41,7 +41,7 @@ describe('ColorImmutable Schemes', function() {
     describe('#split', function() {
         it('returns 2 split colors', function() {
             const split = ColorImmutable.fromHSV(120, 50, 50).split();
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 split.map(
                     color => color.toString()
                 ),
@@ -62,7 +62,7 @@ describe('ColorImmutable Schemes', function() {
     describe('#tetradic', function() {
         it('returns 3 tetradic colors', function() {
             const tetradic = ColorImmutable.fromHSV(120, 50, 50).tetradic();
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 tetradic.map(
                     color => color.toString()
                 ),
@@ -84,7 +84,7 @@ describe('ColorImmutable Schemes', function() {
     describe('#triadic', function() {
         it('returns 2 triadic colors', function() {
             const triadic = ColorImmutable.fromHSV(120, 50, 50).triadic();
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 triadic.map(
                     color => color.toString()
                 ),

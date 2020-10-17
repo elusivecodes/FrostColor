@@ -1,4 +1,4 @@
-const assert = require('assert').strict;
+const assert = require('assert');
 const { Color } = require('../../dist/frost-color.min');
 
 describe('Color Palette', function() {
@@ -6,7 +6,7 @@ describe('Color Palette', function() {
     describe('#shades', function() {
         it('creates a shades palette', function() {
             const shades = Color.fromHSV(120, 50, 50).shades();
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 shades.map(
                     color => color.toString()
                 ),
@@ -33,7 +33,7 @@ describe('Color Palette', function() {
 
         it('works with shades argument', function() {
             const shades = Color.fromHSV(120, 50, 50).shades(5);
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 shades.map(
                     color => color.toString()
                 ),
@@ -57,7 +57,7 @@ describe('Color Palette', function() {
     describe('#tints', function() {
         it('creates a tints palette', function() {
             const tints = Color.fromHSV(120, 50, 50).tints();
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 tints.map(
                     color => color.toString()
                 ),
@@ -84,7 +84,7 @@ describe('Color Palette', function() {
 
         it('works with tints argument', function() {
             const tints = Color.fromHSV(120, 50, 50).tints(5);
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 tints.map(
                     color => color.toString()
                 ),
@@ -108,7 +108,7 @@ describe('Color Palette', function() {
     describe('#tones', function() {
         it('creates a tones palette', function() {
             const tones = Color.fromHSV(120, 50, 50).tones();
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 tones.map(
                     color => color.toString()
                 ),
@@ -135,7 +135,7 @@ describe('Color Palette', function() {
 
         it('works with tones argument', function() {
             const tones = Color.fromHSV(120, 50, 50).tones(5);
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 tones.map(
                     color => color.toString()
                 ),
@@ -165,7 +165,7 @@ describe('Color Palette', function() {
             assert.ok('tints' in palette);
             assert.ok('tones' in palette);
 
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 {
                     shades: palette.shades
                         .map(
@@ -241,7 +241,7 @@ describe('Color Palette', function() {
             const palette = Color.fromHSV(120, 50, 50)
                 .palette(5, 0, 0);
 
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 palette.shades.map(
                     color => color.toString()
                 ),
@@ -254,11 +254,11 @@ describe('Color Palette', function() {
                 ]
             );
 
-            assert.equal(
+            assert.strictEqual(
                 palette.tints.length,
                 0
             );
-            assert.equal(
+            assert.strictEqual(
                 palette.tones.length,
                 0
             );
@@ -273,7 +273,7 @@ describe('Color Palette', function() {
             const palette = Color.fromHSV(120, 50, 50)
                 .palette(0, 5, 0);
 
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 palette.tints.map(
                     color => color.toString()
                 ),
@@ -286,11 +286,11 @@ describe('Color Palette', function() {
                 ]
             );
 
-            assert.equal(
+            assert.strictEqual(
                 palette.shades.length,
                 0
             );
-            assert.equal(
+            assert.strictEqual(
                 palette.tones.length,
                 0
             );
@@ -305,7 +305,7 @@ describe('Color Palette', function() {
             const palette = Color.fromHSV(120, 50, 50)
                 .palette(0, 0, 5);
 
-            assert.deepEqual(
+            assert.deepStrictEqual(
                 palette.tones.map(
                     color => color.toString()
                 ),
@@ -318,11 +318,11 @@ describe('Color Palette', function() {
                 ]
             );
 
-            assert.equal(
+            assert.strictEqual(
                 palette.shades.length,
                 0
             );
-            assert.equal(
+            assert.strictEqual(
                 palette.tints.length,
                 0
             );

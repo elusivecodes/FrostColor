@@ -1,4 +1,4 @@
-const assert = require('assert').strict;
+const assert = require('assert');
 const { Color } = require('../../dist/frost-color.min');
 
 describe('Color Manipulation', function() {
@@ -7,11 +7,11 @@ describe('Color Manipulation', function() {
         it('darkens the color', function() {
             const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.darken(.5);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 '#204020'
             );
-            assert.equal(
+            assert.strictEqual(
                 color1,
                 color2
             );
@@ -22,11 +22,11 @@ describe('Color Manipulation', function() {
         it('inverts the color', function() {
             const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.invert();
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 '#bf80bf'
             );
-            assert.equal(
+            assert.strictEqual(
                 color1,
                 color2
             );
@@ -37,11 +37,11 @@ describe('Color Manipulation', function() {
         it('lightens the color', function() {
             const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.lighten(.5);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 '#95ca95'
             );
-            assert.equal(
+            assert.strictEqual(
                 color1,
                 color2
             );
@@ -52,11 +52,11 @@ describe('Color Manipulation', function() {
         it('shades the color', function() {
             const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.shade(.3);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 '#2d592d'
             );
-            assert.equal(
+            assert.strictEqual(
                 color1,
                 color2
             );
@@ -67,11 +67,11 @@ describe('Color Manipulation', function() {
         it('tints the color', function() {
             const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.tint(.3);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 '#79a679'
             );
-            assert.equal(
+            assert.strictEqual(
                 color1,
                 color2
             );
@@ -82,11 +82,11 @@ describe('Color Manipulation', function() {
         it('tones the color', function() {
             const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.tone(.3);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 '#538053'
             );
-            assert.equal(
+            assert.strictEqual(
                 color1,
                 color2
             );

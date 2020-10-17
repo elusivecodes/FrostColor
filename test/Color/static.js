@@ -1,11 +1,11 @@
-const assert = require('assert').strict;
+const assert = require('assert');
 const { Color, ColorImmutable } = require('../../dist/frost-color.min');
 
 describe('Color Static', function() {
 
     describe('#dist', function() {
         it('returns the distance between two colors', function() {
-            assert.equal(
+            assert.strictEqual(
                 Color.dist(
                     new Color(100, 0, 0),
                     new Color(0, 0, 100)
@@ -15,7 +15,7 @@ describe('Color Static', function() {
         });
 
         it('works with ColorImmutable', function() {
-            assert.equal(
+            assert.strictEqual(
                 Color.dist(
                     new Color(100, 0, 0),
                     new ColorImmutable(0, 0, 100)
@@ -30,15 +30,15 @@ describe('Color Static', function() {
             const color1 = new Color(255, 0, 0);
             const color2 = new Color(0, 0, 255);
             const color3 = Color.mix(color1, color2, .5);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 'red'
             );
-            assert.equal(
+            assert.strictEqual(
                 color2.toString(),
                 'blue'
             );
-            assert.equal(
+            assert.strictEqual(
                 color3.toString(),
                 'purple'
             );
@@ -51,15 +51,15 @@ describe('Color Static', function() {
             const color1 = new Color(255, 0, 0);
             const color2 = new ColorImmutable(0, 0, 255);
             const color3 = Color.mix(color1, color2, .5);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 'red'
             );
-            assert.equal(
+            assert.strictEqual(
                 color2.toString(),
                 'blue'
             );
-            assert.equal(
+            assert.strictEqual(
                 color3.toString(),
                 'purple'
             );
@@ -72,15 +72,15 @@ describe('Color Static', function() {
             const color1 = new ColorImmutable(255, 0, 0);
             const color2 = new ColorImmutable(0, 0, 255);
             const color3 = Color.mix(color1, color2, .5);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 'red'
             );
-            assert.equal(
+            assert.strictEqual(
                 color2.toString(),
                 'blue'
             );
-            assert.equal(
+            assert.strictEqual(
                 color3.toString(),
                 'purple'
             );
@@ -95,15 +95,15 @@ describe('Color Static', function() {
             const color1 = new Color(255, 0, 0);
             const color2 = new Color(0, 0, 255);
             const color3 = Color.multiply(color1, color2, .5);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 'red'
             );
-            assert.equal(
+            assert.strictEqual(
                 color2.toString(),
                 'blue'
             );
-            assert.equal(
+            assert.strictEqual(
                 color3.toString(),
                 'maroon'
             );
@@ -116,15 +116,15 @@ describe('Color Static', function() {
             const color1 = new Color(255, 0, 0);
             const color2 = new ColorImmutable(0, 0, 255);
             const color3 = Color.multiply(color1, color2, .5);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 'red'
             );
-            assert.equal(
+            assert.strictEqual(
                 color2.toString(),
                 'blue'
             );
-            assert.equal(
+            assert.strictEqual(
                 color3.toString(),
                 'maroon'
             );
@@ -137,15 +137,15 @@ describe('Color Static', function() {
             const color1 = new ColorImmutable(255, 0, 0);
             const color2 = new ColorImmutable(0, 0, 255);
             const color3 = Color.multiply(color1, color2, .5);
-            assert.equal(
+            assert.strictEqual(
                 color1.toString(),
                 'red'
             );
-            assert.equal(
+            assert.strictEqual(
                 color2.toString(),
                 'blue'
             );
-            assert.equal(
+            assert.strictEqual(
                 color3.toString(),
                 'maroon'
             );
