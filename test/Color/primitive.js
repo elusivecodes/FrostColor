@@ -38,11 +38,11 @@ describe('Color Primitive', function() {
     });
 
     describe('#valueOf', function() {
-        it('returns the luma value', function() {
+        it('returns the relative luma value', function() {
             assert.strictEqual(
                 Color.fromHSV(180, 50, 50)
                     .valueOf(),
-                0.44684999999999997
+                0.17935225036098287
             );
         });
     });
@@ -80,11 +80,11 @@ describe('Color Primitive', function() {
             );
         });
 
-        it('returns the luma value', function() {
+        it('returns the relative luma value', function() {
             const color = Color.fromHSV(180, 50, 50);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('number'),
-                0.44684999999999997
+                0.17935225036098287
             );
         });
     });

@@ -3,6 +3,28 @@ const { Color, ColorImmutable } = require('../../dist/frost-color.min');
 
 describe('Color Static', function() {
 
+    describe('#contrast', function() {
+        it('returns the contrast between two colors', function() {
+            assert.strictEqual(
+                Color.contrast(
+                    new Color(100, 0, 0),
+                    new Color(0, 0, 100)
+                ),
+                1.3022288504206543
+            );
+        });
+
+        it('works with ColorImmutable', function() {
+            assert.strictEqual(
+                Color.contrast(
+                    new Color(100, 0, 0),
+                    new ColorImmutable(0, 0, 100)
+                ),
+                1.3022288504206543
+            );
+        });
+    });
+
     describe('#dist', function() {
         it('returns the distance between two colors', function() {
             assert.strictEqual(

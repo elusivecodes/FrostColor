@@ -1,5 +1,5 @@
 /**
- * FrostColor v2.0.3
+ * FrostColor v2.0.4
  * https://github.com/elusivecodes/FrostColor
  */
 (function(global, factory) {
@@ -423,16 +423,18 @@
         },
 
         /**
-         * Calculate the luminance of an RGB color.
+         * Calculate the relative luminance of an RGB color.
          * @param {number} r The red value. (0, 255)
          * @param {number} g The green value. (0, 255)
          * @param {number} b The blue value. (0, 255)
-         * @returns {number} The luminance value.
+         * @returns {number} The relative luminance value.
          */
         RGB2Luma(r, g, b) {
-            return (0.2126 * (r / 255))
-                + (0.7152 * (g / 255))
-                + (0.0722 * (b / 255));
+            r = this.RGBLumaValue(r);
+            g = this.RGBLumaValue(g);
+            b = this.RGBLumaValue(b);
+
+            return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
         },
 
         /**
@@ -609,7 +611,23 @@
             }
 
             return v1;
+        },
+
+        /**
+         * Calculate the relative R, G or B value for luma calculation.
+         * @param {number} v The value.
+         * @returns {number} The R, G or B value.
+         */
+        RGBLumaValue(v) {
+            v /= 255;
+
+            if (v <= 0.03928) {
+                return v / 12.92;
+            }
+
+            return Math.pow(((v + 0.055) / 1.055), 2.4);
         }
+
     });
 
     /**
@@ -898,6 +916,18 @@
     Object.assign(Color, {
 
         /**
+         * Get the contrast value between two colors.
+         * @param {Color} color1 The first Color.
+         * @param {Color} color2 The second Color.
+         * @returns {number} The contrast value. (1, 21)
+         */
+        contrast(color1, color2) {
+            const luma1 = color1.luma();
+            const luma2 = color2.luma();
+            return (Math.max(luma1, luma2) + .05) / (Math.min(luma1, luma2) + .05);
+        },
+
+        /**
          * Calculate the distance between two colors.
          * @param {Color} color1 The first Color.
          * @param {Color} color2 The second Color.
@@ -1000,8 +1030,8 @@
         },
 
         /**
-         * Get the luminance value of the color 
-         * @returns {number} The luminance value. (0, 1)
+         * Get the relative luminance value of the color 
+         * @returns {number} The relative luminance value. (0, 1)
          */
         luma() {
             return this.constructor.RGB2Luma(this._r, this._g, this._b);

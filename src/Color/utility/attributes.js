@@ -37,8 +37,8 @@ Object.assign(Color.prototype, {
     },
 
     /**
-     * Get the luminance value of the color 
-     * @returns {number} The luminance value. (0, 1)
+     * Get the relative luminance value of the color 
+     * @returns {number} The relative luminance value. (0, 1)
      */
     luma() {
         return this.constructor.RGB2Luma(this._r, this._g, this._b);

@@ -5,6 +5,18 @@
 Object.assign(Color, {
 
     /**
+     * Get the contrast value between two colors.
+     * @param {Color} color1 The first Color.
+     * @param {Color} color2 The second Color.
+     * @returns {number} The contrast value. (1, 21)
+     */
+    contrast(color1, color2) {
+        const luma1 = color1.luma();
+        const luma2 = color2.luma();
+        return (Math.max(luma1, luma2) + .05) / (Math.min(luma1, luma2) + .05);
+    },
+
+    /**
      * Calculate the distance between two colors.
      * @param {Color} color1 The first Color.
      * @param {Color} color2 The second Color.

@@ -224,16 +224,18 @@ Object.assign(Color, {
     },
 
     /**
-     * Calculate the luminance of an RGB color.
+     * Calculate the relative luminance of an RGB color.
      * @param {number} r The red value. (0, 255)
      * @param {number} g The green value. (0, 255)
      * @param {number} b The blue value. (0, 255)
-     * @returns {number} The luminance value.
+     * @returns {number} The relative luminance value.
      */
     RGB2Luma(r, g, b) {
-        return (0.2126 * (r / 255))
-            + (0.7152 * (g / 255))
-            + (0.0722 * (b / 255));
+        r = this.RGBLumaValue(r);
+        g = this.RGBLumaValue(g);
+        b = this.RGBLumaValue(b);
+
+        return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
     },
 
     /**
@@ -410,5 +412,21 @@ Object.assign(Color, {
         }
 
         return v1;
+    },
+
+    /**
+     * Calculate the relative R, G or B value for luma calculation.
+     * @param {number} v The value.
+     * @returns {number} The R, G or B value.
+     */
+    RGBLumaValue(v) {
+        v /= 255;
+
+        if (v <= 0.03928) {
+            return v / 12.92;
+        }
+
+        return Math.pow(((v + 0.055) / 1.055), 2.4);
     }
+
 });

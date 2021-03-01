@@ -227,7 +227,7 @@ const saturation = color.getSaturation();
 
 **Luma**
 
-Get the luminance value of the color (between *0* and *1*).
+Get the relative luminance value of the color (between *0* and *1*).
 
 ```javascript
 const luma = color.luma();
@@ -426,6 +426,17 @@ const colorPalette = color.palette(shades, tints, tones);
 
 
 ## Static Methods
+
+**Contrast**
+
+Calculate the contrast between two colors.
+
+- `color1` is a *Color* object.
+- `color2` is a *Color* object.
+
+```javascript
+const contrast = Color.contrast(color1, color2);
+```
 
 **Distance**
 

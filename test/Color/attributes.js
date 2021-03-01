@@ -44,11 +44,11 @@ describe('Color Attributes', function() {
     });
 
     describe('#luma', function() {
-        it('returns the luma value', function() {
+        it('returns the relative luma value', function() {
             assert.strictEqual(
                 Color.fromHSV(180, 50, 50)
                     .luma(),
-                0.44684999999999997
+                0.17935225036098287
             );
         });
     });
