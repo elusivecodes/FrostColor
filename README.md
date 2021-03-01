@@ -429,7 +429,7 @@ const colorPalette = color.palette(shades, tints, tones);
 
 **Contrast**
 
-Calculate the contrast between two colors.
+Calculate the contrast between two colors (between *1* and *21*).
 
 - `color1` is a *Color* object.
 - `color2` is a *Color* object.
