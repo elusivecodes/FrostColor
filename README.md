@@ -449,6 +449,19 @@ Calculate the distance between two colors.
 const distance = Color.dist(color1, color2);
 ```
 
+**Find Contrast**
+
+Find an optimally contrasting color for another color.
+
+- `color1` is a *Color* object.
+- `color2` is a *Color* object.
+- `minContrast` is a number between *1* and *21* indicating the minimum valid contrast, and will default to *4.5*.
+- `stepSize` is a number between *0* and *1* indicating the amount to darken/lighten the color on each iteration, and will default to *0.01*.
+
+```javascript
+const contrastColor = Color.findContrast(color1, color2, minContrast, stepSize);
+```
+
 **Mix**
 
 Create a new *Color* by mixing two colors together by a specified amount.

@@ -47,6 +47,60 @@ describe('Color Static', function() {
         });
     });
 
+    describe('#findContrast', function() {
+        it('returns a minimally contrasting color between two colors', function() {
+            const color1 = new Color(203, 213, 255);
+            const color2 = new Color(122, 143, 255);
+            const color3 = Color.findContrast(color1, color2);
+            assert.strictEqual(
+                color3.toString(),
+                '#4c599e'
+            );
+            assert.ok(
+                color3 instanceof Color
+            );
+        });
+
+        it('works with minContrast', function() {
+            const color1 = new Color(203, 213, 255);
+            const color2 = new Color(122, 143, 255);
+            const color3 = Color.findContrast(color1, color2, 3);
+            assert.strictEqual(
+                color3.toString(),
+                '#6272cc'
+            );
+            assert.ok(
+                color3 instanceof Color
+            );
+        });
+
+        it('works with stepSize', function() {
+            const color1 = new Color(203, 213, 255);
+            const color2 = new Color(122, 143, 255);
+            const color3 = Color.findContrast(color1, color2, 4.5, 0.1);
+            assert.strictEqual(
+                color3.toString(),
+                '#495699'
+            );
+            assert.ok(
+                color3 instanceof Color
+            );
+        });
+
+        it('works with ColorImmutable', function() {
+            const color1 = new Color(203, 213, 255);
+            const color2 = new ColorImmutable(122, 143, 255);
+            const color3 = Color.findContrast(color1, color2);
+            assert.strictEqual(
+                color3.toString(),
+                '#4c599e'
+            );
+            assert.ok(
+                color3 instanceof Color
+            );
+        });
+    });
+
     describe('#mix', function() {
         it('returns a new Color mixed from two colors', function() {
             const color1 = new Color(255, 0, 0);
