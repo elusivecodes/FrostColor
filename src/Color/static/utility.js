@@ -33,31 +33,28 @@ Object.assign(Color, {
     /**
      * Find an optimally contrasting color for another color.
      * @param {Color} color1 The first Color.
-     * @param {Color} color2 The second Color.
+     * @param {Color} [color2] The second Color.
      * @param {number} [minContrast=4.5] The minimum contrast.
      * @param {number} [stepSize=1] The step size.
      * @returns {Color} The new Color.
      */
-    findContrast(color1, color2, minContrast = 4.5, stepSize = 0.01) {
-        const tempColor = this.fromString(color2.toString());
-
-        if (this.contrast(color1, tempColor) >= minContrast) {
-            return tempColor;
+    findContrast(color1, color2 = null, minContrast = 4.5, stepSize = 0.01) {
+        if (!color2) {
+            color2 = color1.clone();
         }
 
-        let offset = stepSize;
-        while (offset <= 1) {
-            const tempColor1 = tempColor.clone().tint(offset);
-            if (this.contrast(color1, tempColor1) >= minContrast) {
-                return tempColor1;
-            }
+        if (this.contrast(color1, color2) >= minContrast) {
+            return color2;
+        }
 
-            const tempColor2 = tempColor.clone().shade(offset);
-            if (this.contrast(color1, tempColor2) >= minContrast) {
-                return tempColor2;
+        const methods = ['tint', 'shade'];
+        for (let i = stepSize; i <= 1; i += stepSize) {
+            for (const method of methods) {
+                const tempColor = color2.clone()[method](i);
+                if (this.contrast(color1, tempColor) >= minContrast) {
+                    return tempColor;
+                }
             }
-
-            offset += stepSize;
         }
 
         return null;

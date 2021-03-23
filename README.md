@@ -454,13 +454,17 @@ const distance = Color.dist(color1, color2);
 Find an optimally contrasting color for another color.
 
 - `color1` is a *Color* object.
-- `color2` is a *Color* object.
+- `color2` is a *Color* object, and will default to *null*.
 - `minContrast` is a number between *1* and *21* indicating the minimum valid contrast, and will default to *4.5*.
 - `stepSize` is a number between *0* and *1* indicating the amount to darken/lighten the color on each iteration, and will default to *0.01*.
 
 ```javascript
 const contrastColor = Color.findContrast(color1, color2, minContrast, stepSize);
 ```
+
+If `color2` value is *null*, a clone of `color1` will be used instead.
+
+This method will tint/shade `color2` until it meets a minimum contrast threshold with `color1`, then the new color will be returned. If no valid contrast value can be found, this method will return *null* instead.
 
 **Mix**
 

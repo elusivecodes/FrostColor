@@ -48,6 +48,18 @@ describe('ColorImmutable Static', function() {
     });
 
     describe('#findContrast', function() {
+        it('returns a minimally contrasting color', function() {
+            const color1 = new ColorImmutable(203, 213, 255);
+            const color2 = ColorImmutable.findContrast(color1);
+            assert.strictEqual(
+                color2.toString(),
+                '#575c6e'
+            );
+            assert.ok(
+                color2 instanceof ColorImmutable
+            );
+        });
+
         it('returns a minimally contrasting color between two colors', function() {
             const color1 = new ColorImmutable(203, 213, 255);
             const color2 = new ColorImmutable(122, 143, 255);
@@ -96,7 +108,7 @@ describe('ColorImmutable Static', function() {
                 '#4c599e'
             );
             assert.ok(
-                color3 instanceof ColorImmutable
+                color3 instanceof Color
             );
         });
     });
