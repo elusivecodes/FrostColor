@@ -42,7 +42,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 new Color(120, 50, 50)
                     .toRGBString(),
-                'rgb(120, 50, 50)'
+                'rgb(120 50 50)'
             );
         });
 
@@ -50,7 +50,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 new Color(120, 50, 50, .5)
                     .toRGBString(),
-                'rgba(120, 50, 50, 0.5)'
+                'rgb(120 50 50 / 50%)'
             );
         });
     });
@@ -60,7 +60,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 Color.fromHSL(120, 50, 50)
                     .toHSLString(),
-                'hsl(120, 50%, 50%)'
+                'hsl(120deg 50% 50%)'
             );
         });
 
@@ -68,7 +68,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 Color.fromHSL(120, 50, 50, .5)
                     .toHSLString(),
-                'hsla(120, 50%, 50%, 0.5)'
+                'hsl(120deg 50% 50% / 50%)'
             );
         });
     });

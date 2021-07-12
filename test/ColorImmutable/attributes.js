@@ -48,7 +48,7 @@ describe('ColorImmutable Attributes', function() {
             assert.strictEqual(
                 ColorImmutable.fromHSV(180, 50, 50)
                     .luma(),
-                0.17935225036098287
+                .17935225036098287
             );
         });
     });

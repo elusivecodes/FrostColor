@@ -32,7 +32,7 @@ describe('Color Primitive', function() {
             assert.strictEqual(
                 new Color(120, 50, 50, .5)
                     .toString(),
-                'rgba(120, 50, 50, 0.5)'
+                'rgb(120 50 50 / 50%)'
             );
         });
     });
@@ -42,7 +42,7 @@ describe('Color Primitive', function() {
             assert.strictEqual(
                 Color.fromHSV(180, 50, 50)
                     .valueOf(),
-                0.17935225036098287
+                .17935225036098287
             );
         });
     });
@@ -76,7 +76,7 @@ describe('Color Primitive', function() {
             const color = new Color(120, 50, 50, .5);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('string'),
-                'rgba(120, 50, 50, 0.5)'
+                'rgb(120 50 50 / 50%)'
             );
         });
 
@@ -84,7 +84,7 @@ describe('Color Primitive', function() {
             const color = Color.fromHSV(180, 50, 50);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('number'),
-                0.17935225036098287
+                .17935225036098287
             );
         });
     });

@@ -89,7 +89,7 @@ describe('ColorImmutable Static', function() {
         it('works with stepSize', function() {
             const color1 = new ColorImmutable(203, 213, 255);
             const color2 = new ColorImmutable(122, 143, 255);
-            const color3 = ColorImmutable.findContrast(color1, color2, 4.5, 0.1);
+            const color3 = ColorImmutable.findContrast(color1, color2, 4.5, .1);
             assert.strictEqual(
                 color3.toString(),
                 '#495699'

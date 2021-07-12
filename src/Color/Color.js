@@ -91,13 +91,13 @@ class Color {
         h = Math.round(h);
         s = Math.round(s);
         l = Math.round(l);
-        const a = Math.round(this._a * 100) / 100;
+        const a = Math.round(this._a * 100);
 
-        if (a < 1) {
-            return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+        if (a < 100) {
+            return `hsl(${h}deg ${s}% ${l}% / ${a}%)`;
         }
 
-        return `hsl(${h}, ${s}%, ${l}%)`;
+        return `hsl(${h}deg ${s}% ${l}%)`;
     }
 
     /**
@@ -108,13 +108,13 @@ class Color {
         const r = Math.round(this._r);
         const g = Math.round(this._g);
         const b = Math.round(this._b);
-        const a = Math.round(this._a * 1000) / 1000;
+        const a = Math.round(this._a * 100);
 
-        if (a < 1) {
-            return `rgba(${r}, ${g}, ${b}, ${a})`;
+        if (a < 100) {
+            return `rgb(${r} ${g} ${b} / ${a}%)`;
         }
 
-        return `rgb(${r}, ${g}, ${b})`;
+        return `rgb(${r} ${g} ${b})`;
     }
 
     /**

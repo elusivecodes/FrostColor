@@ -87,35 +87,45 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromHSLString(string) {
+        const HSL2Match = string.match(this._hsl2RegExp);
+
+        if (HSL2Match) {
+            return this.fromHSL(HSL2Match[1], HSL2Match[2], HSL2Match[3]);
+        }
+
+        const HSLA2Match = string.match(this._hsla2RegExp);
+
+        if (HSLA2Match) {
+            return this.fromHSL(
+                HSLA2Match[1],
+                HSLA2Match[2],
+                HSLA2Match[3],
+                HSLA2Match[5] ?
+                    HSLA2Match[4] / 100 :
+                    HSLA2Match[4]
+            );
+        }
+
         const HSLMatch = string.match(this._hslRegExp);
 
-        if (!HSLMatch) {
-            throw new Error('Invalid HSL string');
+        if (HSLMatch) {
+            return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
         }
 
-        return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
-    },
-
-    /**
-     * Create a new Color from a HSLA color string.
-     * @param {string} string The HSLA color string.
-     * @returns {Color} A new Color object.
-     */
-    fromHSLAString(string) {
         const HSLAMatch = string.match(this._hslaRegExp);
 
-        if (!HSLAMatch) {
-            throw new Error('Invalid HSLA string');
+        if (HSLAMatch) {
+            return this.fromHSL(
+                HSLAMatch[1],
+                HSLAMatch[2],
+                HSLAMatch[3],
+                HSLAMatch[5] ?
+                    HSLAMatch[4] / 100 :
+                    HSLAMatch[4]
+            );
         }
 
-        return this.fromHSL(
-            HSLAMatch[1],
-            HSLAMatch[2],
-            HSLAMatch[3],
-            HSLAMatch[5] ?
-                HSLAMatch[4] / 100 :
-                HSLAMatch[4]
-        );
+        throw new Error('Invalid HSLA string');
     },
 
     /**
@@ -149,35 +159,45 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromRGBString(string) {
+        const RGB2Match = string.match(this._rgb2RegExp);
+
+        if (RGB2Match) {
+            return new this(RGB2Match[1], RGB2Match[2], RGB2Match[3]);
+        }
+
+        const RGBA2Match = string.match(this._rgba2RegExp);
+
+        if (RGBA2Match) {
+            return new this(
+                RGBA2Match[1],
+                RGBA2Match[2],
+                RGBA2Match[3],
+                RGBA2Match[5] ?
+                    RGBA2Match[4] / 100 :
+                    RGBA2Match[4]
+            );
+        }
+
         const RGBMatch = string.match(this._rgbRegExp);
 
-        if (!RGBMatch) {
-            throw new Error('Invalid RGB string');
+        if (RGBMatch) {
+            return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
         }
 
-        return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
-    },
-
-    /**
-     * Create a new Color from a RGBA color string.
-     * @param {string} string The RGBA color string.
-     * @returns {Color} A new Color object.
-     */
-    fromRGBAString(string) {
         const RGBAMatch = string.match(this._rgbaRegExp);
 
-        if (!RGBAMatch) {
-            throw new Error('Invalid RGBA string');
+        if (RGBAMatch) {
+            return new this(
+                RGBAMatch[1],
+                RGBAMatch[2],
+                RGBAMatch[3],
+                RGBAMatch[5] ?
+                    RGBAMatch[4] / 100 :
+                    RGBAMatch[4]
+            );
         }
 
-        return new this(
-            RGBAMatch[1],
-            RGBAMatch[2],
-            RGBAMatch[3],
-            RGBAMatch[5] ?
-                RGBAMatch[4] / 100 :
-                RGBAMatch[4]
-        );
+        throw new Error('Invalid RGB string');
     },
 
     /**
@@ -192,7 +212,7 @@ Object.assign(Color, {
             return new this(0, 0, 0, 0);
         }
 
-        if (this.colors[string]) {
+        if (string in this.colors) {
             string = this.colors[string];
         } else {
             string = string.trim();
@@ -202,16 +222,8 @@ Object.assign(Color, {
             return this.fromHexString(string);
         }
 
-        if (string.substring(0, 4).toLowerCase() === 'rgba') {
-            return this.fromRGBAString(string);
-        }
-
         if (string.substring(0, 3).toLowerCase() === 'rgb') {
             return this.fromRGBString(string);
-        }
-
-        if (string.substring(0, 4).toLowerCase() === 'hsla') {
-            return this.fromHSLAString(string);
         }
 
         if (string.substring(0, 3).toLowerCase() === 'hsl') {

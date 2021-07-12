@@ -95,7 +95,7 @@ Object.assign(Color, {
         s /= 100;
         l /= 100;
 
-        const v2 = l < 0.5 ?
+        const v2 = l < .5 ?
             l * (1 + s) :
             (l + s) - (s * l),
             v1 = 2 * l - v2;
@@ -235,7 +235,7 @@ Object.assign(Color, {
         g = this.RGBLumaValue(g);
         b = this.RGBLumaValue(b);
 
-        return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+        return (.2126 * r) + (.7152 * g) + (.0722 * b);
     },
 
     /**
@@ -259,7 +259,7 @@ Object.assign(Color, {
             return [0, 0, l * 100];
         }
 
-        const s = l < 0.5 ?
+        const s = l < .5 ?
             diff / (max + min) :
             diff / (2 - max - min),
             deltaR = (
@@ -422,11 +422,11 @@ Object.assign(Color, {
     RGBLumaValue(v) {
         v /= 255;
 
-        if (v <= 0.03928) {
+        if (v <= .03928) {
             return v / 12.92;
         }
 
-        return Math.pow(((v + 0.055) / 1.055), 2.4);
+        return Math.pow(((v + .055) / 1.055), 2.4);
     }
 
 });

@@ -89,7 +89,7 @@ describe('Color Static', function() {
         it('works with stepSize', function() {
             const color1 = new Color(203, 213, 255);
             const color2 = new Color(122, 143, 255);
-            const color3 = Color.findContrast(color1, color2, 4.5, 0.1);
+            const color3 = Color.findContrast(color1, color2, 4.5, .1);
             assert.strictEqual(
                 color3.toString(),
                 '#495699'

@@ -32,7 +32,7 @@ describe('ColorImmutable Primitive', function() {
             assert.strictEqual(
                 new ColorImmutable(120, 50, 50, .5)
                     .toString(),
-                'rgba(120, 50, 50, 0.5)'
+                'rgb(120 50 50 / 50%)'
             );
         });
     });
@@ -42,7 +42,7 @@ describe('ColorImmutable Primitive', function() {
             assert.strictEqual(
                 ColorImmutable.fromHSV(180, 50, 50)
                     .valueOf(),
-                0.17935225036098287
+                .17935225036098287
             );
         });
     });
@@ -76,7 +76,7 @@ describe('ColorImmutable Primitive', function() {
             const color = new ColorImmutable(120, 50, 50, .5);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('string'),
-                'rgba(120, 50, 50, 0.5)'
+                'rgb(120 50 50 / 50%)'
             );
         });
 
@@ -84,7 +84,7 @@ describe('ColorImmutable Primitive', function() {
             const color = ColorImmutable.fromHSV(180, 50, 50);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('number'),
-                0.17935225036098287
+                .17935225036098287
             );
         });
     });

@@ -30,9 +30,9 @@ describe('ColorImmutable Creation', function() {
 
         it('works with alpha argument', function() {
             assert.strictEqual(
-                new ColorImmutable(255, 255, 255, 0.5)
+                new ColorImmutable(255, 255, 255, .5)
                     .toString(),
-                'rgba(255, 255, 255, 0.5)'
+                'rgb(255 255 255 / 50%)'
             );
         });
 
@@ -46,9 +46,9 @@ describe('ColorImmutable Creation', function() {
 
         it('works with brightness and alpha arguments', function() {
             assert.strictEqual(
-                new ColorImmutable(100, 0.5)
+                new ColorImmutable(100, .5)
                     .toString(),
-                'rgba(255, 255, 255, 0.5)'
+                'rgb(255 255 255 / 50%)'
             );
         });
     });
@@ -80,6 +80,14 @@ describe('ColorImmutable Creation', function() {
 
         it('works with rgb string', function() {
             assert.strictEqual(
+                ColorImmutable.fromString('rgb(255 0 0)')
+                    .toString(),
+                'red'
+            );
+        });
+
+        it('works with alternate rgb string', function() {
+            assert.strictEqual(
                 ColorImmutable.fromString('rgb(255, 0, 0)')
                     .toString(),
                 'red'
@@ -87,6 +95,14 @@ describe('ColorImmutable Creation', function() {
         });
 
         it('works with rgba string', function() {
+            assert.strictEqual(
+                ColorImmutable.fromString('rgb(255 0 0 / 100%)')
+                    .toString(),
+                'red'
+            );
+        });
+
+        it('works with alternate rgba string', function() {
             assert.strictEqual(
                 ColorImmutable.fromString('rgba(255, 0, 0, 1)')
                     .toString(),
@@ -96,6 +112,14 @@ describe('ColorImmutable Creation', function() {
 
         it('works with hsl string', function() {
             assert.strictEqual(
+                ColorImmutable.fromString('hsl(155deg 30% 70%)')
+                    .toString(),
+                '#9cc9b6'
+            );
+        });
+
+        it('works with alternate hsl string', function() {
+            assert.strictEqual(
                 ColorImmutable.fromString('hsl(155, 30%, 70%)')
                     .toString(),
                 '#9cc9b6'
@@ -104,9 +128,17 @@ describe('ColorImmutable Creation', function() {
 
         it('works with hsla string', function() {
             assert.strictEqual(
+                ColorImmutable.fromString('hsl(180deg 100% 30% / 50%)')
+                    .toString(),
+                'rgb(0 153 153 / 50%)'
+            );
+        });
+
+        it('works with alternate hsla string', function() {
+            assert.strictEqual(
                 ColorImmutable.fromString('hsla(180, 100%, 30%, .5)')
                     .toString(),
-                'rgba(0, 153, 153, 0.5)'
+                'rgb(0 153 153 / 50%)'
             );
         });
 
@@ -160,7 +192,7 @@ describe('ColorImmutable Creation', function() {
             assert.strictEqual(
                 ColorImmutable.fromRGB(180, 100, 30, .5)
                     .toString(),
-                'rgba(180, 100, 30, 0.5)'
+                'rgb(180 100 30 / 50%)'
             );
         });
     });
@@ -178,7 +210,7 @@ describe('ColorImmutable Creation', function() {
             assert.strictEqual(
                 ColorImmutable.fromHSL(180, 100, 30, .5)
                     .toString(),
-                'rgba(0, 153, 153, 0.5)'
+                'rgb(0 153 153 / 50%)'
             );
         });
     });
@@ -196,7 +228,7 @@ describe('ColorImmutable Creation', function() {
             assert.strictEqual(
                 ColorImmutable.fromHSV(180, 100, 30, .5)
                     .toString(),
-                'rgba(0, 77, 77, 0.5)'
+                'rgb(0 77 77 / 50%)'
             );
         });
     });
@@ -214,7 +246,7 @@ describe('ColorImmutable Creation', function() {
             assert.strictEqual(
                 ColorImmutable.fromCMY(90, 50, 15, .5)
                     .toString(),
-                'rgba(25, 128, 217, 0.5)'
+                'rgb(25 128 217 / 50%)'
             );
         });
     });
@@ -232,7 +264,7 @@ describe('ColorImmutable Creation', function() {
             assert.strictEqual(
                 ColorImmutable.fromCMYK(90, 50, 15, 55, .5)
                     .toString(),
-                'rgba(11, 57, 98, 0.5)'
+                'rgb(11 57 98 / 50%)'
             );
         });
     });

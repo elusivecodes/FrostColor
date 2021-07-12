@@ -1,5 +1,5 @@
 /**
- * FrostColor v2.0.8
+ * FrostColor v3.0.0
  * https://github.com/elusivecodes/FrostColor
  */
 (function(global, factory) {
@@ -107,13 +107,13 @@
             h = Math.round(h);
             s = Math.round(s);
             l = Math.round(l);
-            const a = Math.round(this._a * 100) / 100;
+            const a = Math.round(this._a * 100);
 
-            if (a < 1) {
-                return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+            if (a < 100) {
+                return `hsl(${h}deg ${s}% ${l}% / ${a}%)`;
             }
 
-            return `hsl(${h}, ${s}%, ${l}%)`;
+            return `hsl(${h}deg ${s}% ${l}%)`;
         }
 
         /**
@@ -124,13 +124,13 @@
             const r = Math.round(this._r);
             const g = Math.round(this._g);
             const b = Math.round(this._b);
-            const a = Math.round(this._a * 1000) / 1000;
+            const a = Math.round(this._a * 100);
 
-            if (a < 1) {
-                return `rgba(${r}, ${g}, ${b}, ${a})`;
+            if (a < 100) {
+                return `rgb(${r} ${g} ${b} / ${a}%)`;
             }
 
-            return `rgb(${r}, ${g}, ${b})`;
+            return `rgb(${r} ${g} ${b})`;
         }
 
         /**
@@ -294,7 +294,7 @@
             s /= 100;
             l /= 100;
 
-            const v2 = l < 0.5 ?
+            const v2 = l < .5 ?
                 l * (1 + s) :
                 (l + s) - (s * l),
                 v1 = 2 * l - v2;
@@ -434,7 +434,7 @@
             g = this.RGBLumaValue(g);
             b = this.RGBLumaValue(b);
 
-            return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+            return (.2126 * r) + (.7152 * g) + (.0722 * b);
         },
 
         /**
@@ -458,7 +458,7 @@
                 return [0, 0, l * 100];
             }
 
-            const s = l < 0.5 ?
+            const s = l < .5 ?
                 diff / (max + min) :
                 diff / (2 - max - min),
                 deltaR = (
@@ -621,11 +621,11 @@
         RGBLumaValue(v) {
             v /= 255;
 
-            if (v <= 0.03928) {
+            if (v <= .03928) {
                 return v / 12.92;
             }
 
-            return Math.pow(((v + 0.055) / 1.055), 2.4);
+            return Math.pow(((v + .055) / 1.055), 2.4);
         }
 
     });
@@ -719,35 +719,45 @@
          * @returns {Color} A new Color object.
          */
         fromHSLString(string) {
+            const HSL2Match = string.match(this._hsl2RegExp);
+
+            if (HSL2Match) {
+                return this.fromHSL(HSL2Match[1], HSL2Match[2], HSL2Match[3]);
+            }
+
+            const HSLA2Match = string.match(this._hsla2RegExp);
+
+            if (HSLA2Match) {
+                return this.fromHSL(
+                    HSLA2Match[1],
+                    HSLA2Match[2],
+                    HSLA2Match[3],
+                    HSLA2Match[5] ?
+                        HSLA2Match[4] / 100 :
+                        HSLA2Match[4]
+                );
+            }
+
             const HSLMatch = string.match(this._hslRegExp);
 
-            if (!HSLMatch) {
-                throw new Error('Invalid HSL string');
+            if (HSLMatch) {
+                return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
             }
 
-            return this.fromHSL(HSLMatch[1], HSLMatch[2], HSLMatch[3]);
-        },
-
-        /**
-         * Create a new Color from a HSLA color string.
-         * @param {string} string The HSLA color string.
-         * @returns {Color} A new Color object.
-         */
-        fromHSLAString(string) {
             const HSLAMatch = string.match(this._hslaRegExp);
 
-            if (!HSLAMatch) {
-                throw new Error('Invalid HSLA string');
+            if (HSLAMatch) {
+                return this.fromHSL(
+                    HSLAMatch[1],
+                    HSLAMatch[2],
+                    HSLAMatch[3],
+                    HSLAMatch[5] ?
+                        HSLAMatch[4] / 100 :
+                        HSLAMatch[4]
+                );
             }
 
-            return this.fromHSL(
-                HSLAMatch[1],
-                HSLAMatch[2],
-                HSLAMatch[3],
-                HSLAMatch[5] ?
-                    HSLAMatch[4] / 100 :
-                    HSLAMatch[4]
-            );
+            throw new Error('Invalid HSLA string');
         },
 
         /**
@@ -781,35 +791,45 @@
          * @returns {Color} A new Color object.
          */
         fromRGBString(string) {
+            const RGB2Match = string.match(this._rgb2RegExp);
+
+            if (RGB2Match) {
+                return new this(RGB2Match[1], RGB2Match[2], RGB2Match[3]);
+            }
+
+            const RGBA2Match = string.match(this._rgba2RegExp);
+
+            if (RGBA2Match) {
+                return new this(
+                    RGBA2Match[1],
+                    RGBA2Match[2],
+                    RGBA2Match[3],
+                    RGBA2Match[5] ?
+                        RGBA2Match[4] / 100 :
+                        RGBA2Match[4]
+                );
+            }
+
             const RGBMatch = string.match(this._rgbRegExp);
 
-            if (!RGBMatch) {
-                throw new Error('Invalid RGB string');
+            if (RGBMatch) {
+                return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
             }
 
-            return new this(RGBMatch[1], RGBMatch[2], RGBMatch[3]);
-        },
-
-        /**
-         * Create a new Color from a RGBA color string.
-         * @param {string} string The RGBA color string.
-         * @returns {Color} A new Color object.
-         */
-        fromRGBAString(string) {
             const RGBAMatch = string.match(this._rgbaRegExp);
 
-            if (!RGBAMatch) {
-                throw new Error('Invalid RGBA string');
+            if (RGBAMatch) {
+                return new this(
+                    RGBAMatch[1],
+                    RGBAMatch[2],
+                    RGBAMatch[3],
+                    RGBAMatch[5] ?
+                        RGBAMatch[4] / 100 :
+                        RGBAMatch[4]
+                );
             }
 
-            return new this(
-                RGBAMatch[1],
-                RGBAMatch[2],
-                RGBAMatch[3],
-                RGBAMatch[5] ?
-                    RGBAMatch[4] / 100 :
-                    RGBAMatch[4]
-            );
+            throw new Error('Invalid RGB string');
         },
 
         /**
@@ -824,7 +844,7 @@
                 return new this(0, 0, 0, 0);
             }
 
-            if (this.colors[string]) {
+            if (string in this.colors) {
                 string = this.colors[string];
             } else {
                 string = string.trim();
@@ -834,16 +854,8 @@
                 return this.fromHexString(string);
             }
 
-            if (string.substring(0, 4).toLowerCase() === 'rgba') {
-                return this.fromRGBAString(string);
-            }
-
             if (string.substring(0, 3).toLowerCase() === 'rgb') {
                 return this.fromRGBString(string);
-            }
-
-            if (string.substring(0, 4).toLowerCase() === 'hsla') {
-                return this.fromHSLAString(string);
             }
 
             if (string.substring(0, 3).toLowerCase() === 'hsl') {
@@ -946,10 +958,10 @@
          * @param {Color} color1 The first Color.
          * @param {Color} [color2] The second Color.
          * @param {number} [minContrast=4.5] The minimum contrast.
-         * @param {number} [stepSize=1] The step size.
+         * @param {number} [stepSize=.01] The step size.
          * @returns {Color} The new Color.
          */
-        findContrast(color1, color2 = null, minContrast = 4.5, stepSize = 0.01) {
+        findContrast(color1, color2 = null, minContrast = 4.5, stepSize = .01) {
             if (!color2) {
                 color2 = color1.clone();
             }
@@ -1599,11 +1611,15 @@
 
         // HSL RegExp
         _hslRegExp: /^hsl\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%\)$/i,
+        _hsl2RegExp: /^hsl\(((?:\d*\.)?\d+)deg\s+((?:\d*\.)?\d+)\%\s+((?:\d*\.)?\d+)\%\)$/i,
         _hslaRegExp: /^hsla\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)\%,\s*((?:\d*\.)?\d+)(\%?)\)$/i,
+        _hsla2RegExp: /^hsl\(((?:\d*\.)?\d+)deg\s+((?:\d*\.)?\d+)\%\s+((?:\d*\.)?\d+)\%\s*\/\s*((?:\d*\.)?\d+)(\%?)\)$/i,
 
         // RGB RegExp
         _rgbRegExp: /^rgb\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)\)$/i,
-        _rgbaRegExp: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)(\%?)\)$/i
+        _rgb2RegExp: /^rgb\(((?:\d*\.)?\d+)\s+((?:\d*\.)?\d+)\s+((?:\d*\.)?\d+)\)$/i,
+        _rgbaRegExp: /^rgba\(((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+),\s*((?:\d*\.)?\d+)(\%?)\)$/i,
+        _rgba2RegExp: /^rgb\(((?:\d*\.)?\d+)\s+((?:\d*\.)?\d+)\s+((?:\d*\.)?\d+)\s*\/\s*((?:\d*\.)?\d+)(\%?)\)$/i
 
     });
 

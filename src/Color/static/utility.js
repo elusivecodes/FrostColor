@@ -35,10 +35,10 @@ Object.assign(Color, {
      * @param {Color} color1 The first Color.
      * @param {Color} [color2] The second Color.
      * @param {number} [minContrast=4.5] The minimum contrast.
-     * @param {number} [stepSize=1] The step size.
+     * @param {number} [stepSize=.01] The step size.
      * @returns {Color} The new Color.
      */
-    findContrast(color1, color2 = null, minContrast = 4.5, stepSize = 0.01) {
+    findContrast(color1, color2 = null, minContrast = 4.5, stepSize = .01) {
         if (!color2) {
             color2 = color1.clone();
         }
