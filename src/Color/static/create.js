@@ -87,6 +87,8 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromHSLString(string) {
+        string = string.trim();
+
         const HSL2Match = string.match(this._hsl2RegExp);
 
         if (HSL2Match) {
@@ -125,7 +127,7 @@ Object.assign(Color, {
             );
         }
 
-        throw new Error('Invalid HSLA string');
+        throw new Error('Invalid HSL string');
     },
 
     /**
@@ -159,6 +161,8 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromRGBString(string) {
+        string = string.trim();
+
         const RGB2Match = string.match(this._rgb2RegExp);
 
         if (RGB2Match) {
@@ -206,7 +210,7 @@ Object.assign(Color, {
      * @returns {Color} A new Color object.
      */
     fromString(string) {
-        string = string.toLowerCase();
+        string = string.toLowerCase().trim();
 
         if (string === 'transparent') {
             return new this(0, 0, 0, 0);
@@ -214,8 +218,6 @@ Object.assign(Color, {
 
         if (string in this.colors) {
             string = this.colors[string];
-        } else {
-            string = string.trim();
         }
 
         if (string.substring(0, 1) === '#') {

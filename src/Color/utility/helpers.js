@@ -14,7 +14,7 @@ Object.assign(Color.prototype, {
 
         if (this._a < 1) {
             return hex +
-                (this._a * 255 | 1 << 8)
+                (Math.round(this._a * 255) | 1 << 8)
                     .toString(16)
                     .slice(1);
         }
@@ -36,6 +36,6 @@ Object.assign(Color.prototype, {
      */
     _getHSV() {
         return this.constructor.RGB2HSV(this._r, this._g, this._b);
-    },
+    }
 
 });

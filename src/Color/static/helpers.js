@@ -31,6 +31,11 @@ Object.assign(Color, {
             + b * amount;
     },
 
+    /**
+     * Shorten a hex string (if possible).
+     * @param {string} hex The hex string.
+     * @returns {string} The hex string.
+     */
     _toHex(hex) {
         if (hex.length === 9 &&
             hex[1] === hex[2] &&

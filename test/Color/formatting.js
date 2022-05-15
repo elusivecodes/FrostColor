@@ -14,9 +14,9 @@ describe('Color Formatting', function() {
 
         it('returns a short hex string (with alpha)', function() {
             assert.strictEqual(
-                new Color(17, 17, 17, .07)
+                new Color(17, 17, 17, .4)
                     .toHexString(),
-                '#1111'
+                '#1116'
             );
         });
 
@@ -32,7 +32,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 new Color(120, 50, 50, .5)
                     .toHexString(),
-                '#7832327f'
+                '#78323280'
             );
         });
     });

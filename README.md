@@ -10,7 +10,6 @@ It is a lightweight (~4kb gzipped) and modern library, and features full support
 - [Basic Usage](#basic-usage)
 - [Color Creation](#color-creation)
 - [Color Formatting](#color-formatting)
-- [Color Output](#color-output)
 - [Color Attributes](#color-attributes)
 - [Color Manipulation](#color-manipulation)
 - [Color Schemes](#color-schemes)

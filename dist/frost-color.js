@@ -1,5 +1,5 @@
 /**
- * FrostColor v3.0.0
+ * FrostColor v3.0.1
  * https://github.com/elusivecodes/FrostColor
  */
 (function(global, factory) {
@@ -719,6 +719,8 @@
          * @returns {Color} A new Color object.
          */
         fromHSLString(string) {
+            string = string.trim();
+
             const HSL2Match = string.match(this._hsl2RegExp);
 
             if (HSL2Match) {
@@ -757,7 +759,7 @@
                 );
             }
 
-            throw new Error('Invalid HSLA string');
+            throw new Error('Invalid HSL string');
         },
 
         /**
@@ -791,6 +793,8 @@
          * @returns {Color} A new Color object.
          */
         fromRGBString(string) {
+            string = string.trim();
+
             const RGB2Match = string.match(this._rgb2RegExp);
 
             if (RGB2Match) {
@@ -838,7 +842,7 @@
          * @returns {Color} A new Color object.
          */
         fromString(string) {
-            string = string.toLowerCase();
+            string = string.toLowerCase().trim();
 
             if (string === 'transparent') {
                 return new this(0, 0, 0, 0);
@@ -846,8 +850,6 @@
 
             if (string in this.colors) {
                 string = this.colors[string];
-            } else {
-                string = string.trim();
             }
 
             if (string.substring(0, 1) === '#') {
@@ -900,6 +902,11 @@
                 + b * amount;
         },
 
+        /**
+         * Shorten a hex string (if possible).
+         * @param {string} hex The hex string.
+         * @returns {string} The hex string.
+         */
         _toHex(hex) {
             if (hex.length === 9 &&
                 hex[1] === hex[2] &&
@@ -992,10 +999,10 @@
          */
         mix(color1, color2, amount) {
             return new this(
-                Color._lerp(color1._r, color2._r, amount),
-                Color._lerp(color1._g, color2._g, amount),
-                Color._lerp(color1._b, color2._b, amount),
-                Color._lerp(color1._a, color2._a, amount)
+                this._lerp(color1._r, color2._r, amount),
+                this._lerp(color1._g, color2._g, amount),
+                this._lerp(color1._b, color2._b, amount),
+                this._lerp(color1._a, color2._a, amount)
             );
         },
 
@@ -1008,22 +1015,22 @@
          */
         multiply(color1, color2, amount) {
             return new this(
-                Color._lerp(
+                this._lerp(
                     color1._r,
                     color1._r * color2._r / 255,
                     amount
                 ),
-                Color._lerp(
+                this._lerp(
                     color1._g,
                     color1._g * color2._g / 255,
                     amount
                 ),
-                Color._lerp(
+                this._lerp(
                     color1._b,
                     color1._b * color2._b / 255,
                     amount
                 ),
-                Color._lerp(
+                this._lerp(
                     color1._a,
                     color1._a * color2._a,
                     amount
@@ -1159,7 +1166,7 @@
 
             if (this._a < 1) {
                 return hex +
-                    (this._a * 255 | 1 << 8)
+                    (Math.round(this._a * 255) | 1 << 8)
                         .toString(16)
                         .slice(1);
             }
@@ -1181,7 +1188,7 @@
          */
         _getHSV() {
             return this.constructor.RGB2HSV(this._r, this._g, this._b);
-        },
+        }
 
     });
 

@@ -69,10 +69,10 @@ Object.assign(Color, {
      */
     mix(color1, color2, amount) {
         return new this(
-            Color._lerp(color1._r, color2._r, amount),
-            Color._lerp(color1._g, color2._g, amount),
-            Color._lerp(color1._b, color2._b, amount),
-            Color._lerp(color1._a, color2._a, amount)
+            this._lerp(color1._r, color2._r, amount),
+            this._lerp(color1._g, color2._g, amount),
+            this._lerp(color1._b, color2._b, amount),
+            this._lerp(color1._a, color2._a, amount)
         );
     },
 
@@ -85,22 +85,22 @@ Object.assign(Color, {
      */
     multiply(color1, color2, amount) {
         return new this(
-            Color._lerp(
+            this._lerp(
                 color1._r,
                 color1._r * color2._r / 255,
                 amount
             ),
-            Color._lerp(
+            this._lerp(
                 color1._g,
                 color1._g * color2._g / 255,
                 amount
             ),
-            Color._lerp(
+            this._lerp(
                 color1._b,
                 color1._b * color2._b / 255,
                 amount
             ),
-            Color._lerp(
+            this._lerp(
                 color1._a,
                 color1._a * color2._a,
                 amount
