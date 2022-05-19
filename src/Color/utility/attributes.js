@@ -50,12 +50,7 @@ Object.assign(Color.prototype, {
      * @returns {Color} The modified Color object.
      */
     setAlpha(a) {
-        return this.setColor(
-            this._r,
-            this._g,
-            this._b,
-            a
-        );
+        return this.setColor(this._r, this._g, this._b, a);
     },
 
     /**
@@ -66,12 +61,7 @@ Object.assign(Color.prototype, {
     setBrightness(v) {
         const [h, s, _] = this._getHSV();
         const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
-        return this.setColor(
-            r,
-            g,
-            b,
-            this._a
-        );
+        return this.setColor(r, g, b, this._a);
     },
 
     /**
@@ -82,12 +72,7 @@ Object.assign(Color.prototype, {
     setHue(h) {
         const [_, s, v] = this._getHSV();
         const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
-        return this.setColor(
-            r,
-            g,
-            b,
-            this._a
-        );
+        return this.setColor(r, g, b, this._a);
     },
 
     /**
@@ -98,12 +83,7 @@ Object.assign(Color.prototype, {
     setSaturation(s) {
         const [h, _, v] = this._getHSV();
         const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
-        return this.setColor(
-            r,
-            g,
-            b,
-            this._a
-        );
+        return this.setColor(r, g, b, this._a);
     }
 
 });

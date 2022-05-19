@@ -28,11 +28,7 @@ Object.assign(Color.prototype, {
         return new Array(shades)
             .fill()
             .map(
-                (_, index) => this.clone()
-                    .shade(
-                        index
-                        / (shades + 1)
-                    )
+                (_, index) => this.clone().shade(index / (shades + 1))
             );
     },
 
@@ -45,11 +41,7 @@ Object.assign(Color.prototype, {
         return new Array(tints)
             .fill()
             .map(
-                (_, index) => this.clone()
-                    .tint(
-                        index
-                        / (tints + 1)
-                    )
+                (_, index) => this.clone().tint(index / (tints + 1))
             );
     },
 
@@ -62,11 +54,7 @@ Object.assign(Color.prototype, {
         return new Array(tones)
             .fill()
             .map(
-                (_, index) => this.clone()
-                    .tone(
-                        index
-                        / (tones + 1)
-                    )
+                (_, index) => this.clone().tone(index / (tones + 1))
             );
     }
 

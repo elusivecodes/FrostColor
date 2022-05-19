@@ -29,7 +29,7 @@ describe('ColorImmutable Schemes', function() {
             const complementary = ColorImmutable.fromHSV(120, 50, 50).complementary();
             assert.strictEqual(
                 complementary.toString(),
-                '#80407f'
+                '#804080'
             );
 
             assert.ok(
@@ -67,8 +67,8 @@ describe('ColorImmutable Schemes', function() {
                     color => color.toString()
                 ),
                 [
-                    '#407f80',
-                    '#80407f',
+                    '#408080',
+                    '#804080',
                     '#804040'
                 ]
             );

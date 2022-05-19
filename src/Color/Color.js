@@ -15,8 +15,7 @@ class Color {
     constructor(r = 0, g = 1, b = null, a = 1) {
         if (b === null) {
             a = g;
-            r *= 2.55;
-            b = g = r;
+            b = g = r = this.constructor._round(r * 2.55);
         }
 
         this._r = this.constructor._clamp(r, 0, 255);

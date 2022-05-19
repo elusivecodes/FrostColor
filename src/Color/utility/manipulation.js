@@ -13,12 +13,7 @@ Object.assign(Color.prototype, {
         let [h, s, l] = this._getHSL();
         l -= l * amount;
         const [r, g, b] = this.constructor.HSL2RGB(h, s, l);
-        return this.setColor(
-            r,
-            g,
-            b,
-            this._a
-        );
+        return this.setColor(r, g, b, this._a);
     },
 
     /**
@@ -43,12 +38,7 @@ Object.assign(Color.prototype, {
         let [h, s, l] = this._getHSL();
         l += (100 - l) * amount;
         const [r, g, b] = this.constructor.HSL2RGB(h, s, l);
-        return this.setColor(
-            r,
-            g,
-            b,
-            this._a
-        );
+        return this.setColor(r, g, b, this._a);
     },
 
     /**
@@ -62,12 +52,7 @@ Object.assign(Color.prototype, {
             new this.constructor(0),
             amount
         );
-        return this.setColor(
-            color._r,
-            color._g,
-            color._b,
-            this._a
-        );
+        return this.setColor(color._r, color._g, color._b, this._a);
     },
 
     /**
@@ -81,12 +66,7 @@ Object.assign(Color.prototype, {
             new this.constructor(100),
             amount
         );
-        return this.setColor(
-            color._r,
-            color._g,
-            color._b,
-            this._a
-        );
+        return this.setColor(color._r, color._g, color._b, this._a);
     },
 
     /**
@@ -100,12 +80,7 @@ Object.assign(Color.prototype, {
             new this.constructor(50),
             amount
         );
-        return this.setColor(
-            color._r,
-            color._g,
-            color._b,
-            this._a
-        );
+        return this.setColor(color._r, color._g, color._b, this._a);
     }
 
 });

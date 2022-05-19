@@ -21,13 +21,10 @@ Object.assign(Color, {
         k /= 100;
 
         return [
-            (c / 100 - k)
-            / (1 - k) * 100,
-            (m / 100 - k)
-            / (1 - k) * 100,
-            (y / 100 - k)
-            / (1 - k) * 100,
-            k * 100
+            this._round((c / 100 - k) / (1 - k) * 100),
+            this._round((m / 100 - k) / (1 - k) * 100),
+            this._round((y / 100 - k) / (1 - k) * 100),
+            this._round(k * 100)
         ];
     },
 
@@ -40,12 +37,9 @@ Object.assign(Color, {
      */
     CMY2RGB(c, m, y) {
         return [
-            (1 - c / 100)
-            * 255,
-            (1 - m / 100)
-            * 255,
-            (1 - y / 100)
-            * 255
+            this._round((1 - c / 100) * 255),
+            this._round((1 - m / 100) * 255),
+            this._round((1 - y / 100) * 255)
         ];
     },
 
@@ -61,21 +55,9 @@ Object.assign(Color, {
         k /= 100;
 
         return [
-            (
-                c / 100
-                * (1 - k)
-                + k
-            ) * 100,
-            (
-                m / 100
-                * (1 - k)
-                + k
-            ) * 100,
-            (
-                y / 100
-                * (1 - k)
-                + k
-            ) * 100
+            this._round((c / 100 * (1 - k) + k) * 100),
+            this._round((m / 100 * (1 - k) + k) * 100),
+            this._round((y / 100 * (1 - k) + k) * 100)
         ];
     },
 
@@ -98,24 +80,15 @@ Object.assign(Color, {
         const v2 = l < .5 ?
             l * (1 + s) :
             (l + s) - (s * l),
-            v1 = 2 * l - v2;
+            v1 = 2 * l - v2,
+            r = this.RGBHue(v1, v2, h + (1 / 3)),
+            g = this.RGBHue(v1, v2, h),
+            b = this.RGBHue(v1, v2, h - (1 / 3));
 
         return [
-            this.RGBHue(
-                v1,
-                v2,
-                h + (1 / 3)
-            ) * 255,
-            this.RGBHue(
-                v1,
-                v2,
-                h
-            ) * 255,
-            this.RGBHue(
-                v1,
-                v2,
-                h - (1 / 3)
-            ) * 255
+            this._round(r * 255),
+            this._round(g * 255),
+            this._round(b * 255)
         ];
     },
 
@@ -131,9 +104,9 @@ Object.assign(Color, {
 
         if (!s) {
             return [
-                v * 255,
-                v * 255,
-                v * 255
+                this._round(v * 255),
+                this._round(v * 255),
+                this._round(v * 255)
             ];
         }
 
@@ -141,21 +114,9 @@ Object.assign(Color, {
         s /= 100;
 
         const vi = Math.floor(h),
-            v1 = v
-                * (1 - s),
-            v2 = v
-                * (
-                    1 - s
-                    * (h - vi)
-                ),
-            v3 = v
-                * (
-                    1 - s
-                    * (
-                        1
-                        - (h - vi)
-                    )
-                );
+            v1 = v * (1 - s),
+            v2 = v * (1 - s * (h - vi)),
+            v3 = v * (1 - s * (1 - (h - vi)));
 
         let r, g, b;
 
@@ -193,9 +154,9 @@ Object.assign(Color, {
         }
 
         return [
-            r * 255,
-            g * 255,
-            b * 255
+            this._round(r * 255),
+            this._round(g * 255),
+            this._round(b * 255)
         ];
     },
 
@@ -208,18 +169,9 @@ Object.assign(Color, {
      */
     RGB2CMY(r, g, b) {
         return [
-            (
-                1
-                - (r / 255)
-            ) * 100,
-            (
-                1 -
-                (g / 255)
-            ) * 100,
-            (
-                1
-                - (b / 255)
-            ) * 100
+            this._round((1 - (r / 255)) * 100),
+            this._round((1 - (g / 255)) * 100),
+            this._round((1 - (b / 255)) * 100)
         ];
     },
 
@@ -256,33 +208,19 @@ Object.assign(Color, {
             l = (max + min) / 2;
 
         if (!diff) {
-            return [0, 0, l * 100];
+            return [
+                0,
+                0,
+                this._round(l * 100)
+            ];
         }
 
         const s = l < .5 ?
             diff / (max + min) :
             diff / (2 - max - min),
-            deltaR = (
-                (
-                    (max - r)
-                    / 6
-                )
-                + (diff / 2)
-            ) / diff,
-            deltaG = (
-                (
-                    (max - g)
-                    / 6
-                )
-                + (diff / 2)
-            ) / diff,
-            deltaB = (
-                (
-                    (max - b)
-                    / 6
-                )
-                + (diff / 2)
-            ) / diff;
+            deltaR = (((max - r) / 6) + (diff / 2)) / diff,
+            deltaG = (((max - g) / 6) + (diff / 2)) / diff,
+            deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
         let h = 0;
 
@@ -291,23 +229,19 @@ Object.assign(Color, {
                 h = deltaB - deltaG;
                 break;
             case g:
-                h = 1 / 3
-                    + deltaR
-                    - deltaB;
+                h = 1 / 3 + deltaR - deltaB;
                 break;
             case b:
-                h = 2 / 3
-                    + deltaG
-                    - deltaR;
+                h = 2 / 3 + deltaG - deltaR;
                 break;
         }
 
+        h = (h + 1) % 1;
+
         return [
-            (
-                (h + 1) % 1
-            ) * 360,
-            s * 100,
-            l * 100
+            this._round(h * 360),
+            this._round(s * 100),
+            this._round(l * 100)
         ];
     },
 
@@ -329,31 +263,17 @@ Object.assign(Color, {
             v = max;
 
         if (!diff) {
-            return [0, 0, v * 100];
+            return [
+                0,
+                0,
+                this._round(v * 100)
+            ];
         }
 
         const s = diff / max,
-            deltaR = (
-                (
-                    (max - r)
-                    / 6
-                )
-                + (diff / 2)
-            ) / diff,
-            deltaG = (
-                (
-                    (max - g)
-                    / 6
-                )
-                + (diff / 2)
-            ) / diff,
-            deltaB = (
-                (
-                    (max - b)
-                    / 6
-                )
-                + (diff / 2)
-            ) / diff;
+            deltaR = (((max - r) / 6) + (diff / 2)) / diff,
+            deltaG = (((max - g) / 6) + (diff / 2)) / diff,
+            deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
         let h = 0;
 
@@ -362,21 +282,19 @@ Object.assign(Color, {
                 h = deltaB - deltaG;
                 break;
             case g:
-                h = 1 / 3
-                    + deltaR - deltaB;
+                h = 1 / 3 + deltaR - deltaB;
                 break;
             case b:
-                h = 2 / 3
-                    + deltaG - deltaR;
+                h = 2 / 3 + deltaG - deltaR;
                 break;
         }
 
         h = (h + 1) % 1;
 
         return [
-            h * 360,
-            s * 100,
-            v * 100
+            this._round(h * 360),
+            this._round(s * 100),
+            this._round(v * 100)
         ];
     },
 
@@ -391,10 +309,7 @@ Object.assign(Color, {
         vH = (vH + 1) % 1;
 
         if (6 * vH < 1) {
-            return v1
-                + (v2 - v1)
-                * 6
-                * vH;
+            return v1 + (v2 - v1) * 6 * vH;
         }
 
         if (2 * vH < 1) {
@@ -402,13 +317,7 @@ Object.assign(Color, {
         }
 
         if (3 * vH < 2) {
-            return v1
-                + (v2 - v1)
-                * (
-                    (2 / 3)
-                    - vH
-                )
-                * 6;
+            return v1 + (v2 - v1) * ((2 / 3) - vH) * 6;
         }
 
         return v1;

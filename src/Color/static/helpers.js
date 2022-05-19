@@ -26,9 +26,18 @@ Object.assign(Color, {
      * @returns {number} The interpolated value.
      */
     _lerp(a, b, amount) {
-        return a
-            * (1 - amount)
-            + b * amount;
+        const value = a * (1 - amount) + b * amount;
+        return this._round(value);
+    },
+
+    /**
+     * Round a number to a specified precision.
+     * @param {number} num The number to round.
+     * @param {number} [precision=2] The precision to use.
+     * @returns {number} The rounded number.
+     */
+    _round(num, precision = 2) {
+        return parseFloat(parseFloat(num).toFixed(precision));
     },
 
     /**

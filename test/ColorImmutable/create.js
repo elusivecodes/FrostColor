@@ -246,7 +246,7 @@ describe('ColorImmutable Creation', function() {
             assert.strictEqual(
                 ColorImmutable.fromCMY(90, 50, 15, .5)
                     .toString(),
-                'rgb(25 128 217 / 50%)'
+                'rgb(26 128 217 / 50%)'
             );
         });
     });

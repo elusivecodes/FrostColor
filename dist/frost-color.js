@@ -1,5 +1,5 @@
 /**
- * FrostColor v3.0.1
+ * FrostColor v3.0.2
  * https://github.com/elusivecodes/FrostColor
  */
 (function(global, factory) {
@@ -31,8 +31,7 @@
         constructor(r = 0, g = 1, b = null, a = 1) {
             if (b === null) {
                 a = g;
-                r *= 2.55;
-                b = g = r;
+                b = g = r = this.constructor._round(r * 2.55);
             }
 
             this._r = this.constructor._clamp(r, 0, 255);
@@ -220,13 +219,10 @@
             k /= 100;
 
             return [
-                (c / 100 - k)
-                / (1 - k) * 100,
-                (m / 100 - k)
-                / (1 - k) * 100,
-                (y / 100 - k)
-                / (1 - k) * 100,
-                k * 100
+                this._round((c / 100 - k) / (1 - k) * 100),
+                this._round((m / 100 - k) / (1 - k) * 100),
+                this._round((y / 100 - k) / (1 - k) * 100),
+                this._round(k * 100)
             ];
         },
 
@@ -239,12 +235,9 @@
          */
         CMY2RGB(c, m, y) {
             return [
-                (1 - c / 100)
-                * 255,
-                (1 - m / 100)
-                * 255,
-                (1 - y / 100)
-                * 255
+                this._round((1 - c / 100) * 255),
+                this._round((1 - m / 100) * 255),
+                this._round((1 - y / 100) * 255)
             ];
         },
 
@@ -260,21 +253,9 @@
             k /= 100;
 
             return [
-                (
-                    c / 100
-                    * (1 - k)
-                    + k
-                ) * 100,
-                (
-                    m / 100
-                    * (1 - k)
-                    + k
-                ) * 100,
-                (
-                    y / 100
-                    * (1 - k)
-                    + k
-                ) * 100
+                this._round((c / 100 * (1 - k) + k) * 100),
+                this._round((m / 100 * (1 - k) + k) * 100),
+                this._round((y / 100 * (1 - k) + k) * 100)
             ];
         },
 
@@ -297,24 +278,15 @@
             const v2 = l < .5 ?
                 l * (1 + s) :
                 (l + s) - (s * l),
-                v1 = 2 * l - v2;
+                v1 = 2 * l - v2,
+                r = this.RGBHue(v1, v2, h + (1 / 3)),
+                g = this.RGBHue(v1, v2, h),
+                b = this.RGBHue(v1, v2, h - (1 / 3));
 
             return [
-                this.RGBHue(
-                    v1,
-                    v2,
-                    h + (1 / 3)
-                ) * 255,
-                this.RGBHue(
-                    v1,
-                    v2,
-                    h
-                ) * 255,
-                this.RGBHue(
-                    v1,
-                    v2,
-                    h - (1 / 3)
-                ) * 255
+                this._round(r * 255),
+                this._round(g * 255),
+                this._round(b * 255)
             ];
         },
 
@@ -330,9 +302,9 @@
 
             if (!s) {
                 return [
-                    v * 255,
-                    v * 255,
-                    v * 255
+                    this._round(v * 255),
+                    this._round(v * 255),
+                    this._round(v * 255)
                 ];
             }
 
@@ -340,21 +312,9 @@
             s /= 100;
 
             const vi = Math.floor(h),
-                v1 = v
-                    * (1 - s),
-                v2 = v
-                    * (
-                        1 - s
-                        * (h - vi)
-                    ),
-                v3 = v
-                    * (
-                        1 - s
-                        * (
-                            1
-                            - (h - vi)
-                        )
-                    );
+                v1 = v * (1 - s),
+                v2 = v * (1 - s * (h - vi)),
+                v3 = v * (1 - s * (1 - (h - vi)));
 
             let r, g, b;
 
@@ -392,9 +352,9 @@
             }
 
             return [
-                r * 255,
-                g * 255,
-                b * 255
+                this._round(r * 255),
+                this._round(g * 255),
+                this._round(b * 255)
             ];
         },
 
@@ -407,18 +367,9 @@
          */
         RGB2CMY(r, g, b) {
             return [
-                (
-                    1
-                    - (r / 255)
-                ) * 100,
-                (
-                    1 -
-                    (g / 255)
-                ) * 100,
-                (
-                    1
-                    - (b / 255)
-                ) * 100
+                this._round((1 - (r / 255)) * 100),
+                this._round((1 - (g / 255)) * 100),
+                this._round((1 - (b / 255)) * 100)
             ];
         },
 
@@ -455,33 +406,19 @@
                 l = (max + min) / 2;
 
             if (!diff) {
-                return [0, 0, l * 100];
+                return [
+                    0,
+                    0,
+                    this._round(l * 100)
+                ];
             }
 
             const s = l < .5 ?
                 diff / (max + min) :
                 diff / (2 - max - min),
-                deltaR = (
-                    (
-                        (max - r)
-                        / 6
-                    )
-                    + (diff / 2)
-                ) / diff,
-                deltaG = (
-                    (
-                        (max - g)
-                        / 6
-                    )
-                    + (diff / 2)
-                ) / diff,
-                deltaB = (
-                    (
-                        (max - b)
-                        / 6
-                    )
-                    + (diff / 2)
-                ) / diff;
+                deltaR = (((max - r) / 6) + (diff / 2)) / diff,
+                deltaG = (((max - g) / 6) + (diff / 2)) / diff,
+                deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
             let h = 0;
 
@@ -490,23 +427,19 @@
                     h = deltaB - deltaG;
                     break;
                 case g:
-                    h = 1 / 3
-                        + deltaR
-                        - deltaB;
+                    h = 1 / 3 + deltaR - deltaB;
                     break;
                 case b:
-                    h = 2 / 3
-                        + deltaG
-                        - deltaR;
+                    h = 2 / 3 + deltaG - deltaR;
                     break;
             }
 
+            h = (h + 1) % 1;
+
             return [
-                (
-                    (h + 1) % 1
-                ) * 360,
-                s * 100,
-                l * 100
+                this._round(h * 360),
+                this._round(s * 100),
+                this._round(l * 100)
             ];
         },
 
@@ -528,31 +461,17 @@
                 v = max;
 
             if (!diff) {
-                return [0, 0, v * 100];
+                return [
+                    0,
+                    0,
+                    this._round(v * 100)
+                ];
             }
 
             const s = diff / max,
-                deltaR = (
-                    (
-                        (max - r)
-                        / 6
-                    )
-                    + (diff / 2)
-                ) / diff,
-                deltaG = (
-                    (
-                        (max - g)
-                        / 6
-                    )
-                    + (diff / 2)
-                ) / diff,
-                deltaB = (
-                    (
-                        (max - b)
-                        / 6
-                    )
-                    + (diff / 2)
-                ) / diff;
+                deltaR = (((max - r) / 6) + (diff / 2)) / diff,
+                deltaG = (((max - g) / 6) + (diff / 2)) / diff,
+                deltaB = (((max - b) / 6) + (diff / 2)) / diff;
 
             let h = 0;
 
@@ -561,21 +480,19 @@
                     h = deltaB - deltaG;
                     break;
                 case g:
-                    h = 1 / 3
-                        + deltaR - deltaB;
+                    h = 1 / 3 + deltaR - deltaB;
                     break;
                 case b:
-                    h = 2 / 3
-                        + deltaG - deltaR;
+                    h = 2 / 3 + deltaG - deltaR;
                     break;
             }
 
             h = (h + 1) % 1;
 
             return [
-                h * 360,
-                s * 100,
-                v * 100
+                this._round(h * 360),
+                this._round(s * 100),
+                this._round(v * 100)
             ];
         },
 
@@ -590,10 +507,7 @@
             vH = (vH + 1) % 1;
 
             if (6 * vH < 1) {
-                return v1
-                    + (v2 - v1)
-                    * 6
-                    * vH;
+                return v1 + (v2 - v1) * 6 * vH;
             }
 
             if (2 * vH < 1) {
@@ -601,13 +515,7 @@
             }
 
             if (3 * vH < 2) {
-                return v1
-                    + (v2 - v1)
-                    * (
-                        (2 / 3)
-                        - vH
-                    )
-                    * 6;
+                return v1 + (v2 - v1) * ((2 / 3) - vH) * 6;
             }
 
             return v1;
@@ -690,8 +598,7 @@
                     null
             );
 
-            return new this(
-                rgb[0],
+            return new this(rgb[0],
                 rgb[1],
                 rgb[2],
                 rgb[3] ?
@@ -897,9 +804,18 @@
          * @returns {number} The interpolated value.
          */
         _lerp(a, b, amount) {
-            return a
-                * (1 - amount)
-                + b * amount;
+            const value = a * (1 - amount) + b * amount;
+            return this._round(value);
+        },
+
+        /**
+         * Round a number to a specified precision.
+         * @param {number} num The number to round.
+         * @param {number} [precision=2] The precision to use.
+         * @returns {number} The rounded number.
+         */
+        _round(num, precision = 2) {
+            return parseFloat(parseFloat(num).toFixed(precision));
         },
 
         /**
@@ -1092,12 +1008,7 @@
          * @returns {Color} The modified Color object.
          */
         setAlpha(a) {
-            return this.setColor(
-                this._r,
-                this._g,
-                this._b,
-                a
-            );
+            return this.setColor(this._r, this._g, this._b, a);
         },
 
         /**
@@ -1108,12 +1019,7 @@
         setBrightness(v) {
             const [h, s, _] = this._getHSV();
             const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
-            return this.setColor(
-                r,
-                g,
-                b,
-                this._a
-            );
+            return this.setColor(r, g, b, this._a);
         },
 
         /**
@@ -1124,12 +1030,7 @@
         setHue(h) {
             const [_, s, v] = this._getHSV();
             const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
-            return this.setColor(
-                r,
-                g,
-                b,
-                this._a
-            );
+            return this.setColor(r, g, b, this._a);
         },
 
         /**
@@ -1140,12 +1041,7 @@
         setSaturation(s) {
             const [h, _, v] = this._getHSV();
             const [r, g, b] = this.constructor.HSV2RGB(h, s, v);
-            return this.setColor(
-                r,
-                g,
-                b,
-                this._a
-            );
+            return this.setColor(r, g, b, this._a);
         }
 
     });
@@ -1207,12 +1103,7 @@
             let [h, s, l] = this._getHSL();
             l -= l * amount;
             const [r, g, b] = this.constructor.HSL2RGB(h, s, l);
-            return this.setColor(
-                r,
-                g,
-                b,
-                this._a
-            );
+            return this.setColor(r, g, b, this._a);
         },
 
         /**
@@ -1237,12 +1128,7 @@
             let [h, s, l] = this._getHSL();
             l += (100 - l) * amount;
             const [r, g, b] = this.constructor.HSL2RGB(h, s, l);
-            return this.setColor(
-                r,
-                g,
-                b,
-                this._a
-            );
+            return this.setColor(r, g, b, this._a);
         },
 
         /**
@@ -1256,12 +1142,7 @@
                 new this.constructor(0),
                 amount
             );
-            return this.setColor(
-                color._r,
-                color._g,
-                color._b,
-                this._a
-            );
+            return this.setColor(color._r, color._g, color._b, this._a);
         },
 
         /**
@@ -1275,12 +1156,7 @@
                 new this.constructor(100),
                 amount
             );
-            return this.setColor(
-                color._r,
-                color._g,
-                color._b,
-                this._a
-            );
+            return this.setColor(color._r, color._g, color._b, this._a);
         },
 
         /**
@@ -1294,12 +1170,7 @@
                 new this.constructor(50),
                 amount
             );
-            return this.setColor(
-                color._r,
-                color._g,
-                color._b,
-                this._a
-            );
+            return this.setColor(color._r, color._g, color._b, this._a);
         }
 
     });
@@ -1334,11 +1205,7 @@
             return new Array(shades)
                 .fill()
                 .map(
-                    (_, index) => this.clone()
-                        .shade(
-                            index
-                            / (shades + 1)
-                        )
+                    (_, index) => this.clone().shade(index / (shades + 1))
                 );
         },
 
@@ -1351,11 +1218,7 @@
             return new Array(tints)
                 .fill()
                 .map(
-                    (_, index) => this.clone()
-                        .tint(
-                            index
-                            / (tints + 1)
-                        )
+                    (_, index) => this.clone().tint(index / (tints + 1))
                 );
         },
 
@@ -1368,11 +1231,7 @@
             return new Array(tones)
                 .fill()
                 .map(
-                    (_, index) => this.clone()
-                        .tone(
-                            index
-                            / (tones + 1)
-                        )
+                    (_, index) => this.clone().tone(index / (tones + 1))
                 );
         }
 
