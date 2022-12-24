@@ -1,11 +1,11 @@
-const assert = require('assert');
-const { ColorImmutable } = require('../../dist/frost-color.min');
+import assert from 'node:assert/strict';
+import Color from './../src/index.js';
 
-describe('ColorImmutable Palette', function() {
+describe('Color Palette', function() {
 
     describe('#shades', function() {
         it('creates a shades palette', function() {
-            const shades = ColorImmutable.fromHSV(120, 50, 50).shades();
+            const shades = Color.fromHSV(120, 50, 50).shades();
             assert.deepStrictEqual(
                 shades.map(
                     color => color.toString()
@@ -26,13 +26,13 @@ describe('ColorImmutable Palette', function() {
 
             assert.ok(
                 shades.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });
 
         it('works with shades argument', function() {
-            const shades = ColorImmutable.fromHSV(120, 50, 50).shades(5);
+            const shades = Color.fromHSV(120, 50, 50).shades(5);
             assert.deepStrictEqual(
                 shades.map(
                     color => color.toString()
@@ -48,7 +48,7 @@ describe('ColorImmutable Palette', function() {
 
             assert.ok(
                 shades.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });
@@ -56,7 +56,7 @@ describe('ColorImmutable Palette', function() {
 
     describe('#tints', function() {
         it('creates a tints palette', function() {
-            const tints = ColorImmutable.fromHSV(120, 50, 50).tints();
+            const tints = Color.fromHSV(120, 50, 50).tints();
             assert.deepStrictEqual(
                 tints.map(
                     color => color.toString()
@@ -77,13 +77,13 @@ describe('ColorImmutable Palette', function() {
 
             assert.ok(
                 tints.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });
 
         it('works with tints argument', function() {
-            const tints = ColorImmutable.fromHSV(120, 50, 50).tints(5);
+            const tints = Color.fromHSV(120, 50, 50).tints(5);
             assert.deepStrictEqual(
                 tints.map(
                     color => color.toString()
@@ -99,7 +99,7 @@ describe('ColorImmutable Palette', function() {
 
             assert.ok(
                 tints.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });
@@ -107,7 +107,7 @@ describe('ColorImmutable Palette', function() {
 
     describe('#tones', function() {
         it('creates a tones palette', function() {
-            const tones = ColorImmutable.fromHSV(120, 50, 50).tones();
+            const tones = Color.fromHSV(120, 50, 50).tones();
             assert.deepStrictEqual(
                 tones.map(
                     color => color.toString()
@@ -128,13 +128,13 @@ describe('ColorImmutable Palette', function() {
 
             assert.ok(
                 tones.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });
 
         it('works with tones argument', function() {
-            const tones = ColorImmutable.fromHSV(120, 50, 50).tones(5);
+            const tones = Color.fromHSV(120, 50, 50).tones(5);
             assert.deepStrictEqual(
                 tones.map(
                     color => color.toString()
@@ -150,7 +150,7 @@ describe('ColorImmutable Palette', function() {
 
             assert.ok(
                 tones.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });
@@ -158,7 +158,7 @@ describe('ColorImmutable Palette', function() {
 
     describe('#palette', function() {
         it('creates a color palette', function() {
-            const palette = ColorImmutable.fromHSV(120, 50, 50)
+            const palette = Color.fromHSV(120, 50, 50)
                 .palette();
 
             assert.ok('shades' in palette);
@@ -222,23 +222,23 @@ describe('ColorImmutable Palette', function() {
 
             assert.ok(
                 palette.shades.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
             assert.ok(
                 palette.tints.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
             assert.ok(
                 palette.tones.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });
 
         it('works with shades argument', function() {
-            const palette = ColorImmutable.fromHSV(120, 50, 50)
+            const palette = Color.fromHSV(120, 50, 50)
                 .palette(5, 0, 0);
 
             assert.deepStrictEqual(
@@ -264,13 +264,13 @@ describe('ColorImmutable Palette', function() {
             );
             assert.ok(
                 palette.shades.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });
 
         it('works with tints argument', function() {
-            const palette = ColorImmutable.fromHSV(120, 50, 50)
+            const palette = Color.fromHSV(120, 50, 50)
                 .palette(0, 5, 0);
 
             assert.deepStrictEqual(
@@ -296,13 +296,13 @@ describe('ColorImmutable Palette', function() {
             );
             assert.ok(
                 palette.tints.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });
 
         it('works with tones argument', function() {
-            const palette = ColorImmutable.fromHSV(120, 50, 50)
+            const palette = Color.fromHSV(120, 50, 50)
                 .palette(0, 0, 5);
 
             assert.deepStrictEqual(
@@ -328,7 +328,7 @@ describe('ColorImmutable Palette', function() {
             );
             assert.ok(
                 palette.tones.every(
-                    color => color instanceof ColorImmutable
+                    color => color instanceof Color
                 )
             );
         });

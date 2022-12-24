@@ -1,5 +1,5 @@
-const assert = require('assert');
-const { Color } = require('../../dist/frost-color.min');
+import assert from 'node:assert/strict';
+import Color from './../src/index.js';
 
 describe('Color Attributes', function() {
 
@@ -59,11 +59,11 @@ describe('Color Attributes', function() {
             const color2 = color1.setAlpha(.75);
             assert.strictEqual(
                 color1.getAlpha(),
-                .75
+                1
             );
             assert.strictEqual(
-                color1,
-                color2
+                color2.getAlpha(),
+                .75
             );
         });
     });
@@ -74,11 +74,11 @@ describe('Color Attributes', function() {
             const color2 = color1.setBrightness(75);
             assert.strictEqual(
                 color1.getBrightness(),
-                75
+                50
             );
             assert.strictEqual(
-                color1,
-                color2
+                color2.getBrightness(),
+                75
             );
         });
     });
@@ -89,11 +89,11 @@ describe('Color Attributes', function() {
             const color2 = color1.setHue(270);
             assert.strictEqual(
                 color1.getHue(),
-                270
+                180
             );
             assert.strictEqual(
-                color1,
-                color2
+                color2.getHue(),
+                270
             );
         });
     });
@@ -104,11 +104,11 @@ describe('Color Attributes', function() {
             const color2 = color1.setSaturation(25);
             assert.strictEqual(
                 color1.getSaturation(),
-                25
+                50
             );
             assert.strictEqual(
-                color1,
-                color2
+                color2.getSaturation(),
+                25
             );
         });
     });

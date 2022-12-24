@@ -1,0 +1,57 @@
+import Color from './color.js';
+import { fromCMY, fromCMYK, fromHexString, fromHSL, fromHSLString, fromHSV, fromRGB, fromRGBString, fromString } from './static/create.js';
+import { contrast, dist, findContrast, mix, multiply } from './static/utility.js';
+import { getAlpha, getBrightness, getHue, getSaturation, luma, setAlpha, setBrightness, setHue, setSaturation } from './prototype/attributes.js';
+import { darken, invert, lighten, shade, tint, tone } from './prototype/manipulation.js';
+import { label, toHexString, toHSLString, toRGBString, toString } from './prototype/output.js';
+import { palette, shades, tints, tones } from './prototype/palette.js';
+import { analogous, complementary, split, tetradic, triadic } from './prototype/schemes.js';
+
+Color.contrast = contrast;
+Color.dist = dist;
+Color.findContrast = findContrast;
+Color.fromCMY = fromCMY;
+Color.fromCMYK = fromCMYK;
+Color.fromHexString = fromHexString;
+Color.fromHSL = fromHSL;
+Color.fromHSLString = fromHSLString;
+Color.fromHSV = fromHSV;
+Color.fromRGB = fromRGB;
+Color.fromRGBString = fromRGBString;
+Color.fromString = fromString;
+Color.mix = mix;
+Color.multiply = multiply;
+
+const proto = Color.prototype;
+
+proto.analogous = analogous;
+proto.complementary = complementary;
+proto.darken = darken;
+proto.getAlpha = getAlpha;
+proto.getBrightness = getBrightness;
+proto.getHue = getHue;
+proto.getSaturation = getSaturation;
+proto.invert = invert;
+proto.label = label;
+proto.lighten = lighten;
+proto.luma = luma;
+proto.palette = palette;
+proto.setAlpha = setAlpha;
+proto.setBrightness = setBrightness;
+proto.setHue = setHue;
+proto.setSaturation = setSaturation;
+proto.shade = shade;
+proto.shades = shades;
+proto.split = split;
+proto.tetradic = tetradic;
+proto.tint = tint;
+proto.tints = tints;
+proto.toHexString = toHexString;
+proto.toHSLString = toHSLString;
+proto.toRGBString = toRGBString;
+proto.toString = toString;
+proto.tone = tone;
+proto.tones = tones;
+proto.triadic = triadic;
+
+export default Color;

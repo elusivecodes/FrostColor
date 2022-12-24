@@ -1,6 +1,6 @@
 # FrostColor
 
-**FrostColor** is a free, open-source color manipulation library for *JavaScript*.
+**FrostColor** is a free, open-source immutable color manipulation library for *JavaScript*.
 
 It is a lightweight (~4kb gzipped) and modern library, and features full support for RGB, HSL, HSV, CMY and CMYK color-spaces.
 
@@ -34,7 +34,7 @@ npm i frostcolor
 In Node.js:
 
 ```javascript
-const { Color, ColorImmutable } = require('frostcolor');
+import Color from 'frostcolor';
 ```
 
 
@@ -58,16 +58,6 @@ const color = new Color(red, green, blue, alpha);
 
 ```javascript
 const color = new Color(brightness, alpha);
-```
-
-**Immutable Colors**
-
-By default, *Color* objects are mutable, but if you wish to create an immutable reference you can use the following syntax.
-
-Immutable *Color* objects return a new *ColorImmutable* whenever they are modified.
-
-```javascript
-const color = new ColorImmutable(red, green, blue, alpha);
 ```
 
 
@@ -134,14 +124,6 @@ Create a new *Color* from HSV values.
 
 ```javascript
 const color = Color.fromHSV(hue, saturation, value, alpha);
-```
-
-**Clone**
-
-Create a new *Color* from an existing *Color*.
-
-```javascript
-const clone = color.clone();
 ```
 
 
@@ -239,7 +221,7 @@ Set the alpha value of the color.
 - `alpha` is a number between *0* and *1*.
 
 ```javascript
-color.setAlpha(alpha);
+const newColor = color.setAlpha(alpha);
 ```
 
 **Set Brightness**
@@ -249,7 +231,7 @@ Set the brightness value of the color.
 - `brightness` is a number between *0* and *100*.
 
 ```javascript
-color.setBrightness(brightness);
+const newColor = color.setBrightness(brightness);
 ```
 
 **Set Hue**
@@ -259,7 +241,7 @@ Set the hue value of the color.
 - `hue` is a number between *0* and *360*.
 
 ```javascript
-color.setHue(hue);
+const newColor = color.setHue(hue);
 ```
 
 **Set Saturation**
@@ -269,7 +251,7 @@ Set the saturation value of the color.
 - `saturation` is a number between *0* and *100*.
 
 ```javascript
-color.setSaturation(saturation);
+const newColor = color.setSaturation(saturation);
 ```
 
 
@@ -282,7 +264,7 @@ Darken the color by a specified amount.
 - `amount` is a number between *0* and *1*.
 
 ```javascript
-color.darken(amount);
+const newColor = color.darken(amount);
 ```
 
 **Invert**
@@ -290,7 +272,7 @@ color.darken(amount);
 Invert the color.
 
 ```javascript
-color.invert();
+const newColor = color.invert();
 ```
 
 **Lighten**
@@ -300,7 +282,7 @@ Lighten the color by a specified amount.
 - `amount` is a number between *0* and *1*.
 
 ```javascript
-color.lighten(amount);
+const newColor = color.lighten(amount);
 ```
 
 **Shade**
@@ -310,7 +292,7 @@ Shade the color by a specified amount.
 - `amount` is a number between *0* and *1*.
 
 ```javascript
-color.shade(amount);
+const newColor = color.shade(amount);
 ```
 
 **Tint**
@@ -320,7 +302,7 @@ Tint the color by a specified amount.
 - `amount` is a number between *0* and *1*.
 
 ```javascript
-color.tint(amount);
+const newColor = color.tint(amount);
 ```
 
 **Tone**
@@ -330,7 +312,7 @@ Tone the color by a specified amount.
 - `amount` is a number between *0* and *1*.
 
 ```javascript
-color.tone(amount);
+const newColor = color.tone(amount);
 ```
 
 
