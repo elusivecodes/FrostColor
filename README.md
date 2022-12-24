@@ -28,13 +28,13 @@ It is a lightweight (~4kb gzipped) and modern library, and features full support
 **Using NPM**
 
 ```
-npm i frostcolor
+npm i @fr0st/color
 ```
 
 In Node.js:
 
 ```javascript
-import Color from 'frostcolor';
+import Color from '@fr0st/color';
 ```
 
 
