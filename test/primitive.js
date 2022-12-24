@@ -1,5 +1,5 @@
-const assert = require('assert');
-const { Color } = require('../../dist/frost-color.min');
+import assert from 'node:assert/strict';
+import Color from './../src/index.js';
 
 describe('Color Primitive', function() {
 

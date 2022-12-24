@@ -1,11 +1,11 @@
-const assert = require('assert');
-const { ColorImmutable } = require('../../dist/frost-color.min');
+import assert from 'node:assert/strict';
+import Color from './../src/index.js';
 
-describe('ColorImmutable Manipulation', function() {
+describe('Color Manipulation', function() {
 
     describe('#darken', function() {
         it('darkens the color', function() {
-            const color1 = ColorImmutable.fromHSV(120, 50, 50);
+            const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.darken(.5);
             assert.strictEqual(
                 color1.toString(),
@@ -20,7 +20,7 @@ describe('ColorImmutable Manipulation', function() {
 
     describe('#invert', function() {
         it('inverts the color', function() {
-            const color1 = ColorImmutable.fromHSV(120, 50, 50);
+            const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.invert();
             assert.strictEqual(
                 color1.toString(),
@@ -35,7 +35,7 @@ describe('ColorImmutable Manipulation', function() {
 
     describe('#lighten', function() {
         it('lightens the color', function() {
-            const color1 = ColorImmutable.fromHSV(120, 50, 50);
+            const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.lighten(.5);
             assert.strictEqual(
                 color1.toString(),
@@ -50,7 +50,7 @@ describe('ColorImmutable Manipulation', function() {
 
     describe('#shade', function() {
         it('shades the color', function() {
-            const color1 = ColorImmutable.fromHSV(120, 50, 50);
+            const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.shade(.3);
             assert.strictEqual(
                 color1.toString(),
@@ -65,7 +65,7 @@ describe('ColorImmutable Manipulation', function() {
 
     describe('#tint', function() {
         it('tints the color', function() {
-            const color1 = ColorImmutable.fromHSV(120, 50, 50);
+            const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.tint(.3);
             assert.strictEqual(
                 color1.toString(),
@@ -80,7 +80,7 @@ describe('ColorImmutable Manipulation', function() {
 
     describe('#tone', function() {
         it('tones the color', function() {
-            const color1 = ColorImmutable.fromHSV(120, 50, 50);
+            const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.tone(.3);
             assert.strictEqual(
                 color1.toString(),
