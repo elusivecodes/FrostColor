@@ -1,6 +1,6 @@
 {
     "name": "@fr0st/color",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "description": "FrostColor is a free, open-source color manipulation library for JavaScript.",
     "keywords": [
         "color",
@@ -20,13 +20,14 @@
     "main": "src/index.js",
     "type": "module",
     "files": [
+        "dist",
         "LICENSE",
         "README.md",
         "src"
     ],
     "scripts": {
         "build": "npm run js-compile && npm run js-minify",
-        "js-compile": "rollup src/index.js --file dist/frost-color.js --format iife --sourcemap --name Color",
+        "js-compile": "rollup --config",
         "js-lint": "eslint --ext .js .",
         "js-minify": "terser --compress passes=2 --mangle --source-map \"content=dist/frost-color.js.map\" --output dist/frost-color.min.js dist/frost-color.js",
         "test": "mocha --recursive"
@@ -39,11 +40,10 @@
     "license": "MIT",
     "private": false,
     "devDependencies": {
-        "eslint": "^8.30.0",
+        "eslint": "^8.31.0",
         "eslint-config-google": "^0.14.0",
-        "filepath": "^1.1.0",
         "mocha": "^10.2.0",
-        "rollup": "^3.7.5",
+        "rollup": "^3.9.1",
         "terser": "^5.16.1"
     }
 }
