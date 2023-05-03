@@ -73,11 +73,6 @@
      * @class
      */
     class Color {
-        #r;
-        #g;
-        #b;
-        #a;
-
         /**
          * New Color constructor.
          * @param {number} [r=0] The red value, or the brightness value.
@@ -91,10 +86,10 @@
                 b = g = r = round(r * 2.55);
             }
 
-            this.#r = clamp(r, 0, 255);
-            this.#g = clamp(g, 0, 255);
-            this.#b = clamp(b, 0, 255);
-            this.#a = clamp(a, 0, 1);
+            this._r = clamp(r, 0, 255);
+            this._g = clamp(g, 0, 255);
+            this._b = clamp(b, 0, 255);
+            this._a = clamp(a, 0, 1);
         }
 
         /**
@@ -121,7 +116,7 @@
          * @return {number} The alpha value. (0, 1)
          */
         get a() {
-            return this.#a;
+            return this._a;
         }
 
         /**
@@ -129,7 +124,7 @@
          * @return {number} The blue value. (0, 255)
          */
         get b() {
-            return this.#b;
+            return this._b;
         }
 
         /**
@@ -137,7 +132,7 @@
          * @return {number} The green value. (0, 255)
          */
         get g() {
-            return this.#g;
+            return this._g;
         }
 
         /**
@@ -145,7 +140,7 @@
          * @return {number} The red value. (0, 255)
          */
         get r() {
-            return this.#r;
+            return this._r;
         }
     }
 
