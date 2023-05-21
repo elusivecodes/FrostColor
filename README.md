@@ -397,12 +397,13 @@ const colorTones = color.tones(tones);
 
 Create a palette object with a specified number of shades, tints and tone variations.
 
-- `shades` is a number indicating how many shades you wish to generate, and will default to *10*.
-- `tints` is a number indicating how many tints you wish to generate, and will default to *10*.
-- `tones` is a number indicating how many tones you wish to generate, and will default to *10*.
+- `options` is an object containing options for how the palette should be generated.
+    - `shades` is a number indicating how many shades you wish to generate, and will default to *10*.
+    - `tints` is a number indicating how many tints you wish to generate, and will default to *10*.
+    - `tones` is a number indicating how many tones you wish to generate, and will default to *10*.
 
 ```javascript
-const colorPalette = color.palette(shades, tints, tones);
+const colorPalette = color.palette(options);
 ```
 
 
@@ -436,8 +437,9 @@ Find an optimally contrasting color for another color.
 
 - `color1` is a *Color* object.
 - `color2` is a *Color* object, and will default to *null*.
-- `minContrast` is a number between *1* and *21* indicating the minimum valid contrast, and will default to *4.5*.
-- `stepSize` is a number between *0* and *1* indicating the amount to darken/lighten the color on each iteration, and will default to *0.01*.
+- `options` is an object containing options for how the contrasting color should be found.
+    - `minContrast` is a number between *1* and *21* indicating the minimum valid contrast, and will default to *4.5*.
+    - `stepSize` is a number between *0* and *1* indicating the amount to darken/lighten the color on each iteration, and will default to *0.01*.
 
 ```javascript
 const contrastColor = Color.findContrast(color1, color2, minContrast, stepSize);

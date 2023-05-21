@@ -239,7 +239,7 @@ describe('Color Palette', function() {
 
         it('works with shades argument', function() {
             const palette = Color.fromHSV(120, 50, 50)
-                .palette(5, 0, 0);
+                .palette({ shades: 5 });
 
             assert.deepStrictEqual(
                 palette.shades.map(
@@ -256,11 +256,11 @@ describe('Color Palette', function() {
 
             assert.strictEqual(
                 palette.tints.length,
-                0
+                10
             );
             assert.strictEqual(
                 palette.tones.length,
-                0
+                10
             );
             assert.ok(
                 palette.shades.every(
@@ -271,7 +271,7 @@ describe('Color Palette', function() {
 
         it('works with tints argument', function() {
             const palette = Color.fromHSV(120, 50, 50)
-                .palette(0, 5, 0);
+                .palette({ tints: 5 });
 
             assert.deepStrictEqual(
                 palette.tints.map(
@@ -288,11 +288,11 @@ describe('Color Palette', function() {
 
             assert.strictEqual(
                 palette.shades.length,
-                0
+                10
             );
             assert.strictEqual(
                 palette.tones.length,
-                0
+                10
             );
             assert.ok(
                 palette.tints.every(
@@ -303,7 +303,7 @@ describe('Color Palette', function() {
 
         it('works with tones argument', function() {
             const palette = Color.fromHSV(120, 50, 50)
-                .palette(0, 0, 5);
+                .palette({ tones: 5 });
 
             assert.deepStrictEqual(
                 palette.tones.map(
@@ -320,11 +320,11 @@ describe('Color Palette', function() {
 
             assert.strictEqual(
                 palette.shades.length,
-                0
+                10
             );
             assert.strictEqual(
                 palette.tints.length,
-                0
+                10
             );
             assert.ok(
                 palette.tones.every(

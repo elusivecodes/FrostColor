@@ -4,12 +4,13 @@
 
 /**
  * Create a palette object with a specified number of shades, tints and tone variations.
- * @param {number} [shades=10] The number of shades to generate.
- * @param {number} [tints=10] The number of tints to generate.
- * @param {number} [tones=10] The number of tones to generate.
+ * @param {object} [options] The options for generating a palette.
+ * @param {number} [options.shades=10] The number of shades to generate.
+ * @param {number} [options.tints=10] The number of tints to generate.
+ * @param {number} [options.tones=10] The number of tones to generate.
  * @return {object} A palette object.
  */
-export function palette(shades = 10, tints = 10, tones = 10) {
+export function palette({ shades = 10, tints = 10, tones = 10 } = {}) {
     return {
         shades: this.shades(shades),
         tints: this.tints(tints),

@@ -32,11 +32,12 @@ export const dist = (color1, color2) => {
  * Find an optimally contrasting color for another color.
  * @param {Color} color1 The first Color.
  * @param {Color} [color2] The second Color.
- * @param {number} [minContrast=4.5] The minimum contrast.
- * @param {number} [stepSize=.01] The step size.
+ * @param {object} [options] The options for finding the contrasting color.
+ * @param {number} [options.minContrast=4.5] The minimum contrast.
+ * @param {number} [options.stepSize=.01] The step size.
  * @return {Color} The new Color.
  */
-export const findContrast = (color1, color2 = null, minContrast = 4.5, stepSize = .01) => {
+export const findContrast = (color1, color2 = null, { minContrast = 4.5, stepSize = .01 } = {}) => {
     if (!color2) {
         color2 = color1;
     }

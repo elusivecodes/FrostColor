@@ -887,11 +887,12 @@
      * Find an optimally contrasting color for another color.
      * @param {Color} color1 The first Color.
      * @param {Color} [color2] The second Color.
-     * @param {number} [minContrast=4.5] The minimum contrast.
-     * @param {number} [stepSize=.01] The step size.
+     * @param {object} [options] The options for finding the contrasting color.
+     * @param {number} [options.minContrast=4.5] The minimum contrast.
+     * @param {number} [options.stepSize=.01] The step size.
      * @return {Color} The new Color.
      */
-    const findContrast = (color1, color2 = null, minContrast = 4.5, stepSize = .01) => {
+    const findContrast = (color1, color2 = null, { minContrast = 4.5, stepSize = .01 } = {}) => {
         if (!color2) {
             color2 = color1;
         }
@@ -1188,12 +1189,13 @@
 
     /**
      * Create a palette object with a specified number of shades, tints and tone variations.
-     * @param {number} [shades=10] The number of shades to generate.
-     * @param {number} [tints=10] The number of tints to generate.
-     * @param {number} [tones=10] The number of tones to generate.
+     * @param {object} [options] The options for generating a palette.
+     * @param {number} [options.shades=10] The number of shades to generate.
+     * @param {number} [options.tints=10] The number of tints to generate.
+     * @param {number} [options.tones=10] The number of tones to generate.
      * @return {object} A palette object.
      */
-    function palette(shades = 10, tints = 10, tones = 10) {
+    function palette({ shades = 10, tints = 10, tones = 10 } = {}) {
         return {
             shades: this.shades(shades),
             tints: this.tints(tints),
