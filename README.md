@@ -442,10 +442,10 @@ Find an optimally contrasting color for another color.
     - `stepSize` is a number between *0* and *1* indicating the amount to darken/lighten the color on each iteration, and will default to *0.01*.
 
 ```javascript
-const contrastColor = Color.findContrast(color1, color2, minContrast, stepSize);
+const contrastColor = Color.findContrast(color1, color2, options);
 ```
 
-If `color2` value is *null*, a clone of `color1` will be used instead.
+If `color2` value is *null*, `color1` will be used instead.
 
 This method will tint/shade `color2` until it meets a minimum contrast threshold with `color1`, then the new color will be returned. If no valid contrast value can be found, this method will return *null* instead.
 
