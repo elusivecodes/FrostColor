@@ -2,13 +2,12 @@ import assert from 'node:assert/strict';
 import Color from './../src/index.js';
 
 describe('Color Creation', function() {
-
     describe('#constructor', function() {
         it('works with red argument', function() {
             assert.strictEqual(
                 new Color(255, 0, 0)
                     .toString(),
-                'red'
+                'red',
             );
         });
 
@@ -16,7 +15,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 new Color(0, 255, 0)
                     .toString(),
-                'lime'
+                'lime',
             );
         });
 
@@ -24,7 +23,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 new Color(0, 0, 255)
                     .toString(),
-                'blue'
+                'blue',
             );
         });
 
@@ -32,7 +31,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 new Color(255, 255, 255, .5)
                     .toString(),
-                'rgb(255 255 255 / 50%)'
+                'rgb(255 255 255 / 50%)',
             );
         });
 
@@ -40,7 +39,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 new Color(100)
                     .toString(),
-                'white'
+                'white',
             );
         });
 
@@ -48,7 +47,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 new Color(100, .5)
                     .toString(),
-                'rgb(255 255 255 / 50%)'
+                'rgb(255 255 255 / 50%)',
             );
         });
     });
@@ -58,7 +57,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('red')
                     .toString(),
-                'red'
+                'red',
             );
         });
 
@@ -66,7 +65,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('#ff0000')
                     .toString(),
-                'red'
+                'red',
             );
         });
 
@@ -74,7 +73,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('#f00')
                     .toString(),
-                'red'
+                'red',
             );
         });
 
@@ -82,7 +81,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('rgb(255 0 0)')
                     .toString(),
-                'red'
+                'red',
             );
         });
 
@@ -90,7 +89,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('rgb(255, 0, 0)')
                     .toString(),
-                'red'
+                'red',
             );
         });
 
@@ -98,7 +97,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('rgb(255 0 0 / 100%)')
                     .toString(),
-                'red'
+                'red',
             );
         });
 
@@ -106,7 +105,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('rgba(255, 0, 0, 1)')
                     .toString(),
-                'red'
+                'red',
             );
         });
 
@@ -114,7 +113,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('hsl(155deg 30% 70%)')
                     .toString(),
-                '#9cc9b6'
+                '#9cc9b6',
             );
         });
 
@@ -122,7 +121,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('hsl(155, 30%, 70%)')
                     .toString(),
-                '#9cc9b6'
+                '#9cc9b6',
             );
         });
 
@@ -130,7 +129,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('hsl(180deg 100% 30% / 50%)')
                     .toString(),
-                'rgb(0 153 153 / 50%)'
+                'rgb(0 153 153 / 50%)',
             );
         });
 
@@ -138,42 +137,42 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromString('hsla(180, 100%, 30%, .5)')
                     .toString(),
-                'rgb(0 153 153 / 50%)'
+                'rgb(0 153 153 / 50%)',
             );
         });
 
         it('throws error with invalid hex string', function() {
-            assert.throws(_ => {
+            assert.throws((_) => {
                 Color.fromString('#INVALID');
             });
         });
 
         it('throws error with invalid rgb string', function() {
-            assert.throws(_ => {
+            assert.throws((_) => {
                 Color.fromString('rgb(INVALID)');
             });
         });
 
         it('throws error with invalid rgba string', function() {
-            assert.throws(_ => {
+            assert.throws((_) => {
                 Color.fromString('rgba(INVALID)');
             });
         });
 
         it('throws error with invalid hsl string', function() {
-            assert.throws(_ => {
+            assert.throws((_) => {
                 Color.fromString('hsl(INVALID)');
             });
         });
 
         it('throws error with invalid hsla string', function() {
-            assert.throws(_ => {
+            assert.throws((_) => {
                 Color.fromString('hsla(INVALID)');
             });
         });
 
         it('throws error with invalid string', function() {
-            assert.throws(_ => {
+            assert.throws((_) => {
                 Color.fromString('INVALID');
             });
         });
@@ -184,7 +183,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromRGB(155, 30, 70)
                     .toString(),
-                '#9b1e46'
+                '#9b1e46',
             );
         });
 
@@ -192,7 +191,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromRGB(180, 100, 30, .5)
                     .toString(),
-                'rgb(180 100 30 / 50%)'
+                'rgb(180 100 30 / 50%)',
             );
         });
     });
@@ -202,7 +201,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromHSL(155, 30, 70)
                     .toString(),
-                '#9cc9b6'
+                '#9cc9b6',
             );
         });
 
@@ -210,7 +209,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromHSL(180, 100, 30, .5)
                     .toString(),
-                'rgb(0 153 153 / 50%)'
+                'rgb(0 153 153 / 50%)',
             );
         });
     });
@@ -220,7 +219,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromHSV(155, 30, 70)
                     .toString(),
-                '#7db39c'
+                '#7db39c',
             );
         });
 
@@ -228,7 +227,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromHSV(180, 100, 30, .5)
                     .toString(),
-                'rgb(0 77 77 / 50%)'
+                'rgb(0 77 77 / 50%)',
             );
         });
     });
@@ -238,7 +237,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromCMY(77, 15, 35)
                     .toString(),
-                '#3bd9a6'
+                '#3bd9a6',
             );
         });
 
@@ -246,7 +245,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromCMY(90, 50, 15, .5)
                     .toString(),
-                'rgb(26 128 217 / 50%)'
+                'rgb(26 128 217 / 50%)',
             );
         });
     });
@@ -256,7 +255,7 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromCMYK(77, 15, 35, 45)
                     .toString(),
-                '#20775b'
+                '#20775b',
             );
         });
 
@@ -264,9 +263,8 @@ describe('Color Creation', function() {
             assert.strictEqual(
                 Color.fromCMYK(90, 50, 15, 55, .5)
                     .toString(),
-                'rgb(11 57 98 / 50%)'
+                'rgb(11 57 98 / 50%)',
             );
         });
     });
-
 });

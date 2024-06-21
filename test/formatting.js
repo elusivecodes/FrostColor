@@ -2,13 +2,12 @@ import assert from 'node:assert/strict';
 import Color from './../src/index.js';
 
 describe('Color Formatting', function() {
-
     describe('#toHexString', function() {
         it('returns a short hex string', function() {
             assert.strictEqual(
                 new Color(17, 17, 17)
                     .toHexString(),
-                '#111'
+                '#111',
             );
         });
 
@@ -16,7 +15,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 new Color(17, 17, 17, .4)
                     .toHexString(),
-                '#1116'
+                '#1116',
             );
         });
 
@@ -24,7 +23,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 new Color(120, 50, 50)
                     .toHexString(),
-                '#783232'
+                '#783232',
             );
         });
 
@@ -32,7 +31,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 new Color(120, 50, 50, .5)
                     .toHexString(),
-                '#78323280'
+                '#78323280',
             );
         });
     });
@@ -42,7 +41,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 new Color(120, 50, 50)
                     .toRGBString(),
-                'rgb(120 50 50)'
+                'rgb(120 50 50)',
             );
         });
 
@@ -50,7 +49,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 new Color(120, 50, 50, .5)
                     .toRGBString(),
-                'rgb(120 50 50 / 50%)'
+                'rgb(120 50 50 / 50%)',
             );
         });
     });
@@ -60,7 +59,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 Color.fromHSL(120, 50, 50)
                     .toHSLString(),
-                'hsl(120deg 50% 50%)'
+                'hsl(120deg 50% 50%)',
             );
         });
 
@@ -68,7 +67,7 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 Color.fromHSL(120, 50, 50, .5)
                     .toHSLString(),
-                'hsl(120deg 50% 50% / 50%)'
+                'hsl(120deg 50% 50% / 50%)',
             );
         });
     });
@@ -78,10 +77,8 @@ describe('Color Formatting', function() {
             assert.strictEqual(
                 new Color(120, 50, 50)
                     .label(),
-                'saddlebrown'
+                'saddlebrown',
             );
         });
-
     });
-
 });

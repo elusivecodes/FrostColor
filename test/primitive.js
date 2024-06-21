@@ -2,13 +2,12 @@ import assert from 'node:assert/strict';
 import Color from './../src/index.js';
 
 describe('Color Primitive', function() {
-
     describe('#toString', function() {
         it('returns a html color name', function() {
             assert.strictEqual(
                 new Color(255, 0, 0)
                     .toString(),
-                'red'
+                'red',
             );
         });
 
@@ -16,7 +15,7 @@ describe('Color Primitive', function() {
             assert.strictEqual(
                 new Color(17, 17, 17)
                     .toString(),
-                '#111'
+                '#111',
             );
         });
 
@@ -24,7 +23,7 @@ describe('Color Primitive', function() {
             assert.strictEqual(
                 new Color(120, 50, 50)
                     .toString(),
-                '#783232'
+                '#783232',
             );
         });
 
@@ -32,7 +31,7 @@ describe('Color Primitive', function() {
             assert.strictEqual(
                 new Color(120, 50, 50, .5)
                     .toString(),
-                'rgb(120 50 50 / 50%)'
+                'rgb(120 50 50 / 50%)',
             );
         });
     });
@@ -42,7 +41,7 @@ describe('Color Primitive', function() {
             assert.strictEqual(
                 Color.fromHSV(180, 50, 50)
                     .valueOf(),
-                .17935225036098287
+                .17935225036098287,
             );
         });
     });
@@ -52,7 +51,7 @@ describe('Color Primitive', function() {
             const color = new Color(255, 0, 0);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('string'),
-                'red'
+                'red',
             );
         });
 
@@ -60,7 +59,7 @@ describe('Color Primitive', function() {
             const color = new Color(17, 17, 17);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('string'),
-                '#111'
+                '#111',
             );
         });
 
@@ -68,7 +67,7 @@ describe('Color Primitive', function() {
             const color = new Color(120, 50, 50);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('string'),
-                '#783232'
+                '#783232',
             );
         });
 
@@ -76,7 +75,7 @@ describe('Color Primitive', function() {
             const color = new Color(120, 50, 50, .5);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('string'),
-                'rgb(120 50 50 / 50%)'
+                'rgb(120 50 50 / 50%)',
             );
         });
 
@@ -84,9 +83,8 @@ describe('Color Primitive', function() {
             const color = Color.fromHSV(180, 50, 50);
             assert.strictEqual(
                 color[Symbol.toPrimitive]('number'),
-                .17935225036098287
+                .17935225036098287,
             );
         });
     });
-
 });

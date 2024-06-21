@@ -2,15 +2,14 @@ import assert from 'node:assert/strict';
 import Color from './../src/index.js';
 
 describe('Color Static', function() {
-
     describe('#contrast', function() {
         it('returns the contrast between two colors', function() {
             assert.strictEqual(
                 Color.contrast(
                     new Color(100, 0, 0),
-                    new Color(0, 0, 100)
+                    new Color(0, 0, 100),
                 ),
-                1.3022288504206543
+                1.3022288504206543,
             );
         });
     });
@@ -20,9 +19,9 @@ describe('Color Static', function() {
             assert.strictEqual(
                 Color.dist(
                     new Color(100, 0, 0),
-                    new Color(0, 0, 100)
+                    new Color(0, 0, 100),
                 ),
-                141.4213562373095
+                141.4213562373095,
             );
         });
     });
@@ -33,10 +32,10 @@ describe('Color Static', function() {
             const color2 = Color.findContrast(color1);
             assert.strictEqual(
                 color2.toString(),
-                '#575c6e'
+                '#575c6e',
             );
             assert.ok(
-                color2 instanceof Color
+                color2 instanceof Color,
             );
         });
 
@@ -46,10 +45,10 @@ describe('Color Static', function() {
             const color3 = Color.findContrast(color1, color2);
             assert.strictEqual(
                 color3.toString(),
-                '#4c599e'
+                '#4c599e',
             );
             assert.ok(
-                color3 instanceof Color
+                color3 instanceof Color,
             );
         });
 
@@ -59,10 +58,10 @@ describe('Color Static', function() {
             const color3 = Color.findContrast(color1, color2, { minContrast: 3 });
             assert.strictEqual(
                 color3.toString(),
-                '#6272cc'
+                '#6272cc',
             );
             assert.ok(
-                color3 instanceof Color
+                color3 instanceof Color,
             );
         });
 
@@ -72,10 +71,10 @@ describe('Color Static', function() {
             const color3 = Color.findContrast(color1, color2, { stepSize: .1 });
             assert.strictEqual(
                 color3.toString(),
-                '#495699'
+                '#495699',
             );
             assert.ok(
-                color3 instanceof Color
+                color3 instanceof Color,
             );
         });
     });
@@ -87,18 +86,18 @@ describe('Color Static', function() {
             const color3 = Color.mix(color1, color2, .5);
             assert.strictEqual(
                 color1.toString(),
-                'red'
+                'red',
             );
             assert.strictEqual(
                 color2.toString(),
-                'blue'
+                'blue',
             );
             assert.strictEqual(
                 color3.toString(),
-                'purple'
+                'purple',
             );
             assert.ok(
-                color3 instanceof Color
+                color3 instanceof Color,
             );
         });
     });
@@ -110,18 +109,18 @@ describe('Color Static', function() {
             const color3 = Color.multiply(color1, color2, .5);
             assert.strictEqual(
                 color1.toString(),
-                'red'
+                'red',
             );
             assert.strictEqual(
                 color2.toString(),
-                'blue'
+                'blue',
             );
             assert.strictEqual(
                 color3.toString(),
-                'maroon'
+                'maroon',
             );
             assert.ok(
-                color3 instanceof Color
+                color3 instanceof Color,
             );
         });
     });

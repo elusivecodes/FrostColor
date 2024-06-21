@@ -2,18 +2,17 @@ import assert from 'node:assert/strict';
 import Color from './../src/index.js';
 
 describe('Color Manipulation', function() {
-
     describe('#darken', function() {
         it('darkens the color', function() {
             const color1 = Color.fromHSV(120, 50, 50);
             const color2 = color1.darken(.5);
             assert.strictEqual(
                 color1.toString(),
-                '#408040'
+                '#408040',
             );
             assert.strictEqual(
                 color2.toString(),
-                '#204020'
+                '#204020',
             );
         });
     });
@@ -24,11 +23,11 @@ describe('Color Manipulation', function() {
             const color2 = color1.invert();
             assert.strictEqual(
                 color1.toString(),
-                '#408040'
+                '#408040',
             );
             assert.strictEqual(
                 color2.toString(),
-                '#bf80bf'
+                '#bf80bf',
             );
         });
     });
@@ -39,11 +38,11 @@ describe('Color Manipulation', function() {
             const color2 = color1.lighten(.5);
             assert.strictEqual(
                 color1.toString(),
-                '#408040'
+                '#408040',
             );
             assert.strictEqual(
                 color2.toString(),
-                '#95ca95'
+                '#95ca95',
             );
         });
     });
@@ -54,11 +53,11 @@ describe('Color Manipulation', function() {
             const color2 = color1.shade(.3);
             assert.strictEqual(
                 color1.toString(),
-                '#408040'
+                '#408040',
             );
             assert.strictEqual(
                 color2.toString(),
-                '#2d592d'
+                '#2d592d',
             );
         });
     });
@@ -69,11 +68,11 @@ describe('Color Manipulation', function() {
             const color2 = color1.tint(.3);
             assert.strictEqual(
                 color1.toString(),
-                '#408040'
+                '#408040',
             );
             assert.strictEqual(
                 color2.toString(),
-                '#79a679'
+                '#79a679',
             );
         });
     });
@@ -84,13 +83,12 @@ describe('Color Manipulation', function() {
             const color2 = color1.tone(.3);
             assert.strictEqual(
                 color1.toString(),
-                '#408040'
+                '#408040',
             );
             assert.strictEqual(
                 color2.toString(),
-                '#538053'
+                '#538053',
             );
         });
     });
-
 });

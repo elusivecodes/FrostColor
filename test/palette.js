@@ -2,13 +2,12 @@ import assert from 'node:assert/strict';
 import Color from './../src/index.js';
 
 describe('Color Palette', function() {
-
     describe('#shades', function() {
         it('creates a shades palette', function() {
             const shades = Color.fromHSV(120, 50, 50).shades();
             assert.deepStrictEqual(
                 shades.map(
-                    color => color.toString()
+                    (color) => color.toString(),
                 ),
                 [
                     '#408040',
@@ -20,14 +19,14 @@ describe('Color Palette', function() {
                     '#1d3a1d',
                     '#172e17',
                     '#112311',
-                    '#0c170c'
-                ]
+                    '#0c170c',
+                ],
             );
 
             assert.ok(
                 shades.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
 
@@ -35,21 +34,21 @@ describe('Color Palette', function() {
             const shades = Color.fromHSV(120, 50, 50).shades(5);
             assert.deepStrictEqual(
                 shades.map(
-                    color => color.toString()
+                    (color) => color.toString(),
                 ),
                 [
                     '#408040',
                     '#356a35',
                     '#2b552b',
                     '#204020',
-                    '#152b15'
-                ]
+                    '#152b15',
+                ],
             );
 
             assert.ok(
                 shades.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
     });
@@ -59,7 +58,7 @@ describe('Color Palette', function() {
             const tints = Color.fromHSV(120, 50, 50).tints();
             assert.deepStrictEqual(
                 tints.map(
-                    color => color.toString()
+                    (color) => color.toString(),
                 ),
                 [
                     '#408040',
@@ -71,14 +70,14 @@ describe('Color Palette', function() {
                     '#a8c5a8',
                     '#b9d1b9',
                     '#cbdccb',
-                    '#dce8dc'
-                ]
+                    '#dce8dc',
+                ],
             );
 
             assert.ok(
                 tints.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
 
@@ -86,21 +85,21 @@ describe('Color Palette', function() {
             const tints = Color.fromHSV(120, 50, 50).tints(5);
             assert.deepStrictEqual(
                 tints.map(
-                    color => color.toString()
+                    (color) => color.toString(),
                 ),
                 [
                     '#408040',
                     '#609560',
                     '#80aa80',
                     '#9fbf9f',
-                    '#bfd5bf'
-                ]
+                    '#bfd5bf',
+                ],
             );
 
             assert.ok(
                 tints.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
     });
@@ -110,7 +109,7 @@ describe('Color Palette', function() {
             const tones = Color.fromHSV(120, 50, 50).tones();
             assert.deepStrictEqual(
                 tones.map(
-                    color => color.toString()
+                    (color) => color.toString(),
                 ),
                 [
                     '#408040',
@@ -122,14 +121,14 @@ describe('Color Palette', function() {
                     '#638063',
                     '#688068',
                     '#6e806e',
-                    '#748074'
-                ]
+                    '#748074',
+                ],
             );
 
             assert.ok(
                 tones.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
 
@@ -137,21 +136,21 @@ describe('Color Palette', function() {
             const tones = Color.fromHSV(120, 50, 50).tones(5);
             assert.deepStrictEqual(
                 tones.map(
-                    color => color.toString()
+                    (color) => color.toString(),
                 ),
                 [
                     '#408040',
                     '#4a804a',
                     '#558055',
                     '#608060',
-                    '#6a806a'
-                ]
+                    '#6a806a',
+                ],
             );
 
             assert.ok(
                 tones.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
     });
@@ -169,16 +168,16 @@ describe('Color Palette', function() {
                 {
                     shades: palette.shades
                         .map(
-                            color => color.toString()
+                            (color) => color.toString(),
                         ),
                     tints: palette.tints
                         .map(
-                            color => color.toString()
+                            (color) => color.toString(),
                         ),
                     tones: palette.tones
                         .map(
-                            color => color.toString()
-                        )
+                            (color) => color.toString(),
+                        ),
                 },
                 {
                     shades: [
@@ -191,7 +190,7 @@ describe('Color Palette', function() {
                         '#1d3a1d',
                         '#172e17',
                         '#112311',
-                        '#0c170c'
+                        '#0c170c',
                     ],
                     tints: [
                         '#408040',
@@ -203,7 +202,7 @@ describe('Color Palette', function() {
                         '#a8c5a8',
                         '#b9d1b9',
                         '#cbdccb',
-                        '#dce8dc'
+                        '#dce8dc',
                     ],
                     tones: [
                         '#408040',
@@ -215,25 +214,25 @@ describe('Color Palette', function() {
                         '#638063',
                         '#688068',
                         '#6e806e',
-                        '#748074'
-                    ]
-                }
+                        '#748074',
+                    ],
+                },
             );
 
             assert.ok(
                 palette.shades.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
             assert.ok(
                 palette.tints.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
             assert.ok(
                 palette.tones.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
 
@@ -243,29 +242,29 @@ describe('Color Palette', function() {
 
             assert.deepStrictEqual(
                 palette.shades.map(
-                    color => color.toString()
+                    (color) => color.toString(),
                 ),
                 [
                     '#408040',
                     '#356a35',
                     '#2b552b',
                     '#204020',
-                    '#152b15'
-                ]
+                    '#152b15',
+                ],
             );
 
             assert.strictEqual(
                 palette.tints.length,
-                10
+                10,
             );
             assert.strictEqual(
                 palette.tones.length,
-                10
+                10,
             );
             assert.ok(
                 palette.shades.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
 
@@ -275,29 +274,29 @@ describe('Color Palette', function() {
 
             assert.deepStrictEqual(
                 palette.tints.map(
-                    color => color.toString()
+                    (color) => color.toString(),
                 ),
                 [
                     '#408040',
                     '#609560',
                     '#80aa80',
                     '#9fbf9f',
-                    '#bfd5bf'
-                ]
+                    '#bfd5bf',
+                ],
             );
 
             assert.strictEqual(
                 palette.shades.length,
-                10
+                10,
             );
             assert.strictEqual(
                 palette.tones.length,
-                10
+                10,
             );
             assert.ok(
                 palette.tints.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
 
@@ -307,31 +306,30 @@ describe('Color Palette', function() {
 
             assert.deepStrictEqual(
                 palette.tones.map(
-                    color => color.toString()
+                    (color) => color.toString(),
                 ),
                 [
                     '#408040',
                     '#4a804a',
                     '#558055',
                     '#608060',
-                    '#6a806a'
-                ]
+                    '#6a806a',
+                ],
             );
 
             assert.strictEqual(
                 palette.shades.length,
-                10
+                10,
             );
             assert.strictEqual(
                 palette.tints.length,
-                10
+                10,
             );
             assert.ok(
                 palette.tones.every(
-                    color => color instanceof Color
-                )
+                    (color) => color instanceof Color,
+                ),
             );
         });
     });
-
 });
