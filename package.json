@@ -1,6 +1,6 @@
 {
     "name": "@fr0st/color",
-    "version": "4.1.5",
+    "version": "4.1.6",
     "description": "FrostColor is a free, open-source color manipulation library for JavaScript.",
     "keywords": [
         "color",
@@ -40,7 +40,7 @@
     "license": "MIT",
     "private": false,
     "devDependencies": {
-        "@fr0st/eslint-config": "^1.0.0",
+        "@fr0st/eslint-config": "^1.0.2",
         "eslint": "^9.5.0",
         "mocha": "^10.4.0",
         "rollup": "^4.18.0",
